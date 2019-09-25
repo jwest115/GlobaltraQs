@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <title>Login</title>
+
+        <body>
+            <div class="jumbotron container" style = "margin-top: 5%; width: 50%;">
+                <div>
+                    <h1 style ="display: flex; flex-direction: column; justify-content: center; text-align: center;"> Login </h1>
+                    <br>
+                </div>
+               <form action="{% url 'login' %}" method="POST">
+                   {% csrf_token %}
+                   {% if error_message %}
+                        <div class="alert alert-danger" role="alert">
+                          {{ error_message }}
+                        </div>
+                    {% endif %}
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Username</label>
+                      {{ form.username }}
+{#                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">#}
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                      {{ form.password }}
+{#                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">#}
+                  </div>
+                   <div>
+                       <br>
+                       <p> New user? Click <a href = "{% url 'signup' %}"> here</a> to create an account!</p>
+                   </div>
+                    <input style='float:right' type="submit" value="Submit" class="btn btn-primary">
+                </form>
+            </div>
+        </body>
+</html>
