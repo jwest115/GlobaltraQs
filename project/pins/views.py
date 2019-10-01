@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-
+from django.views import View
 # Create your views here.
 from pins.forms import DropPinForm
 from pins.models import Pin
@@ -106,9 +106,9 @@ def display_map2(request):
                 pin.save()
                 pin_list = serializers.serialize('json', Pin.objects.all())
                 form = DropPinForm()
-                # return render(request, template, context={'form': form, 'pin_list': pin_list, 'latitude': latitude,
-                #                                           'longitude': longitude})
-                return HttpResponseRedirect('/freemap')
+                return render(request, template, context={'form': form, 'pin_list': pin_list, 'latitude': latitude,
+                                                          'longitude': longitude})
+                # return HttpResponseRedirect('/freemap')
 
         else:
             pins = Pin.objects.all()
@@ -143,3 +143,7 @@ def detail(request, pin_id):
     return render(request, 'pins/detail.html',
                   context={'story': story, 'author': user, 'pin_list': pin_list, 'latitude': story.latitude,
                            'longitude': story.longitude})
+
+
+def test(request):
+    return render(request, 'pins/test.html')

@@ -16,10 +16,15 @@
       <list>
         <option value="Python Script" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/map-frontend" />
+  </component>
   <component name="ProjectId" id="1Q4VgHUSyQI7M92Y1yC7APIw3dT" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -30,14 +35,16 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\pins\static\pins\js" />
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\pins\static\pins" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\pins" />
       <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\pins\templates\pins" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\pins\static\pins" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -101,11 +108,27 @@
       <workItem from="1568833859822" duration="6649000" />
       <workItem from="1569201158958" duration="2200000" />
       <workItem from="1569203912406" duration="412000" />
-      <workItem from="1569438367244" duration="5242000" />
+      <workItem from="1569438367244" duration="9616000" />
+      <workItem from="1569542961993" duration="3966000" />
+      <workItem from="1569619138335" duration="3302000" />
+      <workItem from="1569622501787" duration="5178000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
