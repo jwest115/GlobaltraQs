@@ -38,10 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pins',
-<<<<<<< Updated upstream
     'rest_framework',
-=======
->>>>>>> Stashed changes
 ]
 
 MIDDLEWARE = [

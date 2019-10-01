@@ -24,6 +24,8 @@
     "webpack-cli": "^3.3.9"
   },
   "dependencies": {
+    "react-leaflet": "^2.4.0",
+    "redux": "^4.0.4",
     "yarn": "^1.17.3"
   }
 }
