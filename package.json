@@ -4,7 +4,8 @@
   "description": "website",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack --mode development --watch ./GlobalTraqs/frontend/src/index.js --output ./GlobalTraqs/frontend/static/frontend/main.js",
+    "build": "webpack --mode production ./GlobalTraqs/frontend/src/index.js --output ./GlobalTraqs/frontend/static/frontend/main.js"
   },
   "repository": {
     "type": "git",
@@ -17,14 +18,24 @@
   },
   "homepage": "https://github.com/jwest115/GlobaltraQs#readme",
   "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "prop-types": "^15.7.2",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
+    "weak-key": "^1.0.1",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9"
   },
   "dependencies": {
+    "@reach/router": "^1.2.1",
+    "leaflet": "^1.5.1",
+    "leaflet.markercluster": "^1.4.1",
     "react-leaflet": "^2.4.0",
+    "react-leaflet-markercluster": "^1.1.8",
     "redux": "^4.0.4",
     "yarn": "^1.17.3"
   }
