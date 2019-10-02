@@ -34,10 +34,18 @@ export default class MapDisplay extends Component {
             lat: 34.0668,
             lng: -118.1684,
             zoom: 10,
-            maxZoom: 30
+            maxZoom: 30,
+            data: []
         }
     }
-
+    componentDidMount() {
+        fetch('api/pins')
+            .then(response => response.json())
+            .then(data => this.setState({ data }));
+        /* .then((findresponse) => {
+            console.log(findresponse)
+        }) */
+    }
 
 
 
@@ -58,12 +66,12 @@ export default class MapDisplay extends Component {
                             {markerList[0].name}  <br /> Easily customizable.
                         </Popup>
                     </Marker>
-                    {markerList.map((marker, index) => {
-                        let post = [marker.lat, marker.lng];
+                    {this.state.data.map((marker, index) => {
+                        let post = [marker.latitude, marker.longitude];
                         return (
                             <Marker key={index} position={post}>
                                 <Popup>
-                                    {marker.name} <br /> {marker.info}
+                                    {marker.title} <br /> {marker.description}
                                 </Popup>
                             </Marker>
                         );
