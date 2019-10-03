@@ -1,4 +1,4 @@
-import Map from './components/Map/index'
+
 import React, { Component, Fragment } from 'react'
 import Header from './components/layout/Header'
 import MapDashboard from './components/Map/MapDashboard'

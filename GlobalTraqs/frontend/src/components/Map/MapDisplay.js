@@ -35,32 +35,38 @@ export default class MapDisplay extends Component {
             lng: -118.1684,
             zoom: 10,
             maxZoom: 30,
-            data: []
+            data: [],
+            userlat: 0,
+            userlng: 0
         }
     }
     componentDidMount() {
         fetch('api/pins')
             .then(response => response.json())
             .then(data => this.setState({ data }));
-        /* .then((findresponse) => {
-            console.log(findresponse)
-        }) */
-    }
 
+    }
+    addMarker = (e) => {
+        this.setState({ userlat: e.latlng.lat })
+        this.setState({ userlng: e.latlng.lng })
+    }
 
 
     render() {
 
         const position = [this.state.lat, this.state.lng];
-        const post = [34.07, -118.2];
+        const userposition = [this.state.userlat, this.state.userlng];
         return (
             <div id="map" >
-                <Map center={position} zoom={15} maxZoom={30}
-                    id="map" style={divStyle}>
+                <Map center={position} zoom={15} maxZoom={30} //shows map
+                    id="map" style={divStyle}
+                    //user click for location
+                    onClick={this.addMarker}>
                     <TileLayer
                         attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
                         url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
                     />
+
                     <Marker position={position}>
                         <Popup>
                             {markerList[0].name}  <br /> Easily customizable.
@@ -76,9 +82,15 @@ export default class MapDisplay extends Component {
                             </Marker>
                         );
                     })}
+                    {/* current selected posisiotn   
+                 {console.log(this.state.userlat)}
+                    {console.log(this.state.userlng)} */}
 
-
-
+                    <Marker position={userposition} >
+                        <Popup>
+                            Your position <br /> yeet
+                        </Popup>
+                    </Marker>
                 </Map>
             </div>
         )
