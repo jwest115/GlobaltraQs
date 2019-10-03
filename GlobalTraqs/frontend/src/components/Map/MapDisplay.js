@@ -59,7 +59,7 @@ export default class MapDisplay extends Component {
                     id="map" style={divStyle}>
                     <TileLayer
                         attribution="&copy; <a href=&quot;https://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                        url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
+                        url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
                     />
                     <Marker position={position}>
                         <Popup>
