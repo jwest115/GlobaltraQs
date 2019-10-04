@@ -38,6 +38,7 @@
     "lodash": "^4.17.15",
     "react-leaflet": "^2.4.0",
     "react-leaflet-markercluster": "^1.1.8",
+    "react-router-dom": "^5.1.2",
     "redux": "^4.0.4",
     "styled-components": "^4.4.0",
     "yarn": "^1.17.3"

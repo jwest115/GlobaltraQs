@@ -7,26 +7,7 @@ const divStyle = {
     width: '1280px'
 
 }
-const markerList = [
-    {
-        lat: 34.0668,
-        lng: -119.1684,
-        name: "ABC Hospitals",
-        info: 10
-    },
-    {
-        lat: 35.442889,
-        lng: -119.396873,
-        name: "XYZ Hospitals",
-        info: 20
-    },
-    {
-        lat: 33.441681,
-        lng: -118.394357,
-        name: "NRI Hospitals",
-        info: 10
-    }
-];
+
 export default class MapDisplay extends Component {
     constructor(props) {
         super(props);
@@ -67,11 +48,7 @@ export default class MapDisplay extends Component {
                         url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
                     />
 
-                    <Marker position={position}>
-                        <Popup>
-                            {markerList[0].name}  <br /> Easily customizable.
-                        </Popup>
-                    </Marker>
+
                     {this.state.data.map((marker, index) => {
                         let post = [marker.latitude, marker.longitude];
                         return (
