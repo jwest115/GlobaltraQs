@@ -4,25 +4,21 @@ import Header from './components/layout/Header'
 import MapDashboard from './components/Map/MapDashboard'
 import About from './components/AboutPage/About'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-const divStyle = {
-    height: '400px',
-    width: '100%'
-
-}
+import { Provider } from 'react-redux'
+import store from './store';
 
 export class App extends Component {
     render() {
         return (
-            <Router>
+            <Provider store={store}>
                 <Fragment>
                     <Header />
-                    <div className="container" style={divStyle}>
+                    <div className="container">
+                        <MapDashboard />
 
-                        <Route path="/" component={MapDashboard} />
-                        <Route path="/about" component={About} />
                     </div>
                 </Fragment>
-            </Router>
+            </Provider>
         )
     }
 }

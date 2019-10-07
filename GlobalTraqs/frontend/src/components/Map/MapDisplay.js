@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
+import { PinForm } from './PinForm';
 
+//this uses fetch 
 const divStyle = {
     height: '720px',
     width: '1280px'
@@ -30,6 +32,7 @@ export default class MapDisplay extends Component {
     addMarker = (e) => {
         this.setState({ userlat: e.latlng.lat })
         this.setState({ userlng: e.latlng.lng })
+
     }
 
 
@@ -37,7 +40,9 @@ export default class MapDisplay extends Component {
 
         const position = [this.state.lat, this.state.lng];
         const userposition = [this.state.userlat, this.state.userlng];
+
         return (
+
             <div id="map" >
                 <Map center={position} zoom={15} maxZoom={30} //shows map
                     id="map" style={divStyle}
@@ -59,15 +64,17 @@ export default class MapDisplay extends Component {
                             </Marker>
                         );
                     })}
-                    {/* current selected posisiotn   
-                 {console.log(this.state.userlat)}
-                    {console.log(this.state.userlng)} */}
-
+                    {/* current selected posisiotn    */}
+                    {/*                {console.log(this.state.userlat)}
+                    {console.log(this.state.userlng)}
+                    {console.log(this.state.userlat + "yeet")} */}
                     <Marker position={userposition} >
                         <Popup>
                             Your position <br /> yeet
                         </Popup>
                     </Marker>
+                    <PinForm userlat={this.state.userlat} />
+
                 </Map>
             </div>
         )

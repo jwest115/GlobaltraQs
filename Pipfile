@@ -11,6 +11,7 @@ django = "*"
 djangorestframework = "*"
 psycopg2-binary = "*"
 django-cors-headers = "*"
+django-autofixture = "*"
 
 [requires]
 python_version = "3.7"
