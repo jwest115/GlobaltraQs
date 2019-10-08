@@ -54,8 +54,6 @@ export class Pins extends Component {
 
         return (
             <Fragment>
-
-
                 <h2>pins</h2>
                 <div id="map" >
                     <Map center={position} zoom={15} maxZoom={30} //shows map
@@ -94,7 +92,7 @@ export class Pins extends Component {
                     </Map>
 
                 </div>
-                <AddPinForm userlat={this.state.userlat} userlng={this.state.userlng} />
+                <PinForm userlat={this.state.userlat} userlng={this.state.userlng} />
                 {/* change AddPin PinForm for working form */}
             </Fragment>
 

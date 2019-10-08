@@ -9,8 +9,8 @@ export class PinForm extends Component {
     state = {
         title: '',
         description: '',
-        latitude: this.props.userlat,
-        longitude: this.props.userlng,
+        latitude: '',
+        longitude: '',
     }
     static propTypes = {
         addPin: PropTypes.func.isRequired
@@ -18,10 +18,15 @@ export class PinForm extends Component {
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
     onSubmit = e => {
+        const a = this.props.userlat
+        const b = this.props.userlng
         e.preventDefault();
+        this.state.latitude = a
+        this.state.longitude = b
         const { title, description, latitude, longitude } = this.state
         const pin = { title, description, latitude, longitude };
         this.props.addPin(pin)
+        console.log(a + ' ' + this.state.latitude)
     }
 
     render() {
@@ -55,36 +60,34 @@ export class PinForm extends Component {
                             value={description}
                         />
                     </div>
-                    <div className="form-group">
-                        <label>Latitude</label>
+
+
+                    <input type="hidden" name="latitude" onChange={this.onChange}
+                        // value={this.props.userlat}
+                        value={latitude} />
+
+                    <input type="hidden" name="longitude" onChange={this.onChange}
+                        // value={this.props.userlat}
+                        value={longitude} />
+                    {/*        <div className="form-group">
+
                         <textarea
                             className="form-control"
-                            type="number"
-                            name="latitude"
-                            onChange={this.onChange}
-                            // value={this.props.userlat}
-                            value={latitude}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>longitude</label>
-                        <textarea
-                            className="form-control"
-                            type="number"
+                            type="hidden"
                             name="longitude"
                             onChange={this.onChange}
-                            /*   value={this.props.userlng} */
-                            value={longitude}
+                               value={this.props.userlng} 
+                        value = { longitude }
                         />
 
-                    </div>
+                    </div> */}
                     <div className="form-group">
                         <button type="submit" className="btn btn-primary">
                             Submit
                 </button>
                     </div>
                 </form>
-            </div>
+            </div >
         )
     }
 }

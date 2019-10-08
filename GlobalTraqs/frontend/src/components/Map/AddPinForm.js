@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
 
 export class AddPinForm extends Component {
+    constructor(props) {
+        super(props)
 
-
-    state = {
-        title: 'a',
-        description: '',
+        this.state = {
+            title: '',
+            description: '',
+            lat: props.userlat,
+        }
     }
+
+
+
 
 
     handleChange(evt) {
@@ -15,19 +21,21 @@ export class AddPinForm extends Component {
         this.setState({ [evt.target.name]: evt.target.value });
     }
     handleSubmit = e => {
-        alert(`${this.state.title} desc ${this.state.description}`)
+        alert(`${this.state.title} desc ${this.state.description}  ${this.state.lat} `)
+
     }
 
 
     render() {
 
-        console.log(this.props.userlat + 'ye' + this.state.title)
+
+        console.log(this.props.userlat + ' state: ' + this.state.title)
         return (
 
             <form onSubmit={this.handleSubmit}>
 
                 <label>Title</label>
-                <input type="text" name="title" onChange={this.handleChange.bind(this)} value={this.props.userlat} />
+                <input type="hidden" name="title" value={this.state.title} onChange={this.handleChange.bind(this)} />
 
                 <label>description</label>
                 <input type="text" name="description" value={this.state.description} onChange={this.handleChange.bind(this)} />
