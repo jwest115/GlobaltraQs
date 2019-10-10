@@ -1,9 +1,17 @@
 # GlobaltraQs
 
-pip install pipenv
+1. pip install pipenv
 
-pipenv install
+2. pipenv install
 
-pipenv shell
+3. pipenv shell
 
-npm install
+4. cd GlobalTraqs
+
+5. python manage.py migrate
+
+6. python manage.py runserver
+
+7. in another terminal npm install
+
+8. npm run dev or npm run build to deploy
