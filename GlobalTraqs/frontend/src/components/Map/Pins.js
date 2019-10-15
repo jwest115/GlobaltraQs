@@ -7,7 +7,7 @@ import PinForm from "./PinForm"
 import AddPinForm from './AddPinForm';
 const divStyle = {
     height: '720px',
-    width: '1280px'
+    width: '1080px'
 
 }
 
