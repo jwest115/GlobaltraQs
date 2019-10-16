@@ -1,0 +1,60 @@
+{% load render_bundle from webpack_loader %}
+
+<html>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="../static/pins/styles/styles.css">
+         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+           integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+           crossorigin=""/>
+         <!-- Make sure you put this AFTER Leaflet's CSS -->
+        <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+               integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+               crossorigin="">
+        </script>
+        <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css">
+        <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+	<script src="https://openlayers.org/en/v4.6.5/build/ol.js" type="text/javascript"></script>
+
+        <title>Home</title>
+
+        <body>
+        <div class="top-bar">
+            <img src = "../static/pins/images/globaltraqs logo.png" alt="logo"></img>
+            <div class="navigation-links">
+                <a href = "">SEARCH</a>
+                <a href = "{% url 'login' %}">SIGN UP/LOG IN</a>
+            </div>
+        </div>
+        <div id="outer" style="position:relative;">
+            <button style="right: 5%; top:5%; width: 100px; z-index: 2; position: absolute" class="btn btn-primary">Add Story</button>
+             {# DISPLAY MAP WITH REACT #}
+            <div id="world-map" style="z-index: 1;"></div>
+
+            <script>
+              var mymap;
+              var vectorlayer;
+              window.props = {{ pin_list|safe }};
+              window.latitude = {{ latitude }};
+              window.longitude = {{ longitude }};
+              window.react_mount = document.getElementById('world-map');
+            </script>
+            {% render_bundle 'main' %}
+        </div>
+        </body>
+</html>

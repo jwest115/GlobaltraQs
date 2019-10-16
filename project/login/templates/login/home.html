@@ -1,0 +1,38 @@
+{#<html>#}
+{#    <head>#}
+{#        <!-- Required meta tags -->#}
+{#        <meta charset="utf-8">#}
+{#        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
+{##}
+{#        <!-- Bootstrap CSS -->#}
+{#        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">#}
+{##}
+{#        <title>Home</title>#}
+{##}
+{#        <body>#}
+{#            <div class="jumbotron container" style = "margin-top: 50px">#}
+{#                {% if user.is_authenticated %}#}
+{#                     <div class="alert alert-success" style="float: right" role="alert">#}
+{#                         <p class="lead">Welcome {{ user.username }}! </p>#}
+{#                    </div>#}
+{#                    <h3> Welcome {{ user.username }} !!!</h3>#}
+{#                {% endif %}#}
+{#                <h1 class="display-4">Simple login page</h1>#}
+{#                <p class="lead">This is a simple sign up/ login page.</p>#}
+{#                <br>#}
+{#                <p class = lead> Click <a class="lead" href="{% url 'display_map' %}" role="button">here</a> to view the map! </p>#}
+{#                <p class = lead> Click <a class="lead" href="../freemap" role="button">here</a> to view the FREE map! </p>#}
+{##}
+{#                <hr class="my-4">#}
+{#                <p>Click the button below to sign in or create a new Django user account.</p>#}
+{#                {% if user.is_authenticated %}#}
+{#                    <form method="POST" action="{% url 'logout' %}">#}
+{#                        {% csrf_token %}#}
+{#                        <input type="submit" value="Logout" class="btn btn-primary btn-lg">#}
+{#                    </form>#}
+{#                {% elif not user.is_authenicated %}#}
+{#                    <a class="btn btn-primary btn-lg" href="{% url 'login' %}" role="button">Sign up/ Login</a>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#        </body>#}
+{#</html>#}

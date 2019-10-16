@@ -6,6 +6,11 @@
 
 3. pipenv shell
 
+4. npm install
+
+5. npm run watch
+
+python manage.py runserver
 4. cd GlobalTraqs
 
 5. python manage.py migrate
