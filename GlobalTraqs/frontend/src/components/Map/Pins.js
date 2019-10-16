@@ -6,24 +6,13 @@ import PropTypes from "prop-types"
 import PinForm from "./PinForm"
 import L from 'leaflet'
 import AddPinForm from './AddPinForm';
-import pinRed from './assets/pinRed.png'
-import rocket from './assets/rocket.png'
+
 
 const divStyle = {
     height: '720px',
     width: '1080px'
 
 }
-export const pointerIcon = new L.Icon({
-    iconUrl: rocket,
-    iconRetinaUrl: rocket,
-    iconAnchor: [5, 55],
-    popupAnchor: [10, -44],
-    iconSize: [25, 55],
-    shadowUrl: rocket,
-    shadowSize: [68, 95],
-    shadowAnchor: [20, 92],
-})
 
 export class Pins extends Component {
 
@@ -70,7 +59,7 @@ export class Pins extends Component {
         return (
             <Fragment>
                 <h2>pins</h2>
-                <img src={rocket} />
+
                 <div id="map" >
                     <Map center={position} zoom={15} maxZoom={30} //shows map
                         id="map" style={divStyle}
@@ -98,13 +87,13 @@ export class Pins extends Component {
                  {console.log(this.state.userlat)}
                     {console.log(this.state.userlng)} */}
 
-                        <Marker position={userposition} icon={pointerIcon} >
+                        <Marker position={userposition}  >
                             <Popup>
                                 Your position <br /> yeet
                             </Popup>
                         </Marker>
 
-                        {console.log(pointerIcon)}
+
                     </Map>
 
                 </div>
