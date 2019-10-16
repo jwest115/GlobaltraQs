@@ -99,7 +99,7 @@ export default class DisplayMap extends Component {
                   shadowAnchor: [20, 92],
                 })
 
-                  // can probably do this part better ---> only did it this way because of a big I did not want to fix today
+                  // can probably do this part better ---> only did it this way because of a bug I did not want to fix today
                     let post = [marker.latitude, marker.longitude];
                     let category = marker.category;
                     if(category == 'community') {
