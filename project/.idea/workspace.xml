@@ -11,40 +11,53 @@
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="project" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
         <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/map-frontend" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/frontend" />
   </component>
   <component name="ProjectId" id="1Q4VgHUSyQI7M92Y1yC7APIw3dT" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pins" />
+    <property name="js.linters.configure.manually.selectedeslint" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/static/frontend/images" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\PyCharm 2019.2\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\pins\static\pins\js" />
-      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\pins\static\pins" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\frontend\static\frontend\images" />
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\frontend\static\frontend\styles" />
       <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\pins" />
       <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\pins\templates\pins" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\frontend\static\frontend\images" />
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\frontend\src" />
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\frontend\src\reducers" />
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\frontend\src\components" />
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\project\frontend\cypress\integration" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -112,6 +125,15 @@
       <workItem from="1569542961993" duration="3966000" />
       <workItem from="1569619138335" duration="3302000" />
       <workItem from="1569622501787" duration="5178000" />
+      <workItem from="1570669612543" duration="36000" />
+      <workItem from="1570672100882" duration="13721000" />
+      <workItem from="1570750988878" duration="4211000" />
+      <workItem from="1570823672760" duration="12000" />
+      <workItem from="1570827419458" duration="10747000" />
+      <workItem from="1570842075404" duration="14906000" />
+      <workItem from="1571109814633" duration="5022000" />
+      <workItem from="1571118580960" duration="3564000" />
+      <workItem from="1571200253240" duration="10904000" />
     </task>
     <servers />
   </component>

@@ -1,1 +1,3 @@
+djangorestframework
+django
 django-webpack-loader

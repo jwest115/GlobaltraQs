@@ -15,7 +15,7 @@ from login.forms import RegisterForm, LoginForm
 
 
 def index(request):
-    return render(request, "login/home.html")
+    return render(request, "pins/home.html")
 
 
 def logout(request):

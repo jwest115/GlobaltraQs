@@ -1,0 +1,12 @@
+[
+    {
+        "model": "story.lead",
+        "pk": 1,
+        "fields": {
+            "title": "Some title",
+            "description": "the description",
+            "latitude": "34.0668",
+            "longitude": "-118.1684"
+        }
+    }
+]
