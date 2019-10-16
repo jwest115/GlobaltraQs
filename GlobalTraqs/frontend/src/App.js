@@ -26,7 +26,7 @@ export class App extends Component {
                         <div className="container">
                             <Switch>
                                 <Route exact path="/" component={MapDashboard} />
-                                <PrivateRoute exact path="/About" component={About} />
+                                <Route exact path="/About" component={About} />
                                 <Route exact path="/faq" component={FAQ} />
                                 <Route exact path="/login" component={login} />
                                 <Route exact path="/register" component={register} />

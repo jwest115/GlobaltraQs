@@ -21,14 +21,14 @@ export const loadUser = () => (dispatch, getState) => {
         }
     }
     //if token, add to headers config
-    if (token) {
+    if(token) {
         config.headers['Authorization'] = `Token {token}`
     }
-    axios.get('/api/auth/user', config)
-        .then(res => {
+    axios.get('/api/auth/user' , config)
+        .then(res=> {
             dispatch({
                 type: USER_LOADED,
-                payload: res.data
+                payload: res
             })
-        }).catch(err => console.log(err.response.data + '' + err.response.status));
+        })
 }
