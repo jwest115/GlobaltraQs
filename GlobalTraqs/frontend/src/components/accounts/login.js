@@ -18,7 +18,7 @@ function Copyright() {
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
-                Your Website
+                GlobalTraqs
       </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -70,10 +70,10 @@ export default function SignIn() {
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
+                        id="username"
+                        label="Username"
+                        name="username"
+                        autoComplete="username"
                         autoFocus
                     />
                     <TextField

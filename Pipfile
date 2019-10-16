@@ -12,6 +12,7 @@ djangorestframework = "*"
 psycopg2-binary = "*"
 django-cors-headers = "*"
 django-autofixture = "*"
+django-rest-knox = "*"
 
 [requires]
 python_version = "3.7"

@@ -4,6 +4,7 @@ import { getPins, deletePins } from '../../actions//pins'
 import { connect } from 'react-redux';
 import PropTypes from "prop-types"
 import PinForm from "./PinForm"
+import L from 'leaflet'
 import AddPinForm from './AddPinForm';
 const divStyle = {
     height: '720px',

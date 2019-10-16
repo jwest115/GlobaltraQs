@@ -10,8 +10,13 @@ import register from './components/accounts/register'
 import { Provider } from 'react-redux'
 import store from './store';
 import login from './components/accounts/login'
-
+import PrivateRoute from './components/common/PrivateRoute'
+import { loadUser } from '../src/actions/auth'
 export class App extends Component {
+    componentDidMount() {
+        store.dispatch(loadUser())
+    }
+
     render() {
         return (
             <Provider store={store}>
@@ -21,7 +26,7 @@ export class App extends Component {
                         <div className="container">
                             <Switch>
                                 <Route exact path="/" component={MapDashboard} />
-                                <Route exact path="/About" component={About} />
+                                <PrivateRoute exact path="/About" component={About} />
                                 <Route exact path="/faq" component={FAQ} />
                                 <Route exact path="/login" component={login} />
                                 <Route exact path="/register" component={register} />
