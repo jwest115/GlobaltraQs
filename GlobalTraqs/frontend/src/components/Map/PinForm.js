@@ -4,6 +4,12 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { addPin } from '../../actions/pins'
 
+
+const categorySelection = [
+    { label: "Personal", value: 1 },
+    { label: "Historical", value: 2 },
+    { label: "Community", value: 3 }
+]
 export class PinForm extends Component {
 
     state = {
@@ -63,7 +69,10 @@ export class PinForm extends Component {
                     </div>
                     <div className="form-group">
                         <label>Category</label>
-                        <select value={category} name="category" className="form-control" onChange={this.onChange}>
+
+                        <select name="category" className="form-control" onChange={this.onChange}>
+                            {/* someone put like user must select an option error handling something blah blah */}
+                            <option disabled selected value> -- select an option -- </option>
                             <option value="1">Personal</option>
                             <option value="2">Community</option>
                             <option value="3">Hisftorical</option>

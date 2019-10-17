@@ -11,9 +11,12 @@
 5. npm run watch
 
 python manage.py runserver
+
 4. cd GlobalTraqs
 
 5. python manage.py migrate
+
+5a. clear your cache if using chrome
 
 6. python manage.py runserver
 

@@ -3,13 +3,55 @@ import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import { getPins, deletePins } from '../../actions//pins'
 import { connect } from 'react-redux';
 import PropTypes from "prop-types"
-import PinForm from "./PinForm"
+import PinForm from "./PinForm";
+import community from "./images/community.png"// Tell Webpack this JS file uses this image
+import historical from "./images/historical.png"
+import personal from "./images/personal.png"
+import red_marker from "./images/red_marker.png"
 import AddPinForm from './AddPinForm';
 const divStyle = {
     height: '720px',
     width: '1080px'
 
 }
+export const defaultPointerIcon = new L.Icon({
+    iconUrl: red_marker,
+    iconRetinaUrl: red_marker,
+    iconAnchor: [5, 55],
+    popupAnchor: [10, -44],
+    iconSize: [55, 55],
+    shadowSize: [68, 95],
+    shadowAnchor: [20, 92]
+});
+
+export const communityIcon = new L.Icon({
+    iconUrl: community,
+    iconRetinaUrl: community,
+    iconAnchor: [5, 55],
+    popupAnchor: [10, -44],
+    iconSize: [55, 55],
+    shadowSize: [68, 95],
+    shadowAnchor: [20, 92]
+});
+export const historicalIcon = new L.Icon({
+    iconUrl: historical,
+    iconRetinaUrl: historical,
+    iconAnchor: [5, 55],
+    popupAnchor: [10, -44],
+    iconSize: [55, 55],
+    shadowSize: [68, 95],
+    shadowAnchor: [20, 92]
+});
+
+export const personalIcon = new L.Icon({
+    iconUrl: personal,
+    iconRetinaUrl: personal,
+    iconAnchor: [5, 55],
+    popupAnchor: [10, -44],
+    iconSize: [55, 55],
+    shadowSize: [68, 95],
+    shadowAnchor: [20, 92]
+});
 
 export class Pins extends Component {
     constructor(props) {
@@ -68,12 +110,19 @@ export class Pins extends Component {
 
                         {this.props.pins.map((marker, index) => {
                             let post = [marker.latitude, marker.longitude];
+                            let categoryIcon = ''
+                            if (marker.category == 1) {
+                                categoryIcon = personalIcon
+                            } else if (marker.category == 2) {
+                                categoryIcon = communityIcon
+                            } else { categoryIcon = historicalIcon }
+
+
                             return (
-                                <Marker key={index} position={post}>
+                                <Marker key={index} position={post} icon={categoryIcon}>
                                     <Popup>
                                         {marker.title} <br /> {marker.description}
                                         <br />
-                                        category: {marker.category} <br />
                                         <button onClick=
                                             {this.props.deletePins.bind(this, marker.id)}
                                             type="button" className="btn btn-danger btn-sm">Delete</button>
@@ -85,7 +134,7 @@ export class Pins extends Component {
                  {console.log(this.state.userlat)}
                     {console.log(this.state.userlng)} */}
 
-                        <Marker position={userposition} >
+                        <Marker position={userposition} icon={defaultPointerIcon} >
                             <Popup>
                                 Your position <br /> yeet
                             </Popup>
