@@ -23,6 +23,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "css-loader": "^3.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
@@ -46,6 +47,7 @@
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
+    "style-loader": "^1.0.0",
     "styled-components": "^4.4.0",
     "url-loader": "^2.2.0",
     "yarn": "^1.17.3"
