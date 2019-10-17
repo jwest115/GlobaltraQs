@@ -11,6 +11,7 @@ export class PinForm extends Component {
         description: '',
         latitude: '',
         longitude: '',
+        category: ''
     }
     static propTypes = {
         addPin: PropTypes.func.isRequired
@@ -23,15 +24,15 @@ export class PinForm extends Component {
         e.preventDefault();
         this.state.latitude = a
         this.state.longitude = b
-        const { title, description, latitude, longitude } = this.state
-        const pin = { title, description, latitude, longitude };
+        const { title, description, latitude, longitude, category } = this.state
+        const pin = { title, description, latitude, longitude, category };
         this.props.addPin(pin)
         console.log(a + ' ' + this.state.latitude)
     }
 
     render() {
 
-        const { title, description, latitude, longitude } = this.state
+        const { title, description, latitude, longitude, category } = this.state
 
 
         return (
@@ -59,6 +60,14 @@ export class PinForm extends Component {
                             onChange={this.onChange}
                             value={description}
                         />
+                    </div>
+                    <div className="form-group">
+                        <label>Category</label>
+                        <select value={category} name="category" className="form-control" onChange={this.onChange}>
+                            <option value="1">Personal</option>
+                            <option value="2">Community</option>
+                            <option value="3">Hisftorical</option>
+                        </select>
                     </div>
 
 

@@ -71,7 +71,10 @@ export class Pins extends Component {
                             return (
                                 <Marker key={index} position={post}>
                                     <Popup>
-                                        {marker.title} <br /> {marker.description} <br />  <button onClick=
+                                        {marker.title} <br /> {marker.description}
+                                        <br />
+                                        category: {marker.category} <br />
+                                        <button onClick=
                                             {this.props.deletePins.bind(this, marker.id)}
                                             type="button" className="btn btn-danger btn-sm">Delete</button>
                                     </Popup>
