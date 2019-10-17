@@ -1,25 +1,25 @@
 # GlobaltraQs
 
+first terminal
+
 1. pip install pipenv
 
 2. pipenv install
 
 3. pipenv shell
 
-4. npm install
-
-5. npm run watch
-
-python manage.py runserver
-
 4. cd GlobalTraqs
 
-5. python manage.py migrate
+5. python manage.py makemigrations
 
-5a. clear your cache if using chrome
+6. python manage.py migrate
 
-6. python manage.py runserver
+7. python manage.py runserver
 
-7. in another terminal npm install
+second terminal
 
-8. npm run dev or npm run build to deploy
+1. npm install
+
+2. npm run dev
+
+clear cache 0in browser
