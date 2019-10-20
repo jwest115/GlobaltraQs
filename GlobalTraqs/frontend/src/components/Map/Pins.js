@@ -8,7 +8,7 @@ import community from "./images/community.png"// Tell Webpack this JS file uses 
 import historical from "./images/historical.png"
 import personal from "./images/personal.png"
 import red_marker from "./images/red_marker.png"
-import AddPinForm from './AddPinForm';
+
 const divStyle = {
     height: '720px',
     width: '1080px'
