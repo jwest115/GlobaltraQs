@@ -2,33 +2,41 @@ import React, { Component } from 'react'
 import Pins from './Pins'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { addPin } from '../../actions/pins'
+import { editPin } from '../../actions/pins'
+import axios from 'axios';
 
-
-export class PinForm extends Component {
+export class EditPin extends Component {
 
     state = {
         title: '',
         description: '',
         latitude: '',
         longitude: '',
-        category: ''
+        category: '',
+        id: '',
     }
     static propTypes = {
-        addPin: PropTypes.func.isRequired
+        editPin: PropTypes.func.isRequired
     }
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
     onSubmit = e => {
         const a = this.props.userlat
         const b = this.props.userlng
-        e.preventDefault();
+        const c = this.props.storyid
+        //  e.preventDefault(); //prevents refresh of page 
         this.state.latitude = a
         this.state.longitude = b
+        this.state.id = c
         const { title, description, latitude, longitude, category } = this.state
         const pin = { title, description, latitude, longitude, category };
-        this.props.addPin(pin)
-        console.log(a + ' ' + this.state.latitude)
+        this.props.editPin(pin, c)
+        /*    axios.put(`/api/pins/${c}/`, pin)
+               .then(res => {
+                   console.log(res)
+                   console.log(res.data)
+               }) */
+        console.log(a + ' ' + this.state.latitude + '' + c)
     }
 
     render() {
@@ -39,8 +47,8 @@ export class PinForm extends Component {
         return (
 
             <div className="card card-body mt-4 mb-4">
-                <h2>Add a Pin</h2>
-                {console.log(this.props.userlat + 'pinfomr' + this.props.userlng)}
+                <h2>edit a Pin</h2>
+                {console.log(this.props.userlat + 'pinfomr' + this.props.userlng + 'aa' + this.props.storyid)}
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>title</label>
@@ -105,4 +113,4 @@ export class PinForm extends Component {
     }
 }
 //callling the action
-export default connect(null, { addPin })(PinForm)
+export default connect(null, { editPin })(EditPin)

@@ -8,12 +8,16 @@ import community from "./images/community.png"// Tell Webpack this JS file uses 
 import historical from "./images/historical.png"
 import personal from "./images/personal.png"
 import red_marker from "./images/red_marker.png"
+import EditPin from './EditPin';
+
 
 const divStyle = {
     height: '720px',
     width: '1080px'
 
 }
+
+
 export const defaultPointerIcon = new L.Icon({
     iconUrl: red_marker,
     iconRetinaUrl: red_marker,
@@ -61,10 +65,10 @@ export class Pins extends Component {
             lng: -118.1684,
             zoom: 10,
             maxZoom: 30,
-            data: [],
             userlat: 0,
             userlng: 0,
-            value: ""
+            selectedLat: "",
+            selectedLong: "",
         }
     }
 
@@ -123,13 +127,19 @@ export class Pins extends Component {
                                     <Popup>
                                         {marker.title} <br /> {marker.description}
                                         <br />
+
+                                        <EditPin userlat={marker.latitude} userlng={marker.longitude} storyid={marker.id} />
                                         <button onClick=
                                             {this.props.deletePins.bind(this, marker.id)}
                                             type="button" className="btn btn-danger btn-sm">Delete</button>
                                     </Popup>
                                 </Marker>
                             );
-                        })}
+                        })
+
+                        }
+
+
                         {/* current selected posisiotn   
                  {console.log(this.state.userlat)}
                     {console.log(this.state.userlng)} */}
@@ -153,8 +163,8 @@ export class Pins extends Component {
 
 }
 
-const mapStateToProps = state => ({
-    pins: state.pins.pins
+const mapStateToProps = state => ({ //state of redux
+    pins: state.pins.pins // state.pins we want pins reducer from index, .pins is from initial state
 })
 
 export default connect(
