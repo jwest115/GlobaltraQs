@@ -10,7 +10,7 @@ import register from './components/accounts/register'
 import { Provider } from 'react-redux'
 import store from './store';
 import login from './components/accounts/login'
-import Sidebar from './components/layout/Sidebar'
+
 export class App extends Component {
     render() {
         return (
@@ -18,7 +18,7 @@ export class App extends Component {
                 <Router>
                     <Fragment>
                         <Header />
-                        <Sidebar />
+
                         <div className="container">
                             <Switch>
 
