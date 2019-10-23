@@ -23,7 +23,7 @@ export class App extends Component {
                             <Switch>
                                 <Route exact path="/" component={MapDashboard} />
                                 <Route exact path="/About" component={About} />
-                                <Route exact path="/Story" component={Story} />
+                                <Route path='/Story/:id' exact component={Story} />
                                 <Route exact path="/faq" component={FAQ} />
                                 <Route exact path="/login" component={login} />
                                 <Route exact path="/register" component={register} />
