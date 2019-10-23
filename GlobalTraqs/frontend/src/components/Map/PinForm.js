@@ -13,7 +13,7 @@ export class PinForm extends Component {
         latitude: '',
         longitude: '',
         category: '',
-        id: '',
+        user: '',
     }
     static propTypes = {
         addPin: PropTypes.func.isRequired
@@ -27,9 +27,9 @@ export class PinForm extends Component {
         e.preventDefault();
         this.state.latitude = a
         this.state.longitude = b
-        this.state.id = ida
-        const { title, description, latitude, longitude, category, id } = this.state
-        const pin = { title, description, latitude, longitude, category, id };
+        this.state.user = ida
+        const { title, description, latitude, longitude, category, user } = this.state
+        const pin = { title, description, latitude, longitude, category, user };
         this.props.addPin(pin)
         console.log(a + ' ' + this.state.latitude)
     }
