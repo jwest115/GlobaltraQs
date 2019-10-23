@@ -10,6 +10,7 @@ import register from './components/accounts/register'
 import { Provider } from 'react-redux'
 import store from './store';
 import login from './components/accounts/login'
+import Story from './components/Map/Story'
 
 export class App extends Component {
     render() {
@@ -22,6 +23,7 @@ export class App extends Component {
                             <Switch>
                                 <Route exact path="/" component={MapDashboard} />
                                 <Route exact path="/About" component={About} />
+                                <Route exact path="/Story" component={Story} />
                                 <Route exact path="/faq" component={FAQ} />
                                 <Route exact path="/login" component={login} />
                                 <Route exact path="/register" component={register} />

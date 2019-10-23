@@ -9,7 +9,7 @@ import historical from "./images/historical.png"
 import personal from "./images/personal.png"
 import red_marker from "./images/red_marker.png"
 import EditPin from './EditPin';
-
+import { Link } from 'react-router-dom'
 
 const divStyle = {
     height: '720px',
@@ -129,6 +129,9 @@ export class Pins extends Component {
                                         <br />
 
                                         <EditPin userlat={marker.latitude} userlng={marker.longitude} storyid={marker.id} />
+                                        <Link to="/Story">
+                                            <button type="button" className="btn btn-primary btn-sm">View Story</button>
+                                        </Link>
                                         <button onClick=
                                             {this.props.deletePins.bind(this, marker.id)}
                                             type="button" className="btn btn-danger btn-sm">Delete</button>
