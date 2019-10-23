@@ -23,6 +23,6 @@ urlpatterns = [
 
 
     path('', include('pins.urls')),
-
+    path('', include('accounts.urls')),
 
 ]

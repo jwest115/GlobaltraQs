@@ -3,14 +3,14 @@ import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import { getPins, deletePins } from '../../actions//pins'
 import { connect } from 'react-redux';
 import PropTypes from "prop-types"
-import PinForm from "./PinForm";
+import PinForm from "./PinForm"
 import community from "./images/community.png"// Tell Webpack this JS file uses this image
 import historical from "./images/historical.png"
 import personal from "./images/personal.png"
 import red_marker from "./images/red_marker.png"
-import EditPin from './EditPin';
 import { Link } from 'react-router-dom'
-
+import EditPin from './EditPin';
+import L from 'leaflet'
 const divStyle = {
     height: '720px',
     width: '1080px'
@@ -58,6 +58,7 @@ export const personalIcon = new L.Icon({
 });
 
 export class Pins extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -101,6 +102,7 @@ export class Pins extends Component {
         return (
             <Fragment>
                 <h2>pins</h2>
+
                 <div id="map" >
                     <Map center={position} zoom={15} maxZoom={30} //shows map
                         id="map" style={divStyle}
@@ -149,7 +151,7 @@ export class Pins extends Component {
                  {console.log(this.state.userlat)}
                     {console.log(this.state.userlng)} */}
 
-                        <Marker position={userposition} icon={defaultPointerIcon} >
+                        <Marker position={userposition}  >
                             <Popup>
                                 Your position <br /> yeet
                             </Popup>

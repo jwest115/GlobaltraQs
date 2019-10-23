@@ -32,6 +32,7 @@ export class PinForm extends Component {
         const pin = { title, description, latitude, longitude, category, user };
         this.props.addPin(pin)
         console.log(a + ' ' + this.state.latitude)
+        console.log("id" + this.props.id)
     }
 
     render() {
