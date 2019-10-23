@@ -13,7 +13,7 @@ export class EditPin extends Component {
         latitude: '',
         longitude: '',
         category: '',
-        id: '',
+        user: '',
     }
     static propTypes = {
         editPin: PropTypes.func.isRequired
@@ -24,12 +24,14 @@ export class EditPin extends Component {
         const a = this.props.userlat
         const b = this.props.userlng
         const c = this.props.storyid
-        //  e.preventDefault(); //prevents refresh of page 
+        const d = 1
+        this.state.user = d
+        //e.preventDefault(); //prevents refresh of page 
         this.state.latitude = a
         this.state.longitude = b
         this.state.id = c
-        const { title, description, latitude, longitude, category } = this.state
-        const pin = { title, description, latitude, longitude, category };
+        const { title, description, category, latitude, longitude, user } = this.state
+        const pin = { title, description, category, latitude, longitude, user };
         this.props.editPin(pin, c)
         /*    axios.put(`/api/pins/${c}/`, pin)
                .then(res => {
