@@ -1,17 +1,22 @@
 
-import React, { Component, Fragment } from 'react'
-import Header from './components/layout/Header'
-import MapDashboard from './components/Map/MapDashboard'
-import About from './components/AboutPage/About'
-import FAQ from './components/AboutPage/FAQ'
-import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import register from './components/accounts/register'
+import React, { Component, Fragment } from 'react';
+import Header from './components/layout/Header';
+import MapDashboard from './components/Map/MapDashboard';
+import About from './components/AboutPage/About';
+import FAQ from './components/AboutPage/FAQ';
+import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import register from './components/accounts/register';
 // if deployed to apache, mess with congig htt file
-import { Provider } from 'react-redux'
+import Alerts from "./components/layout/Alerts";
+import { Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+import { Provider } from 'react-redux';
 import store from './store';
-import login from './components/accounts/login'
-import PrivateRoute from './components/common/PrivateRoute'
-import { loadUser } from '../src/actions/auth'
+import login from './components/accounts/login';
+import PrivateRoute from './components/common/PrivateRoute';
+import { loadUser } from './actions/auth';
+
+
 export class App extends Component {
     componentDidMount() {
         store.dispatch(loadUser())
@@ -23,7 +28,7 @@ export class App extends Component {
                 <Router>
                     <Fragment>
                         <Header />
-                        <div className="container">
+                           <div className="container">
                             <Switch>
                                 <Route exact path="/" component={MapDashboard} />
                                 <Route exact path="/About" component={About} />
@@ -32,7 +37,7 @@ export class App extends Component {
                                 <Route exact path="/register" component={register} />
                                 {/* <MapDashboard /> */}
                             </Switch>
-                        </div>
+                          </div>
                     </Fragment>
                 </Router>
             </Provider>

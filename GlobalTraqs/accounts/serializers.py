@@ -9,6 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email')
+
 # Register Serializer
 
 
@@ -16,16 +17,15 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'password')
-        # make sure password is write only
         extra_kwargs = {'password': {'write_only': True}}
-# when we create a user we need a password
 
     def create(self, validated_data):
         user = User.objects.create_user(
             validated_data['username'], validated_data['email'], validated_data['password'])
 
         return user
-# login Serializer\
+
+# Login Serializer
 
 
 class LoginSerializer(serializers.Serializer):
