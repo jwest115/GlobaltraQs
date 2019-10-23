@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'pins',
     'rest_framework',
     'frontend',
-    'autofixture',
+   
 
 ]
 REST_FRAMEWORK = {

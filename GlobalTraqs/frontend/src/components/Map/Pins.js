@@ -9,7 +9,7 @@ import historical from "./images/historical.png"
 import personal from "./images/personal.png"
 import red_marker from "./images/red_marker.png"
 import EditPin from './EditPin';
-
+import { Link } from 'react-router-dom'
 
 const divStyle = {
     height: '720px',
@@ -120,7 +120,7 @@ export class Pins extends Component {
                             } else if (marker.category == 2) {
                                 categoryIcon = communityIcon
                             } else { categoryIcon = historicalIcon }
-
+                            const id = marker.id
 
                             return (
                                 <Marker key={index} position={post} icon={categoryIcon}>
@@ -129,6 +129,11 @@ export class Pins extends Component {
                                         <br />
 
                                         <EditPin userlat={marker.latitude} userlng={marker.longitude} storyid={marker.id} />
+                                        {/* <Link to="/Story"> */}
+
+                                        <Link to={`Story/${id}`}>
+                                            <button type="button" className="btn btn-primary btn-sm">View Story</button>
+                                        </Link>
                                         <button onClick=
                                             {this.props.deletePins.bind(this, marker.id)}
                                             type="button" className="btn btn-danger btn-sm">Delete</button>
@@ -156,7 +161,7 @@ export class Pins extends Component {
                 </div>
                 <PinForm userlat={this.state.userlat} userlng={this.state.userlng} />
                 {/* change AddPin PinForm for working form */}
-            </Fragment>
+            </Fragment >
 
         );
     }
