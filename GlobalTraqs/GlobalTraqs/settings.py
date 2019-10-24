@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'GlobalTraqs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'gvyzfbvt',
-        'USER': 'gvyzfbvt',
-        'PASSWORD': 'N4g2JFIBiyOIbyWQYnR9buPOSL-tGfWa',
+        'NAME': 'lbsggtda',
+        'USER': 'lbsggtda',
+        'PASSWORD': 'XOpmy4Z0BX79r0cOKoD6NIYnhGkKDCl1',
         'HOST': 'salt.db.elephantsql.com',
         'PORT': '5432',
     }
