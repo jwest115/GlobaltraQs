@@ -31,6 +31,7 @@ export class Story extends Component {
                 <h2>Description: {this.state.userStory.description}</h2>
                 <h2>latitude: {this.state.userStory.latitude}</h2>
                 <h2>longitude: {this.state.userStory.longitude}</h2>
+                <h2>owner: {this.state.userStory.owner}</h2>
                 <div className="col-lg-1">
                     <img src="https://picsum.photos/200/300" className="rounded" position="center" ></img>
 
