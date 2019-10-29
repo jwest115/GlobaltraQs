@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'GlobalTraqs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'lbsggtda',
-        'USER': 'lbsggtda',
-        'PASSWORD': 'XOpmy4Z0BX79r0cOKoD6NIYnhGkKDCl1',
-        'HOST': 'salt.db.elephantsql.com',
+        'NAME': 'globaltraqs',
+        'USER': 'postgres',
+        'PASSWORD': 'csula2019',
+        'HOST': 'globaltraqs.cmlzsycukvtd.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }

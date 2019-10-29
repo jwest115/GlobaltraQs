@@ -22,7 +22,3 @@ class pin (models.Model):
 class categoryType(models.Model):
 
     categoryName = models.CharField(max_length=50)
-
-    def __str__(self):
-        """String for representing the Model object."""
-        return self.categoryName
