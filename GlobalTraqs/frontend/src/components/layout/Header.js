@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { logout } from "../../actions/auth";
+import { logout, deleteUser } from "../../actions/auth";
+
 
 export class Header extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
-    logout: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired
   };
 
     render() {
@@ -15,16 +17,26 @@ export class Header extends Component {
         const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (
-      <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-        <span className="navbar-text mr-3">
+
+       <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+        <span className="navbar-text text-warning mr-5">
+
           <strong>{user ? `Welcome ${user.username}` : ""}</strong>
         </span>
         <li className="nav-item">
           <button
             onClick={this.props.logout}
-            className="nav-link btn btn-info btn-sm text-light"
+            className="nav-link btn btn-link btn-lg text-info"
           >
-            Logout
+            LOGOUT
+          </button>
+          </li>
+           <li className="nav-item">
+          <button
+            onClick={this.props.deleteUser}
+            className="nav-link btn btn-link btn-lg text-danger"
+          >
+            DELETE ACCOUNT
           </button>
         </li>
       </ul>
@@ -79,5 +91,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logout }
+  { logout, deleteUser }
 )(Header);

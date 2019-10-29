@@ -6,7 +6,8 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  DELETE_USER
 } from "../actions/types";
 
 const initialState = {
@@ -43,6 +44,7 @@ export default function(state = initialState, action) {
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:
+    case DELETE_USER:
       localStorage.removeItem("token");
       return {
         ...state,
@@ -51,6 +53,11 @@ export default function(state = initialState, action) {
         isAuthenticated: false,
         isLoading: false
       };
+      case DELETE_USER:
+            return {
+                ...state,
+                items: state.items.filter(user => user.id !== action.id!== action.payload)
+            };
     default:
       return state;
   }

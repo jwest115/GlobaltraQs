@@ -15,7 +15,7 @@ export const getPins = () => dispatch => {
 };
 
 export const deletePins = (id) => dispatch => {
-    axios.delete(`/api/pins/${id}/`)
+    axios.delete('/api/pins/${id}/')
         .then(res => {
             dispatch({
                 type: DELETE_PINS,
