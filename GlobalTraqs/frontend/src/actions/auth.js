@@ -107,8 +107,10 @@ export const logout = () => (dispatch, getState) => {
 
 // DELETE USER
 export const deleteUser = (id) => (dispatch, getState) => {
+  /*   const a = 1
+    id = a */
   axios
-    .delete("/api/auth/user/${id}/", tokenConfig(getState))
+    .delete(`/api/auth/${id}/`, tokenConfig(getState))
     .then(res => {
       dispatch({
         type: DELETE_USER,
