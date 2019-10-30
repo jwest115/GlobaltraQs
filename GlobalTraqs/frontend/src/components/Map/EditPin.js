@@ -80,7 +80,7 @@ export class EditPin extends Component {
                             <option disabled selected value> -- select an option -- </option>
                             <option value="1">Personal</option>
                             <option value="2">Community</option>
-                            <option value="3">Hisftorical</option>
+                            <option value="3">Historical</option>
                         </select>
                     </div>
 

@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8f382347-7f98-4021-8688-5238bd831446" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/GlobaltraQs.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="8f382347-7f98-4021-8688-5238bd831446" name="Default Changelist" comment="Added the ReCaptcha">
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/GlobaltraQs.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GlobaltraQs.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/register.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/templates/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/templates/frontend/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,6 +33,7 @@
   <component name="ProjectId" id="1ScPB77seAi4lsob75fJgQrLPrB" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -75,7 +75,8 @@
       <workItem from="1572201895271" duration="98000" />
       <workItem from="1572202037711" duration="5648000" />
       <workItem from="1572365447811" duration="32000" />
-      <workItem from="1572455312705" duration="306000" />
+      <workItem from="1572455312705" duration="1240000" />
+      <workItem from="1572459610345" duration="4571000" />
     </task>
     <task id="LOCAL-00001" summary="fml">
       <created>1571871592874</created>
@@ -98,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572207641256</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added the ReCaptcha">
+      <created>1572455644321</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1572455644322</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,6 +127,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fml" />
-    <option name="LAST_COMMIT_MESSAGE" value="fml" />
+    <MESSAGE value="Added the ReCaptcha" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added the ReCaptcha" />
   </component>
 </project>

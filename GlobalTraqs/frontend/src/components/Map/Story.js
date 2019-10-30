@@ -26,14 +26,14 @@ export class Story extends Component {
         const { id } = this.props.match.params
         return (
             <div className="card card-body mt-4 mb-4">
-                <h2>id is {id}</h2>
+                <h2>id is: {id}</h2>
                 <h2>Title:  {this.state.userStory.title}</h2>
                 <h2>Description: {this.state.userStory.description}</h2>
                 <h2>latitude: {this.state.userStory.latitude}</h2>
                 <h2>longitude: {this.state.userStory.longitude}</h2>
                 <h2>owner: {this.state.userStory.owner}</h2>
                 <div className="col-lg-1">
-                    <img src="https://picsum.photos/200/300" className="rounded" position="center" ></img>
+                    <img src="https://picsum.photos/200/300" className="rounded" position="center"></img>
 
                 </div>
 

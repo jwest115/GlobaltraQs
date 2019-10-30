@@ -7,6 +7,7 @@ import { createMessage } from "../../actions/messages";
 import Recaptcha from "react-recaptcha";
 
 export class Register extends Component {
+  //
   constructor(props) {
     super(props);
     this.reCaptchaLoaded = this.reCaptchaLoaded.bind(this)
@@ -26,7 +27,8 @@ export class Register extends Component {
     username: "",
     email: "",
     password: "",
-    password2: ""
+    password2: "",
+    captchaIsVerified: false
   };
 
   static propTypes = {
@@ -109,6 +111,7 @@ export class Register extends Component {
               <button type="submit" className="btn btn-primary float-left">
                 Register
               </button>
+              {/*This is the ReCaptcha*/}
               <Recaptcha
                   className="float-right"
                   sitekey="6LcAL78UAAAAAPOluo3jzUzXt5XLWKuUujc-_7QX"
