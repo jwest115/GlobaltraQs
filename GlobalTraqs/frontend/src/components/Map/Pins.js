@@ -124,7 +124,7 @@ export class Pins extends Component {
                             } else { categoryIcon = historicalIcon }
                             const id = marker.id
 
-                            return (
+                            return (  //so ucould show the html
                                 <Marker key={index} position={post} icon={categoryIcon}>
                                     <Popup>
                                         {marker.title} <br /> {marker.description}

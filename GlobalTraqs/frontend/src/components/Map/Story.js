@@ -1,14 +1,31 @@
 import React, { Component } from 'react'
 import PropTypes from "prop-types"
 import axios from 'axios';
-export class Story extends Component {
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import { connect } from "react-redux";
+import { logout } from "../../actions/auth";
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            userStory: '',
-        }
+export class Story extends Component {
+    static propTypes = {
+        auth: PropTypes.object.isRequired,
+        logout: PropTypes.func.isRequired
+    };
+
+
+    state = {
+        userStory: '',
+        upvote: '',
+        ownerid: '',
+        numberOfUpvote: '',
+        userUpvote: '',
+        id: '',
+        pinId: '',
+        pinstory: '',
+        upVoter: '',
+
     }
+
 
     componentDidMount() {
         const { id } = this.props.match.params
@@ -20,13 +37,44 @@ export class Story extends Component {
             .catch(error => {
                 console.log(error);
             });
+        axios.get(`api/upVoteStory?pinId=${id}`)
+            .then(response => {
+                this.setState({ pinStory: response.data });
+                console.log(response.data);
+                this.setState({
+                    numberOfUpvote: response.data.length
+                })
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+        this.setState({ pinId: id })
+
     }
+    onSubmit = e => {
+        this.state.upvote = true
+        this.state.upVoter = 1
+        e.preventDefault();
+        console.log('yeet')
+
+        const { upvote, pinId, upVoter } = this.state
+        const upVoteStoryPin = { upvote, pinId, upVoter }
+
+        axios.post('/api/upVoteStory/', upVoteStoryPin)
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(err => console.log(err));
+    }
+
 
     render() {
         const { id } = this.props.match.params
+
         return (
             <div className="card card-body mt-4 mb-4">
-                <h2>id is {id}</h2>
+                <h2>id is {id}  </h2>
                 <h2>Title:  {this.state.userStory.title}</h2>
                 <h2>Description: {this.state.userStory.description}</h2>
                 <h2>latitude: {this.state.userStory.latitude}</h2>
@@ -36,6 +84,12 @@ export class Story extends Component {
                     <img src="https://picsum.photos/200/300" className="rounded" position="center" ></img>
 
                 </div>
+                <form onSubmit={this.onSubmit}>
+                    <h2>number of upvotes {this.state.numberOfUpvote} <button type="submit" className="btn btn-primary">
+                        Upvote
+                </button></h2>
+                </form>
+
 
 
 
