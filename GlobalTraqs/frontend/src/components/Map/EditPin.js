@@ -16,6 +16,7 @@ export class EditPin extends Component {
         user: '',
     }
     static propTypes = {
+        pins: PropTypes.array.isRequired,
         editPin: PropTypes.func.isRequired
     }
     onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -26,7 +27,7 @@ export class EditPin extends Component {
         const c = this.props.storyid
         const d = 1
         this.state.user = d
-        //e.preventDefault(); //prevents refresh of page 
+        e.preventDefault(); //prevents refresh of page 
         this.state.latitude = a
         this.state.longitude = b
         this.state.id = c

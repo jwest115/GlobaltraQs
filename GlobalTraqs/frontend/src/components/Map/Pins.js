@@ -82,6 +82,7 @@ export class Pins extends Component {
         this.props.getPins();
     }
 
+
     addMarker = (e) => {
         const lat = e.latlng.lat;
         const lng = e.latlng.lng;
