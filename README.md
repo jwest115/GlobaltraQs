@@ -25,7 +25,7 @@
 clear cache in browser
 
 
-*When first running/ starting with fresh db you need to create groups with permission in '/admin' page (I will eventually do this programically, but for now the manual approach)
+# *When first running/ starting with fresh db you need to create groups with permission in '/admin' page (I will eventually do this programically, but for now the manual approach)
 
   1. Go to http://127.0.0.1:8000/admin/ and log into superuser account
   2. Click Groups
