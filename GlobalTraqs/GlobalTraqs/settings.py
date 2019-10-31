@@ -93,12 +93,20 @@ DATABASES = {
     #     'HOST': 'salt.db.elephantsql.com',
     #     'PORT': '5432',
     # }
+    #  'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #    'NAME': 'globaltraqs_db3',
+    #   'USER': 'postgres',
+    #  'PASSWORD': '@Ziggy323',
+    # 'HOST': 'localhost',
+    # 'PORT': '5432',
+    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'globaltraqs_db3',
+        'NAME': 'globaltraqs',
         'USER': 'postgres',
-        'PASSWORD': '@Ziggy323',
-        'HOST': 'localhost',
+        'PASSWORD': 'csula2019',
+        'HOST': 'globaltraqs.cmlzsycukvtd.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
