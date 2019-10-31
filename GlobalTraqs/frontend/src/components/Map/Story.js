@@ -4,12 +4,12 @@ import axios from 'axios';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { connect } from "react-redux";
-import { logout } from "../../actions/auth";
+
 
 export class Story extends Component {
     static propTypes = {
         auth: PropTypes.object.isRequired,
-        logout: PropTypes.func.isRequired
+
     };
 
 
@@ -23,11 +23,13 @@ export class Story extends Component {
         pinId: '',
         pinstory: '',
         upVoter: '',
+        username: '',
 
     }
 
 
     componentDidMount() {
+
         const { id } = this.props.match.params
         axios.get(`api/pins/${id}`)
             .then(response => {
@@ -71,15 +73,23 @@ export class Story extends Component {
 
     render() {
         const { id } = this.props.match.params
-
+        const { isAuthenticated, user } = this.props.auth;
+        this.state.username = user ? user.username : ""
+        const authorizedUser = (
+            <h2>yeet</h2>
+        )
+        const notUser = (
+            <h2>yeeta</h2>
+        )
         return (
+
             <div className="card card-body mt-4 mb-4">
                 <h2>id is {id}  </h2>
                 <h2>Title:  {this.state.userStory.title}</h2>
                 <h2>Description: {this.state.userStory.description}</h2>
                 <h2>latitude: {this.state.userStory.latitude}</h2>
                 <h2>longitude: {this.state.userStory.longitude}</h2>
-                <h2>owner: {this.state.userStory.owner}</h2>
+                <h2>owner: {this.state.userStory.owner} {this.state.username}</h2>
                 <div className="col-lg-1">
                     <img src="https://picsum.photos/200/300" className="rounded" position="center" ></img>
 
@@ -89,7 +99,7 @@ export class Story extends Component {
                         Upvote
                 </button></h2>
                 </form>
-
+                {isAuthenticated ? authorizedUser : notUser}
 
 
 
@@ -108,5 +118,9 @@ export class Story extends Component {
         )
     }
 }
-
-export default Story
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+export default connect(
+    mapStateToProps
+)(Story);
