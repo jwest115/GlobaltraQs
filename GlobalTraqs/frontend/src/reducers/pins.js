@@ -23,7 +23,7 @@ export default function (state = initialState, action) {
         case EDIT_PIN:
             return {
                 ...state,
-                pins: action.payload
+                pins: [...state.pins, action.payload]
             };
         default:
             return state;
