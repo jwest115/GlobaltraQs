@@ -65,9 +65,7 @@ export class Story extends Component {
             })
             .catch(err => console.log(err));
     };
-    yare() {
-        console.log('yeet from function')
-    }
+
 
     render() {
         const { id } = this.props.match.params;
@@ -78,7 +76,7 @@ export class Story extends Component {
         const notUser = <h2>yeeta</h2>;
         return (
             <div className="card card-body mt-4 mb-4">
-                {yare()}
+
                 <h2>id is {id} </h2>
                 <h2>Title: {this.state.userStory.title}</h2>
                 <h2>Description: {this.state.userStory.description}</h2>
