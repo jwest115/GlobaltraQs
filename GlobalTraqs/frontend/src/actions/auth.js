@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import { returnErrors } from "./messages";
 
@@ -62,6 +61,7 @@ export const login = (username, password) => dispatch => {
       });
     });
 };
+
 
 // REGISTER USER
 export const register = ({ username, password, email }) => dispatch => {

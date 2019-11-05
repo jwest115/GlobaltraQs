@@ -7,18 +7,30 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  DELETE_USER
+  DELETE_USER,
+  GET_USERS
 } from "../actions/types";
 
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
   isLoading: false,
-  user: null
+  user: null,
+  users: []
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+   case DELETE_USER:
+      return {
+          ...state,
+          users: action.payload
+      };
+    case GET_USERS:
+      return {
+          ...state,
+          users: action.payload
+      };
     case USER_LOADING:
       return {
         ...state,
@@ -44,7 +56,7 @@ export default function(state = initialState, action) {
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:
-    case DELETE_USER:
+//    case DELETE_USER:
       localStorage.removeItem("token");
       return {
         ...state,
@@ -53,11 +65,11 @@ export default function(state = initialState, action) {
         isAuthenticated: false,
         isLoading: false
       };
-      case DELETE_USER:
-            return {
-                ...state,
-                items: state.items.filter(user => user.id !== action.id!== action.payload)
-            };
+//      case DELETE_USER:
+//            return {
+//                ...state,
+//                items: state.items.filter(user => user.id !== action.id!== action.payload)
+//            };
     default:
       return state;
   }

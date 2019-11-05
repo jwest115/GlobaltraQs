@@ -15,6 +15,8 @@ import store from './store';
 import login from './components/accounts/login';
 import PrivateRoute from './components/common/PrivateRoute';
 import { loadUser } from './actions/auth';
+import {DisplayMap} from "./components/Map/MapDisplay";
+import Manage from './components/accounts/manage'
 
 
 export class App extends Component {
@@ -32,9 +34,11 @@ export class App extends Component {
                             <Switch>
                                 <Route exact path="/" component={MapDashboard} />
                                 <Route exact path="/About" component={About} />
+                                <Route path='/Story/:id' exact component={Story} />
                                 <Route exact path="/faq" component={FAQ} />
                                 <Route exact path="/login" component={login} />
                                 <Route exact path="/register" component={register} />
+                                <Route exact path="/manage" component={Manage} />
                                 {/* <MapDashboard /> */}
                             </Switch>
                           </div>

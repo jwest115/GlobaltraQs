@@ -1,6 +1,7 @@
 export const GET_PINS = 'GET_PINS';
 export const DELETE_PINS = 'DELETE_PINS';
 export const ADD_PIN = 'ADD_PIN';
+export const EDIT_PIN = 'EDIT_PIN'
 export const GET_ERRORS = "GET_ERRORS";
 export const CREATE_MESSAGE = "CREATE_MESSAGE";
 export const USER_LOADING = "USER_LOADING";
@@ -11,4 +12,5 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
+export const GET_USERS = "GET_USERS";
 export const DELETE_USER = "DELETE_USER";

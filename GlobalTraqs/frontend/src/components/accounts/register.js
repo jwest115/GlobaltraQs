@@ -4,13 +4,31 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { register } from "../../actions/auth";
 import { createMessage } from "../../actions/messages";
+import Recaptcha from "react-recaptcha";
 
 export class Register extends Component {
+  //
+  constructor(props) {
+    super(props);
+    this.reCaptchaLoaded = this.reCaptchaLoaded.bind(this)
+    this.verifyCallback = this.verifyCallback.bind(this)
+  }
+  reCaptchaLoaded(){
+    console.log('captcha successfully loaded');
+  }
+  verifyCallback(response){
+    if(response){
+      this.setState({
+        captchaIsVerified: true
+      })
+    }
+  }
   state = {
     username: "",
     email: "",
     password: "",
-    password2: ""
+    password2: "",
+    captchaIsVerified: false
   };
 
   static propTypes = {
@@ -20,16 +38,20 @@ export class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { username, email, password, password2 } = this.state;
-    if (password !== password2) {
-      this.props.createMessage({ passwordNotMatch: "Passwords do not match" });
+    if (this.state.captchaIsVerified) {
+      const {username, email, password, password2} = this.state;
+      if (password !== password2) {
+        this.props.createMessage({passwordNotMatch: "Passwords do not match"});
+      } else {
+        const newUser = {
+          username,
+          password,
+          email
+        };
+        this.props.register(newUser);
+      }
     } else {
-      const newUser = {
-        username,
-        password,
-        email
-      };
-      this.props.register(newUser);
+      alert('please verify that you are a human!')
     }
   };
 
@@ -85,10 +107,18 @@ export class Register extends Component {
                 value={password2}
               />
             </div>
-            <div className="form-group">
-              <button type="submit" className="btn btn-primary">
+            <div className="form-group row justify-content-between justify-content-around">
+              <button type="submit" className="btn btn-primary float-left">
                 Register
               </button>
+              {/*This is the ReCaptcha*/}
+              <Recaptcha
+                  className="float-right"
+                  sitekey="6LcAL78UAAAAAPOluo3jzUzXt5XLWKuUujc-_7QX"
+                  render="explicit"
+                  verifyCallback={this.verifyCallback}
+                  onloadCallback={this.reCaptchaLoaded}
+              />
             </div>
             <p>
               Already have an account? <Link to="/login">Login</Link>

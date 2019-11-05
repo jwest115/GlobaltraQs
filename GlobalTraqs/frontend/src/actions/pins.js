@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 import { GET_PINS, DELETE_PINS, ADD_PIN } from './types';
@@ -30,6 +31,19 @@ export const addPin = (pin) => dispatch => {
         .then(res => {
             dispatch({
                 type: ADD_PIN,
+                payload: res.data
+            });
+        })
+        .catch(err => console.log(err));
+};
+
+
+export const editPin = (pin, id) => dispatch => {
+    console.log(id + '' + pin.title)
+    axios.put(`/api/pins/${id}/`, pin)
+        .then(res => {
+            dispatch({
+                type: EDIT_PIN,
                 payload: res.data
             });
         })
