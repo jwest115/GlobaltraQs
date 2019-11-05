@@ -3,82 +3,31 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../../actions/auth";
-import Recaptcha from "react-recaptcha";
 
 export class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.reCaptchaLoaded = this.reCaptchaLoaded.bind(this)
-        this.verifyCallback = this.verifyCallback.bind(this)
-    }
-    reCaptchaLoaded(){
-        console.log('captcha successfully loaded');
-    }
-    verifyCallback(response){
-        if(response){
-            this.setState({
-                captchaIsVerified: true
-            })
-        }
-    }
     state = {
         username: "",
-        password: "",
-        captchaIsVerified: false,
-        counter: 0,
-        attempts: false
+        password: ""
     };
-
 
     static propTypes = {
         login: PropTypes.func.isRequired,
         isAuthenticated: PropTypes.bool
     };
 
-    onSubmit = e =>{
-        this.setState({ counter: this.state.counter + 1 })
-        console.log("initial: " + this.state.counter);
-        if (this.state.counter < 3){
-            e.preventDefault();
-            this.props.login(this.state.username, this.state.password);
-            console.log("no captcha: "+ this.state.counter);
-        }
-        else{
-            e.preventDefault();
-            this.setState({
-                attempts: true
-            })
-            if(this.state.captchaIsVerified){
-                e.preventDefault();
-                console.log("With captcha: "+ this.state.counter);
-                this.props.login(this.state.username, this.state.password);
-            }
-            else {
-                e.preventDefault();
-                alert('please verify that you are a human!')
-            }
-        }
+    onSubmit = e => {
+        e.preventDefault();
+        this.props.login(this.state.username, this.state.password);
     };
 
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
-    render(){
+    render() {
+
         if (this.props.isAuthenticated) {
             return <Redirect to="/" />;
         }
-        const attempts = this.state.attempts;
         const { username, password } = this.state;
-        let captcha;
-        if(attempts){
-            captcha =
-                <Recaptcha
-                  className="float-right"
-                  sitekey="6LcAL78UAAAAAPOluo3jzUzXt5XLWKuUujc-_7QX"
-                  render="explicit"
-                  verifyCallback={this.verifyCallback}
-                  onloadCallback={this.reCaptchaLoaded}
-                />
-        }
         return (
             <div className="col-md-6 m-auto">
                 <div className="card card-body mt-5">
@@ -106,12 +55,10 @@ export class Login extends Component {
                             />
                         </div>
 
-                        <div className="form-group row justify-content-between justify-content-around">
-                            <button type="submit" className="btn btn-primary float-left">
+                        <div className="form-group">
+                            <button type="submit" className="btn btn-primary">
                                 Login
               </button>
-                            <recaptcha loginAttempts={attempts}/>
-                            {captcha}
                         </div>
                         <p>
                             Don't have an account? <Link to="/register">Register</Link>
