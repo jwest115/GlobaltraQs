@@ -13,6 +13,8 @@ class PinViewSet(viewsets.ModelViewSet):
         # permissions.IsAuthenticated,
     ]
     serializer_class = PinSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = '__all__'
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
