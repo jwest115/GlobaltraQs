@@ -25,6 +25,7 @@ export default function (state = initialState, action) {
                 ...state,
                 pins: [...state.pins, action.payload]
             };
+
         default:
             return state;
     }

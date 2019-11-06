@@ -14,6 +14,8 @@ export const getPins = () => dispatch => {
         .catch(err => console.log(err));
 };
 
+
+
 export const deletePins = (id) => dispatch => {
     axios.delete(`/api/pins/${id}/`)
         .then(res => {

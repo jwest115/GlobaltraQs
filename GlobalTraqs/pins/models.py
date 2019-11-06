@@ -35,3 +35,11 @@ class upVoteStory(models.Model):
             models.UniqueConstraint(
                 fields=['pinId', 'upVoter'], name="upvoter-pin")
         ]
+
+
+class flagStory(models.Model):
+    pinId = models.ForeignKey(
+        "pin", on_delete=models.CASCADE, null=True)
+    flagger = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    flagged = models.BooleanField(default=False)

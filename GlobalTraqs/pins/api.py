@@ -1,6 +1,6 @@
-from pins.models import pin, categoryType, upVoteStory
+from pins.models import pin, categoryType, upVoteStory, flagStory
 from rest_framework import viewsets, permissions
-from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer
+from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer, FlagStorySerializer
 from django.contrib.auth.models import User
 # catalog viewset
 from django_filters.rest_framework import DjangoFilterBackend
@@ -31,6 +31,17 @@ class upVoteStoryViewSet(viewsets.ModelViewSet):
         # permissions.IsAuthenticated,
     ]
     serializer_class = upVoteStorySerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = '__all__'
+
+
+class FlagStoryViewSet(viewsets.ModelViewSet):
+    queryset = flagStory.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+        # permissions.IsAuthenticated,
+    ]
+    serializer_class = FlagStorySerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
 
