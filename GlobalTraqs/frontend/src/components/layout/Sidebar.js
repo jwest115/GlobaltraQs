@@ -9,10 +9,11 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
-import { TextField, Select, FormControl, MenuItem } from "@material-ui/core";
+import { TextField, Select, FormControl, MenuItem, IconButton } from "@material-ui/core";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Header from "./Header";
-import PropTypes from "prop-types";
+import SearchIcon from '@material-ui/icons/Search';
+import Icon from '@material-ui/core/Icon';
 const useStyles = makeStyles({
   list: {
     width: 250
@@ -45,20 +46,21 @@ export default function Sidebar() {
 
   const sideList = side => (
     <div className={classes.list} role="presentation">
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={toggleDrawer("right", false)}
-      >
-        Close
-      </Button>
-      <Divider />
-      <TextField></TextField>
+      <TextField
+          id="searchForm"
+          className={classes.textField}
+          label="Search"
+          margin="none"
+          fullWidth
+          variant="filled">
+        
+      </TextField>
       <div>
         <FormControl>
           <Select
             labelid="demo-simple-select-helper-label"
-            id="demo-simple-select-helper"
+            id="pinForm"
+            fullWidth
             value={age}
             onChange={handleChange}
           >
@@ -72,20 +74,35 @@ export default function Sidebar() {
       <Button
         variant="contained"
         color="primary"
-        onClick={toggleDrawer("right", false)}
+        id="searchButton"
+        fullWidth
+        //onClick={toggleDrawer("right", false)}
       >
         Search
       </Button>
     </div>
   );
 
+  var text = document.getElementById("searchForm");
+  var type = document.getElementById("pinForm");
+  if(text){
+  document.getElementById("searchButton").addEventListener("click", function() {
+      console.log( "Search for " + text.value + ". With Pin Type " + type.value );
+  });
+  }
   const handleChange = event => {
     setAge(event.target.value);
   };
 
   return (
     <div>
-      <Button onClick={toggleDrawer("right", true)}>Open Right</Button>
+      <Button 
+      variant="contained" 
+      color="dedfault"
+      className={classes.button}
+      startIcon={<SearchIcon/>}
+      onClick={toggleDrawer("right", true)}>
+      </Button>
       <Drawer
         anchor="right"
         open={state.right}
@@ -94,5 +111,7 @@ export default function Sidebar() {
         {sideList("right")}
       </Drawer>
     </div>
+    
   );
+
 }
