@@ -13,6 +13,7 @@ import EditPin from "./EditPin";
 import L from "leaflet";
 import Modal from "./Modal";
 
+import MarkerClusterGroup from "react-leaflet-markercluster";
 const divStyle = {
   height: "90%",
   width: "100%"
@@ -119,47 +120,47 @@ export class Pins extends Component {
             attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           />
+          <MarkerClusterGroup>
+            {this.props.pins.map((marker, index) => {
+              let post = [marker.latitude, marker.longitude];
+              let categoryIcon = "";
+              if (marker.category == 1) {
+                categoryIcon = personalIcon;
+              } else if (marker.category == 2) {
+                categoryIcon = communityIcon;
+              } else {
+                categoryIcon = historicalIcon;
+              }
+              const id = marker.id;
 
-          {this.props.pins.map((marker, index) => {
-            let post = [marker.latitude, marker.longitude];
-            let categoryIcon = "";
-            if (marker.category == 1) {
-              categoryIcon = personalIcon;
-            } else if (marker.category == 2) {
-              categoryIcon = communityIcon;
-            } else {
-              categoryIcon = historicalIcon;
-            }
-            const id = marker.id;
-
-            return (
-              <Marker key={index} position={post} icon={categoryIcon}>
-                <Popup>
-                  {marker.title} <br /> {marker.description}
-                  <br />
-                  <EditPin
-                    userlat={marker.latitude}
-                    userlng={marker.longitude}
-                    storyid={marker.id}
-                  />
-                  {/* <Link to="/Story"> */}
-                  <Link to={`Story/${id}`} params={{ testvalue: "hello" }}>
-                    <button type="button" className="btn btn-primary btn-sm">
-                      View Story
+              return (
+                <Marker key={index} position={post} icon={categoryIcon}>
+                  <Popup>
+                    {marker.title} <br /> {marker.description}
+                    <br />
+                    <EditPin
+                      userlat={marker.latitude}
+                      userlng={marker.longitude}
+                      storyid={marker.id}
+                    />
+                    {/* <Link to="/Story"> */}
+                    <Link to={`Story/${id}`} params={{ testvalue: "hello" }}>
+                      <button type="button" className="btn btn-primary btn-sm">
+                        View Story
+                      </button>
+                    </Link>
+                    <button
+                      onClick={this.props.deletePins.bind(this, marker.id)}
+                      type="button"
+                      className="btn btn-danger btn-sm"
+                    >
+                      Delete
                     </button>
-                  </Link>
-                  <button
-                    onClick={this.props.deletePins.bind(this, marker.id)}
-                    type="button"
-                    className="btn btn-danger btn-sm"
-                  >
-                    Delete
-                  </button>
-                </Popup>
-              </Marker>
-            );
-          })}
-
+                  </Popup>
+                </Marker>
+              );
+            })}
+          </MarkerClusterGroup>
           {/* current selected posisiotn
                  {console.log(this.state.userlat)}
                     {console.log(this.state.userlng)} */}
