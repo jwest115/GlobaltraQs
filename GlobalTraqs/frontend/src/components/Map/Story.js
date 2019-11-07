@@ -174,9 +174,9 @@ export class Story extends Component {
 
   render() {
     const { id } = this.props.match.params;
-
+    console.log(this.state.hasFlaggedBefore);
     const { isAuthenticated, user } = this.props.auth;
-    const flaggedButton = this.state.flagged ? (
+    const flaggedButton = this.state.hasFlaggedBefore ? (
       <button type="button" class="btn btn-warning">
         Flagged
       </button>

@@ -60,6 +60,7 @@ export const personalIcon = new L.Icon({
 });
 
 export class Pins extends Component {
+  intervalID;
   constructor(props) {
     super(props);
     this.state = {
@@ -84,6 +85,10 @@ export class Pins extends Component {
   };
   componentDidMount() {
     this.props.getPins();
+    this.intervalID = setInterval(this.props.getPins.bind(this), 5000); //every 5 seconds it gets data
+  }
+  componentWillUnmount() {
+    clearInterval(this.intervalID);
   }
 
   toggle = () => {
