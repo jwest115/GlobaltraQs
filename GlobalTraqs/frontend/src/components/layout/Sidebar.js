@@ -14,14 +14,30 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Header from "./Header";
 import SearchIcon from '@material-ui/icons/Search';
 import Icon from '@material-ui/core/Icon';
-const useStyles = makeStyles({
-  list: {
-    width: 250
+import axios from "axios";
+
+const drawerWidth = 240;
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
   },
-  fullList: {
-    width: "auto"
-  }
-});
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+  toolbar: theme.mixins.toolbar,
+}));
 
 export default function Sidebar() {
   const [age, setAge] = React.useState("");
@@ -46,62 +62,73 @@ export default function Sidebar() {
 
   const sideList = side => (
     <div className={classes.list} role="presentation">
-      <TextField
+      <form>
+        <TextField
           id="searchForm"
           className={classes.textField}
           label="Search"
           margin="none"
           fullWidth
           variant="filled">
-        
-      </TextField>
-      <div>
-        <FormControl>
-          <Select
-            labelid="demo-simple-select-helper-label"
-            id="pinForm"
-            fullWidth
-            value={age}
-            onChange={handleChange}
-          >
-            <MenuItem value={0}>Personal</MenuItem>
-            <MenuItem value={1}>Community</MenuItem>
-            <MenuItem value={2}>Historical</MenuItem>
-          </Select>
-          <FormHelperText>Select Pin Type</FormHelperText>
-        </FormControl>
-      </div>
-      <Button
-        variant="contained"
-        color="primary"
-        id="searchButton"
-        fullWidth
+
+        </TextField>
+        <div>
+          <FormControl>
+            <Select
+              labelid="demo-simple-select-helper-label"
+              id="pinForm"
+              fullWidth
+              value={age}
+              onChange={handleChange}
+            >
+              <MenuItem value={1}>Personal</MenuItem>
+              <MenuItem value={2}>Community</MenuItem>
+              <MenuItem value={3}>Historical</MenuItem>
+            </Select>
+            <FormHelperText>Select Pin Type</FormHelperText>
+          </FormControl>
+        </div>
+        <Button
+          variant="contained"
+          color="primary"
+          id="searchButton"
+          fullWidth
         //onClick={toggleDrawer("right", false)}
-      >
-        Search
+        >
+          Search
       </Button>
+      </form>
     </div>
   );
 
   var text = document.getElementById("searchForm");
   var type = document.getElementById("pinForm");
-  if(text){
-  document.getElementById("searchButton").addEventListener("click", function() {
-      console.log( "Search for " + text.value + ". With Pin Type " + type.value );
-  });
+  if (text) {
+    document.getElementById("searchButton").addEventListener("click", function () {
+      console.log("Searched For : " + text + ". Category is : " + type)
+      axios.get(`api/pins?category=${type}`).then(response => {
+
+      })
+        .catch(error => {
+          console.log(error);
+        });
+    });
   }
+
+
+
   const handleChange = event => {
     setAge(event.target.value);
   };
 
   return (
     <div>
-      <Button 
-      variant="contained" 
-      color="dedfault"
-      className={classes.button}
-      startIcon={<SearchIcon/>}
-      onClick={toggleDrawer("right", true)}>
+      <Button
+        variant="contained"
+        color="default"
+        className={classes.button}
+        startIcon={<SearchIcon />}
+        onClick={toggleDrawer("right", true)}>
       </Button>
       <Drawer
         anchor="right"
@@ -111,7 +138,7 @@ export default function Sidebar() {
         {sideList("right")}
       </Drawer>
     </div>
-    
+
   );
 
 }
