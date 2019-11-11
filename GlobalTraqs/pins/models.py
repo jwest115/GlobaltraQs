@@ -11,7 +11,7 @@ class pin(models.Model):
     latitude = models.CharField(max_length=50)
     longitude = models.CharField(max_length=50)
     category = models.ForeignKey(
-        "categoryType", on_delete=models.CASCADE, null=True)
+        "categoryType", on_delete=models.CASCADE, null=True, related_name='selected_category')
     # 1 is community, 2: historical, 3: personal
 
 
@@ -43,3 +43,10 @@ class flagStory(models.Model):
     flagger = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     flagged = models.BooleanField(default=False)
+
+
+class countUpvoteFlag(models.Model):
+    pinId = models.ForeignKey(
+        "pin", on_delete=models.CASCADE, null=True)
+    upVotes = models.PositiveSmallIntegerField(default=0)
+    flags = models.PositiveSmallIntegerField(default=0)
