@@ -122,4 +122,6 @@ psd
 thumb
 sketch
 
-# End of https://www.gitignore.io/api/react
+# End of https://www.gitignore.io/api/rea
+.vscode/settings.json
+

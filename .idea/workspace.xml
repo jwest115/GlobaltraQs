@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8f382347-7f98-4021-8688-5238bd831446" name="Default Changelist" comment="Added the ReCaptcha">
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/GlobaltraQs.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GlobaltraQs.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="GlobaltraQs" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1ScPB77seAi4lsob75fJgQrLPrB" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/GlobaltraQs-2.0" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\GlobaltraQs-2.0\GlobalTraqs\frontend\static\frontend" />
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\PycharmProjects\GlobaltraQs-2.0\GlobalTraqs\frontend\src\components\Map" />
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\Desktop\merge attempt 10-30-19\GlobaltraQs\GlobalTraqs\frontend\src\components\layout" />
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\Desktop\merge attempt 10-30-19\GlobaltraQs\GlobalTraqs\frontend\src\components\accounts" />
+      <recent name="C:\Users\justi.JUSTINE-SURFACE\Desktop\merge attempt 10-30-19\GlobaltraQs\GlobalTraqs\frontend\src\actions" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8f382347-7f98-4021-8688-5238bd831446" name="Default Changelist" comment="" />
+      <created>1571859773201</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1571859773201</updated>
+      <workItem from="1571859785396" duration="7002000" />
+      <workItem from="1571867720943" duration="104000" />
+      <workItem from="1571867889849" duration="2637000" />
+      <workItem from="1571870614457" duration="229000" />
+      <workItem from="1571871026675" duration="774000" />
+      <workItem from="1571871834844" duration="14000" />
+      <workItem from="1572201895271" duration="98000" />
+      <workItem from="1572202037711" duration="5648000" />
+      <workItem from="1572365447811" duration="32000" />
+      <workItem from="1572455312705" duration="1240000" />
+      <workItem from="1572459610345" duration="4571000" />
+      <workItem from="1572471864346" duration="1499000" />
+      <workItem from="1572473777738" duration="7344000" />
+      <workItem from="1572484704594" duration="3833000" />
+      <workItem from="1572919494540" duration="1156000" />
+      <workItem from="1572920703690" duration="11452000" />
+      <workItem from="1572978522491" duration="1256000" />
+      <workItem from="1573070695443" duration="8645000" />
+      <workItem from="1573159487665" duration="355000" />
+      <workItem from="1573174188127" duration="80000" />
+      <workItem from="1573184316285" duration="1496000" />
+      <workItem from="1573259705068" duration="6232000" />
+      <workItem from="1573275330409" duration="40000" />
+      <workItem from="1573348601164" duration="14984000" />
+      <workItem from="1573448487965" duration="85000" />
+      <workItem from="1573449951862" duration="3354000" />
+    </task>
+    <task id="LOCAL-00001" summary="fml">
+      <created>1571871592874</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1571871592874</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fml">
+      <created>1572205682803</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1572205682803</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fml">
+      <created>1572207641256</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1572207641256</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added the ReCaptcha">
+      <created>1572455644321</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1572455644322</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fml" />
+    <MESSAGE value="Added the ReCaptcha" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added the ReCaptcha" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/GlobalTraqs/frontend/src/reducers/pins.js</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
