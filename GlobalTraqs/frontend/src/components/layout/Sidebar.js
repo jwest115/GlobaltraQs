@@ -49,13 +49,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-state = {
-  pinData: ""
-}
-
 
 export default function Sidebar() {
-  const [age, setAge] = React.useState("");
+  const [age, pindata, setAge] = React.useState("");
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -112,32 +108,24 @@ export default function Sidebar() {
           id="searchButton"
           fullWidth
         //onClick={toggleDrawer("right", false)}
+
         >
           Search
       </Button>
+      
       </form>
-      if (text && type) {
-        <Card>
-          <CardContent>
-            <Typography variant="h5" component="h2">
-        Title: {this.state.pinData.title}
-        </Typography>
-            <Typography variant="body2" component="p">
-            {this.state.pinData.description}
-            </Typography>
-          </CardContent>
-        </Card>
-      }
     </div>
   );
 //more data in the card? like author or creation data?
+//cards with lizard use
+////{this.state.pinData.description}
 
   if (text) {
     document.getElementById("searchButton").addEventListener("click", function () {
       console.log("Searched For : " + text.value + ". Category is : " + type.value)
       axios.get(`api/pins?category=${type.value}`).then(response => {
         const pindata = response.data;
-        this.setState({ pinData: pinData })
+        console.log(pindata.title)
       })
         .catch(error => {
           console.log(error);
