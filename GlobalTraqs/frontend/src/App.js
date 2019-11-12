@@ -34,9 +34,8 @@ export class App extends Component {
         <Router>
           <Fragment>
             <Header />
-            
-            <div className="container">
             <Sidebar />
+            <div className="container">
               <Switch>
                 <Route exact path="/" component={MapDashboard} />
                 <Route exact path="/About" component={About} />

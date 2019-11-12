@@ -2,19 +2,15 @@ import React, { Component } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import { TextField, Select, FormControl, MenuItem, IconButton } from "@material-ui/core";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import Header from "./Header";
 import SearchIcon from '@material-ui/icons/Search';
-import Icon from '@material-ui/core/Icon';
 import axios from "axios";
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 
 const drawerWidth = 240;
 
@@ -37,10 +33,30 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3),
   },
   toolbar: theme.mixins.toolbar,
+  card: {
+    minWidth: 275,
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
 }));
+
+state = {
+  pinData: ""
+}
+
 
 export default function Sidebar() {
   const [age, setAge] = React.useState("");
+
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -59,9 +75,11 @@ export default function Sidebar() {
 
     setState({ ...state, [side]: open });
   };
-
+  var text = document.getElementById("searchForm");
+  var type = document.getElementById("pinForm");
   const sideList = side => (
     <div className={classes.list} role="presentation">
+      <CssBaseline />
       <form>
         <TextField
           id="searchForm"
@@ -98,16 +116,28 @@ export default function Sidebar() {
           Search
       </Button>
       </form>
+      if (text && type) {
+        <Card>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+        Title: {this.state.pinData.title}
+        </Typography>
+            <Typography variant="body2" component="p">
+            {this.state.pinData.description}
+            </Typography>
+          </CardContent>
+        </Card>
+      }
     </div>
   );
+//more data in the card? like author or creation data?
 
-  var text = document.getElementById("searchForm");
-  var type = document.getElementById("pinForm");
   if (text) {
     document.getElementById("searchButton").addEventListener("click", function () {
-      console.log("Searched For : " + text + ". Category is : " + type)
-      axios.get(`api/pins?category=${type}`).then(response => {
-
+      console.log("Searched For : " + text.value + ". Category is : " + type.value)
+      axios.get(`api/pins?category=${type.value}`).then(response => {
+        const pindata = response.data;
+        this.setState({ pinData: pinData })
       })
         .catch(error => {
           console.log(error);
