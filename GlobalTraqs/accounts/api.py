@@ -1,9 +1,11 @@
 from rest_framework import generics, permissions, viewsets
+from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from knox.models import AuthToken
 from users.models import User
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
 
+# , ProfileCreateSerializer
 # Register API
 
 
@@ -52,3 +54,8 @@ class UsersViewSet(viewsets.ModelViewSet):
         permissions.AllowAny
     ]
     serializer_class = UserSerializer
+
+# class ProfileCreateAPIView(CreateAPIView):
+#
+#     model = Profile
+#     serializer_class = ProfileCreateSerializer
