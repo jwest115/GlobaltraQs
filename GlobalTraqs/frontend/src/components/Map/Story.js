@@ -83,15 +83,18 @@ export class Story extends Component {
         console.log(this.props.match.params);
         const { id } = this.state.storyId;
         // this.props.getPin(id);
-
         axios.get(`api/pins/${id}`)
             .then(response => {
                 this.setState({ userStory: response.data });
-                console.log(response.data);
+                this.getAuthor(response.data.user_id);
             })
             .catch(error => {
                 console.log(error);
             });
+
+        // this.getAuthor(this.state.userStory.user_id);
+
+        // getUser(id);
 
         // const {user_id} = this.state.userStory;
         // console.log("user id " + this.state.userStory);
@@ -120,7 +123,15 @@ export class Story extends Component {
         }
     };
 
-
+    getAuthor = (user_id) => {
+     axios.get(`/api/auth/users/${user_id}/`)
+            .then(res => {
+                this.setState({storyAuthor: res.data});
+            })
+             .catch(error => {
+                console.log(error);
+            });
+    };
 
 
     render() {
@@ -129,12 +140,11 @@ export class Story extends Component {
         if(!this.state.userStory || this.state.userStory == undefined){
             return null; //You can change here to put a customized loading spinner
         }
-
         let isAdminOrModerator = false;
         let adminModeratorEditStory = "";
         const { isAuthenticated, user } = this.props.auth;
         if(isAuthenticated) {
-            if(user.is_administrator || user.is_moderator) {
+            if(user.is_administrator || user.is_moderator || this.state.userStory.user_id == this.state.storyAuthor.id) {
                 isAdminOrModerator = true;
                  adminModeratorEditStory = (
                      <div className='admin-moderator-edit'>
@@ -143,8 +153,13 @@ export class Story extends Component {
                     );
             }
         }
+        let authorName = 'Anonymous';
+        if(this.state.storyAuthor != '') {
+            authorName = this.state.storyAuthor.username;
+        }
         // console.log("lat " + this.state.userStory.latitude);
         const position = [this.state.userStory.latitude, this.state.userStory.longitude];
+        // const {author} = this.props.user;
         return (
             <div className='container-fluid' style={divStyle2}>
                 <Map center={position} zoom={15} maxZoom={30} id="map" style={divStyle}>
@@ -158,7 +173,7 @@ export class Story extends Component {
                                 let categoryIcon = ''
                                 if (marker.category == 1) {
                                     categoryIcon = personalIcon
-                                } else if (marker.category == 2) {g
+                                } else if (marker.category == 2) {
                                     categoryIcon = communityIcon
                                 } else { categoryIcon = historicalIcon }
                                 const id = marker.id
@@ -168,11 +183,9 @@ export class Story extends Component {
                                         <Popup>
                                             {marker.title} <br /> {marker.description}
                                             <br />
-                                            <Router>
                                                 <Link to={`/Story/${id}`} key={id}>
                                                     <button onClick={() => this.updateStoryId(id)} type="button" className="btn btn-primary btn-sm">View Story</button>
                                                 </Link>
-                                            </Router>
                                         </Popup>
                                     </Marker>
                                 );
@@ -180,13 +193,19 @@ export class Story extends Component {
                         }
                 </Map>
                 <div className='container-fluid' style={storyBody}>
+                     {this.state.showEditForm &&
+                <EditPin title={this.state.userStory.title} description={this.state.userStory.description} userlat={this.state.userStory.latitude} userlng={this.state.userStory.longitude}
+                      storyid={id} user_id={this.state.userStory.user_id}/> }
+                    {isAdminOrModerator ? adminModeratorEditStory : ""}
                     <h2><strong>{this.state.userStory.title}</strong></h2>
+                    <p>By: {authorName}</p>
+                    <hr></hr>
                     <p>{this.state.userStory.description}</p>
                 </div>
             {/*<div className="card card-body mt-4 mb-4">*/}
             {/*    {this.state.showEditForm &&*/}
             {/*    <EditPin title={this.state.userStory.title} description={this.state.userStory.description} userlat={this.state.userStory.latitude} userlng={this.state.userStory.longitude}*/}
-            {/*          storyid={id} user={this.state.userStory.user}/> }*/}
+            {/*          storyid={id} user_id={this.state.userStory.user_id}/> }*/}
             {/*    {isAdminOrModerator ? adminModeratorEditStory : ""}*/}
             {/*    <div className=''>*/}
             {/*    <h2>id is: {this.state.userStory.title}</h2>*/}
@@ -219,8 +238,7 @@ export class Story extends Component {
 }
 const mapStateToProps = state => ({
   auth: state.auth,
-  pins: state.pins.pins // state.pins we want pins reducer from index, .pins is from initial state
-
+  pins: state.pins.pins, // state.pins we want pins reducer from index, .pins is from initial state
   // pin: state.pin.pin
 });
 export default connect(

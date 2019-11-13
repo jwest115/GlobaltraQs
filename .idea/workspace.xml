@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8f382347-7f98-4021-8688-5238bd831446" name="Default Changelist" comment="Added the ReCaptcha">
-      <change beforePath="$PROJECT_DIR$/.idea/GlobaltraQs.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GlobaltraQs.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="8f382347-7f98-4021-8688-5238bd831446" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/GlobalTraqs/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/GlobalTraqs/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/accounts/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/accounts/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/accounts/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/accounts/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/accounts/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/actions/pins.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/actions/pins.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/actions/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/actions/types.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/PinForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/PinForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Pins.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Pins.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Modal.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/layout/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/layout/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/reducers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/reducers/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/reducers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/reducers/pins.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/reducers/pins.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/templates/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/templates/frontend/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/pins/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0002_pin_owner.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0003_remove_pin_owner.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0004_pin_owner.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0005_remove_pin_owner.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0006_auto_20191030_1655.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0007_remove_pin_user.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0008_pin_user.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0009_auto_20191106_1436.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0010_auto_20191106_1438.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/pins/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/pins/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/pins/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/users/migrations/0001_initial.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -127,7 +117,7 @@
       <workItem from="1573348601164" duration="14984000" />
       <workItem from="1573448487965" duration="85000" />
       <workItem from="1573449951862" duration="3600000" />
-      <workItem from="1573622427130" duration="207000" />
+      <workItem from="1573622427130" duration="5879000" />
     </task>
     <task id="LOCAL-00001" summary="fml">
       <created>1571871592874</created>
@@ -157,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572455644322</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Story page">
+      <created>1573622714704</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1573622714704</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,7 +176,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fml" />
     <MESSAGE value="Added the ReCaptcha" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the ReCaptcha" />
+    <MESSAGE value="Story page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Story page" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -35,7 +35,8 @@ from django.conf import settings
 
 
 class pin(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE)
+    user_id = models.IntegerField(null=True, blank=True)
+    # user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, blank=True)
     title = models.CharField(max_length=50)
     description = models.TextField()
     latitude = models.CharField(max_length=50)

@@ -129,24 +129,25 @@
         this.state.longitude = lng;
 
         this.randomizePin(lat, lng);
-
+        console.log(user);
+        console.log("is the user!");
         const {title, description, latitude, longitude, category} = this.state;
         let pin;
         // console.log(user);
         // console.log("is the user");
-        // let author_user_id = user.id;
-        pin = {title, description, latitude, longitude, category};
-
-        // if(isAuthenticated) {
-        //     console.log("HERE");
-        //     pin = {user, title, description, latitude, longitude, category};
-        //             console.log("title " + title + " description " + description + " latitude " + latitude + " longitude " + longitude + " category is " + category + " user " + user.id);
-        // }
-        // else {
-        //     console.log("here in the else");
-        //     pin = {title, description, latitude, longitude, category};
-        //             console.log("title " + title + " description " + description + " latitude " + latitude + " longitude " + longitude + " category is " + category);
-        // }
+        if(isAuthenticated) {
+            let user_id = user.id;
+            console.log("HERE");
+            pin = {user_id, title, description, latitude, longitude, category};
+                    console.log("user " + user_id + "title " + title + " description " + description + " latitude " + latitude + " longitude " + longitude + " category is " + category);
+                    console.log("user is");
+                    console.log(user_id);
+        }
+        else {
+            console.log("here in the else");
+            pin = {title, description, latitude, longitude, category};
+                    console.log("title " + title + " description " + description + " latitude " + latitude + " longitude " + longitude + " category is " + category);
+        }
         // console.log("adding " + pin.user_id);
         this.props.addPin(pin);
 
