@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { register } from "../../actions/auth";
 import { createMessage } from "../../actions/messages";
 import Recaptcha from "react-recaptcha";
-
+import * as EmailValidator from 'email-validator';
 export class Register extends Component {
   //
   constructor(props) {
@@ -28,7 +28,9 @@ export class Register extends Component {
     email: "",
     password: "",
     password2: "",
-    captchaIsVerified: false
+    captchaIsVerified: false,
+    inputs: {},
+    errors: {}
   };
 
   static propTypes = {
@@ -38,22 +40,63 @@ export class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    if (this.state.captchaIsVerified) {
-      const {username, email, password, password2} = this.state;
-      if (password !== password2) {
-        this.props.createMessage({passwordNotMatch: "Passwords do not match"});
+    if (this.formIsValid()) {
+      if (this.state.captchaIsVerified) {
+        const {username, email, password, password2} = this.state;
+        if (password !== password2) {
+          this.props.createMessage({passwordNotMatch: "Passwords do not match"});
+        } else {
+          const newUser = {
+            username,
+            password,
+            email
+          };
+          this.props.register(newUser);
+        }
       } else {
-        const newUser = {
-          username,
-          password,
-          email
-        };
-        this.props.register(newUser);
+        alert('please verify that you are a human!')
       }
-    } else {
-      alert('please verify that you are a human!')
     }
   };
+
+  formIsValid() {
+    let errors = {};
+    let formIsValid = true;
+    if (this.state.username === '') {
+      formIsValid = false;
+      errors["username"] = "*Please enter your username.";
+    }
+    if(this.state.username !== ''){
+      errors["username"] = "";
+    }
+    if (!this.state.password === "") {
+      formIsValid = false;
+      errors["password"] = "*Please enter your password.";
+    }
+    if (this.state.password !== "") {
+      errors["password"] = "";
+    }
+    if (this.state.email === '') {
+      formIsValid = false;
+      errors["email"] = "*Please enter your email";
+    }
+    if (this.state.email !== '') {
+      errors["email"] = "";
+    }
+    if (!EmailValidator.validate(this.state.email)) {
+      formIsValid = false;
+      errors["email"] = "*Please enter a valid email";
+    }
+    if(this.state.password !== this.state.password2){
+      formIsValid = false;
+      errors["password2"] = "*Passwords do not Match"
+    }
+    if(this.state.password === this.state.password2){
+      errors["password2"] = null
+    }
+    this.setState({errors:errors})
+    return formIsValid;
+  }
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
@@ -76,6 +119,9 @@ export class Register extends Component {
                 onChange={this.onChange}
                 value={username}
               />
+              <p>
+                {this.state.errors["username"]}
+              </p>
             </div>
             <div className="form-group">
               <label>Email</label>
@@ -86,6 +132,9 @@ export class Register extends Component {
                 onChange={this.onChange}
                 value={email}
               />
+              <p>
+                {this.state.errors["email"]}
+              </p>
             </div>
             <div className="form-group">
               <label>Password</label>
@@ -96,6 +145,9 @@ export class Register extends Component {
                 onChange={this.onChange}
                 value={password}
               />
+              <p>
+                {this.state.errors["password"]}
+              </p>
             </div>
             <div className="form-group">
               <label>Confirm Password</label>
@@ -106,6 +158,9 @@ export class Register extends Component {
                 onChange={this.onChange}
                 value={password2}
               />
+              <p>
+                {this.state.errors["password2"]}
+              </p>
             </div>
             <div className="form-group row justify-content-between justify-content-around">
               <button type="submit" className="btn btn-primary float-left">

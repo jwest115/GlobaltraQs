@@ -26,7 +26,9 @@ export class Login extends Component {
         password: "",
         captchaIsVerified: false,
         counter: 0,
-        attempts: false
+        attempts: false,
+        inputs: {},
+        errors: {}
     };
 
 
@@ -34,6 +36,7 @@ export class Login extends Component {
         login: PropTypes.func.isRequired,
         isAuthenticated: PropTypes.bool
     };
+
 
     onSubmit = e =>{
         this.setState({ counter: this.state.counter + 1 })
@@ -58,11 +61,51 @@ export class Login extends Component {
                 alert('please verify that you are a human!')
             }
         }
+        this.validateForm();
     };
-
+    validateForm() {
+        let errors = {};
+        let formIsValid = true;
+        if (this.state.username === '') {
+            formIsValid = false;
+            errors["username"] = "*Please enter your username.";
+        }
+        if (this.state.username !== '') {
+            errors["username"] = "";
+        }
+        if (this.state.password === '') {
+            formIsValid = false;
+            errors["password"] = "*Please enter your password.";
+        }
+        if (this.state.password !== '') {
+            errors["password"] = "";
+        }
+        this.setState({errors:errors})
+        return formIsValid;
+    }
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
     render(){
+        //validate = {values => {
+        //     let errors = {};
+        //     if (!values.email) {
+        //         errors.email = "Required";
+        //     }else if (!EmailValidator.validate(values.email)) {
+        //         errors.email = "Invalid email address";
+        //
+        //     }
+        //
+        //     const passwordRegex = /(?=.*[0-9])/;
+        //     if (!values.password) {
+        //         errors.password = "Required";
+        //     } else if (values.password.length < 8) {
+        //         errors.password = "Password must be 8 characters long.";
+        //     } else if (!passwordRegex.test(values.password)) {
+        //         errors.password = "Invalida password. Must contain one number";
+        //     }
+        //
+        //     return errors;
+        // }}
         if (this.props.isAuthenticated) {
             return <Redirect to="/" />;
         }
@@ -93,7 +136,11 @@ export class Login extends Component {
                                 onChange={this.onChange}
                                 value={username}
                             />
+                            <p>
+                                 {this.state.errors["username"]}
+                            </p>
                         </div>
+
 
                         <div className="form-group">
                             <label>Password</label>
@@ -104,7 +151,9 @@ export class Login extends Component {
                                 onChange={this.onChange}
                                 value={password}
                             />
-                        </div>
+                            <p>
+                                {this.state.errors["password"]}
+                            </p>                        </div>
 
                         <div className="form-group row justify-content-between justify-content-around">
                             <button type="submit" className="btn btn-primary float-left">
@@ -116,11 +165,16 @@ export class Login extends Component {
                         <p>
                             Don't have an account? <Link to="/register">Register</Link>
                         </p>
+                    <p>
+                        Forgot Password? <Link></Link>
+                    </p>
                     </form>
                 </div>
             </div>
         );
     }
+
+
 }
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
