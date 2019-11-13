@@ -12,7 +12,7 @@ export class Story extends Component {
   state = {
     pinId: "",
     userStory: "",
-    numberOfUpvote: "",
+    upVotes: "",
     upvote: "",
     hasVotedBefore: "",
     upVoteId: "",
@@ -39,11 +39,15 @@ export class Story extends Component {
       flagger: userid
     });
     this.state.upVoter = userid;
-    console.log("the user id is: " + this.state.upVoterId);
+    console.log("the user id is: " + id);
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-        this.setState({ userStory: response.data });
+        this.setState({
+          userStory: response.data,
+          upVotes: response.data.upVotes
+        });
+
         console.log(response.data);
       })
       .catch(error => {
@@ -102,9 +106,13 @@ export class Story extends Component {
       "initial upvote: " + this.state.upvote + " " + this.state.upVoter
     );
     const switchVote = this.state.upvote ? false : true;
+    this.state.upvote ? (this.state.upVotes -= 1) : (this.state.upVotes += 1);
     this.setState({
-      upvote: switchVote
+      upvote: switchVote,
+      upVotes: this.state.upVotes
     });
+    console.log(this.state.upVotes);
+    console.log("the updoot" + this.state.userStory.upVotes);
     this.state.upvote = switchVote;
     console.log(
       "post upvote: " + switchVote + " " + this.state.upvote + "lalal"
@@ -115,8 +123,18 @@ export class Story extends Component {
       ? this.changeUpvote(upVoteStoryPin)
       : this.newUpvote(upVoteStoryPin);
 
+    console.log(this.state.upVotes + "how many");
+    const { upVotes } = this.state;
+    const storypin = { upVotes };
     axios
-
+      .patch(`api/pins/${this.state.pinId}/`, storypin)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    axios
       .get(
         `api/upVoteStory?pinId=${this.state.pinId}&upVoter=${this.state.upVoterId}`
       )
@@ -177,7 +195,7 @@ export class Story extends Component {
     console.log(this.state.hasFlaggedBefore);
     const { isAuthenticated, user } = this.props.auth;
     const flaggedButton = this.state.hasFlaggedBefore ? (
-      <button type="button" class="btn btn-warning">
+      <button type="button" className="btn btn-warning">
         Flagged
       </button>
     ) : (
@@ -213,7 +231,7 @@ export class Story extends Component {
         </div>
         <form onSubmit={this.onSubmit}>
           <h2>
-            number of upvotes {this.state.numberOfUpvote}{" "}
+            number of upvotes: {this.state.upVotes}{" "}
             {isAuthenticated ? upVoteButton : "login to upvote"}
           </h2>
         </form>

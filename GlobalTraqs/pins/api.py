@@ -1,9 +1,11 @@
-from pins.models import pin, categoryType, upVoteStory, flagStory, countUpvoteFlag
+from pins.models import pin, categoryType, upVoteStory, flagStory
 from rest_framework import viewsets, permissions
-from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer, FlagStorySerializer, CountFlagStorySerializer
+from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer, FlagStorySerializer
 from django.contrib.auth.models import User
 # catalog viewset
 from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models.functions import Coalesce
+from django.db.models import Count, Sum, Value
 
 
 class PinViewSet(viewsets.ModelViewSet):
@@ -51,14 +53,3 @@ class FlagStoryViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):  # saves user id
         serializer.save(owner=self.request.user) """
-
-
-class CountFlagStoryViewSet(viewsets.ModelViewSet):
-    queryset = countUpvoteFlag.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-        # permissions.IsAuthenticated,
-    ]
-    serializer_class = CountFlagStorySerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = '__all__'

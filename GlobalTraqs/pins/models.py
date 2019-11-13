@@ -13,6 +13,11 @@ class pin(models.Model):
     category = models.ForeignKey(
         "categoryType", on_delete=models.CASCADE, null=True, related_name='selected_category')
     # 1 is community, 2: historical, 3: personal
+    upVotes = models.PositiveSmallIntegerField(default=0)
+
+    def __str__(self):
+        """String for representing the Model object."""
+        return self.title
 
 
 class categoryType(models.Model):
@@ -25,7 +30,7 @@ class categoryType(models.Model):
 
 class upVoteStory(models.Model):
     pinId = models.ForeignKey(
-        "pin", on_delete=models.CASCADE, null=True)
+        "pin", on_delete=models.CASCADE, null=True, related_name='pinsUpvote')
     upVoter = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     upvote = models.BooleanField(default=False)
@@ -34,6 +39,8 @@ class upVoteStory(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=['pinId', 'upVoter'], name="upvoter-pin")
+
+
         ]
 
 
@@ -43,10 +50,3 @@ class flagStory(models.Model):
     flagger = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     flagged = models.BooleanField(default=False)
-
-
-class countUpvoteFlag(models.Model):
-    pinId = models.ForeignKey(
-        "pin", on_delete=models.CASCADE, null=True)
-    upVotes = models.PositiveSmallIntegerField(default=0)
-    flags = models.PositiveSmallIntegerField(default=0)

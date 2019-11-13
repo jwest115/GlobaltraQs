@@ -37,6 +37,7 @@ export class CustomModal extends Component {
       submitAddress: this.props.submitAddress,
       category: "1",
       radius: "none",
+      upVotes: 0,
       toggle: this.props.toggle
     };
 
@@ -116,8 +117,15 @@ export class CustomModal extends Component {
 
     this.randomizePin(lat, lng);
 
-    const { title, description, latitude, longitude, category } = this.state;
-    const pin = { title, description, latitude, longitude, category };
+    const {
+      title,
+      description,
+      latitude,
+      longitude,
+      category,
+      upVotes
+    } = this.state;
+    const pin = { title, description, latitude, longitude, category, upVotes };
     this.props.addPin(pin);
 
     console.log(
@@ -130,7 +138,8 @@ export class CustomModal extends Component {
         " longitude " +
         longitude +
         " category is " +
-        category
+        category +
+        " id: "
     );
     this.state.toggle();
   };
@@ -319,7 +328,4 @@ export class CustomModal extends Component {
     }
   }
 }
-export default connect(
-  null,
-  { addPin }
-)(CustomModal);
+export default connect(null, { addPin })(CustomModal);

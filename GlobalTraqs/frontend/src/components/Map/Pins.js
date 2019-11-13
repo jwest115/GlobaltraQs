@@ -200,7 +200,4 @@ const mapStateToProps = state => ({
   pins: state.pins.pins // state.pins we want pins reducer from index, .pins is from initial state
 });
 
-export default connect(
-  mapStateToProps,
-  { getPins, deletePins }
-)(Pins);
+export default connect(mapStateToProps, { getPins, deletePins })(Pins);
