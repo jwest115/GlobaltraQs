@@ -53,11 +53,9 @@ export class Header extends Component {
           </button>
           </li>
            <li className="nav-item">
-          <button
-            onClick={this.props.deleteUser}
-            className="nav-link btn btn-link btn-lg text-danger">
-            DELETE ACCOUNT
-          </button>
+          <Link to="/profile" className="nav-link">
+            Profile
+          </Link>
         </li>
       </ul>
     );
@@ -79,7 +77,7 @@ export class Header extends Component {
         return (
 
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-                <a className="navbar-brand" href="#">GlobalTraqs</a>
+                <a className="navbar-brand" href="#">GlobaltraQs</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
                     aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
