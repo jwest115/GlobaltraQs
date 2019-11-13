@@ -51,25 +51,17 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function Sidebar() {
-  const [pinType, pinstate, setPinType] = React.useState('');
+  const [pinType, setPinType] = React.useState('');
 
   const classes = useStyles();
-  const [state, setState] = React.useState({
+  const [drawerState, setState] = React.useState({
     top: false,
     left: false,
     bottom: false,
     right: false
   });
 
-  pinstate = {
-    id: "" ,
-    title: "",
-    description: "",
-    latitude: "",
-    longitude: "",
-    owner: "",
-    category: ""
-  }
+
   const toggleDrawer = (side, open) => event => {
     if (
       event.type === "keydown" &&
@@ -78,7 +70,7 @@ export default function Sidebar() {
       return;
     }
 
-    setState({ ...state, [side]: open });
+    setState({ ...drawerState, [side]: open });
   };
 
 
@@ -123,21 +115,20 @@ export default function Sidebar() {
         >
           Search
       </Button>
-      
+
       </form>
     </div>
   );
-//more data in the card? like author or creation data?
-//cards with lizard use
-////{this.state.pinData.description}
+  //more data in the card? like author or creation data?
+  //cards with lizard use
+  ////{this.state.pinData.description}
 
   if (text && type) {
     document.getElementById("searchButton").addEventListener("click", function () {
       console.log("Searched For : " + text.value + ". Category is : " + type.value)
       axios.get(`api/pins?category=${type.value}`).then(response => {
-        this.setState({pindata : response.data});
-        console.log(pindata)
-        
+        //this.setState({pindata : response.data});
+        console.log(response.data)
       })
         .catch(error => {
           console.log(error);
@@ -159,7 +150,7 @@ export default function Sidebar() {
       </Button>
       <Drawer
         anchor="right"
-        open={state.right}
+        open={drawerState.right}
         onClose={toggleDrawer("right", false)}
       >
         {sideList("right")}
