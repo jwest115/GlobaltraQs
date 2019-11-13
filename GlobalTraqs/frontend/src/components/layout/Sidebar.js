@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function Sidebar() {
-  const [age, pindata, setAge] = React.useState("");
+  const [pinType, pinstate, setPinType] = React.useState('');
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -61,6 +61,15 @@ export default function Sidebar() {
     right: false
   });
 
+  pinstate = {
+    id: "" ,
+    title: "",
+    description: "",
+    latitude: "",
+    longitude: "",
+    owner: "",
+    category: ""
+  }
   const toggleDrawer = (side, open) => event => {
     if (
       event.type === "keydown" &&
@@ -71,6 +80,8 @@ export default function Sidebar() {
 
     setState({ ...state, [side]: open });
   };
+
+
   var text = document.getElementById("searchForm");
   var type = document.getElementById("pinForm");
   const sideList = side => (
@@ -92,7 +103,7 @@ export default function Sidebar() {
               labelid="demo-simple-select-helper-label"
               id="pinForm"
               fullWidth
-              value={age}
+              value={pinType}
               onChange={handleChange}
             >
               <MenuItem value={1}>Personal</MenuItem>
@@ -120,12 +131,13 @@ export default function Sidebar() {
 //cards with lizard use
 ////{this.state.pinData.description}
 
-  if (text) {
+  if (text && type) {
     document.getElementById("searchButton").addEventListener("click", function () {
       console.log("Searched For : " + text.value + ". Category is : " + type.value)
       axios.get(`api/pins?category=${type.value}`).then(response => {
-        const pindata = response.data;
-        console.log(pindata.title)
+        this.setState({pindata : response.data});
+        console.log(pindata)
+        
       })
         .catch(error => {
           console.log(error);
@@ -133,12 +145,9 @@ export default function Sidebar() {
     });
   }
 
-
-
   const handleChange = event => {
-    setAge(event.target.value);
+    setPinType(event.target.value);
   };
-
   return (
     <div>
       <Button
