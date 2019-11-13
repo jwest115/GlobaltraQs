@@ -81,7 +81,8 @@ export class Pins extends Component {
   static propTypes = {
     pins: PropTypes.array.isRequired,
     getPins: PropTypes.func.isRequired,
-    deletePins: PropTypes.func.isRequired
+    deletePins: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
   };
   componentDidMount() {
     this.props.getPins();
@@ -107,6 +108,8 @@ export class Pins extends Component {
   };
 
   render() {
+    const { isAuthenticated, user } = this.props.auth;
+    const userid = user ? user.id : "";
     const position = [this.state.lat, this.state.lng];
     const userposition = [this.state.userlat, this.state.userlng];
 
@@ -136,7 +139,7 @@ export class Pins extends Component {
               } else {
                 categoryIcon = historicalIcon;
               }
-              const id = marker.id;
+              //const id = marker.id;
 
               return (
                 <Marker key={index} position={post} icon={categoryIcon}>
@@ -149,7 +152,10 @@ export class Pins extends Component {
                       storyid={marker.id}
                     />
                     {/* <Link to="/Story"> */}
-                    <Link to={`Story/${id}`} params={{ testvalue: "hello" }}>
+                    <Link
+                      to={`Story/${marker.id}`}
+                      params={{ testvalue: "hello" }}
+                    >
                       <button type="button" className="btn btn-primary btn-sm">
                         View Story
                       </button>
@@ -179,6 +185,7 @@ export class Pins extends Component {
             submitAddress={this.state.submitAddress}
             toggle={this.toggle}
             refreshList={this.refreshList}
+            owner={userid}
           />
         ) : null}
         <button
@@ -197,7 +204,8 @@ export class Pins extends Component {
 
 const mapStateToProps = state => ({
   //state of redux
-  pins: state.pins.pins // state.pins we want pins reducer from index, .pins is from initial state
+  pins: state.pins.pins,
+  auth: state.auth // state.pins we want pins reducer from index, .pins is from initial state
 });
 
 export default connect(mapStateToProps, { getPins, deletePins })(Pins);

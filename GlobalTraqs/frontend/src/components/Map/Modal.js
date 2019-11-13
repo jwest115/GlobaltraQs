@@ -38,7 +38,8 @@ export class CustomModal extends Component {
       category: "1",
       radius: "none",
       upVotes: 0,
-      toggle: this.props.toggle
+      toggle: this.props.toggle,
+      owner: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -114,7 +115,7 @@ export class CustomModal extends Component {
     e.preventDefault();
     this.state.latitude = lat;
     this.state.longitude = lng;
-
+    this.state.owner = this.props.owner;
     this.randomizePin(lat, lng);
 
     const {
@@ -123,9 +124,18 @@ export class CustomModal extends Component {
       latitude,
       longitude,
       category,
-      upVotes
+      upVotes,
+      owner
     } = this.state;
-    const pin = { title, description, latitude, longitude, category, upVotes };
+    const pin = {
+      title,
+      description,
+      latitude,
+      longitude,
+      category,
+      upVotes,
+      owner
+    };
     this.props.addPin(pin);
 
     console.log(
