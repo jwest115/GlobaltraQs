@@ -37,10 +37,7 @@ INSTALLED_APPS = [
     'pins',
     'rest_framework',
     'frontend',
-<<<<<<< HEAD
-=======
     'autofixture',
->>>>>>> login&register-1
     'knox',
     'accounts',
     'users'
@@ -89,29 +86,9 @@ WSGI_APPLICATION = 'GlobalTraqs.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'lbsggtda',
-    #     'USER': 'lbsggtda',
-    #     'PASSWORD': 'XOpmy4Z0BX79r0cOKoD6NIYnhGkKDCl1',
-    #     'HOST': 'salt.db.elephantsql.com',
-    #     'PORT': '5432',
-    # }
-    # 'default': {
-    #   'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #  'NAME': 'globaltraqs_db3',
-    # 'USER': 'postgres',
-    # 'PASSWORD': '@Ziggy323',
-    # 'HOST': 'localhost',
-    # 'PORT': '5432',
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'globaltraqs',
-        'USER': 'postgres',
-        'PASSWORD': 'csula2019',
-        'HOST': 'globaltraqs.cmlzsycukvtd.us-east-1.rds.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

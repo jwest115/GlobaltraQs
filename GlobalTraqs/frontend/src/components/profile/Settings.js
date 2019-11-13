@@ -3,7 +3,6 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Switch from "react-switch";
-//import { Checkbox } from 'semantic-ui-react'
 
 class Settings extends Component {
    constructor() {

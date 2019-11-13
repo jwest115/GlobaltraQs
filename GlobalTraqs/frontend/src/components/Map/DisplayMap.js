@@ -166,8 +166,4 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps, { getPins })
-<<<<<<< HEAD
-    (DisplayMap);
-=======
-    (DisplayMap);
->>>>>>> login&register-1
+

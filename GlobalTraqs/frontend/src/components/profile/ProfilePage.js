@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Button, Icon} from 'semantic-ui-react';
 import Typography from '@material-ui/core/Typography';
 import { login } from "../../actions/auth";
 
