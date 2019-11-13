@@ -6,18 +6,38 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  DELETE_USER,
+  GET_USERS,
+  GET_USER
 } from "../actions/types";
 
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
   isLoading: false,
-  user: null
+  user: '',
+  users: [],
+  story_author: null
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case GET_USER:
+        return {
+          ...state,
+          story_author: action.payload
+    };
+    case DELETE_USER:
+      return {
+          ...state,
+          user: action.payload
+      };
+    case GET_USERS:
+      return {
+          ...state,
+          users: action.payload
+      };
     case USER_LOADING:
       return {
         ...state,

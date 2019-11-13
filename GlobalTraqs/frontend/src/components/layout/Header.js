@@ -13,11 +13,34 @@ export class Header extends Component {
     render() {
 
         const { isAuthenticated, user } = this.props.auth;
+        var userRole = "";
+        var adminManager = null;
+    if(user != null) {
+        if(user.is_anonymous_active) {
+           user.username = "Anonymous";
+        }
+        else if(user.is_administrator) {
+            adminManager = (
+                 <li className="nav-item">
+                    <Link to="/manage" className="nav-link">Manage</Link>
+                 </li>
+            );
+            userRole = (
+                <strong>(Administrator)</strong>
+            );
+        }
+        else if(user.is_moderator) {
+            userRole = (
+                <strong>(Moderator)</strong>
+            );
+        }
+    }
 
     const authLinks = (
       <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
         <span className="navbar-text mr-3">
-          <strong>{user ? `Welcome ${user.username}` : ""}</strong>
+          <strong>{user ? `Welcome ${user.username}` : ""} {userRole} </strong>
+
         </span>
         <li className="nav-item">
           <button
@@ -64,6 +87,7 @@ export class Header extends Component {
                         <li className="nav-item">
                             <Link to="/About" className="nav-link">About </Link>
                         </li>
+                        {adminManager ? adminManager : ""}
                     </ul>
                     {isAuthenticated ? authLinks : guestLinks}
                 </div>

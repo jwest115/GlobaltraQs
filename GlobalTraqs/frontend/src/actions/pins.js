@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GET_PINS, DELETE_PINS, ADD_PIN, EDIT_PIN } from './types';
+import {GET_PINS, DELETE_PINS, ADD_PIN, EDIT_PIN, GET_PIN, GET_USER} from './types';
 
 //GET PINS
 export const getPins = () => dispatch => {
@@ -32,12 +32,14 @@ export const addPin = (pin) => dispatch => {
                 type: ADD_PIN,
                 payload: res.data
             });
+            console.log("In add pin");
+            console.log(res.data);
         })
         .catch(err => console.log(err));
 };
 
 export const editPin = (pin, id) => dispatch => {
-    console.log(id + '' + pin.title)
+    console.log(id + ' ' + pin.title);
     axios.put(`/api/pins/${id}/`, pin)
         .then(res => {
             dispatch({
@@ -46,4 +48,17 @@ export const editPin = (pin, id) => dispatch => {
             });
         })
         .catch(err => console.log(err));
+};
+
+export const getPin = (id) => dispatch => {
+    axios.get(`api/pins/${id}/`)
+        .then(res => {
+            dispatch({
+                type: GET_PIN,
+                payload: res.data
+            });
+            console.log(res.data)
+            console.log("is the pin!");
+        })
+        .catch(error => console.log(error));
 };

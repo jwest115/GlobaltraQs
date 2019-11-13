@@ -7,54 +7,66 @@ import PinForm from "./PinForm"
 import community from "./images/community.png"// Tell Webpack this JS file uses this image
 import historical from "./images/historical.png"
 import personal from "./images/personal.png"
-import red_marker from "./images/red_marker.png"
+import default_marker from "./images/default.png"
 import { Link } from 'react-router-dom'
 import EditPin from './EditPin';
 import L from 'leaflet'
-const divStyle = {
-    height: '720px',
-    width: '1080px'
+import Modal from "./Modal";
 
-}
+
+const divStyle = {
+    height: '90vh',
+    width: '100%',
+    // height: 40vh;
+    // width: '100%';
+    left: '0px',
+    position: 'absolute'
+};
+const divStyle2 = {
+    paddingLeft: '0px',
+    paddingRight: '0px',
+    position: 'absolute'
+};
 
 
 export const defaultPointerIcon = new L.Icon({
-    iconUrl: red_marker,
-    iconRetinaUrl: red_marker,
-    iconAnchor: [5, 55],
-    popupAnchor: [10, -44],
-    iconSize: [55, 55],
-    shadowSize: [68, 95],
-    shadowAnchor: [20, 92]
+  iconUrl: default_marker,
+  iconRetinaUrl: default_marker,
+  iconAnchor: [28, 61],
+  popupAnchor: [10, -44],
+  iconSize: [55, 55],
+  shadowSize: [68, 95],
+  shadowAnchor: [20, 92],
 });
 
 export const communityIcon = new L.Icon({
     iconUrl: community,
     iconRetinaUrl: community,
-    iconAnchor: [5, 55],
+    iconAnchor: [28, 61],
     popupAnchor: [10, -44],
     iconSize: [55, 55],
     shadowSize: [68, 95],
-    shadowAnchor: [20, 92]
+    shadowAnchor: [20, 92],
 });
+
 export const historicalIcon = new L.Icon({
     iconUrl: historical,
     iconRetinaUrl: historical,
-    iconAnchor: [5, 55],
+    iconAnchor: [28, 61],
     popupAnchor: [10, -44],
     iconSize: [55, 55],
     shadowSize: [68, 95],
-    shadowAnchor: [20, 92]
+    shadowAnchor: [20, 92],
 });
 
 export const personalIcon = new L.Icon({
     iconUrl: personal,
     iconRetinaUrl: personal,
-    iconAnchor: [5, 55],
+    iconAnchor: [28, 61],
     popupAnchor: [10, -44],
     iconSize: [55, 55],
     shadowSize: [68, 95],
-    shadowAnchor: [20, 92]
+    shadowAnchor: [20, 92],
 });
 
 export class Pins extends Component {
@@ -70,6 +82,9 @@ export class Pins extends Component {
             userlng: 0,
             selectedLat: "",
             selectedLong: "",
+            submitAddress: true,
+            modal: false,
+            categoryType: personalIcon
         }
     }
 
@@ -77,19 +92,26 @@ export class Pins extends Component {
         pins: PropTypes.array.isRequired,
         getPins: PropTypes.func.isRequired,
         deletePins: PropTypes.func.isRequired
-    }
+    };
+
     componentDidMount() {
         this.props.getPins();
     }
 
+    toggle = () => {
+        this.setState({ modal: !this.state.modal });
+      };
+
+    createStory = (address) => {
+        const item = { title: "", description: "", address:""};
+        this.setState({submitAddress: address, modal: !this.state.modal })
+      };
+
     addMarker = (e) => {
-        const lat = e.latlng.lat;
-        const lng = e.latlng.lng;
-
-        this.setState({ userlat: e.latlng.lat })
-        this.setState({ userlng: e.latlng.lng })
-
-    }
+        this.setState({ userlat: e.latlng.lat });
+        this.setState({ userlng: e.latlng.lng });
+        this.createStory(false)
+    };
 
 
 
@@ -101,9 +123,7 @@ export class Pins extends Component {
 
         return (
             <Fragment>
-                <h2>pins</h2>
-
-                <div id="map" >
+                <div className='container-fluid' style={divStyle2}>
                     <Map center={position} zoom={15} maxZoom={30} //shows map
                         id="map" style={divStyle}
                         //user click for location
@@ -147,24 +167,32 @@ export class Pins extends Component {
                         }
 
 
-                        {/* current selected posisiotn   
+                        {/* current selected posisiotn
                  {console.log(this.state.userlat)}
                     {console.log(this.state.userlng)} */}
 
-                        <Marker position={userposition}  >
-                            <Popup>
-                                Your position <br /> yeet
-                            </Popup>
+                        <Marker position={userposition} icon={defaultPointerIcon}>
                         </Marker>
 
-
                     </Map>
+                     <button onClick={() => this.createStory(true)} className="btn btn-primary add-story-button">
+                                  Add Story
+                         </button>
+                     {this.state.modal ? (
+                  <Modal
+                    userlat={this.state.userlat}
+                    userlng={this.state.userlng}
+                    submitAddress = {this.state.submitAddress}
+                    toggle={this.toggle}
+                    refreshList={this.refreshList}
+                  />
+                ) : null}
 
-                </div>
-                <PinForm userlat={this.state.userlat} userlng={this.state.userlng} />
+
+                {/*<PinForm userlat={this.state.userlat} userlng={this.state.userlng} />*/}
                 {/* change AddPin PinForm for working form */}
+                </div>
             </Fragment >
-
         );
     }
 
@@ -172,7 +200,7 @@ export class Pins extends Component {
 
 const mapStateToProps = state => ({ //state of redux
     pins: state.pins.pins // state.pins we want pins reducer from index, .pins is from initial state
-})
+});
 
 export default connect(
     mapStateToProps, { getPins, deletePins })

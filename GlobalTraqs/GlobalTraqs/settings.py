@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'frontend',
     'knox',
-    'accounts'
+    'accounts',
+    'users'
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':
@@ -54,6 +55,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# SETTING THE USER MODEL FROM users APP
+AUTH_USER_MODEL = 'users.User'
+
 
 ROOT_URLCONF = 'GlobalTraqs.urls'
 
@@ -80,12 +85,20 @@ WSGI_APPLICATION = 'GlobalTraqs.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'lbsggtda',
+    #     'USER': 'lbsggtda',
+    #     'PASSWORD': 'XOpmy4Z0BX79r0cOKoD6NIYnhGkKDCl1',
+    #     'HOST': 'salt.db.elephantsql.com',
+    #     'PORT': '5432',
+    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'lbsggtda',
-        'USER': 'lbsggtda',
-        'PASSWORD': 'XOpmy4Z0BX79r0cOKoD6NIYnhGkKDCl1',
-        'HOST': 'salt.db.elephantsql.com',
+        'NAME': 'globaltraqs_db3',
+        'USER': 'postgres',
+        'PASSWORD': '@Ziggy323',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }

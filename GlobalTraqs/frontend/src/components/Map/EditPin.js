@@ -20,13 +20,14 @@ export class EditPin extends Component {
     }
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
+
     onSubmit = e => {
-        const a = this.props.userlat
-        const b = this.props.userlng
-        const c = this.props.storyid
-        const d = 1
-        this.state.user = d
-        //e.preventDefault(); //prevents refresh of page 
+        const a = this.props.userlat;
+        const b = this.props.userlng;
+        const c = this.props.storyid;
+        // const d = 1
+        // this.state.user = d
+        e.preventDefault(); //prevents refresh of page
         this.state.latitude = a
         this.state.longitude = b
         this.state.id = c
@@ -42,9 +43,7 @@ export class EditPin extends Component {
     }
 
     render() {
-
-        const { title, description, latitude, longitude, category } = this.state
-
+        const { title, description, latitude, longitude, category } = this.state;
 
         return (
 
@@ -93,16 +92,14 @@ export class EditPin extends Component {
                         // value={this.props.userlat}
                         value={longitude} />
                     {/*        <div className="form-group">
-
                         <textarea
                             className="form-control"
                             type="hidden"
                             name="longitude"
                             onChange={this.onChange}
-                               value={this.props.userlng} 
+                               value={this.props.userlng}
                         value = { longitude }
                         />
-
                     </div> */}
                     <div className="form-group">
                         <button type="submit" className="btn btn-primary">

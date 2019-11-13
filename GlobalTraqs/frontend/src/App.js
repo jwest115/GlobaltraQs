@@ -16,7 +16,13 @@ import login from './components/accounts/login';
 import PrivateRoute from './components/common/PrivateRoute';
 import { loadUser } from './actions/auth';
 import Story from './components/Map/Story'
+import {DisplayMap} from "./components/Map/DisplayMap";
+import Manage from './components/accounts/manage'
+import EditStory from "./components/Map/EditStory";
 
+const divStyle = {
+   position: 'relative'
+};
 
 export class App extends Component {
     componentDidMount() {
@@ -29,15 +35,18 @@ export class App extends Component {
                 <Router>
                     <Fragment>
                         <Header />
-                           <div className="container">
+                            <div>
+                           {/*<div className="container-fluid" style={divStyle}>*/}
                             <Switch>
-
                                 <Route exact path="/" component={MapDashboard} />
                                 <Route exact path="/About" component={About} />
                                 <Route path='/Story/:id' exact component={Story} />
                                 <Route exact path="/faq" component={FAQ} />
                                 <Route exact path="/login" component={login} />
                                 <Route exact path="/register" component={register} />
+                                <Route exact path="/manage" component={Manage} />
+                                <Route path="/Story/:id/edit" exact component={EditStory} />
+
                                 {/* <MapDashboard /> */}
                             </Switch>
                           </div>

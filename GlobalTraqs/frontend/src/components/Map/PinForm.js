@@ -21,17 +21,18 @@ export class PinForm extends Component {
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
     onSubmit = e => {
-        const ida = 1
-        const a = this.props.userlat
-        const b = this.props.userlng
+        const ida = 1;
+        const a = this.props.userlat;
+        const b = this.props.userlng;
         e.preventDefault();
-        this.state.latitude = a
-        this.state.longitude = b
-        this.state.user = ida
-        const { title, description, latitude, longitude, category, user } = this.state
-        const pin = { title, description, latitude, longitude, category, user };
-        this.props.addPin(pin)
-        console.log(a + ' ' + this.state.latitude)
+        this.state.latitude = a;
+        this.state.longitude = b;
+        this.state.user = ida;
+        const { title, description, latitude, longitude, category } = this.state;
+        const pin = { title, description, latitude, longitude, category };
+        console.log("category " + category);
+        this.props.addPin(pin);
+        console.log(a + ' ' + this.state.latitude);
         console.log("id" + this.props.id)
     }
 
@@ -75,7 +76,7 @@ export class PinForm extends Component {
                             <option disabled selected value> -- select an option -- </option>
                             <option value="1">Personal</option>
                             <option value="2">Community</option>
-                            <option value="3">Hisftorical</option>
+                            <option value="3">Historical</option>
                         </select>
                     </div>
 
