@@ -32,7 +32,7 @@ class upVoteStory(models.Model):
     pinId = models.ForeignKey(
         "pin", on_delete=models.CASCADE, null=True, related_name='pinsUpvote')
     upVoter = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='updooter')
     upvote = models.BooleanField(default=False)
 
     class Meta:
