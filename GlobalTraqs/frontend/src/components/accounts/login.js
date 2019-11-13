@@ -73,12 +73,16 @@ export class Login extends Component {
         if (this.state.username !== '') {
             errors["username"] = "";
         }
+        if (this.state.password !== '') {
+            errors["password"] = "";
+        }
+        if (this.state.password.length < 8) {
+            formIsValid = false;
+            errors["password"] = "*Password must be at least 8 characters long";
+        }
         if (this.state.password === '') {
             formIsValid = false;
             errors["password"] = "*Please enter your password.";
-        }
-        if (this.state.password !== '') {
-            errors["password"] = "";
         }
         this.setState({errors:errors})
         return formIsValid;
@@ -86,26 +90,6 @@ export class Login extends Component {
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
     render(){
-        //validate = {values => {
-        //     let errors = {};
-        //     if (!values.email) {
-        //         errors.email = "Required";
-        //     }else if (!EmailValidator.validate(values.email)) {
-        //         errors.email = "Invalid email address";
-        //
-        //     }
-        //
-        //     const passwordRegex = /(?=.*[0-9])/;
-        //     if (!values.password) {
-        //         errors.password = "Required";
-        //     } else if (values.password.length < 8) {
-        //         errors.password = "Password must be 8 characters long.";
-        //     } else if (!passwordRegex.test(values.password)) {
-        //         errors.password = "Invalida password. Must contain one number";
-        //     }
-        //
-        //     return errors;
-        // }}
         if (this.props.isAuthenticated) {
             return <Redirect to="/" />;
         }
@@ -136,7 +120,7 @@ export class Login extends Component {
                                 onChange={this.onChange}
                                 value={username}
                             />
-                            <p>
+                            <p className="text-danger">
                                  {this.state.errors["username"]}
                             </p>
                         </div>
@@ -151,7 +135,7 @@ export class Login extends Component {
                                 onChange={this.onChange}
                                 value={password}
                             />
-                            <p>
+                            <p className="text-danger">
                                 {this.state.errors["password"]}
                             </p>                        </div>
 

@@ -6,11 +6,12 @@ import { register } from "../../actions/auth";
 import { createMessage } from "../../actions/messages";
 import Recaptcha from "react-recaptcha";
 import * as EmailValidator from 'email-validator';
+import { validateAll } from 'indicative';
 export class Register extends Component {
   //
   constructor(props) {
     super(props);
-    this.reCaptchaLoaded = this.reCaptchaLoaded.bind(this)
+    this.reCaptchaLoaded = this.reCaptchaLoaded.bind(this);
     this.verifyCallback = this.verifyCallback.bind(this)
   }
   reCaptchaLoaded(){
@@ -69,12 +70,16 @@ export class Register extends Component {
     if(this.state.username !== ''){
       errors["username"] = "";
     }
+    if (this.state.password !== "") {
+      errors["password"] = "";
+    }
+    if (this.state.password.length < 8) {
+      formIsValid = false;
+      errors["password"] = "*Password must be at least 8 characters long";
+    }
     if (!this.state.password === "") {
       formIsValid = false;
       errors["password"] = "*Please enter your password.";
-    }
-    if (this.state.password !== "") {
-      errors["password"] = "";
     }
     if (this.state.email === '') {
       formIsValid = false;
@@ -94,7 +99,7 @@ export class Register extends Component {
     if(this.state.password === this.state.password2){
       errors["password2"] = null
     }
-    this.setState({errors:errors})
+    this.setState({errors:errors});
     return formIsValid;
   }
 
@@ -118,8 +123,8 @@ export class Register extends Component {
                 name="username"
                 onChange={this.onChange}
                 value={username}
-              />
-              <p>
+              /><div name="userStatus"/>
+              <p className="text-danger">
                 {this.state.errors["username"]}
               </p>
             </div>
@@ -131,8 +136,8 @@ export class Register extends Component {
                 name="email"
                 onChange={this.onChange}
                 value={email}
-              />
-              <p>
+              /><div id="emailStatus"/>
+              <p className="text-danger">
                 {this.state.errors["email"]}
               </p>
             </div>
@@ -145,7 +150,7 @@ export class Register extends Component {
                 onChange={this.onChange}
                 value={password}
               />
-              <p>
+              <p className="text-danger">
                 {this.state.errors["password"]}
               </p>
             </div>
@@ -158,7 +163,7 @@ export class Register extends Component {
                 onChange={this.onChange}
                 value={password2}
               />
-              <p>
+              <p className="text-danger">
                 {this.state.errors["password2"]}
               </p>
             </div>
@@ -188,7 +193,6 @@ export class Register extends Component {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
-
 export default connect(
   mapStateToProps,
   { register, createMessage }
