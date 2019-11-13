@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
-import { TextField, Select, FormControl, MenuItem, IconButton } from "@material-ui/core";
+import { TextField, Select, FormControl, MenuItem, IconButton, responsiveFontSizes } from "@material-ui/core";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import SearchIcon from '@material-ui/icons/Search';
 import axios from "axios";
@@ -10,7 +10,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
-
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
 
 const drawerWidth = 240;
 
@@ -73,7 +74,6 @@ export default function Sidebar() {
     setState({ ...drawerState, [side]: open });
   };
 
-
   var text = document.getElementById("searchForm");
   var type = document.getElementById("pinForm");
   const sideList = side => (
@@ -115,7 +115,7 @@ export default function Sidebar() {
         >
           Search
       </Button>
-
+    
       </form>
     </div>
   );
@@ -127,14 +127,31 @@ export default function Sidebar() {
     document.getElementById("searchButton").addEventListener("click", function () {
       console.log("Searched For : " + text.value + ". Category is : " + type.value)
       axios.get(`api/pins?category=${type.value}`).then(response => {
-        //this.setState({pindata : response.data});
-        console.log(response.data)
+        for (let i = 0; i < response.data.length; i++) {
+          console.log(response.data[i].title)
+          console.log(response.data[i].description)
+        }
       })
         .catch(error => {
           console.log(error);
         });
     });
   }
+
+  /*
+          <Card className={classes.card}>
+            <CardActionArea>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {response.data[i].title}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {response.data[i].description}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+  */
 
   const handleChange = event => {
     setPinType(event.target.value);
