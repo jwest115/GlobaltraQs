@@ -150,7 +150,7 @@ export class Login extends Component {
                             Don't have an account? <Link to="/register">Register</Link>
                         </p>
                     <p>
-                        Forgot Password? <Link></Link>
+                        Forgot Password? <Link to="/resetPassword"></Link>
                     </p>
                     </form>
                 </div>
