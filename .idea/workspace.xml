@@ -2,23 +2,66 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f382347-7f98-4021-8688-5238bd831446" name="Default Changelist" comment="Added the ReCaptcha">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/AboutPage/Support.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/delete.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/profile/ProfilePage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/profile/Settings.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0002_pin_owner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/GlobaltraQs.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GlobaltraQs.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/GlobalTraqs/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/GlobalTraqs/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/AboutPage/About.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/AboutPage/About.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/DisplayMap.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/DisplayMap.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/MapDashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/MapDashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/PinForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/PinForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Pins.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Pins.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/blue_marker.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/blue_marker.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/community.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/community.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/default.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/default.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/globaltraqs logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/globaltraqs logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/historical.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/historical.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/personal.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/personal.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/red_marker.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/images/red_marker.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/layout/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/layout/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/reducers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/reducers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/blue_marker.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/blue_marker.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/community.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/community.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/default.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/default.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/globaltraqs logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/globaltraqs logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/historical.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/historical.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/personal.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/personal.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/red_marker.png" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/images/red_marker.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/pins/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/pins/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/pins/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/pins/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/users/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/users/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/users/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/users/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/users/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/users/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="GlobaltraQs" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />

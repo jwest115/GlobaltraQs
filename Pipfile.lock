@@ -85,6 +85,13 @@
             "index": "pypi",
             "version": "==2.2.6"
         },
+        "django-autofixture": {
+            "hashes": [
+                "sha256:32588b80814cdff3a8aab7cf3859fc9330d38abe37a9cc16e53d24dd1b1fcd86"
+            ],
+            "index": "pypi",
+            "version": "==0.12.1"
+        },
         "django-cors-headers": {
             "hashes": [
                 "sha256:5762ec9c2d59f38c76828dc1d4308baca4bc0d3e1d6f217683e7a24a1c4611a3",

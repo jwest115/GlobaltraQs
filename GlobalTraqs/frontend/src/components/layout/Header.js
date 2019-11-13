@@ -2,18 +2,21 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { logout } from "../../actions/auth";
+import { logout, deleteUser } from "../../actions/auth";
+
 
 export class Header extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
-    logout: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired
   };
 
     render() {
 
         const { isAuthenticated, user } = this.props.auth;
-        var userRole = "";
+
+                var userRole = "";
         var adminManager = null;
     if(user != null) {
         if(user.is_anonymous_active) {
@@ -37,18 +40,22 @@ export class Header extends Component {
     }
 
     const authLinks = (
-      <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-        <span className="navbar-text mr-3">
-          <strong>{user ? `Welcome ${user.username}` : ""} {userRole} </strong>
 
+       <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+        <span className="navbar-text text-warning mr-5">
+          <strong>{user ? `Welcome ${user.username}` : ""} {userRole} </strong>
         </span>
         <li className="nav-item">
           <button
             onClick={this.props.logout}
-            className="nav-link btn btn-info btn-sm text-light"
-          >
-            Logout
+            className="nav-link btn btn-link btn-lg text-info">
+            LOGOUT
           </button>
+          </li>
+           <li className="nav-item">
+          <Link to="/profile" className="nav-link">
+            Profile
+          </Link>
         </li>
       </ul>
     );
@@ -70,7 +77,7 @@ export class Header extends Component {
         return (
 
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-                <a className="navbar-brand" href="#">GlobalTraqs</a>
+                <a className="navbar-brand" href="#">GlobaltraQs</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
                     aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -85,7 +92,10 @@ export class Header extends Component {
                             <Link to="/faq" className="nav-link">Faq </Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/About" className="nav-link">About </Link>
+                            <Link to="/About" className="nav-link">About Us </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/support" className="nav-link">Support Us </Link>
                         </li>
                         {adminManager ? adminManager : ""}
                     </ul>
@@ -103,5 +113,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logout }
+  { logout, deleteUser }
 )(Header);

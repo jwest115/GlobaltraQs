@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'pins',
     'rest_framework',
     'frontend',
+<<<<<<< HEAD
+=======
+    'autofixture',
+>>>>>>> login&register-1
     'knox',
     'accounts',
     'users'
