@@ -147,18 +147,11 @@ export class Pins extends Component {
                             return (
                                 <Marker key={index} position={post} icon={categoryIcon}>
                                     <Popup>
-                                        {marker.title} <br /> {marker.description}
-                                        <br />
-
-                                        <EditPin userlat={marker.latitude} userlng={marker.longitude} storyid={marker.id} />
-                                        {/* <Link to="/Story"> */}
-
+                                        <strong>{marker.title}</strong> <br /> {marker.description.substring(0, 200)}
+                                        <br /><br />
                                         <Link to={`Story/${id}`}>
                                             <button type="button" className="btn btn-primary btn-sm">View Story</button>
                                         </Link>
-                                        <button onClick=
-                                            {this.props.deletePins.bind(this, marker.id)}
-                                            type="button" className="btn btn-danger btn-sm">Delete</button>
                                     </Popup>
                                 </Marker>
                             );

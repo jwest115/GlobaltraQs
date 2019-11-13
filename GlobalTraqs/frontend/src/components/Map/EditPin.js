@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Pins from './Pins'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { editPin } from '../../actions/pins'
+import {deletePins, editPin} from '../../actions/pins'
 import axios from 'axios';
 
 export class EditPin extends Component {
@@ -48,7 +48,12 @@ export class EditPin extends Component {
         return (
 
             <div className="card card-body mt-4 mb-4">
-                <h2>edit a Pin</h2>
+                <div className='delete-button-div'>
+                    <button onClick={this.props.deletePins.bind(this, this.props.storyid)}
+                    type="button" className="delete-story-button btn btn-danger btn-sm">Delete</button>
+                </div>
+                <br/>
+                <h2>Edit Story</h2>
                 {console.log(this.props.userlat + 'pinfomr' + this.props.userlng + 'aa' + this.props.storyid)}
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
@@ -112,4 +117,4 @@ export class EditPin extends Component {
     }
 }
 //callling the action
-export default connect(null, { editPin })(EditPin)
+export default connect(null, { editPin, deletePins })(EditPin)

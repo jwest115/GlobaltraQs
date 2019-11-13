@@ -51,6 +51,7 @@ export class Story extends Component {
         auth: PropTypes.object.isRequired,
         getPins: PropTypes.func.isRequired,
         pins: PropTypes.array.isRequired,
+        deletePins: PropTypes.func.isRequired
         // pin: PropTypes.object.isRequired
     };
 
@@ -181,8 +182,8 @@ export class Story extends Component {
                                 return (
                                     <Marker key={index} position={post} icon={categoryIcon}>
                                         <Popup>
-                                            {marker.title} <br /> {marker.description}
-                                            <br />
+                                            <strong>{marker.title}</strong> <br /> {marker.description.substring(0, 200)}
+                                            <br /><br />
                                                 <Link to={`/Story/${id}`} key={id}>
                                                     <button onClick={() => this.updateStoryId(id)} type="button" className="btn btn-primary btn-sm">View Story</button>
                                                 </Link>

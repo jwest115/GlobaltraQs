@@ -3,22 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="8f382347-7f98-4021-8688-5238bd831446" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/GlobalTraqs/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/GlobalTraqs/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Modal.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Modal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Pins.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Pins.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0002_pin_owner.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0003_remove_pin_owner.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0004_pin_owner.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0005_remove_pin_owner.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0006_auto_20191030_1655.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0007_remove_pin_user.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0008_pin_user.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0009_auto_20191106_1436.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/migrations/0010_auto_20191106_1438.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/pins/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/pins/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/users/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/styles/styles.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +21,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Pins-leaflet-routing" />
+        <entry key="$PROJECT_DIR$" value="story" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -117,7 +106,8 @@
       <workItem from="1573348601164" duration="14984000" />
       <workItem from="1573448487965" duration="85000" />
       <workItem from="1573449951862" duration="3600000" />
-      <workItem from="1573622427130" duration="5879000" />
+      <workItem from="1573622427130" duration="6190000" />
+      <workItem from="1573675618987" duration="2070000" />
     </task>
     <task id="LOCAL-00001" summary="fml">
       <created>1571871592874</created>
@@ -154,7 +144,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573622714704</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Changed pin model field from user foreign key to integer field (temporary fix). Moderators, admins, and authors can not edit their posts.">
+      <created>1573628694465</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1573628694465</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,7 +174,8 @@
     <MESSAGE value="fml" />
     <MESSAGE value="Added the ReCaptcha" />
     <MESSAGE value="Story page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Story page" />
+    <MESSAGE value="Changed pin model field from user foreign key to integer field (temporary fix). Moderators, admins, and authors can not edit their posts." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed pin model field from user foreign key to integer field (temporary fix). Moderators, admins, and authors can not edit their posts." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
