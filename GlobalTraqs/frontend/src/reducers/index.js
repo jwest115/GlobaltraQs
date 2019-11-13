@@ -11,5 +11,8 @@ export default combineReducers({
     errors,
     messages,
     users,
+<<<<<<< HEAD
 
+=======
+>>>>>>> sidebar-part2
 });

@@ -3,7 +3,12 @@ export const GET_PIN = 'GET_PIN';
 export const DELETE_PINS = 'DELETE_PINS';
 export const ADD_PIN = 'ADD_PIN';
 export const USER_LOADING = "USER_LOADING";
+<<<<<<< HEAD
 export const EDIT_PIN = 'EDIT_PIN';
+=======
+export const EDIT_PIN = 'EDIT_PIN'
+export const GET_PIN_BY_ID = 'GET_PIN_BY_ID'
+>>>>>>> sidebar-part2
 export const GET_ERRORS = "GET_ERRORS";
 export const CREATE_MESSAGE = "CREATE_MESSAGE";
 export const USER_LOADED = "USER_LOADED";
@@ -14,5 +19,9 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const GET_USERS = "GET_USERS";
+<<<<<<< HEAD
 export const DELETE_USER = "DELETE_USER";
 export const GET_USER = "GET_USER";
+=======
+export const DELETE_USER = "DELETE_USER";
+>>>>>>> sidebar-part2

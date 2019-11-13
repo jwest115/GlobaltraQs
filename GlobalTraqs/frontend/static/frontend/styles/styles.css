@@ -21,22 +21,37 @@
     color: gray;
     text-decoration: none;
 }
+<<<<<<< HEAD
 
 .leaflet-container {
+=======
+.leaflet-container {
+  position: absolute;
+>>>>>>> sidebar-part2
 	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
+<<<<<<< HEAD
+=======
+    margin-top: 88px;
+>>>>>>> sidebar-part2
     z-index: 1;
 }
 
 
 .add-story-button {
     position: absolute;
+<<<<<<< HEAD
     z-index: 1000;
     float: right;
     right: 20px;
     top: 20px;
+=======
+    top: 100px;
+    right: 10px;
+    z-index: 2;
+>>>>>>> sidebar-part2
 }
 
 /*.map {*/
@@ -46,6 +61,7 @@
 
 /*#world-map {*/
 /*    position: absolute;*/
+<<<<<<< HEAD
 /*}*/
 
 .admin-moderator-edit {
@@ -65,3 +81,6 @@
 .delete-button-div {
     float:right;
 }
+=======
+/*}*/
+>>>>>>> sidebar-part2

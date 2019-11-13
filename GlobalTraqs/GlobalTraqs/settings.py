@@ -39,11 +39,17 @@ INSTALLED_APPS = [
     'frontend',
     'knox',
     'accounts',
+<<<<<<< HEAD
     'users'
+=======
+    'users',
+    'django_filters',
+>>>>>>> sidebar-part2
 ]
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES':
-    ('knox.auth.TokenAuthentication',)
+    ('knox.auth.TokenAuthentication',),
 
 }
 MIDDLEWARE = [
@@ -93,6 +99,7 @@ DATABASES = {
     #     'HOST': 'salt.db.elephantsql.com',
     #     'PORT': '5432',
     # }
+<<<<<<< HEAD
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'globaltraqs_db',
@@ -100,6 +107,38 @@ DATABASES = {
         'PASSWORD': '@Ziggy323',
         'HOST': 'localhost',
         'PORT': '5432',
+=======
+    # 'default': {
+    #   'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #  'NAME': 'globaltraqs_db3',
+    # 'USER': 'postgres',
+    # 'PASSWORD': '@Ziggy323',
+    # 'HOST': 'localhost',
+    # 'PORT': '5432',
+    # }
+    # 'default': {
+    #   'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #  'NAME': 'globaltraqs',
+    # 'USER': 'postgres',
+    # 'PASSWORD': 'csula2019',
+    # 'HOST': 'globaltraqs.cmlzsycukvtd.us-east-1.rds.amazonaws.com',
+    # 'PORT': '5432',
+    # }
+    # 'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #   'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #   'NAME': 'globaltraqs',
+    #  'USER': 'postgres',
+    #   'PASSWORD': 'csula2019',
+    #   'HOST': 'globaltraqs.cmlzsycukvtd.us-east-1.rds.amazonaws.com',
+    #   'PORT': '5432',
+    #  }
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+>>>>>>> sidebar-part2
     }
 }
 

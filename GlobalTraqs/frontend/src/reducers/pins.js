@@ -1,8 +1,12 @@
 import { GET_PINS, DELETE_PINS, ADD_PIN, EDIT_PIN, GET_PIN } from '../actions/types.js';
 
 const initialState = {
+<<<<<<< HEAD
     pins: [],
     pin: null
+=======
+    pins: []
+>>>>>>> sidebar-part2
 };
 export default function (state = initialState, action) {
     switch (action.type) {
@@ -31,6 +35,10 @@ export default function (state = initialState, action) {
                 ...state,
                 pins: [...state.pins, action.payload]
             };
+<<<<<<< HEAD
+=======
+
+>>>>>>> sidebar-part2
         default:
             return state;
     }

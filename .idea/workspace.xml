@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="8f382347-7f98-4021-8688-5238bd831446" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" afterDir="false" />
@@ -8,6 +9,17 @@
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/styles/styles.css" afterDir="false" />
+=======
+    <list default="true" id="8f382347-7f98-4021-8688-5238bd831446" name="Default Changelist" comment="Added the ReCaptcha">
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/GlobaltraQs.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GlobaltraQs.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" afterDir="false" />
+>>>>>>> sidebar-part2
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,11 +31,14 @@
     <favorites_list name="GlobaltraQs" />
   </component>
   <component name="Git.Settings">
+<<<<<<< HEAD
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="story" />
       </map>
     </option>
+=======
+>>>>>>> sidebar-part2
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IgnoredFileRootStore">
@@ -36,18 +51,29 @@
   <component name="ProjectId" id="1ScPB77seAi4lsob75fJgQrLPrB" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+<<<<<<< HEAD
     <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/GlobaltraQs-2.0" />
+=======
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend" />
+>>>>>>> sidebar-part2
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+<<<<<<< HEAD
     <property name="settings.editor.selected.configurable" value="Errors" />
+=======
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+>>>>>>> sidebar-part2
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -93,6 +119,7 @@
       <workItem from="1572459610345" duration="4571000" />
       <workItem from="1572471864346" duration="1499000" />
       <workItem from="1572473777738" duration="7344000" />
+<<<<<<< HEAD
       <workItem from="1572484704594" duration="3833000" />
       <workItem from="1572919494540" duration="1156000" />
       <workItem from="1572920703690" duration="11452000" />
@@ -108,6 +135,9 @@
       <workItem from="1573449951862" duration="3600000" />
       <workItem from="1573622427130" duration="6190000" />
       <workItem from="1573675618987" duration="2070000" />
+=======
+      <workItem from="1572484704594" duration="3227000" />
+>>>>>>> sidebar-part2
     </task>
     <task id="LOCAL-00001" summary="fml">
       <created>1571871592874</created>
@@ -137,6 +167,7 @@
       <option name="project" value="LOCAL" />
       <updated>1572455644322</updated>
     </task>
+<<<<<<< HEAD
     <task id="LOCAL-00005" summary="Story page">
       <created>1573622714704</created>
       <option name="number" value="00005" />
@@ -152,6 +183,9 @@
       <updated>1573628694465</updated>
     </task>
     <option name="localTasksCounter" value="7" />
+=======
+    <option name="localTasksCounter" value="5" />
+>>>>>>> sidebar-part2
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -173,6 +207,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fml" />
     <MESSAGE value="Added the ReCaptcha" />
+<<<<<<< HEAD
     <MESSAGE value="Story page" />
     <MESSAGE value="Changed pin model field from user foreign key to integer field (temporary fix). Moderators, admins, and authors can not edit their posts." />
     <option name="LAST_COMMIT_MESSAGE" value="Changed pin model field from user foreign key to integer field (temporary fix). Moderators, admins, and authors can not edit their posts." />
@@ -186,5 +221,8 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+=======
+    <option name="LAST_COMMIT_MESSAGE" value="Added the ReCaptcha" />
+>>>>>>> sidebar-part2
   </component>
 </project>
