@@ -30,9 +30,9 @@ class categoryType(models.Model):
 
 class upVoteStory(models.Model):
     pinId = models.ForeignKey(
-        "pin", on_delete=models.CASCADE, null=True, related_name='pinsUpvote')
+        "pin", on_delete=models.CASCADE, null=True, related_name='updotes')
     upVoter = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='updooter')
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     upvote = models.BooleanField(default=False)
 
     class Meta:
@@ -46,7 +46,7 @@ class upVoteStory(models.Model):
 
 class flagStory(models.Model):
     pinId = models.ForeignKey(
-        "pin", on_delete=models.CASCADE, null=True)
+        "pin", on_delete=models.CASCADE, null=True,  related_name='flaggerstory')
     flagger = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     flagged = models.BooleanField(default=False)

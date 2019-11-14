@@ -9,10 +9,14 @@ from django.db.models import Count, Sum, Value
 
 
 class PinViewSet(viewsets.ModelViewSet):
-    queryset = pin.objects.all()
-    """    queryset = pin.objects.annotate(
-           updoot=Coalesce(Sum('pinsUpvote__upvote'), Value(1))
-       ) """
+    #queryset = pin.objects.all()
+ #   queryset = pin.objects.annotate(
+  #      updoot=Coalesce(Sum('pinsUpvote__upvote'), Value(1))
+   # )
+    queryset = pin.objects.annotate(
+        updooots=Coalesce(Sum('updotes__upvote'), Value(0))
+    )
+
     permission_classes = [
         permissions.AllowAny
         # permissions.IsAuthenticated,

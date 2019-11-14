@@ -106,10 +106,9 @@ export class Story extends Component {
       "initial upvote: " + this.state.upvote + " " + this.state.upVoter
     );
     const switchVote = this.state.upvote ? false : true;
-    this.state.upvote ? (this.state.upVotes -= 1) : (this.state.upVotes += 1);
+
     this.setState({
-      upvote: switchVote,
-      upVotes: this.state.upVotes
+      upvote: switchVote
     });
     console.log(this.state.upVotes);
     console.log("the updoot" + this.state.userStory.upVotes);
@@ -123,17 +122,6 @@ export class Story extends Component {
       ? this.changeUpvote(upVoteStoryPin)
       : this.newUpvote(upVoteStoryPin);
 
-    console.log(this.state.upVotes + "how many");
-    const { upVotes } = this.state;
-    const storypin = { upVotes };
-    axios
-      .patch(`api/pins/${this.state.pinId}/`, storypin)
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
     axios
       .get(
         `api/upVoteStory?pinId=${this.state.pinId}&upVoter=${this.state.upVoterId}`
@@ -231,7 +219,7 @@ export class Story extends Component {
         </div>
         <form onSubmit={this.onSubmit}>
           <h2>
-            number of upvotes: {this.state.upVotes}{" "}
+            number of upvotes: {this.state.userStory.updooots}{" "}
             {isAuthenticated ? upVoteButton : "login to upvote"}
           </h2>
         </form>
