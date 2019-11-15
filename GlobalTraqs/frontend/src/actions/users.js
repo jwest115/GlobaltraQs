@@ -1,9 +1,5 @@
 import axios from "axios";
 import {GET_USERS} from "./types";
-<<<<<<< HEAD
-import {GET_USER} from "./types";
-=======
->>>>>>> sidebar-part2
 import {DELETE_USER} from "./types";
 
 
@@ -27,7 +23,6 @@ export const deleteUser = (id) => dispatch => {
             });
         })
         .catch(err => console.log(err));
-<<<<<<< HEAD
 };
 
 export const getUser = (id) => dispatch => {
@@ -39,6 +34,4 @@ export const getUser = (id) => dispatch => {
             });
         })
         .catch(err => console.log(err));
-=======
->>>>>>> sidebar-part2
 };

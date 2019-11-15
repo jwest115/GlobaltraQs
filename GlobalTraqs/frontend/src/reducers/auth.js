@@ -8,31 +8,21 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   DELETE_USER,
-<<<<<<< HEAD
   GET_USERS,
   GET_USER
-=======
-  GET_USERS
->>>>>>> sidebar-part2
 } from "../actions/types";
 
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
   isLoading: false,
-<<<<<<< HEAD
   user: '',
   users: [],
   story_author: null
-=======
-  user: null,
-  users: []
->>>>>>> sidebar-part2
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-<<<<<<< HEAD
     case GET_USER:
         return {
           ...state,
@@ -42,12 +32,6 @@ export default function(state = initialState, action) {
       return {
           ...state,
           user: action.payload
-=======
-    case DELETE_USER:
-      return {
-          ...state,
-          users: action.payload
->>>>>>> sidebar-part2
       };
     case GET_USERS:
       return {

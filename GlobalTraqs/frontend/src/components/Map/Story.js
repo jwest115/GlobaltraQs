@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, {Component, Fragment} from 'react'
 import PropTypes from "prop-types"
 import axios from 'axios';
@@ -33,18 +32,24 @@ const storyBody = {
     paddingRight: '50px'
 }
 
-=======
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import axios from "axios";
-
-import { connect } from "react-redux";
->>>>>>> sidebar-part2
-
 export class Story extends Component {
   static propTypes = {
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
+    getPins: PropTypes.func.isRequired,
+    pins: PropTypes.array.isRequired,
+    deletePins: PropTypes.func.isRequired
   };
+
+   constructor(props) {
+        super(props);
+        this.state = {
+            userStory: '',
+            showEditForm: false,
+            editButtonValue:'Edit Story',
+            storyAuthor: '',
+            storyId: ''
+        }
+    }
 
   state = {
     pinId: "",
@@ -63,6 +68,7 @@ export class Story extends Component {
   };
 
   componentDidMount() {
+
     const { id } = this.props.match.params;
     this.setState({ pinId: id });
     const { isAuthenticated, user } = this.props.auth;
@@ -106,7 +112,6 @@ export class Story extends Component {
         console.log(error);
       });
     axios
-
       .get(`api/upVoteStory?pinId=${id}&upVoter=${userid}`)
       .then(response => {
         const userUpvotedBefore =
@@ -133,15 +138,57 @@ export class Story extends Component {
         console.log(error);
       });
   }
-  onSubmit = e => {
+   onFlag = e => {
+    e.preventDefault();
+    this.state.flagged = true;
+    console.log("flag these losers");
+    const { flagged, pinId, flagger } = this.state;
+    const upVoteStoryPin = { flagged, pinId, flagger };
+    axios
+      .post("/api/flagStory/", upVoteStoryPin)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => console.log(err));
+    this.setState({
+      flagged: true,
+      hasFlaggedBefore: true
+    });
+  };
+  changeUpvote(upVoteStoryPin) {
+    console.log("the voite id is: " + this.state.upVoteId);
+    axios
+      .put(`/api/upVoteStory/${this.state.upVoteId}/`, upVoteStoryPin)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => console.log(err));
+  }
+
+  newUpvote(upVoteStoryPin) {
+    axios
+      .post("/api/upVoteStory/", upVoteStoryPin)
+      .then(res => {
+        console.log(res.data);
+      })
+      .catch(err => console.log(err));
+    this.setState({
+      hasVotedBefore: true
+    });
+  }
+ onSubmit = e => {
     e.preventDefault();
     console.log(
       "initial upvote: " + this.state.upvote + " " + this.state.upVoter
     );
     const switchVote = this.state.upvote ? false : true;
+    this.state.upvote ? (this.state.upVotes -= 1) : (this.state.upVotes += 1);
     this.setState({
-      upvote: switchVote
+      upvote: switchVote,
+      upVotes: this.state.upVotes
     });
+    console.log(this.state.upVotes);
+    console.log("the updoot" + this.state.userStory.upVotes);
     this.state.upvote = switchVote;
     console.log(
       "post upvote: " + switchVote + " " + this.state.upvote + "lalal"
@@ -152,26 +199,34 @@ export class Story extends Component {
       ? this.changeUpvote(upVoteStoryPin)
       : this.newUpvote(upVoteStoryPin);
 
-<<<<<<< HEAD
-    constructor(props) {
-        super(props);
-        this.state = {
-            userStory: '',
-            showEditForm: false,
-            editButtonValue:'Edit Story',
-            storyAuthor: '',
-            storyId: ''
-        }
-    }
+    console.log(this.state.upVotes + "how many");
+    const { upVotes } = this.state;
+    const storypin = { upVotes };
+    axios
+      .patch(`api/pins/${this.state.pinId}/`, storypin)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    axios
+      .get(
+        `api/upVoteStory?pinId=${this.state.pinId}&upVoter=${this.state.upVoterId}`
+      )
+      .then(response => {
+        const userUpvotedBefore =
+          response.data && response.data.length ? true : false; // if user upvoted before
+        const upvoteid = userUpvotedBefore ? response.data[0].id : false; //gets  id of upvotted story
 
-
-    static propTypes = {
-        auth: PropTypes.object.isRequired,
-        getPins: PropTypes.func.isRequired,
-        pins: PropTypes.array.isRequired,
-        deletePins: PropTypes.func.isRequired
-        // pin: PropTypes.object.isRequired
-    };
+        this.setState({
+          upVoteId: upvoteid
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
     updateStoryId = (storyId) => {
         this.setState({storyId : storyId});
@@ -179,53 +234,6 @@ export class Story extends Component {
         this.componentDidMount()
     };
 
-    // componentDidUpdate (prevProps) {
-    //      let oldId = prevProps.match.params;
-    //      let newId = this.props.match.params;
-    //
-    //      console.log(newId);
-    //      if (newId !== oldId) {
-    //          axios.get(`api/pins/${newId}`)
-    //             .then(response => {
-    //                 this.setState({ userStory: response.data });
-    //                 console.log(response.data);
-    //             })
-    //             .catch(error => {
-    //                 console.log(error);
-    //             });
-    //      }
-    // }
-
-    componentDidMount() {
-        this.props.getPins();
-        this.state.storyId = this.props.match.params;
-        console.log(this.props.match.params);
-        const { id } = this.state.storyId;
-        // this.props.getPin(id);
-        axios.get(`api/pins/${id}`)
-            .then(response => {
-                this.setState({ userStory: response.data });
-                this.getAuthor(response.data.user_id);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
-        // this.getAuthor(this.state.userStory.user_id);
-
-        // getUser(id);
-
-        // const {user_id} = this.state.userStory;
-        // console.log("user id " + this.state.userStory);
-        // axios.get(`/api/auth/users/${id}/`)
-        //     .then(res => {
-        //             this.setState({storyAuthor: res.data});
-        //             console.log("the data is " + res.data);
-        //     })
-        //      .catch(error => {
-        //         console.log(error);
-        //     });
-    }
 
      editStory = () => {
         if(this.state.showEditForm) {
@@ -278,9 +286,34 @@ export class Story extends Component {
         }
         // console.log("lat " + this.state.userStory.latitude);
         const position = [this.state.userStory.latitude, this.state.userStory.longitude];
+        const flaggedButton = this.state.hasFlaggedBefore ? (
+          <button type="button" class="btn btn-warning">
+            Flagged
+          </button>
+        ) : (
+          <form onSubmit={this.onFlag}>
+            <button type="submit" className="btn btn-danger">
+              Flag
+            </button>
+          </form>
+        );
+        const upVoteButton = (
+          <button type="submit" className="btn btn-primary">
+            {this.state.upvote ? "Downvote" : "Upvote"}
+          </button>
+        );
         // const {author} = this.props.user;
         return (
+
             <div className='container-fluid' style={divStyle2}>
+                     <form onSubmit={this.onSubmit}>
+                      <h2>
+                        number of upvotes {this.state.numberOfUpvote}{" "}
+                        {isAuthenticated ? upVoteButton : "login to upvote"}
+                      </h2>
+                    </form>
+
+                <h2> {isAuthenticated ? flaggedButton : ""}</h2>
                 <Map center={position} zoom={15} maxZoom={30} id="map" style={divStyle}>
                     <TileLayer
                         attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
@@ -321,126 +354,6 @@ export class Story extends Component {
                     <hr></hr>
                     <p>{this.state.userStory.description}</p>
                 </div>
-            {/*<div className="card card-body mt-4 mb-4">*/}
-            {/*    {this.state.showEditForm &&*/}
-            {/*    <EditPin title={this.state.userStory.title} description={this.state.userStory.description} userlat={this.state.userStory.latitude} userlng={this.state.userStory.longitude}*/}
-            {/*          storyid={id} user_id={this.state.userStory.user_id}/> }*/}
-            {/*    {isAdminOrModerator ? adminModeratorEditStory : ""}*/}
-            {/*    <div className=''>*/}
-            {/*    <h2>id is: {this.state.userStory.title}</h2>*/}
-            {/*    <h2>Title:  {this.state.userStory.title}</h2>*/}
-            {/*    <h2>Description: {this.state.userStory.description}</h2>*/}
-            {/*    <h2>latitude: {this.state.userStory.latitude}</h2>*/}
-            {/*    <h2>longitude: {this.state.userStory.longitude}</h2>*/}
-            {/*    /!*<h2>owner: {this.state.userStory.user_id} </h2>*!/*/}
-            {/*    <div className="col-lg-1">*/}
-            {/*        <img src="https://picsum.photos/200/300" className="rounded" position="center"/>*/}
-            {/*    </div>*/}
-=======
-    axios
-
-      .get(
-        `api/upVoteStory?pinId=${this.state.pinId}&upVoter=${this.state.upVoterId}`
-      )
-      .then(response => {
-        const userUpvotedBefore =
-          response.data && response.data.length ? true : false; // if user upvoted before
-        const upvoteid = userUpvotedBefore ? response.data[0].id : false; //gets  id of upvotted story
-
-        this.setState({
-          upVoteId: upvoteid
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-  onFlag = e => {
-    e.preventDefault();
-    this.state.flagged = true;
-    console.log("flag these losers");
-    const { flagged, pinId, flagger } = this.state;
-    const upVoteStoryPin = { flagged, pinId, flagger };
-    axios
-      .post("/api/flagStory/", upVoteStoryPin)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => console.log(err));
-    this.setState({
-      flagged: true,
-      hasFlaggedBefore: true
-    });
-  };
-  changeUpvote(upVoteStoryPin) {
-    console.log("the voite id is: " + this.state.upVoteId);
-    axios
-      .put(`/api/upVoteStory/${this.state.upVoteId}/`, upVoteStoryPin)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => console.log(err));
-  }
-
-  newUpvote(upVoteStoryPin) {
-    axios
-      .post("/api/upVoteStory/", upVoteStoryPin)
-      .then(res => {
-        console.log(res.data);
-      })
-      .catch(err => console.log(err));
-    this.setState({
-      hasVotedBefore: true
-    });
-  }
-
-  render() {
-    const { id } = this.props.match.params;
->>>>>>> sidebar-part2
-
-    const { isAuthenticated, user } = this.props.auth;
-    const flaggedButton = this.state.hasFlaggedBefore ? (
-      <button type="button" class="btn btn-warning">
-        Flagged
-      </button>
-    ) : (
-      <form onSubmit={this.onFlag}>
-        <button type="submit" className="btn btn-danger">
-          Flag
-        </button>
-      </form>
-    );
-    const upVoteButton = (
-      <button type="submit" className="btn btn-primary">
-        {this.state.upvote ? "Downvote" : "Upvote"}
-      </button>
-    );
-    return (
-      <div className="card card-body mt-4 mb-4">
-        <h2>id is {this.state.pinId} </h2>
-        <h2>Title: {this.state.userStory.title}</h2>
-        <h2>Description: {this.state.userStory.description}</h2>
-        <h2>latitude: {this.state.userStory.latitude}</h2>
-        <h2>longitude: {this.state.userStory.longitude}</h2>
-        <h2>
-          owner: {this.state.userStory.owner} {this.state.username}
-        </h2>
-        <h2></h2>
-
-<<<<<<< HEAD
-
-            {/*    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. <b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b>. Praesent mauris. Fusce nec tellus sed augue semper porta. <b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b>. Mauris massa. Vestibulum lacinia arcu eget nulla. <b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b>. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. </p>*/}
-
-            {/*    <p>Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. </p>*/}
-
-            {/*    <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus. </p>*/}
-
-            {/*    <p>Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa mattis sem, at interdum magna augue eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi lacinia molestie dui. Praesent blandit dolor. Sed non quam. In vel mi sit amet augue congue elementum. Morbi in ipsum sit amet pede facilisis laoreet. Donec lacus nunc, viverra nec, blandit vel, egestas et, augue. Vestibulum tincidunt malesuada tellus. Ut ultrices ultrices enim. Curabitur sit amet mauris. Morbi in dui quis est pulvinar ullamcorper. </p>*/}
-
-            {/*    <p>Nulla facilisi. Integer lacinia sollicitudin massa. Cras metus. Sed aliquet risus a tortor. Integer id quam. Morbi mi. Quisque nisl felis, venenatis tristique, dignissim in, ultrices sit amet, augue. Proin sodales libero eget ante. Nulla quam. Aenean laoreet. Vestibulum nisi lectus, commodo ac, facilisis ac, ultricies eu, pede. Ut orci risus, accumsan porttitor, cursus quis, aliquet eget, justo. Sed pretium blandit orci. Ut eu diam at pede suscipit sodales. </p>*/}
-
-            {/*</div>*/}
-            {/*</div>*/}
             </div>
         )
     }
@@ -452,84 +365,4 @@ const mapStateToProps = state => ({
 });
 export default connect(
     mapStateToProps, {getPins})
-    (Story);
-=======
-        <div className="col-lg-1">
-          <img
-            src="https://picsum.photos/200/300"
-            className="rounded"
-            position="center"
-          ></img>
-        </div>
-        <form onSubmit={this.onSubmit}>
-          <h2>
-            number of upvotes {this.state.numberOfUpvote}{" "}
-            {isAuthenticated ? upVoteButton : "login to upvote"}
-          </h2>
-        </form>
-
-        <h2> {isAuthenticated ? flaggedButton : ""}</h2>
-
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec
-          odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla
-          quis sem at nibh elementum imperdiet. Duis sagittis ipsum.{" "}
-          <b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b>.
-          Praesent mauris. Fusce nec tellus sed augue semper porta.{" "}
-          <b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b>. Mauris
-          massa. Vestibulum lacinia arcu eget nulla.{" "}
-          <b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b>. Class
-          aptent taciti sociosqu ad litora torquent per conubia nostra, per
-          inceptos himenaeos.{" "}
-        </p>
-
-        <p>
-          Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.
-          Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem
-          at dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut
-          ligula vel nunc egestas porttitor. Morbi lectus risus, iaculis vel,
-          suscipit quis, luctus non, massa. Fusce ac turpis quis ligula lacinia
-          aliquet. Mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt
-          sed, euismod in, nibh. Quisque volutpat condimentum velit.{" "}
-        </p>
-
-        <p>
-          Class aptent taciti sociosqu ad litora torquent per conubia nostra,
-          per inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt
-          mattis, tortor neque adipiscing diam, a cursus ipsum ante quis turpis.
-          Nulla facilisi. Ut fringilla. Suspendisse potenti. Nunc feugiat mi a
-          tellus consequat imperdiet. Vestibulum sapien. Proin quam. Etiam
-          ultrices. Suspendisse in justo eu magna luctus suscipit. Sed lectus.{" "}
-        </p>
-
-        <p>
-          Integer euismod lacus luctus magna. Quisque cursus, metus vitae
-          pharetra auctor, sem massa mattis sem, at interdum magna augue eget
-          diam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-          posuere cubilia Curae; Morbi lacinia molestie dui. Praesent blandit
-          dolor. Sed non quam. In vel mi sit amet augue congue elementum. Morbi
-          in ipsum sit amet pede facilisis laoreet. Donec lacus nunc, viverra
-          nec, blandit vel, egestas et, augue. Vestibulum tincidunt malesuada
-          tellus. Ut ultrices ultrices enim. Curabitur sit amet mauris. Morbi in
-          dui quis est pulvinar ullamcorper.{" "}
-        </p>
-
-        <p>
-          Nulla facilisi. Integer lacinia sollicitudin massa. Cras metus. Sed
-          aliquet risus a tortor. Integer id quam. Morbi mi. Quisque nisl felis,
-          venenatis tristique, dignissim in, ultrices sit amet, augue. Proin
-          sodales libero eget ante. Nulla quam. Aenean laoreet. Vestibulum nisi
-          lectus, commodo ac, facilisis ac, ultricies eu, pede. Ut orci risus,
-          accumsan porttitor, cursus quis, aliquet eget, justo. Sed pretium
-          blandit orci. Ut eu diam at pede suscipit sodales.{" "}
-        </p>
-      </div>
-    );
-  }
-}
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-
-export default connect(mapStateToProps)(Story);
->>>>>>> sidebar-part2
+    (Story)

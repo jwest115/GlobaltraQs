@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 from pins.models import pin
 from rest_framework import viewsets, permissions
 from .serializers import PinSerializer
-=======
 from pins.models import pin, categoryType, upVoteStory, flagStory
 from rest_framework import viewsets, permissions
 from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer, FlagStorySerializer
->>>>>>> sidebar-part2
 from django.contrib.auth.models import User
 # catalog viewset
 from django_filters.rest_framework import DjangoFilterBackend
@@ -22,13 +19,13 @@ class PinViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
 
-# class CategoryViewSet(viewsets.ModelViewSet):
-#     queryset = categoryType.objects.all()
-#     permission_classes = [
-#         permissions.AllowAny
-#         # permissions.IsAuthenticated,
-#     ]
-#     serializer_class = CategorySerializer
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = categoryType.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+        # permissions.IsAuthenticated,
+    ]
+    serializer_class = CategorySerializer
 
 
 class upVoteStoryViewSet(viewsets.ModelViewSet):

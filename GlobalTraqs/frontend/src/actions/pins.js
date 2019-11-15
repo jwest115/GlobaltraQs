@@ -51,7 +51,6 @@ export const editPin = (pin, id) => dispatch => {
         })
         .catch(err => console.log(err));
 };
-<<<<<<< HEAD
 
 export const getPin = (id) => dispatch => {
     axios.get(`api/pins/${id}/`)
@@ -65,5 +64,3 @@ export const getPin = (id) => dispatch => {
         })
         .catch(error => console.log(error));
 };
-=======
->>>>>>> sidebar-part2
