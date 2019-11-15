@@ -14,7 +14,6 @@ import L from "leaflet";
 import Modal from "./Modal";
 
 import MarkerClusterGroup from "react-leaflet-markercluster";
-
 const divStyle = {
   height: "90%",
   width: "100%"

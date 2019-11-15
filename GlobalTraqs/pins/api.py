@@ -7,10 +7,19 @@ from .serializers import PinSerializer, CategorySerializer, upVoteStorySerialize
 from django.contrib.auth.models import User
 # catalog viewset
 from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models.functions import Coalesce
+from django.db.models import Count, Sum, Value
 
 
 class PinViewSet(viewsets.ModelViewSet):
-    queryset = pin.objects.all()
+    #queryset = pin.objects.all()
+ #   queryset = pin.objects.annotate(
+  #      updoot=Coalesce(Sum('pinsUpvote__upvote'), Value(1))
+   # )
+    queryset = pin.objects.annotate(
+        updooots=Coalesce(Sum('updotes__upvote'), Value(0))
+    )
+
     permission_classes = [
         permissions.AllowAny
         # permissions.IsAuthenticated,

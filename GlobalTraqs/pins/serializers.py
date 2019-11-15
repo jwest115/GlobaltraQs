@@ -4,17 +4,6 @@ from pins.models import pin, categoryType, upVoteStory, flagStory
 from django_restql.mixins import DynamicFieldsMixin
 
 
-class PinSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = pin
-        fields = '__all__'
-
-
-# class CategorySerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = categoryType
-#         fields = '__all__'
-
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = categoryType
@@ -30,4 +19,20 @@ class upVoteStorySerializer(DynamicFieldsMixin, serializers.ModelSerializer):
 class FlagStorySerializer(DynamicFieldsMixin, serializers.ModelSerializer):
     class Meta:
         model = flagStory
+        fields = '__all__'
+
+
+class PinSerializer(serializers.ModelSerializer):
+  #  updoot = serializers.IntegerField()
+    categoryName = serializers.CharField(
+        source="category.categoryName", read_only=True)
+    #pinsUpvote = serializers.StringRelatedField(many=True)
+    # pinsUpvote = upVoteStorySerializer(many=True, read_only=True)
+    #pinsUpvoted = upVoteStorySerializer(many=True, read_only=True)
+    updooots = serializers.IntegerField(read_only=True)
+    flaggerstory = FlagStorySerializer(many=True, read_only=True)
+    updotes = upVoteStorySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = pin
         fields = '__all__'

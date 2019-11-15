@@ -54,17 +54,19 @@ export class Story extends Component {
   state = {
     pinId: "",
     userStory: "",
-    numberOfUpvote: "",
+    upVotes: "",
     upvote: "",
     hasVotedBefore: "",
     upVoteId: "",
     upVoterId: "",
     upVoter: "",
     flagged: "",
-    flaggerId: "",
     hasFlaggedBefore: "",
     flagId: "",
-    flagger: ""
+    flagger: "",
+    currentUser: "",
+    test: "",
+    updotes: ""
   };
 
   componentDidMount() {
@@ -78,30 +80,21 @@ export class Story extends Component {
     this.setState({
       upVoterId: userid,
       upVoter: userid,
-      flaggerId: userid,
+
       flagger: userid
     });
     this.state.upVoter = userid;
-    console.log("the user id is: " + this.state.upVoterId);
+    console.log("the user id is: " + id);
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-        this.setState({ userStory: response.data });
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    axios
-      .get(`api/flagStory?pinId=${id}&flagger=${userid}`)
-      .then(response => {
-        const userFlaggedBefore =
-          response.data && response.data.length ? true : false; // if user upvoted before
-        const stateofFlagged = userFlaggedBefore
-          ? response.data[0].upvote
-          : false; //returns what the user had upvoted from before else new user is false
-        const flaggedid = userFlaggedBefore ? response.data[0].id : false; //gets  id of upvotted story
+        const flaggedData = response.data.flaggerstory.filter(
+          b => b.flagger == userid
+        )[0]; //gets the first value of the filter even tho its the only one
+        const userFlaggedBefore = flaggedData ? true : false;
+        console.log("has the user flag " + userFlaggedBefore);
 
+<<<<<<< HEAD
         this.setState({
           flagged: stateofFlagged,
           hasFlaggedBefore: userFlaggedBefore,
@@ -120,25 +113,73 @@ export class Story extends Component {
           ? response.data[0].upvote
           : false; //returns what the user had upvoted from before else new user is false
         const upvoteid = userUpvotedBefore ? response.data[0].id : false; //gets  id of upvotted story
+=======
+        const upvotedData = response.data.updotes.filter(
+          c => c.upVoter == userid
+        )[0];
 
+        const userUpvotedBefore = upvotedData ? true : false;
+        const stateofUpvote = userUpvotedBefore ? upvotedData.upvote : false;
+        const upvoteid = userUpvotedBefore ? upvotedData.id : false; //gets  id of upvotted story
+>>>>>>> marker-cluster
+
+        console.log(upvotedData);
         this.setState({
+          userStory: response.data,
+          upVotes: response.data.upVotes,
+          hasFlaggedBefore: userFlaggedBefore,
           upvote: stateofUpvote,
           hasVotedBefore: userUpvotedBefore,
-          upVoteId: upvoteid
+          upVoteId: upvoteid,
+          updotes: response.data.updooots
         });
-        console.log(
-          "getting upvotes based on pin id + upvoter id " +
-            "has userupvoted before: " +
-            userUpvotedBefore +
-            " what is the state of their upvote: " +
-            stateofUpvote
-        );
       })
       .catch(error => {
         console.log(error);
       });
   }
+<<<<<<< HEAD
    onFlag = e => {
+=======
+  onSubmit = e => {
+    e.preventDefault();
+    console.log(
+      "initial upvote: " + this.state.upvote + " " + this.state.upVoter
+    );
+    const switchVote = this.state.upvote ? false : true;
+
+    this.setState({
+      upvote: switchVote
+    });
+
+    console.log("the updoot" + this.state.userStory.upVotes);
+    this.state.upvote = switchVote;
+    console.log(
+      "post upvote: " + switchVote + " " + this.state.upvote + "lalal"
+    );
+    const { upvote, pinId, upVoter } = this.state;
+    const upVoteStoryPin = { upvote, pinId, upVoter };
+    this.state.hasVotedBefore
+      ? this.changeUpvote(upVoteStoryPin)
+      : this.newUpvote(upVoteStoryPin);
+  };
+  getData() {
+    axios
+      .get(`api/pins/${this.state.pinId}`)
+      .then(response => {
+        console.log("number: " + response.data.updooots);
+        this.setState({
+          userStory: response.data,
+          updotes: response.data.updooots
+        });
+      })
+
+      .catch(error => {
+        console.log(error);
+      });
+  }
+  onFlag = e => {
+>>>>>>> marker-cluster
     e.preventDefault();
     this.state.flagged = true;
     console.log("flag these losers");
@@ -161,6 +202,7 @@ export class Story extends Component {
       .put(`/api/upVoteStory/${this.state.upVoteId}/`, upVoteStoryPin)
       .then(res => {
         console.log(res.data);
+        this.getData();
       })
       .catch(err => console.log(err));
   }
@@ -169,17 +211,40 @@ export class Story extends Component {
     axios
       .post("/api/upVoteStory/", upVoteStoryPin)
       .then(res => {
+        console.log("new");
         console.log(res.data);
+        this.setState({
+          upVoteId: res.data.id
+        });
+        this.getData();
       })
       .catch(err => console.log(err));
     this.setState({
       hasVotedBefore: true
     });
   }
+<<<<<<< HEAD
  onSubmit = e => {
     e.preventDefault();
     console.log(
       "initial upvote: " + this.state.upvote + " " + this.state.upVoter
+=======
+
+  render() {
+    const { id } = this.props.match.params;
+    console.log(this.state.hasFlaggedBefore);
+    const { isAuthenticated, user } = this.props.auth;
+    const flaggedButton = this.state.hasFlaggedBefore ? (
+      <button type="button" className="btn btn-warning">
+        Flagged
+      </button>
+    ) : (
+      <form onSubmit={this.onFlag}>
+        <button type="submit" className="btn btn-danger">
+          Flag
+        </button>
+      </form>
+>>>>>>> marker-cluster
     );
     const switchVote = this.state.upvote ? false : true;
     this.state.upvote ? (this.state.upVotes -= 1) : (this.state.upVotes += 1);
@@ -219,6 +284,7 @@ export class Story extends Component {
           response.data && response.data.length ? true : false; // if user upvoted before
         const upvoteid = userUpvotedBefore ? response.data[0].id : false; //gets  id of upvotted story
 
+<<<<<<< HEAD
         this.setState({
           upVoteId: upvoteid
         });
@@ -227,6 +293,22 @@ export class Story extends Component {
         console.log(error);
       });
   };
+=======
+        <div className="col-lg-1">
+          <img
+            src="https://picsum.photos/200/300"
+            className="rounded"
+            position="center"
+          ></img>
+        </div>
+        <form onSubmit={this.onSubmit}>
+          <h2>
+            number of upvotes: {/* this.state.userStory.updooots */}{" "}
+            {this.state.updotes}{" "}
+            {isAuthenticated ? upVoteButton : "login to upvote"}
+          </h2>
+        </form>
+>>>>>>> marker-cluster
 
     updateStoryId = (storyId) => {
         this.setState({storyId : storyId});
