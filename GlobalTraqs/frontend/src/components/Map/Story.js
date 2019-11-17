@@ -41,8 +41,8 @@ export class Story extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
     getPins: PropTypes.func.isRequired,
-    pins: PropTypes.array.isRequired,
-    deletePins: PropTypes.func.isRequired
+    pins: PropTypes.array.isRequired
+    //deletePins: PropTypes.func.isRequired
   };
 
   constructor(props) {
