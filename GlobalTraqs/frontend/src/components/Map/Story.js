@@ -268,7 +268,7 @@ export class Story extends Component {
     }
     let authorName = "Anonymous";
     if (this.state.userStory.username != "") {
-      authorName = this.state.storyAuthor.username;
+      authorName = this.state.userStory.username;
     }
     // console.log("lat " + this.state.userStory.latitude);
     const position = [
