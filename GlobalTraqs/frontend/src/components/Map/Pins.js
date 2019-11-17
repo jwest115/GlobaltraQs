@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import EditPin from "./EditPin";
 import L from "leaflet";
 import Modal from "./Modal";
+import { login } from "../../actions/auth";
 
 import MarkerClusterGroup from "react-leaflet-markercluster";
 const divStyle = {
