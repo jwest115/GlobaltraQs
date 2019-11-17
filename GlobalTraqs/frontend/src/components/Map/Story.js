@@ -296,7 +296,7 @@ export class Story extends Component {
       <div className="container-fluid" style={divStyle2}>
         <form onSubmit={this.onSubmit}>
           <h2>
-            number of upvotes {this.state.numberOfUpvote}{" "}
+            number of upvotes {this.state.userStory.updooots}{" "}
             {isAuthenticated ? upVoteButton : "login to upvote"}
           </h2>
         </form>
