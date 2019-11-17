@@ -5,17 +5,40 @@ import PropTypes from "prop-types";
 import Typography from '@material-ui/core/Typography';
 import { login } from "../../actions/auth";
 
+import axios from 'axios';
 
-class ProfilePage extends Component {
 
-  static propTypes = {
-    auth: PropTypes.object.isRequired,
-  };
+export class ProfilePage extends Component {
+ constructor(props) {
+    super(props);
+    this.state = {
+        stories: '',
+    };
+  }
 
-  render() {
+     componentDidMount() {
+     const { isAuthenticated, user } = this.props.auth;
+     const userid = user ? user.id : "";
+        axios.get(`api/pins`)
+            .then(response => {
+            const profileStories = response.data.filter(
+          b => b.owner == userid
+        )
+                console.log(profileStories);
+                this.setState({
+                stories: profileStories
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
 
-          const { isAuthenticated, login, user } = this.props.auth;
-          login: PropTypes.func.isRequired
+   render() {
+
+             const { isAuthenticated, login, user } = this.props.auth;
+
+             login: PropTypes.func.isRequired
 
 
     const authLinks = (
@@ -26,10 +49,10 @@ class ProfilePage extends Component {
     <div>
 
     <Typography variant="h5" component="h3" align="center">
-             {user ? `${user.username}'s Profile Page` : ""}
+             {user ? `${user.username} Profile Page` : ""}
     </Typography>
 
-    <a class="btn btn-primary" href="/#/settings" role="button">Setting</a>
+    <a className="btn btn-primary" href="/#/settings" role="button">Setting</a>
 
     </div>
 
@@ -41,6 +64,7 @@ class ProfilePage extends Component {
 
     );
 
+
     const guestLinks = (
 
          <div>
@@ -51,17 +75,27 @@ class ProfilePage extends Component {
 
     );
 
-    return (
-
-
+       return (
 
         <div>
+
+
+
+         {this.state.stories.map((marker, index) => {
+
+               return (
+               <h2>
+                {this.state.marker.title}
+                 </h2>
+                 )
+
+            })}
 
          {isAuthenticated ? authLinks : guestLinks}
 
         </div>
-    );
-  }
+       )
+    }
 
 }
 
@@ -75,6 +109,3 @@ ProfilePage.propTypes = {
 export default connect(
     mapStateToProps, {login })
     (ProfilePage);
-
-
-
