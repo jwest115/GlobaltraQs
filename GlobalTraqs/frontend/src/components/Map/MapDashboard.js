@@ -1,17 +1,14 @@
-import React, { Fragment } from 'react'
-import Pins from './Pins'
-
-import PinForm from './PinForm'
-
-
+import React, { Fragment } from "react";
+import Pins from "./Pins";
+import Story from "./Story";
+import PinForm from "./PinForm";
+import About from "../AboutPage/About";
 export default function MapDashboard() {
-    return (
-        <Fragment>
+  return (
+    <Fragment>
+      <Pins />
 
-            <Pins />
-
-
-            {/* <MapDisplay /> */}
-        </Fragment>
-    )
+      {/* <MapDisplay /> */}
+    </Fragment>
+  );
 }
