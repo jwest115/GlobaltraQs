@@ -188,12 +188,12 @@ export class Pins extends Component {
             owner={userid}
           />
         ) : null}
-        <button
+        {/*   <button
           onClick={() => this.createStory(true)}
           className="btn btn-primary add-story-button"
         >
           Add Story
-        </button>
+        </button> */}
 
         {/*<PinForm userlat={this.state.userlat} userlng={this.state.userlng} />*/}
         {/* change AddPin PinForm for working form */}
