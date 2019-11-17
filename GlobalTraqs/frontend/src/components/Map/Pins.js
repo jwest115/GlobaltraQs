@@ -115,6 +115,12 @@ export class Pins extends Component {
 
     return (
       <Fragment>
+        <button
+          onClick={() => this.createStory(true)}
+          className="btn btn-primary add-story-button"
+        >
+          Add Story
+        </button>{" "}
         <Map
           center={position}
           zoom={15}
@@ -128,6 +134,7 @@ export class Pins extends Component {
             attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           />
+
           <MarkerClusterGroup>
             {this.props.pins.map((marker, index) => {
               let post = [marker.latitude, marker.longitude];
@@ -188,13 +195,6 @@ export class Pins extends Component {
             owner={userid}
           />
         ) : null}
-        {/*   <button
-          onClick={() => this.createStory(true)}
-          className="btn btn-primary add-story-button"
-        >
-          Add Story
-        </button> */}
-
         {/*<PinForm userlat={this.state.userlat} userlng={this.state.userlng} />*/}
         {/* change AddPin PinForm for working form */}
       </Fragment>
