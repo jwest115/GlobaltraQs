@@ -1,4 +1,3 @@
-from pins.models import pin
 from rest_framework import viewsets, permissions
 from .serializers import PinSerializer
 from pins.models import pin, categoryType, upVoteStory, flagStory
@@ -27,6 +26,7 @@ class PinViewSet(viewsets.ModelViewSet):
     serializer_class = PinSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
+
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = categoryType.objects.all()
