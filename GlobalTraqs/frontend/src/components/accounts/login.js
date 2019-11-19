@@ -26,7 +26,9 @@ export class Login extends Component {
         password: "",
         captchaIsVerified: false,
         counter: 0,
-        attempts: false
+        attempts: false,
+        inputs: {},
+        errors: {}
     };
 
 
@@ -34,6 +36,7 @@ export class Login extends Component {
         login: PropTypes.func.isRequired,
         isAuthenticated: PropTypes.bool
     };
+
 
     onSubmit = e =>{
         this.setState({ counter: this.state.counter + 1 })
@@ -58,8 +61,32 @@ export class Login extends Component {
                 alert('please verify that you are a human!')
             }
         }
+        this.validateForm();
     };
-
+    validateForm() {
+        let errors = {};
+        let formIsValid = true;
+        if (this.state.username === '') {
+            formIsValid = false;
+            errors["username"] = "*Please enter your username.";
+        }
+        if (this.state.username !== '') {
+            errors["username"] = "";
+        }
+        if (this.state.password !== '') {
+            errors["password"] = "";
+        }
+        if (this.state.password.length < 8) {
+            formIsValid = false;
+            errors["password"] = "*Password must be at least 8 characters long";
+        }
+        if (this.state.password === '') {
+            formIsValid = false;
+            errors["password"] = "*Please enter your password.";
+        }
+        this.setState({errors:errors})
+        return formIsValid;
+    }
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
     render(){
@@ -93,7 +120,11 @@ export class Login extends Component {
                                 onChange={this.onChange}
                                 value={username}
                             />
+                            <p className="text-danger">
+                                 {this.state.errors["username"]}
+                            </p>
                         </div>
+
 
                         <div className="form-group">
                             <label>Password</label>
@@ -104,7 +135,9 @@ export class Login extends Component {
                                 onChange={this.onChange}
                                 value={password}
                             />
-                        </div>
+                            <p className="text-danger">
+                                {this.state.errors["password"]}
+                            </p>                        </div>
 
                         <div className="form-group row justify-content-between justify-content-around">
                             <button type="submit" className="btn btn-primary float-left">
@@ -116,11 +149,16 @@ export class Login extends Component {
                         <p>
                             Don't have an account? <Link to="/register">Register</Link>
                         </p>
+                    <p>
+                        Forgot Password? <Link to="/resetPassword"></Link>
+                    </p>
                     </form>
                 </div>
             </div>
         );
     }
+
+
 }
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated

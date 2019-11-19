@@ -87,13 +87,26 @@ WSGI_APPLICATION = 'GlobalTraqs.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'lbsggtda',
+    #     'USER': 'lbsggtda',
+    #     'PASSWORD': 'XOpmy4Z0BX79r0cOKoD6NIYnhGkKDCl1',
+    #     'HOST': 'salt.db.elephantsql.com',
+    #     'PORT': '5432',
+    # }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'globaltraqs_db',
+    #     'USER': 'postgres',
+    #     'PASSWORD': '@Ziggy323',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
+    # }
+
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'gloabaltraqs_db3',
-        'USER': 'postgres',
-        'PASSWORD': '@Ziggy323',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
     }
 }
 
