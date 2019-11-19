@@ -5,13 +5,11 @@ import PinForm from './PinForm'
 
 
 export default function MapDashboard() {
-    return (
-        <Fragment>
+  return (
+    <Fragment>
+      <Pins />
 
-            <Pins />
-
-
-            {/* <MapDisplay /> */}
-        </Fragment>
-    )
+      {/* <MapDisplay /> */}
+    </Fragment>
+  );
 }

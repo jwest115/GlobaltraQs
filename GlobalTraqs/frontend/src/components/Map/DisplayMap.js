@@ -166,4 +166,4 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps, { getPins })
-    (DisplayMap);
+
