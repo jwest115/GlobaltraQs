@@ -19,6 +19,7 @@ import {DisplayMap} from "./components/Map/DisplayMap";
 import Manage from './components/accounts/manage'
 import EditStory from "./components/Map/EditStory";
 import resetPassword from "./components/accounts/resetPassword";
+import ForgotPassword from "./components/accounts/forgotPassword";
 
 const divStyle = {
    position: 'relative'
@@ -46,7 +47,8 @@ export class App extends Component {
                                 <Route exact path="/register" component={register} />
                                 <Route exact path="/manage" component={Manage} />
                                 <Route path="/Story/:id/edit" exact component={EditStory} />
-                                <Route path="/resetPassword" comonent={resetPassword}/>
+                                <Route path="/forgotPassword" component={ForgotPassword}/>
+                                <Route path="/resetPassword" componenet={resetPassword}/>
 
                                 {/* <MapDashboard /> */}
                             </Switch>
