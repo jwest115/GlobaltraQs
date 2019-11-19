@@ -73,6 +73,7 @@ export class Story extends Component {
   };
 
   componentDidMount() {
+    this.props.getPins();
     const { id } = this.props.match.params;
     this.setState({ pinId: id });
     const { isAuthenticated, user } = this.props.auth;
