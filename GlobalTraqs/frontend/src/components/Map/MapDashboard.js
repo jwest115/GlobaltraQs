@@ -1,8 +1,9 @@
-import React, { Fragment } from "react";
-import Pins from "./Pins";
-import Story from "./Story";
-import PinForm from "./PinForm";
-import About from "../AboutPage/About";
+import React, { Fragment } from 'react'
+import Pins from './Pins'
+
+import PinForm from './PinForm'
+
+
 export default function MapDashboard() {
   return (
     <Fragment>
