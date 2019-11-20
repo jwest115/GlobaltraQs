@@ -29,12 +29,12 @@ module.exports = app => {
                     const transporter = nodemailer.createTransport({
                         service: 'gmail',
                         auth:{
-                            user:'',
-                            pass:''
+                            user:'resetglobaltraqs@gmail.com',
+                            pass:'gl0b4ltr4qs'
                         }
                     })
                     const mailOptions = {
-                        from: 'somthing@gmail.com',
+                        from: 'resetglobaltraqs@gmail.com',
                         to: '${user.email}',
                         subject: 'Link to Reset Password',
                         text:

@@ -19,7 +19,7 @@ import {DisplayMap} from "./components/Map/DisplayMap";
 import Manage from './components/accounts/manage'
 import EditStory from "./components/Map/EditStory";
 import resetPassword from "./components/accounts/resetPassword";
-import ForgotPassword from "./components/accounts/forgotPassword";
+import ForgotPassword from "./components/accounts/ForgotPassword";
 
 const divStyle = {
    position: 'relative'
