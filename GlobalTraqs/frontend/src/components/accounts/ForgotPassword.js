@@ -78,6 +78,7 @@ class ForgotPassword extends Component {
                         </button>
                     </form>
                     {showNullError && (
+
                         <div>
                             <p className="text-danger">*You must input a email address </p>
                         </div>

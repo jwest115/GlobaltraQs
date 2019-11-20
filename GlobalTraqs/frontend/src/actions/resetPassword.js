@@ -1,7 +1,7 @@
 import User from '../sequelize';
 
 module.exports = app => {
-    app.get('/reset', (req, res, next) => {
+    app.get('http://127.0.0.1:8000/#/resetPassword', (req, res, next) => {
         User.findOne({
             where: {
                 resetPasswordToken: req.query.resetPasswordToken,
