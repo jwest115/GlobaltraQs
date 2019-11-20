@@ -22,12 +22,12 @@ export class EditPin extends Component {
 
 
     onSubmit = e => {
-        const a = this.props.userlat;
-        const b = this.props.userlng;
-        const c = this.props.storyid;
-        // const d = 1
-        // this.state.user = d
-        e.preventDefault(); //prevents refresh of page
+        const a = this.props.userlat
+        const b = this.props.userlng
+        const c = this.props.storyid
+        const d = 1
+        this.state.user = d
+        e.preventDefault(); //prevents refresh of page 
         this.state.latitude = a
         this.state.longitude = b
         this.state.id = c

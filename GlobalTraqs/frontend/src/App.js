@@ -14,12 +14,14 @@ import store from './store';
 import login from './components/accounts/login';
 import PrivateRoute from './components/common/PrivateRoute';
 import { loadUser } from './actions/auth';
-import Story from './components/Map/Story'
+import Story from './components/Map/Story';
 import {DisplayMap} from "./components/Map/DisplayMap";
 import Manage from './components/accounts/manage'
 import EditStory from "./components/Map/EditStory";
-import resetPassword from "./components/accounts/resetPassword";
+import Settings from './components/profile/Settings'
 import ForgotPassword from "./components/accounts/ForgotPassword";
+import resetPassword from "./components/accounts/resetPassword";
+import ProfilePage from './components/profile/ProfilePage'
 
 const divStyle = {
    position: 'relative'
@@ -45,11 +47,12 @@ export class App extends Component {
                                 <Route exact path="/faq" component={FAQ} />
                                 <Route exact path="/login" component={login} />
                                 <Route exact path="/register" component={register} />
+                                <Route exact path="/profile" component={ProfilePage} />
+                                <Route exact path="/settings" component={Settings} />
                                 <Route exact path="/manage" component={Manage} />
                                 <Route path="/Story/:id/edit" exact component={EditStory} />
                                 <Route path="/forgotPassword" component={ForgotPassword}/>
                                 <Route path="/resetPassword" componenet={resetPassword}/>
-
                                 {/* <MapDashboard /> */}
                             </Switch>
                           </div>
