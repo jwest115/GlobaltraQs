@@ -9,4 +9,5 @@ router.register('api/pins', PinViewSet, 'pin')
 router.register('api/category', CategoryViewSet, 'category')
 router.register('api/upVoteStory', upVoteStoryViewSet, 'upvotestory')
 router.register('api/flagStory', FlagStoryViewSet, 'flagstory')
+
 urlpatterns = router.urls

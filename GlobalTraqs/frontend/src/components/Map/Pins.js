@@ -14,7 +14,6 @@ import L from "leaflet";
 import Modal from "./Modal";
 
 import MarkerClusterGroup from "react-leaflet-markercluster";
-
 const divStyle = {
   height: "90%",
   width: "100%"
@@ -189,12 +188,12 @@ export class Pins extends Component {
             owner={userid}
           />
         ) : null}
-        <button
+        {/*   <button
           onClick={() => this.createStory(true)}
           className="btn btn-primary add-story-button"
         >
           Add Story
-        </button>
+        </button> */}
 
         {/*<PinForm userlat={this.state.userlat} userlng={this.state.userlng} />*/}
         {/* change AddPin PinForm for working form */}
