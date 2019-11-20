@@ -20,7 +20,7 @@ export default class resetPassword extends Component {
     async componentDidMount() {
         console.log(this.props.match.params.token);
         await axios
-            .get('/api/auth/user', {
+            .get('/api/auth/users/', {
                 params: {
                     resetPasswordToken: this.props.match.params.token,
                 }
@@ -55,7 +55,7 @@ export default class resetPassword extends Component {
     updatePassword = e => {
         e.preventDefault();
         axios
-            .put('/api/auth/user', {
+            .put('/api/auth/users/', {
                 username: this.state.username,
                 password: this.state.password
             })

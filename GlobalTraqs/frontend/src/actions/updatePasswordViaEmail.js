@@ -1,8 +1,10 @@
 import User from '../sequelize';
 import bcrypt from 'bcrypt';
+
+
 const BYCRPT_SALT_ROUNDS = 12;
-module.exports = apps => {
-    app.put('/api/auth/user', (req, res, next) => {
+module.exports = app => {
+    app.put('/api/auth/users/', (req, res, next) => {
         User.findOne({
             where: {
                 username: req.body.username

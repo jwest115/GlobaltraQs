@@ -27,7 +27,7 @@ class ForgotPassword extends Component {
             });
         } else {
             axios
-                .post('/api/auth/user', {
+                .post('/api/auth/users/', {
                     email: this.state.email,
                 })
                 .then(response => {
@@ -78,7 +78,6 @@ class ForgotPassword extends Component {
                         </button>
                     </form>
                     {showNullError && (
-
                         <div>
                             <p className="text-danger">*You must input a email address </p>
                         </div>

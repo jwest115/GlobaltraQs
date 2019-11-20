@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts',
     'users',
     'django_filters',
+    'django_rest_passwordreset',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
@@ -142,6 +143,12 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+OLD_PASSWORD_FIELD_ENABLED = True
+
+LOGOUT_ON_PASSWORD_CHANGE = False
+
+
 
 
 # Static files (CSS, JavaScript, Images)

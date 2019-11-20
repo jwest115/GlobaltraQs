@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions, viewsets
 from rest_framework.response import Response
 from knox.models import AuthToken
-
+from django_filters.rest_framework import DjangoFilterBackend
 from users.models import User
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
 
@@ -54,3 +54,7 @@ class UsersViewSet(viewsets.ModelViewSet):
         permissions.AllowAny
     ]
     serializer_class = UserSerializer
+
+
+# filter_backends = [DjangoFilterBackend]
+# filterset_fields = '__all__'
