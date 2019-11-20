@@ -13,6 +13,7 @@ import EditPin from "./EditPin";
 import L from "leaflet";
 import Modal from "./Modal";
 import Control from "react-leaflet-control";
+import { login } from "../../actions/auth";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 const divStyle = {
   height: "90%",
