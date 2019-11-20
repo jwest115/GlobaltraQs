@@ -11,13 +11,10 @@
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/styles/styles.css" afterDir="false" />
 =======
     <list default="true" id="8f382347-7f98-4021-8688-5238bd831446" name="Default Changelist" comment="Added the ReCaptcha">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/GlobaltraQs.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/GlobaltraQs.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/EditPin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/Map/Story.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/accounts/register.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/AboutPage/FAQ.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/AboutPage/FAQ.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/profile/ProfilePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/profile/ProfilePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/profile/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/src/components/profile/Settings.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalTraqs/frontend/static/frontend/main.js" afterDir="false" />
 >>>>>>> sidebar-part2
     </list>
@@ -26,9 +23,6 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="GlobaltraQs" />
   </component>
   <component name="Git.Settings">
 <<<<<<< HEAD

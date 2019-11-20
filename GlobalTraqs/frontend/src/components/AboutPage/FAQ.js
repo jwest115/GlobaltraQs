@@ -52,6 +52,7 @@ export default function FAQ() {
                     <Typography component="p">
                         A: Lavender/purple pins are personal stories. Green pins are community histories, or stories that have significance to LGBTQ communities on a scale larger than the individual. For example, Stonewall would be considered a community story, as would, say, the legalization of gay marriage in California, or the first lesbian couple to get married (quite publically) in Taiwan. Red pins are current locations of active organizations and resources for LGBTQ individuals.
         </Typography>
+
                 </Paper>
             </div>
         </div >
