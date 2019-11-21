@@ -14,6 +14,8 @@ django-cors-headers = "*"
 psycopg2-binary = "*"
 django-restql = "*"
 django-filter = "*"
+django-email-users = "*"
+django-rest-passwordreset = "*"
 
 [requires]
 python_version = "3.7"
