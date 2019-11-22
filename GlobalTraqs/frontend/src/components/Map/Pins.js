@@ -14,6 +14,7 @@ import L from "leaflet";
 import Modal from "./Modal";
 import Control from "react-leaflet-control";
 import MarkerClusterGroup from "react-leaflet-markercluster";
+
 const divStyle = {
   height: "90%",
   width: "100%"
@@ -58,6 +59,7 @@ export const personalIcon = new L.Icon({
   shadowSize: [68, 95],
   shadowAnchor: [20, 92]
 });
+export const abcd = {};
 
 export class Pins extends Component {
   intervalID;
@@ -128,13 +130,24 @@ export class Pins extends Component {
             attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           />
-          <Control position="topright">
-            <button
-              onClick={() => this.createStory(true)}
-              className="btn btn-primary add-story-button"
-            >
-              Add Story
-            </button>
+
+          <Control>
+            <div>
+              <button
+                onClick={() => this.createStory(true)}
+                className="btn btn-primary add-story-button"
+              >
+                Add<br></br>Story
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={() => this.createStory(true)}
+                className="btn btn-primary add-story-button"
+              >
+                ys
+              </button>
+            </div>
           </Control>
 
           <MarkerClusterGroup>
