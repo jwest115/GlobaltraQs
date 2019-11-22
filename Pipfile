@@ -16,6 +16,7 @@ django-restql = "*"
 django-filter = "*"
 django-email-users = "*"
 django-rest-passwordreset = "*"
+django-rest-knox = "*"
 
 [requires]
 python_version = "3.7"
