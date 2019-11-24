@@ -14,6 +14,7 @@ import L from "leaflet";
 import Modal from "./Modal";
 import Control from "react-leaflet-control";
 import MarkerClusterGroup from "react-leaflet-markercluster";
+//import LocateControl from "react-leaflet-locate-control";
 
 const divStyle = {
   height: "90%",
@@ -88,11 +89,12 @@ export class Pins extends Component {
   };
   componentDidMount() {
     this.props.getPins();
-    this.intervalID = setInterval(this.props.getPins.bind(this), 5000); //every 5 seconds it gets data
+    this.getLocation();
+    // this.intervalID = setInterval(this.props.getPins.bind(this), 5000); //every 5 seconds it gets data
   }
-  componentWillUnmount() {
+  /*   componentWillUnmount() {
     clearInterval(this.intervalID);
-  }
+  } */
 
   toggle = () => {
     this.setState({ modal: !this.state.modal });
@@ -109,6 +111,33 @@ export class Pins extends Component {
     this.createStory(false);
   };
 
+  setUserLocation = () => {
+    this.setState({ userlat: userlat });
+    this.setState({ userlng: userlng });
+    this.setState({ lat: 34.0522 });
+    this.setState({ lng: -118.2437 });
+  };
+  getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        succes => {
+          console.log(succes.coords.latitude + "" + succes.coords.longitude);
+          this.setState({
+            userlat: succes.coords.latitude,
+            userlng: succes.coords.longitude
+          });
+        },
+        error => {
+          console.log(error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 1000,
+          maximumAge: 0
+        }
+      );
+    }
+  };
   render() {
     const { isAuthenticated, user } = this.props.auth;
     const userid = user ? user.id : "";
@@ -118,7 +147,7 @@ export class Pins extends Component {
     return (
       <Fragment>
         <Map
-          center={position}
+          center={userposition}
           zoom={15}
           maxZoom={30} //shows map
           id="map"
@@ -142,7 +171,7 @@ export class Pins extends Component {
             </div>
             <div>
               <button
-                onClick={() => this.createStory(true)}
+                onClick={() => this.getLocation()}
                 className="btn btn-primary add-story-button"
               >
                 ys
@@ -194,7 +223,9 @@ export class Pins extends Component {
               );
             })}
           </MarkerClusterGroup>
-
+          {console.log(
+            "userposition: " + this.state.userlat + " " + this.state.userlng
+          )}
           {/* current selected posisiotn
                  {console.log(this.state.userlat)}
                     {console.log(this.state.userlng)} */}
