@@ -41,25 +41,25 @@ export class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    if (this.formIsValid()) {
-      if (this.state.captchaIsVerified) {
-        const { username, email, password, password2 } = this.state;
-        if (password !== password2) {
-          this.props.createMessage({
-            passwordNotMatch: "Passwords do not match"
-          });
-        } else {
-          const newUser = {
-            username,
-            password,
-            email
-          };
-          this.props.register(newUser);
-        }
+    //if (this.formIsValid()) {
+    if (this.state.captchaIsVerified) {
+      const { username, email, password, password2 } = this.state;
+      if (password !== password2) {
+        this.props.createMessage({
+          passwordNotMatch: "Passwords do not match"
+        });
       } else {
-        alert("please verify that you are a human!");
+        const newUser = {
+          username,
+          password,
+          email
+        };
+        this.props.register(newUser);
       }
+    } else {
+      alert("please verify that you are a human!");
     }
+    //}
   };
 
   formIsValid() {
