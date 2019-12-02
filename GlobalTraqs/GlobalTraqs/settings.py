@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'users',
     'passwordReset',
     'django_filters',
-    'django_rest_passwordreset',
+    # 'django_rest_passwordreset',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
