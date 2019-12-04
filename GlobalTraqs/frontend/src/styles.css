@@ -33,13 +33,20 @@
 }
 
 
-.add-story-button {
+/* .add-story-button {
     position: absolute;
     z-index: 1000;
     float: right;
     right: 20px;
     top: 20px;
+} */
+
+.add-story-button {
+    margin-bottom: 10px;
+
+    right: 0px;
 }
+
 
 /*.map {*/
 /*    width: 100%;*/

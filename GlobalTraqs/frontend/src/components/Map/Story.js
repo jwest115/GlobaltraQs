@@ -26,6 +26,12 @@ const divStyle = {
   left: "0"
 };
 
+const style = {
+  signUpForm: {
+    border: "2px solid #000000"
+  }
+};
+
 const divStyle2 = {
   paddingLeft: "0px",
   paddingRight: "0px"
@@ -104,8 +110,10 @@ export class Story extends Component {
         const userUpvotedBefore = upvotedData ? true : false;
         const stateofUpvote = userUpvotedBefore ? upvotedData.upvote : false;
         const upvoteid = userUpvotedBefore ? upvotedData.id : false; //gets  id of upvotted story
-
-        console.log(upvotedData);
+        response.data.commentstory.map((marker, index) => {
+          console.log(marker.username + " " + marker.description);
+        });
+        console.log(response.data.commentstory[0]);
         this.setState({
           userStory: response.data,
           upVotes: response.data.upVotes,
@@ -358,6 +366,20 @@ export class Story extends Component {
           <p>By: {authorName}</p>
           <hr></hr>
           <p>{this.state.userStory.description}</p>
+
+          {this.state.userStory.commentstory.map((marker, index) => {
+            console.log(marker.username);
+            return (
+              <div className="container-md jumbotron" key={index} style={style}>
+                <p className="lead">
+                  <img src="https://via.placeholder.com/30" />
+                  {marker.username}
+                </p>
+
+                <p>{marker.description}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     );
