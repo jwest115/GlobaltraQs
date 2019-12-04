@@ -5,23 +5,23 @@ import PropTypes from "prop-types";
 import { register } from "../../actions/auth";
 import { createMessage } from "../../actions/messages";
 import Recaptcha from "react-recaptcha";
-import * as EmailValidator from 'email-validator';
-import { validateAll } from 'indicative';
+//import * as EmailValidator from 'email-validator';
+//import { validateAll } from "indicative";
 export class Register extends Component {
   //
   constructor(props) {
     super(props);
     this.reCaptchaLoaded = this.reCaptchaLoaded.bind(this);
-    this.verifyCallback = this.verifyCallback.bind(this)
+    this.verifyCallback = this.verifyCallback.bind(this);
   }
-  reCaptchaLoaded(){
-    console.log('captcha successfully loaded');
+  reCaptchaLoaded() {
+    console.log("captcha successfully loaded");
   }
-  verifyCallback(response){
-    if(response){
+  verifyCallback(response) {
+    if (response) {
       this.setState({
         captchaIsVerified: true
-      })
+      });
     }
   }
   state = {
@@ -41,33 +41,35 @@ export class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    if (this.formIsValid()) {
-      if (this.state.captchaIsVerified) {
-        const {username, email, password, password2} = this.state;
-        if (password !== password2) {
-          this.props.createMessage({passwordNotMatch: "Passwords do not match"});
-        } else {
-          const newUser = {
-            username,
-            password,
-            email
-          };
-          this.props.register(newUser);
-        }
+    //if (this.formIsValid()) {
+    if (this.state.captchaIsVerified) {
+      const { username, email, password, password2 } = this.state;
+      if (password !== password2) {
+        this.props.createMessage({
+          passwordNotMatch: "Passwords do not match"
+        });
       } else {
-        alert('please verify that you are a human!')
+        const newUser = {
+          username,
+          password,
+          email
+        };
+        this.props.register(newUser);
       }
+    } else {
+      alert("please verify that you are a human!");
     }
+    //}
   };
 
   formIsValid() {
     let errors = {};
     let formIsValid = true;
-    if (this.state.username === '') {
+    if (this.state.username === "") {
       formIsValid = false;
       errors["username"] = "*Please enter your username.";
     }
-    if(this.state.username !== ''){
+    if (this.state.username !== "") {
       errors["username"] = "";
     }
     if (this.state.password !== "") {
@@ -81,25 +83,25 @@ export class Register extends Component {
       formIsValid = false;
       errors["password"] = "*Please enter your password.";
     }
-    if (this.state.email === '') {
+    if (this.state.email === "") {
       formIsValid = false;
       errors["email"] = "*Please enter your email";
     }
-    if (this.state.email !== '') {
+    if (this.state.email !== "") {
       errors["email"] = "";
     }
     if (!EmailValidator.validate(this.state.email)) {
       formIsValid = false;
       errors["email"] = "*Please enter a valid email";
     }
-    if(this.state.password !== this.state.password2){
+    if (this.state.password !== this.state.password2) {
       formIsValid = false;
-      errors["password2"] = "*Passwords do not Match"
+      errors["password2"] = "*Passwords do not Match";
     }
-    if(this.state.password === this.state.password2){
-      errors["password2"] = null
+    if (this.state.password === this.state.password2) {
+      errors["password2"] = null;
     }
-    this.setState({errors:errors});
+    this.setState({ errors: errors });
     return formIsValid;
   }
 
@@ -123,10 +125,9 @@ export class Register extends Component {
                 name="username"
                 onChange={this.onChange}
                 value={username}
-              /><div name="userStatus"/>
-              <p className="text-danger">
-                {this.state.errors["username"]}
-              </p>
+              />
+              <div name="userStatus" />
+              <p className="text-danger">{this.state.errors["username"]}</p>
             </div>
             <div className="form-group">
               <label>Email</label>
@@ -136,10 +137,9 @@ export class Register extends Component {
                 name="email"
                 onChange={this.onChange}
                 value={email}
-              /><div id="emailStatus"/>
-              <p className="text-danger">
-                {this.state.errors["email"]}
-              </p>
+              />
+              <div id="emailStatus" />
+              <p className="text-danger">{this.state.errors["email"]}</p>
             </div>
             <div className="form-group">
               <label>Password</label>
@@ -150,9 +150,7 @@ export class Register extends Component {
                 onChange={this.onChange}
                 value={password}
               />
-              <p className="text-danger">
-                {this.state.errors["password"]}
-              </p>
+              <p className="text-danger">{this.state.errors["password"]}</p>
             </div>
             <div className="form-group">
               <label>Confirm Password</label>
@@ -163,9 +161,7 @@ export class Register extends Component {
                 onChange={this.onChange}
                 value={password2}
               />
-              <p className="text-danger">
-                {this.state.errors["password2"]}
-              </p>
+              <p className="text-danger">{this.state.errors["password2"]}</p>
             </div>
             <div className="form-group row justify-content-between justify-content-around">
               <button type="submit" className="btn btn-primary float-left">
@@ -173,11 +169,11 @@ export class Register extends Component {
               </button>
               {/*This is the ReCaptcha*/}
               <Recaptcha
-                  className="float-right"
-                  sitekey="6LcAL78UAAAAAPOluo3jzUzXt5XLWKuUujc-_7QX"
-                  render="explicit"
-                  verifyCallback={this.verifyCallback}
-                  onloadCallback={this.reCaptchaLoaded}
+                className="float-right"
+                sitekey="6LcAL78UAAAAAPOluo3jzUzXt5XLWKuUujc-_7QX"
+                render="explicit"
+                verifyCallback={this.verifyCallback}
+                onloadCallback={this.reCaptchaLoaded}
               />
             </div>
             <p>
@@ -193,7 +189,4 @@ export class Register extends Component {
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
-export default connect(
-  mapStateToProps,
-  { register, createMessage }
-)(Register);
+export default connect(mapStateToProps, { register, createMessage })(Register);
