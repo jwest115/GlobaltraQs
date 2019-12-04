@@ -19,7 +19,7 @@ import default_marker from "./images/default.png";
 import community from "./images/community.png";
 import historical from "./images/historical.png";
 import personal from "./images/personal.png";
-
+import AddComment from "./AddComment";
 const divStyle = {
   height: "40vh",
   width: "100%",
@@ -383,6 +383,7 @@ export class Story extends Component {
             );
           })}
         </div>
+        <AddComment userlat={this.state.userlat} userlng={this.state.userlng} />
       </div>
     );
   }
