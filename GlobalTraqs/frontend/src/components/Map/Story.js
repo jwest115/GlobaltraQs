@@ -110,9 +110,7 @@ export class Story extends Component {
         const userUpvotedBefore = upvotedData ? true : false;
         const stateofUpvote = userUpvotedBefore ? upvotedData.upvote : false;
         const upvoteid = userUpvotedBefore ? upvotedData.id : false; //gets  id of upvotted story
-        response.data.commentstory.map((marker, index) => {
-          console.log(marker.username + " " + marker.description);
-        });
+
         console.log(response.data.commentstory[0]);
         this.setState({
           userStory: response.data,
@@ -121,7 +119,8 @@ export class Story extends Component {
           upvote: stateofUpvote,
           hasVotedBefore: userUpvotedBefore,
           upVoteId: upvoteid,
-          updotes: response.data.updooots
+          updotes: response.data.updooots,
+          commentStory: response.data.commentstory
         });
       })
       .catch(error => {
@@ -214,7 +213,10 @@ export class Story extends Component {
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-        this.setState({ userStory: response.data });
+        this.setState({
+          userStory: response.data,
+          commentStory: response.data.commentstory
+        });
         console.log(response.data);
       })
       .catch(error => {
@@ -367,7 +369,7 @@ export class Story extends Component {
           <hr></hr>
           <p>{this.state.userStory.description}</p>
 
-          {this.state.userStory.commentstory.map((marker, index) => {
+          {this.state.commentStory.map((marker, index) => {
             console.log(marker.username);
             return (
               <div className="container-md jumbotron" key={index} style={style}>

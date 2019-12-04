@@ -174,7 +174,7 @@ export class Pins extends Component {
                 onClick={() => this.getLocation()}
                 className="btn btn-primary add-story-button"
               >
-                ys
+                Your<br></br>Location
               </button>
             </div>
           </Control>
