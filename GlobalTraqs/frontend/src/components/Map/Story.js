@@ -97,6 +97,9 @@ export class Story extends Component {
     axios
       .get(`api/pins/${id}`)
       .then(response => {
+        this.getAuthor(response.data.owner);
+        console.log(response.data);
+        console.log("is the data");
         const flaggedData = response.data.flaggerstory.filter(
           b => b.flagger == userid
         )[0]; //gets the first value of the filter even tho its the only one
@@ -260,7 +263,7 @@ export class Story extends Component {
       if (
         user.is_administrator ||
         user.is_moderator ||
-        this.state.userStory.user_id == this.state.storyAuthor.id
+        this.state.userStory.owner == this.state.storyAuthor.id
       ) {
         isAdminOrModerator = true;
         adminModeratorEditStory = (
@@ -276,7 +279,7 @@ export class Story extends Component {
       }
     }
     let authorName = "Anonymous";
-    if (this.state.userStory.username != "") {
+    if (this.state.userStory.owner != null) {
       authorName = this.state.userStory.username;
     }
     // console.log("lat " + this.state.userStory.latitude);
@@ -356,7 +359,7 @@ export class Story extends Component {
               userlat={this.state.userStory.latitude}
               userlng={this.state.userStory.longitude}
               storyid={id}
-              user_id={this.state.userStory.user_id}
+              user_id={this.state.userStory.owner}
             />
           )}
           {isAdminOrModerator ? adminModeratorEditStory : ""}

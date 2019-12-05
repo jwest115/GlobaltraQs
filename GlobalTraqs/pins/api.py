@@ -10,6 +10,8 @@ from django.db.models.functions import Coalesce
 from django.db.models import Count, Sum, Value
 
 
+# might need to install coalesce
+# is this a postgresql issue?
 class PinViewSet(viewsets.ModelViewSet):
     #queryset = pin.objects.all()
  #   queryset = pin.objects.annotate(

@@ -17,7 +17,7 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 //import LocateControl from "react-leaflet-locate-control";
 
 const divStyle = {
-  height: "90%",
+  height: "100%",
   width: "100%"
 };
 
