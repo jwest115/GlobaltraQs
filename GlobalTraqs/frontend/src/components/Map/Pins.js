@@ -13,10 +13,11 @@ import EditPin from "./EditPin";
 import L from "leaflet";
 import Modal from "./Modal";
 import Control from "react-leaflet-control";
-import { login } from "../../actions/auth";
 import MarkerClusterGroup from "react-leaflet-markercluster";
+//import LocateControl from "react-leaflet-locate-control";
+
 const divStyle = {
-  height: "90%",
+  height: "100%",
   width: "100%"
 };
 
@@ -59,6 +60,7 @@ export const personalIcon = new L.Icon({
   shadowSize: [68, 95],
   shadowAnchor: [20, 92]
 });
+export const abcd = {};
 
 export class Pins extends Component {
   intervalID;
@@ -69,13 +71,14 @@ export class Pins extends Component {
       lng: -118.1684,
       zoom: 10,
       maxZoom: 30,
-      userlat: 0,
-      userlng: 0,
+      userlat: 34.0668,
+      userlng: -118.1684,
       selectedLat: "",
       selectedLong: "",
       submitAddress: true,
       modal: false,
-      categoryType: personalIcon
+      categoryType: personalIcon,
+      editButtonValue: "Edit Story"
     };
   }
 
@@ -87,11 +90,26 @@ export class Pins extends Component {
   };
   componentDidMount() {
     this.props.getPins();
-    this.intervalID = setInterval(this.props.getPins.bind(this), 5000); //every 5 seconds it gets data
+    this.getLocation();
+    // this.intervalID = setInterval(this.props.getPins.bind(this), 5000); //every 5 seconds it gets data
   }
-  componentWillUnmount() {
+  /*   componentWillUnmount() {
     clearInterval(this.intervalID);
-  }
+  } */
+
+  editStory = () => {
+    if (this.state.showEditForm) {
+      this.setState({
+        showEditForm: false,
+        editButtonValue: "Edit Story"
+      });
+    } else {
+      this.setState({
+        showEditForm: true,
+        editButtonValue: "Close"
+      });
+    }
+  };
 
   toggle = () => {
     this.setState({ modal: !this.state.modal });
@@ -108,16 +126,46 @@ export class Pins extends Component {
     this.createStory(false);
   };
 
+  setUserLocation = () => {
+    this.setState({ userlat: userlat });
+    this.setState({ userlng: userlng });
+    this.setState({ lat: 34.0522 });
+    this.setState({ lng: -118.2437 });
+  };
+  getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        succes => {
+          console.log(succes.coords.latitude + "" + succes.coords.longitude);
+          this.setState({
+            userlat: succes.coords.latitude,
+            userlng: succes.coords.longitude
+          });
+        },
+        error => {
+          console.log(error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 1000,
+          maximumAge: 0
+        }
+      );
+    }
+  };
   render() {
     const { isAuthenticated, user } = this.props.auth;
     const userid = user ? user.id : "";
     const position = [this.state.lat, this.state.lng];
     const userposition = [this.state.userlat, this.state.userlng];
+    let isAdminOrModerator = false;
+    let adminModeratorEditStory = "";
+
 
     return (
       <Fragment>
         <Map
-          center={position}
+          center={userposition}
           zoom={15}
           maxZoom={30} //shows map
           id="map"
@@ -129,14 +177,26 @@ export class Pins extends Component {
             attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           />
-          <Control position="topright">
-            <button
-              onClick={() => this.createStory(true)}
-              className="btn btn-primary add-story-button"
-            >
-              Add Story
-            </button>
+
+          <Control>
+            <div>
+              <button
+                onClick={() => this.createStory(true)}
+                className="btn btn-primary add-story-button"
+              >
+                Add<br></br>Story
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={() => this.getLocation()}
+                className="btn btn-primary add-story-button"
+              >
+                ys
+              </button>
+            </div>
           </Control>
+
           <MarkerClusterGroup>
             {this.props.pins.map((marker, index) => {
               let post = [marker.latitude, marker.longitude];
@@ -148,19 +208,51 @@ export class Pins extends Component {
               } else {
                 categoryIcon = historicalIcon;
               }
+
+               if (isAuthenticated) {
+                  console.log("user is authenticated!");
+                    if (user.is_administrator || user.is_moderator || marker.owner == user.id) {
+                      isAdminOrModerator = true;
+                      console.log("user is admin or moderator! let them edit!");
+                      adminModeratorEditStory = (
+                          <div className="admin-moderator-edit">
+                            <button
+                                onClick={this.editStory}
+                                className="btn btn-success admin-moderator-edit"
+                            >
+                              {this.state.editButtonValue}
+                            </button>
+                          </div>
+                      );
+                    }
+                }
               //const id = marker.id;
 
               return (
                 <Marker key={index} position={post} icon={categoryIcon}>
                   <Popup>
-                    {marker.title} <br /> {marker.description}
+                  <strong>{marker.title}</strong><br/>{marker.description}
                     <br />
-                    <EditPin
-                      userlat={marker.latitude}
-                      userlng={marker.longitude}
-                      storyid={marker.id}
-                    />
+                    <br />
+
+                    {/*<EditPin*/}
+                    {/*  userlat={marker.latitude}*/}
+                    {/*  userlng={marker.longitude}*/}
+                    {/*  storyid={marker.id}*/}
+                    {/*/>*/}
                     {/* <Link to="/Story"> */}
+                    {/*  UNCOMMENT THIS TO SHOW EDIT FORM FOR VALIDATED AUTHORS AND ADMINS/MODERATORS  */}
+                    {/* {this.state.showEditForm && (*/}
+                    {/*  <EditPin*/}
+                    {/*    title={marker.title}*/}
+                    {/*    description={marker.description}*/}
+                    {/*    userlat={marker.latitude}*/}
+                    {/*    userlng={marker.longitude}*/}
+                    {/*    storyid={marker.id}*/}
+                    {/*    user_id={marker.owner}*/}
+                    {/*  />*/}
+                    {/*)}*/}
+                    {/*{isAdminOrModerator ? adminModeratorEditStory : ""}*/}
                     <Link
                       to={`Story/${marker.id}`}
                       params={{ testvalue: "hello" }}
@@ -169,18 +261,22 @@ export class Pins extends Component {
                         View Story
                       </button>
                     </Link>
-                    <button
-                      onClick={this.props.deletePins.bind(this, marker.id)}
-                      type="button"
-                      className="btn btn-danger btn-sm"
-                    >
-                      Delete
-                    </button>
+                    {isAdminOrModerator ? (
+                          <button onClick={this.props.deletePins.bind(this, marker.id)}
+                                  type="button"
+                                  className="btn btn-danger btn-sm">
+                            Delete
+                          </button>
+                            )
+                        : ""}
                   </Popup>
                 </Marker>
               );
             })}
           </MarkerClusterGroup>
+          {console.log(
+            "userposition: " + this.state.userlat + " " + this.state.userlng
+          )}
           {/* current selected posisiotn
                  {console.log(this.state.userlat)}
                     {console.log(this.state.userlng)} */}
@@ -197,7 +293,6 @@ export class Pins extends Component {
             owner={userid}
           />
         ) : null}
-
         {/*<PinForm userlat={this.state.userlat} userlng={this.state.userlng} />*/}
         {/* change AddPin PinForm for working form */}
       </Fragment>

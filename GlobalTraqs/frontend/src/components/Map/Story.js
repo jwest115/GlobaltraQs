@@ -19,11 +19,17 @@ import default_marker from "./images/default.png";
 import community from "./images/community.png";
 import historical from "./images/historical.png";
 import personal from "./images/personal.png";
-
+import AddComment from "./AddComment";
 const divStyle = {
   height: "40vh",
   width: "100%",
   left: "0"
+};
+
+const style = {
+  signUpForm: {
+    border: "2px solid #000000"
+  }
 };
 
 const divStyle2 = {
@@ -69,7 +75,9 @@ export class Story extends Component {
     flaggerId: "",
     hasFlaggedBefore: "",
     flagId: "",
-    flagger: ""
+    flagger: "",
+    storytitle: "",
+    description: ""
   };
 
   componentDidMount() {
@@ -91,6 +99,12 @@ export class Story extends Component {
     axios
       .get(`api/pins/${id}`)
       .then(response => {
+         if(response.data.owner != null) {
+          console.log("not null");
+          this.getAuthor(response.data.owner);
+        }
+        console.log(response.data);
+        console.log("is the data");
         const flaggedData = response.data.flaggerstory.filter(
           b => b.flagger == userid
         )[0]; //gets the first value of the filter even tho its the only one
@@ -105,7 +119,7 @@ export class Story extends Component {
         const stateofUpvote = userUpvotedBefore ? upvotedData.upvote : false;
         const upvoteid = userUpvotedBefore ? upvotedData.id : false; //gets  id of upvotted story
 
-        console.log(upvotedData);
+        console.log(response.data.commentstory[0]);
         this.setState({
           userStory: response.data,
           upVotes: response.data.upVotes,
@@ -113,7 +127,10 @@ export class Story extends Component {
           upvote: stateofUpvote,
           hasVotedBefore: userUpvotedBefore,
           upVoteId: upvoteid,
-          updotes: response.data.updooots
+          updotes: response.data.updooots,
+          commentStory: response.data.commentstory,
+          storytitle: response.data.title,
+          description: response.data.description
         });
       })
       .catch(error => {
@@ -193,6 +210,8 @@ export class Story extends Component {
         console.log("number: " + response.data.updooots);
         this.setState({
           userStory: response.data,
+          storytitle: response.data.title,
+          description: response.data.description,
           updotes: response.data.updooots
         });
       })
@@ -206,7 +225,12 @@ export class Story extends Component {
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-        this.setState({ userStory: response.data });
+        this.setState({
+          userStory: response.data,
+          storytitle: response.data.title,
+          description: response.data.description,
+          commentStory: response.data.commentstory
+        });
         console.log(response.data);
       })
       .catch(error => {
@@ -228,11 +252,17 @@ export class Story extends Component {
     }
   };
 
-  getAuthor = user_id => {
+  onUpdate = v => {
+    console.log(v.title + "title from onujpdate");
     axios
-      .get(`/api/auth/users/${user_id}/`)
-      .then(res => {
-        this.setState({ storyAuthor: res.data });
+      .get(`api/pins/${this.state.pinId}`)
+      .then(response => {
+        this.setState({
+          userStory: response.data,
+          storytitle: response.data.title,
+          description: response.data.description
+        });
+        console.log(this.state.userStory.title);
       })
       .catch(error => {
         console.log(error);
@@ -249,11 +279,7 @@ export class Story extends Component {
     let adminModeratorEditStory = "";
     const { isAuthenticated, user } = this.props.auth;
     if (isAuthenticated) {
-      if (
-        user.is_administrator ||
-        user.is_moderator ||
-        this.state.userStory.user_id == this.state.storyAuthor.id
-      ) {
+      if (user.is_administrator || user.is_moderator || user.id == this.state.storyAuthor.id) {
         isAdminOrModerator = true;
         adminModeratorEditStory = (
           <div className="admin-moderator-edit">
@@ -349,16 +375,32 @@ export class Story extends Component {
               userlng={this.state.userStory.longitude}
               storyid={id}
               user_id={this.state.userStory.user_id}
+              onUpdate={this.onUpdate.bind(this)}
             />
           )}
           {isAdminOrModerator ? adminModeratorEditStory : ""}
           <h2>
-            <strong>{this.state.userStory.title}</strong>
+            <strong>{this.state.storytitle}</strong>
           </h2>
           <p>By: {authorName}</p>
           <hr></hr>
-          <p>{this.state.userStory.description}</p>
+          <p>{this.state.description}</p>
+
+          {this.state.commentStory.map((marker, index) => {
+            console.log(marker.username);
+            return (
+              <div className="container-md jumbotron" key={index} style={style}>
+                <p className="lead">
+                  <img src="https://via.placeholder.com/30" />
+                  {marker.username}
+                </p>
+
+                <p>{marker.description}</p>
+              </div>
+            );
+          })}
         </div>
+        <AddComment userlat={this.state.userlat} userlng={this.state.userlng} />
       </div>
     );
   }

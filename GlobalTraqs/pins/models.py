@@ -50,3 +50,11 @@ class flagStory(models.Model):
     flagger = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     flagged = models.BooleanField(default=False)
+
+
+class commentStory(models.Model):
+    pin = models.ForeignKey(
+        "pin", on_delete=models.CASCADE, null=True,  related_name='commentstory')
+    commenter = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    description = models.TextField()
