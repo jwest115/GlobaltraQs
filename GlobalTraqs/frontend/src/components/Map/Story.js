@@ -19,6 +19,7 @@ import default_marker from "./images/default.png";
 import community from "./images/community.png";
 import historical from "./images/historical.png";
 import personal from "./images/personal.png";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 
 const divStyle = {
   height: "40vh",
@@ -93,11 +94,13 @@ export class Story extends Component {
       flagger: userid
     });
     this.state.upVoter = userid;
-    console.log("the user id is: " + id);
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-        this.getAuthor(response.data.owner);
+        if(response.data.owner != null) {
+          console.log("not null")
+          this.getAuthor(response.data.owner);
+        }
         console.log(response.data);
         console.log("is the data");
         const flaggedData = response.data.flaggerstory.filter(
@@ -260,23 +263,24 @@ export class Story extends Component {
     let adminModeratorEditStory = "";
     const { isAuthenticated, user } = this.props.auth;
     if (isAuthenticated) {
-      if (
-        user.is_administrator ||
-        user.is_moderator ||
-        this.state.userStory.owner == this.state.storyAuthor.id
-      ) {
-        isAdminOrModerator = true;
-        adminModeratorEditStory = (
-          <div className="admin-moderator-edit">
-            <button
-              onClick={this.editStory}
-              className="btn btn-success admin-moderator-edit"
-            >
-              {this.state.editButtonValue}
-            </button>
-          </div>
-        );
+      console.log("user is authenticated!");
+      if(this.state.userStory.owner != null) {
+        if (user.is_administrator || user.is_moderator || this.state.userStory.owner == user.id) {
+          isAdminOrModerator = true;
+          console.log("user is admin or moderator! let them edit!");
+          adminModeratorEditStory = (
+              <div className="admin-moderator-edit">
+                <button
+                    onClick={this.editStory}
+                    className="btn btn-success admin-moderator-edit"
+                >
+                  {this.state.editButtonValue}
+                </button>
+              </div>
+          );
+        }
       }
+    console.log("user is not a admin or moderator! they will NOT have rights to edit stories")
     }
     let authorName = "Anonymous";
     if (this.state.userStory.owner != null) {
@@ -320,6 +324,7 @@ export class Story extends Component {
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           />
 
+        <MarkerClusterGroup>
           {this.props.pins.map((marker, index) => {
             let post = [marker.latitude, marker.longitude];
             let categoryIcon = "";
@@ -333,6 +338,7 @@ export class Story extends Component {
             const id = marker.id;
 
             return (
+
               <Marker key={index} position={post} icon={categoryIcon}>
                 <Popup>
                   <strong>{marker.title}</strong> <br />{" "}
@@ -350,6 +356,7 @@ export class Story extends Component {
               </Marker>
             );
           })}
+          </MarkerClusterGroup>
         </Map>
         <div className="container-fluid" style={storyBody}>
           {this.state.showEditForm && (

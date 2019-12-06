@@ -99,7 +99,7 @@ DATABASES = {
     # }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'globaltraqs_db',
+    #     'NAME': 'globaltraqs',
     #     'USER': 'postgres',
     #     'PASSWORD': '@Ziggy323',
     #     'HOST': 'localhost',
@@ -108,7 +108,7 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+        'NAME': 'database_3',
     }
 }
 
