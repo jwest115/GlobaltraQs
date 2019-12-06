@@ -75,7 +75,9 @@ export class Story extends Component {
     flaggerId: "",
     hasFlaggedBefore: "",
     flagId: "",
-    flagger: ""
+    flagger: "",
+    storytitle: "",
+    description: ""
   };
 
   componentDidMount() {
@@ -120,7 +122,9 @@ export class Story extends Component {
           hasVotedBefore: userUpvotedBefore,
           upVoteId: upvoteid,
           updotes: response.data.updooots,
-          commentStory: response.data.commentstory
+          commentStory: response.data.commentstory,
+          storytitle: response.data.title,
+          description: response.data.description
         });
       })
       .catch(error => {
@@ -200,6 +204,8 @@ export class Story extends Component {
         console.log("number: " + response.data.updooots);
         this.setState({
           userStory: response.data,
+          storytitle: response.data.title,
+          description: response.data.description,
           updotes: response.data.updooots
         });
       })
@@ -215,6 +221,8 @@ export class Story extends Component {
       .then(response => {
         this.setState({
           userStory: response.data,
+          storytitle: response.data.title,
+          description: response.data.description,
           commentStory: response.data.commentstory
         });
         console.log(response.data);
@@ -238,11 +246,17 @@ export class Story extends Component {
     }
   };
 
-  getAuthor = user_id => {
+  onUpdate = v => {
+    console.log(v.title + "title from onujpdate");
     axios
-      .get(`/api/auth/users/${user_id}/`)
-      .then(res => {
-        this.setState({ storyAuthor: res.data });
+      .get(`api/pins/${this.state.pinId}`)
+      .then(response => {
+        this.setState({
+          userStory: response.data,
+          storytitle: response.data.title,
+          description: response.data.description
+        });
+        console.log(this.state.userStory.title);
       })
       .catch(error => {
         console.log(error);
@@ -359,15 +373,16 @@ export class Story extends Component {
               userlng={this.state.userStory.longitude}
               storyid={id}
               user_id={this.state.userStory.user_id}
+              onUpdate={this.onUpdate.bind(this)}
             />
           )}
           {isAdminOrModerator ? adminModeratorEditStory : ""}
           <h2>
-            <strong>{this.state.userStory.title}</strong>
+            <strong>{this.state.storytitle}</strong>
           </h2>
           <p>By: {authorName}</p>
           <hr></hr>
-          <p>{this.state.userStory.description}</p>
+          <p>{this.state.description}</p>
 
           {this.state.commentStory.map((marker, index) => {
             console.log(marker.username);

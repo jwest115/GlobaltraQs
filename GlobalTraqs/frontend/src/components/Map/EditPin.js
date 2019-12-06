@@ -37,6 +37,7 @@ export class EditPin extends Component {
                    console.log(res)
                    console.log(res.data)
                }) */
+    this.props.onUpdate(pin);
     console.log(a + " " + this.state.latitude + "" + c);
   };
 
