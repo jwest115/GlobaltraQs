@@ -17,7 +17,7 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 //import LocateControl from "react-leaflet-locate-control";
 
 const divStyle = {
-  height: "90%",
+  height: "100%",
   width: "100%"
 };
 
@@ -77,7 +77,8 @@ export class Pins extends Component {
       selectedLong: "",
       submitAddress: true,
       modal: false,
-      categoryType: personalIcon
+      categoryType: personalIcon,
+      editButtonValue: "Edit Story"
     };
   }
 
@@ -95,6 +96,20 @@ export class Pins extends Component {
   /*   componentWillUnmount() {
     clearInterval(this.intervalID);
   } */
+
+  editStory = () => {
+    if (this.state.showEditForm) {
+      this.setState({
+        showEditForm: false,
+        editButtonValue: "Edit Story"
+      });
+    } else {
+      this.setState({
+        showEditForm: true,
+        editButtonValue: "Close"
+      });
+    }
+  };
 
   toggle = () => {
     this.setState({ modal: !this.state.modal });
@@ -143,6 +158,9 @@ export class Pins extends Component {
     const userid = user ? user.id : "";
     const position = [this.state.lat, this.state.lng];
     const userposition = [this.state.userlat, this.state.userlng];
+    let isAdminOrModerator = false;
+    let adminModeratorEditStory = "";
+
 
     return (
       <Fragment>
@@ -174,7 +192,7 @@ export class Pins extends Component {
                 onClick={() => this.getLocation()}
                 className="btn btn-primary add-story-button"
               >
-                Your<br></br>Location
+                ys
               </button>
             </div>
           </Control>
@@ -190,19 +208,51 @@ export class Pins extends Component {
               } else {
                 categoryIcon = historicalIcon;
               }
+
+               if (isAuthenticated) {
+                  console.log("user is authenticated!");
+                    if (user.is_administrator || user.is_moderator || marker.owner == user.id) {
+                      isAdminOrModerator = true;
+                      console.log("user is admin or moderator! let them edit!");
+                      adminModeratorEditStory = (
+                          <div className="admin-moderator-edit">
+                            <button
+                                onClick={this.editStory}
+                                className="btn btn-success admin-moderator-edit"
+                            >
+                              {this.state.editButtonValue}
+                            </button>
+                          </div>
+                      );
+                    }
+                }
               //const id = marker.id;
 
               return (
                 <Marker key={index} position={post} icon={categoryIcon}>
                   <Popup>
-                    {marker.title} <br /> {marker.description}
+                  <strong>{marker.title}</strong><br/>{marker.description}
                     <br />
-                    <EditPin
-                      userlat={marker.latitude}
-                      userlng={marker.longitude}
-                      storyid={marker.id}
-                    />
+                    <br />
+
+                    {/*<EditPin*/}
+                    {/*  userlat={marker.latitude}*/}
+                    {/*  userlng={marker.longitude}*/}
+                    {/*  storyid={marker.id}*/}
+                    {/*/>*/}
                     {/* <Link to="/Story"> */}
+                    {/*  UNCOMMENT THIS TO SHOW EDIT FORM FOR VALIDATED AUTHORS AND ADMINS/MODERATORS  */}
+                    {/* {this.state.showEditForm && (*/}
+                    {/*  <EditPin*/}
+                    {/*    title={marker.title}*/}
+                    {/*    description={marker.description}*/}
+                    {/*    userlat={marker.latitude}*/}
+                    {/*    userlng={marker.longitude}*/}
+                    {/*    storyid={marker.id}*/}
+                    {/*    user_id={marker.owner}*/}
+                    {/*  />*/}
+                    {/*)}*/}
+                    {/*{isAdminOrModerator ? adminModeratorEditStory : ""}*/}
                     <Link
                       to={`Story/${marker.id}`}
                       params={{ testvalue: "hello" }}
@@ -211,13 +261,14 @@ export class Pins extends Component {
                         View Story
                       </button>
                     </Link>
-                    <button
-                      onClick={this.props.deletePins.bind(this, marker.id)}
-                      type="button"
-                      className="btn btn-danger btn-sm"
-                    >
-                      Delete
-                    </button>
+                    {isAdminOrModerator ? (
+                          <button onClick={this.props.deletePins.bind(this, marker.id)}
+                                  type="button"
+                                  className="btn btn-danger btn-sm">
+                            Delete
+                          </button>
+                            )
+                        : ""}
                   </Popup>
                 </Marker>
               );

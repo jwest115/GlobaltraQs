@@ -97,6 +97,12 @@ export class Story extends Component {
     axios
       .get(`api/pins/${id}`)
       .then(response => {
+         if(response.data.owner != null) {
+          console.log("not null");
+          this.getAuthor(response.data.owner);
+        }
+        console.log(response.data);
+        console.log("is the data");
         const flaggedData = response.data.flaggerstory.filter(
           b => b.flagger == userid
         )[0]; //gets the first value of the filter even tho its the only one
@@ -259,11 +265,7 @@ export class Story extends Component {
     let adminModeratorEditStory = "";
     const { isAuthenticated, user } = this.props.auth;
     if (isAuthenticated) {
-      if (
-        user.is_administrator ||
-        user.is_moderator ||
-        this.state.userStory.user_id == this.state.storyAuthor.id
-      ) {
+      if (user.is_administrator || user.is_moderator || user.id == this.state.storyAuthor.id) {
         isAdminOrModerator = true;
         adminModeratorEditStory = (
           <div className="admin-moderator-edit">
