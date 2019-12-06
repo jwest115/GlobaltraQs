@@ -58,7 +58,7 @@ export class App extends Component {
                 <Route exact path="/manage" component={Manage} />
                 <Route path="/Story/:id/edit" exact component={EditStory} />
                 <Route path="/forgotPassword" component={ForgotPassword} />
-                <Route path="/resetPassword" componenet={resetPassword} />
+                {/* <Route path="/resetPassword" componenet={resetPassword} /> */}
 
                 {/* <MapDashboard /> */}
               </Switch>

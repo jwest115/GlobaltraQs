@@ -99,9 +99,7 @@ export class Story extends Component {
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-         if(response.data.owner != null) {
-          console.log("not null");
-          this.getAuthor(response.data.owner);
+        if (response.data.owner != null) {
         }
         console.log(response.data);
         console.log("is the data");
@@ -279,7 +277,11 @@ export class Story extends Component {
     let adminModeratorEditStory = "";
     const { isAuthenticated, user } = this.props.auth;
     if (isAuthenticated) {
-      if (user.is_administrator || user.is_moderator || user.id == this.state.storyAuthor.id) {
+      if (
+        user.is_administrator ||
+        user.is_moderator ||
+        user.id == this.state.storyAuthor.id
+      ) {
         isAdminOrModerator = true;
         adminModeratorEditStory = (
           <div className="admin-moderator-edit">
@@ -293,9 +295,9 @@ export class Story extends Component {
         );
       }
     }
-    let authorName = "Anonymous";
-    if (this.state.userStory.username != "") {
-      authorName = this.state.userStory.username;
+    let authorName = this.state.userStory.username;
+    if (!this.state.userStory.username) {
+      authorName = "Anonymous";
     }
     // console.log("lat " + this.state.userStory.latitude);
     const position = [
@@ -354,13 +356,15 @@ export class Story extends Component {
                   {marker.description.substring(0, 200)}
                   <br />
                   <br />
-                  <button
-                    onClick={() => this.updateStoryId(id)}
-                    type="button"
-                    className="btn btn-primary btn-sm"
-                  >
-                    View Story
-                  </button>
+                  <Link to={`${marker.id}`}>
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm"
+                      onClick={() => this.updateStoryId(id)}
+                    >
+                      View Story
+                    </button>
+                  </Link>
                 </Popup>
               </Marker>
             );
@@ -400,7 +404,7 @@ export class Story extends Component {
             );
           })}
         </div>
-        <AddComment userlat={this.state.userlat} userlng={this.state.userlng} />
+        {/* <AddComment userlat={this.state.userlat} userlng={this.state.userlng} /> */}
       </div>
     );
   }

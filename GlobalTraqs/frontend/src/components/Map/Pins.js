@@ -161,7 +161,6 @@ export class Pins extends Component {
     let isAdminOrModerator = false;
     let adminModeratorEditStory = "";
 
-
     return (
       <Fragment>
         <Map
@@ -192,7 +191,7 @@ export class Pins extends Component {
                 onClick={() => this.getLocation()}
                 className="btn btn-primary add-story-button"
               >
-                ys
+                User<br></br>Location
               </button>
             </div>
           </Control>
@@ -209,29 +208,35 @@ export class Pins extends Component {
                 categoryIcon = historicalIcon;
               }
 
-               if (isAuthenticated) {
-                  console.log("user is authenticated!");
-                    if (user.is_administrator || user.is_moderator || marker.owner == user.id) {
-                      isAdminOrModerator = true;
-                      console.log("user is admin or moderator! let them edit!");
-                      adminModeratorEditStory = (
-                          <div className="admin-moderator-edit">
-                            <button
-                                onClick={this.editStory}
-                                className="btn btn-success admin-moderator-edit"
-                            >
-                              {this.state.editButtonValue}
-                            </button>
-                          </div>
-                      );
-                    }
+              if (isAuthenticated) {
+                console.log("user is authenticated!");
+                if (
+                  user.is_administrator ||
+                  user.is_moderator ||
+                  marker.owner == user.id
+                ) {
+                  isAdminOrModerator = true;
+                  console.log("user is admin or moderator! let them edit!");
+                  adminModeratorEditStory = (
+                    <div className="admin-moderator-edit">
+                      <button
+                        onClick={this.editStory}
+                        className="btn btn-success admin-moderator-edit"
+                      >
+                        {this.state.editButtonValue}
+                      </button>
+                    </div>
+                  );
                 }
+              }
               //const id = marker.id;
 
               return (
                 <Marker key={index} position={post} icon={categoryIcon}>
                   <Popup>
-                  <strong>{marker.title}</strong><br/>{marker.description}
+                    <strong>{marker.title}</strong>
+                    <br />
+                    {marker.description}
                     <br />
                     <br />
 
@@ -262,13 +267,16 @@ export class Pins extends Component {
                       </button>
                     </Link>
                     {isAdminOrModerator ? (
-                          <button onClick={this.props.deletePins.bind(this, marker.id)}
-                                  type="button"
-                                  className="btn btn-danger btn-sm">
-                            Delete
-                          </button>
-                            )
-                        : ""}
+                      <button
+                        onClick={this.props.deletePins.bind(this, marker.id)}
+                        type="button"
+                        className="btn btn-danger btn-sm"
+                      >
+                        Delete
+                      </button>
+                    ) : (
+                      ""
+                    )}
                   </Popup>
                 </Marker>
               );
