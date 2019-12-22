@@ -264,7 +264,6 @@ export class Story extends Component {
     const { isAuthenticated, user } = this.props.auth;
     if (isAuthenticated) {
       console.log("user is authenticated!");
-      if(this.state.userStory.owner != null) {
         if (user.is_administrator || user.is_moderator || this.state.userStory.owner == user.id) {
           isAdminOrModerator = true;
           console.log("user is admin or moderator! let them edit!");
@@ -278,9 +277,8 @@ export class Story extends Component {
                 </button>
               </div>
           );
-        }
+          console.log("user IS admin or moderator!");
       }
-    console.log("user is not a admin or moderator! they will NOT have rights to edit stories")
     }
     let authorName = "Anonymous";
     if (this.state.userStory.owner != null) {

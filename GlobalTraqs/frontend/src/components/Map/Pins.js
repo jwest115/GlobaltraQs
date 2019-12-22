@@ -211,7 +211,6 @@ export class Pins extends Component {
 
                if (isAuthenticated) {
                   console.log("user is authenticated!");
-                  if(marker.owner != null) {
                     if (user.is_administrator || user.is_moderator || marker.owner == user.id) {
                       isAdminOrModerator = true;
                       console.log("user is admin or moderator! let them edit!");
@@ -225,9 +224,8 @@ export class Pins extends Component {
                             </button>
                           </div>
                       );
+                      console.log("user is an admin or moderator!");
                     }
-                  }
-                console.log("user is not a admin or moderator! they will NOT have rights to edit stories")
                }
               //const id = marker.id;
 
