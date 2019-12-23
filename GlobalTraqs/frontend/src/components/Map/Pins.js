@@ -80,7 +80,7 @@ export class Pins extends Component {
       modal: false,
       categoryType: personalIcon,
       editButtonValue: "Edit Story",
-      open: false
+      open: false,
     };
   }
 
@@ -91,6 +91,7 @@ export class Pins extends Component {
     auth: PropTypes.object.isRequired
   };
   componentDidMount() {
+    this.map = this.mapInstance.leafletElement;
     this.props.getPins();
     this.getLocation();
     // this.intervalID = setInterval(this.props.getPins.bind(this), 5000); //every 5 seconds it gets data
@@ -140,6 +141,7 @@ export class Pins extends Component {
     this.setState({ lat: 34.0522 });
     this.setState({ lng: -118.2437 });
   };
+
   getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -183,6 +185,7 @@ export class Pins extends Component {
           maxZoom={30} //shows map
           id="map"
           style={divStyle}
+          ref={e => { this.mapInstance = e }}
           //user click for location
           // right click to add pin
           onContextMenu={this.addMarker}
@@ -213,6 +216,13 @@ export class Pins extends Component {
 
           <MarkerClusterGroup>
             {this.props.pins.map((marker, index) => {
+              // let newlyAddedMarker = false;
+              // if (index == this.props.pins.length - 1) {
+              //   // last one
+              //   console.log("newest");
+              //   console.log(marker.title);
+              //   newlyAddedMarker = true;
+              // }
               let post = [marker.latitude, marker.longitude];
               let categoryIcon = "";
               if (marker.category == 1) {
@@ -285,6 +295,7 @@ export class Pins extends Component {
                             )
                         : ""}
                   </Popup>
+                  {/*{newlyAddedMarker ? this.leafletElement.openPopup() : ""}*/}
                 </Marker>
               );
             })}
@@ -304,8 +315,8 @@ export class Pins extends Component {
             userlng={this.state.userlng}
             submitAddress={this.state.submitAddress}
             toggle={this.toggle}
-            refreshList={this.refreshList}
             owner={userid}
+            map={this.map}
           />
         ) : null}
         {/*<PinForm userlat={this.state.userlat} userlng={this.state.userlng} />*/}

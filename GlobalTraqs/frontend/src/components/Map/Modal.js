@@ -157,6 +157,7 @@ export class CustomModal extends Component {
       endDate
     };
     this.props.addPin(pin);
+    this.props.map.flyTo([this.state.latitude, this.state.longitude], 15);
 
     console.log(
       "title " +
