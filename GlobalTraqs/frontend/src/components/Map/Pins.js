@@ -4,6 +4,7 @@ import { getPins, deletePins } from "../../actions//pins";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import PinForm from "./PinForm";
+import Sidebar from "../layout/Sidebar";
 import community from "./images/community.png"; // Tell Webpack this JS file uses this image
 import historical from "./images/historical.png";
 import personal from "./images/personal.png";
@@ -78,7 +79,8 @@ export class Pins extends Component {
       submitAddress: true,
       modal: false,
       categoryType: personalIcon,
-      editButtonValue: "Edit Story"
+      editButtonValue: "Edit Story",
+      open: false
     };
   }
 
@@ -121,6 +123,12 @@ export class Pins extends Component {
   };
 
   addMarker = e => {
+    if(e.button == 2) {
+      console.log("right!");
+    }
+    else {
+      console.log("not right");
+    }
     this.setState({ userlat: e.latlng.lat });
     this.setState({ userlng: e.latlng.lng });
     this.createStory(false);
@@ -160,10 +168,15 @@ export class Pins extends Component {
     const userposition = [this.state.userlat, this.state.userlng];
     let isAdminOrModerator = false;
     let adminModeratorEditStory = "";
+    let sidebarOpen = true;
 
 
     return (
       <Fragment>
+              {/*<a*/}
+              {/*  onClick={() => props.handleName(sidebarOpen)}*/}
+              {/*  />*/}
+              <Sidebar yeet={sidebarOpen} />
         <Map
           center={userposition}
           zoom={15}
@@ -171,7 +184,8 @@ export class Pins extends Component {
           id="map"
           style={divStyle}
           //user click for location
-          onClick={this.addMarker}
+          // right click to add pin
+          onContextMenu={this.addMarker}
         >
           <TileLayer
             attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
