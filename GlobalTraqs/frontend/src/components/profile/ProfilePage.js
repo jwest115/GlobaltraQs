@@ -6,6 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import { login } from "../../actions/auth";
 import { getPins } from "../../actions/pins";
 import axios from "axios";
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import { Avatar } from 'antd';
 
 export class ProfilePage extends Component {
   static propTypes = {
@@ -54,7 +56,8 @@ export class ProfilePage extends Component {
     const authLinks = (
       <div>
         <Typography variant="h5" component="h3" align="center">
-          {user ? `${user.username} Profile Page` : ""}
+        <Avatar size={64} icon="user" />
+          {user ? ` ${user.username}'s Profile Page` : ""}
         </Typography>
 
         <a className="btn btn-primary" href="/#/settings" role="button">
