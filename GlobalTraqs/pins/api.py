@@ -8,6 +8,9 @@ from django.contrib.auth.models import User
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models.functions import Coalesce
 from django.db.models import Count, Sum, Value
+from django.db.models import F, Q, When
+from django.db.models import Case, CharField, Value
+from django.db.models import IntegerField
 
 
 class PinViewSet(viewsets.ModelViewSet):
@@ -16,7 +19,12 @@ class PinViewSet(viewsets.ModelViewSet):
   #      updoot=Coalesce(Sum('pinsUpvote__upvote'), Value(1))
    # )
     queryset = pin.objects.annotate(
-        updooots=Coalesce(Sum('updotes__upvote'), Value(0))
+        #updooots=Coalesce(Sum('updotes__upvote'), Value(0))
+        updooots=Sum(Case(
+            When(updotes__upvote=True, then=1),
+            default=Value(0),
+            output_field=IntegerField()
+        ))
     )
 
     permission_classes = [
