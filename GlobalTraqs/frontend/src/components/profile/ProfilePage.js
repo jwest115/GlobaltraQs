@@ -58,7 +58,14 @@ export class ProfilePage extends Component {
         <Typography variant="h5" component="h3" align="center">
         <Avatar size={64} icon="user" />
           {user ? ` ${user.username}'s Profile Page` : ""}
+            <p>
+              <strong>Bio: </strong>
+              Lorem ipsum dolor sit amet, justo a bibendum phasellus proodio
+              ligula, sit
+            </p>
         </Typography>
+
+
 
         <a className="btn btn-primary" href="/#/settings" role="button">
           Setting
@@ -66,15 +73,17 @@ export class ProfilePage extends Component {
       </div>
     );
 
-    const guestLinks = <div>not registered</div>;
+    const guestLinks = <div><Redirect to="/" /></div>;
 
     return (
       <div>
         {isAuthenticated ? authLinks : guestLinks}
         {this.state.userStories.map((marker, index) => {
-          return <h2 key={index}>{marker.title}</h2>; //key is needed for html stuff so it wont get mixed up
+          return <h2 key={index}>{marker.title} <br/>
+          {marker.description.substring(0, 200)}</h2>; //key is needed for html stuff so it wont get mixed up
         })}
       </div>
+
     );
   }
 }
