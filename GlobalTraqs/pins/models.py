@@ -13,7 +13,6 @@ class pin(models.Model):
     category = models.ForeignKey(
         "categoryType", on_delete=models.CASCADE, null=True, related_name='selected_category')
     # 1 is community, 2: historical, 3: personal
-    upVotes = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
         """String for representing the Model object."""
