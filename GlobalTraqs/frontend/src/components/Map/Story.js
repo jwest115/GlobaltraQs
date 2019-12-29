@@ -305,16 +305,20 @@ export class Story extends Component {
         {this.state.upvote ? "Downvote" : "Upvote"}
       </button>
     );
+
     // const {author} = this.props.user;
+    let startDate = this.state.userStory.startDate.split('-');
+    let start = new Date(startDate[0], startDate[1], startDate[2]);
+    console.log("start " + startDate[1] + "/" + startDate[2] + "/" + startDate[0]);
+    console.log("start " + start);
+
+    startDate = startDate[1] + "/" + startDate[2] + "/" + startDate[0];
+    let endDate = this.state.userStory.endDate.split('-');
+    let end = new Date(endDate[0], endDate[1], endDate[2]);
+    console.log("end " + end);
+    endDate = endDate[1] + "/" + endDate[2] + "/" + endDate[0];
     return (
       <div className="container-fluid" style={divStyle2}>
-        <form onSubmit={this.onSubmit}>
-          <h2>
-            number of upvotes {this.state.userStory.updooots}{" "}
-            {isAuthenticated ? upVoteButton : "login to upvote"}
-          </h2>
-        </form>
-
         <h2> {isAuthenticated ? flaggedButton : ""}</h2>
         <Map center={position} zoom={15} maxZoom={30} id="map" style={divStyle}>
           <TileLayer
@@ -364,14 +368,23 @@ export class Story extends Component {
               userlat={this.state.userStory.latitude}
               userlng={this.state.userStory.longitude}
               storyid={id}
-              user_id={this.state.userStory.owner}
+              userId={this.state.userStory.owner}
+              startDate={start}
+              endDate={end}
             />
           )}
           {isAdminOrModerator ? adminModeratorEditStory : ""}
           <h2>
             <strong>{this.state.userStory.title}</strong>
           </h2>
+          <p> {startDate} - {endDate} </p>
           <p>By: {authorName}</p>
+          <form onSubmit={this.onSubmit}>
+          <h6>
+            {this.state.userStory.updooots}{" "} upvotes
+            {isAuthenticated ? upVoteButton : <Link to="/login">  &nbsp;Login to upvote!</Link>}
+          </h6>
+          </form>
           <hr></hr>
           <p>{this.state.userStory.description}</p>
 

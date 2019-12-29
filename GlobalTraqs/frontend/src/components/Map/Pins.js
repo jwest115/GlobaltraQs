@@ -252,10 +252,11 @@ export class Pins extends Component {
                     }
                }
               //const id = marker.id;
-
+              let markerInstance;
               return (
                 <Marker key={index} position={post} icon={categoryIcon}>
                   <Popup>
+
                   <strong>{marker.title}</strong><br/>{marker.description}
                     <br />
                     <br />

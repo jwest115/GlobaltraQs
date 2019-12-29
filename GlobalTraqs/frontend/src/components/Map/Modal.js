@@ -66,12 +66,13 @@ export class CustomModal extends Component {
     this.setState({ radius: event.target.value });
   }
 
-   handleStartDateChange = date => {
+  handleStartDateChange = date => {
     this.setState({
       startDate: date
     });
   };
-   handleEndDateChange = date => {
+
+  handleEndDateChange = date => {
     this.setState({
       endDate: date
     });
