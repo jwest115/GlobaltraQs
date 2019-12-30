@@ -125,7 +125,7 @@ export default function Sidebar() {
     console.log("Type" + pinType);
     document.getElementById("searchButton").addEventListener("click", function () {
       console.log("Searched For : " + text.value + ". Category is : " + pinType);
-      axios.get(`api/pins?category=${pinType}`).then(response => {
+      axios.get(`api/pinSearch?search=${text.value}&category=${pinType}`).then(response => {
         setResultList(response.data);
         // for (let i = 0; i < response.data.length; i++) {
 
@@ -160,8 +160,10 @@ export default function Sidebar() {
   };
 
   const displayResults = results => {
+    const stories = [];
+    
     for (let i = 0; i < results.length; i++) {
-       return (
+       stories.push (
         <Card className={classes.card}>
           <CardActionArea>
             <CardContent>
@@ -176,7 +178,10 @@ export default function Sidebar() {
         </Card>
        );
     }
-  }
+    return (
+        <div>{ stories }</div>
+    )
+  };
 
   return (
     <div>
@@ -194,7 +199,7 @@ export default function Sidebar() {
       >
         {sideList("right")}
         {displayResults(results)}
-        { console.log("check " + results.length)}
+        { console.log("count of results is  " + results.length)}
       </Drawer>
     </div>
 

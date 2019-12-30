@@ -6,7 +6,8 @@ import {
   ADD_PIN,
   EDIT_PIN,
   GET_PIN,
-  GET_USER
+  GET_USER,
+  SEARCH_PINS
 } from "./types";
 
 //GET PINS
@@ -16,6 +17,18 @@ export const getPins = () => dispatch => {
     .then(res => {
       dispatch({
         type: GET_PINS,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+export const searchPins = (searchQuery, category) => dispatch => {
+  axios
+    .get(`api/pinSearch?search=${searchQuery}&category=${category}`)
+    .then(res => {
+      dispatch({
+        type: SEARCH_PINS,
         payload: res.data
       });
     })

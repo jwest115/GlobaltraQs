@@ -1,4 +1,4 @@
-import { GET_PINS, DELETE_PINS, ADD_PIN, EDIT_PIN, GET_PIN } from '../actions/types.js';
+import { GET_PINS, DELETE_PINS, ADD_PIN, EDIT_PIN, GET_PIN, SEARCH_PINS } from '../actions/types.js';
 
 const initialState = {
     pins: [],
@@ -6,6 +6,11 @@ const initialState = {
 };
 export default function (state = initialState, action) {
     switch (action.type) {
+        case SEARCH_PINS:
+            return {
+                ...state,
+                pins: action.payload
+            };
         case GET_PIN:
             return {
                 ...state,
