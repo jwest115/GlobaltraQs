@@ -17,12 +17,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '946c#sv0!y1b-go8w)l@qd4j^74i22u4)i=5trrmj05mn40csy'
-
+# SECRET_KEY = '946c#sv0!y1b-go8w)l@qd4j^74i22u4)i=5trrmj05mn40csy'
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY', '946c#sv0!y1b-go8w)l@qd4j^74i22u4)i=5trrmj05mn40csy')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+#DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', '.netlify.com']
 
 
 # Application definition
@@ -154,7 +155,6 @@ LOGOUT_ON_PASSWORD_CHANGE = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
 
 STATIC_URL = '/static/'
 CORS_ORIGIN_ALLOW_ALL = True
