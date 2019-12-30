@@ -78,10 +78,14 @@ export class ProfilePage extends Component {
     return (
       <div>
         {isAuthenticated ? authLinks : guestLinks}
-        {this.state.userStories.map((marker, index) => {
-          return <h2 key={index}>{marker.title} <br/>
-          {marker.description.substring(0, 200)}</h2>; //key is needed for html stuff so it wont get mixed up
-        })}
+        <div class="card">
+           <div class="card-body">
+                {this.state.userStories.map((marker, index) => {
+                  return <h5 class="card-title" key={index}>Title: {marker.title} <br/>
+                  Description: {marker.description.substring(0, 200)}</h5>; //key is needed for html stuff so it wont get mixed up
+                })}
+           </div>
+        </div>
       </div>
 
     );
