@@ -1,22 +1,24 @@
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, generics
 from .serializers import PinSerializer
 from pins.models import pin, categoryType, upVoteStory, flagStory, commentStory
 from rest_framework import viewsets, permissions
-from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer, FlagStorySerializer, CommentStorySerializer
+from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer, FlagStorySerializer, \
+    CommentStorySerializer
 from django.contrib.auth.models import User
 # catalog viewset
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models.functions import Coalesce
 from django.db.models import Count, Sum, Value
+from rest_framework import filters
 
 
 # might need to install coalesce
 # is this a postgresql issue?
 class PinViewSet(viewsets.ModelViewSet):
-    #queryset = pin.objects.all()
- #   queryset = pin.objects.annotate(
-  #      updoot=Coalesce(Sum('pinsUpvote__upvote'), Value(1))
-   # )
+    # queryset = pin.objects.all()
+    #   queryset = pin.objects.annotate(
+    #      updoot=Coalesce(Sum('pinsUpvote__upvote'), Value(1))
+    # )
     queryset = pin.objects.annotate(
         updooots=Coalesce(Sum('updotes__upvote'), Value(0))
     )
@@ -28,6 +30,13 @@ class PinViewSet(viewsets.ModelViewSet):
     serializer_class = PinSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
+
+
+class PinSearchViewSet(viewsets.ModelViewSet):
+    queryset = pin.objects.all()
+    serializer_class = PinSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title', 'description']
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
