@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Switch from "react-switch";
 import axios from 'axios';
 import { logout} from "../../actions/auth";
+import { login } from "../../actions/auth";
 
 export class Settings extends Component {
 
@@ -48,21 +49,36 @@ this.props.logout
             return <Redirect to="/" />;
         }
 
+        const guestLinks = <div><Redirect to="/" /></div>;
+
 
     return (
 
       <div>
-      <label>
-        <span>Accessibility</span>
-        <Switch onChange={this.handleChange} checked={this.state.checked} />
-      </label>
 
+        <div>
 
+          <br/>
 
-      <button  onClick={() => this.deleteAccount(userid)} type="button" className="btn btn-warning">Delete Account</button>
+            <span>Accessibility</span>
+            <Switch className="react-switch" onChange={this.handleChange} checked={this.state.checked} />
+
+{/*
+            <script type="text/javascript">
+            var _userway_config = {
+            account: 'i2MXBKYecX'};
+            </script>
+            <script type="text/javascript" src="https://cdn.userway.org/widget.js"></script>
+
+*/}
+
+        </div>
+
+        <br/>
+
+        <button  onClick={() => this.deleteAccount(userid)} type="button" className="btn btn-warning">Delete Account</button>
 
       </div>
-
     );
   }
 }
@@ -76,5 +92,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-    { logout}
+    { logout, login}
 )(Settings);
