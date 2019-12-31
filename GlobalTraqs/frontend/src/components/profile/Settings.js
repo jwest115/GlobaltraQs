@@ -64,11 +64,12 @@ this.props.logout
             <Switch className="react-switch" onChange={this.handleChange} checked={this.state.checked} />
 
 {/*
-            <script type="text/javascript">
-            var _userway_config = {
-            account: 'i2MXBKYecX'};
-            </script>
-            <script type="text/javascript" src="https://cdn.userway.org/widget.js"></script>
+          <script type="text/javascript">
+          var _userway_config = {
+          account: 'BHN2wadYhB'
+          };
+          </script>
+          <script type="text/javascript" src="https://cdn.userway.org/widget.js"></script>
 
 */}
 
@@ -77,6 +78,7 @@ this.props.logout
         <br/>
 
         <button  onClick={() => this.deleteAccount(userid)} type="button" className="btn btn-warning">Delete Account</button>
+        <Redirect to="/" />
 
       </div>
     );
