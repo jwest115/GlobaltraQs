@@ -22,8 +22,8 @@ SECRET_KEY = '946c#sv0!y1b-go8w)l@qd4j^74i22u4)i=5trrmj05mn40csy'
 #     'DJANGO_SECRET_KEY', '946c#sv0!y1b-go8w)l@qd4j^74i22u4)i=5trrmj05mn40csy')
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
-#DEBUG = True
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+DEBUG = True
+#DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', '.netlify.com']
 
 
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'users',
     'passwordReset',
     'django_filters',
-    'django_rest_passwordreset',
+    #'django_rest_passwordreset',
     'corsheaders',
 ]
 REST_FRAMEWORK = {
@@ -149,10 +149,16 @@ USE_L10N = True
 
 USE_TZ = True
 
-OLD_PASSWORD_FIELD_ENABLED = True
+OLD_PASSWORD_FIELD_ENABLED = False
 
 LOGOUT_ON_PASSWORD_CHANGE = False
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'resetglobaltraqs@gmail.com'
+EMAIL_HOST_PASSWORD = 'gl0b4ltr4qs'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
