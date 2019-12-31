@@ -17,8 +17,6 @@ class pin(models.Model):
     startDate = models.DateField('Date', blank=True, null=True)
     endDate = models.DateField('Date', blank=True, null=True)
 
-
-
     def __str__(self):
         """String for representing the Model object."""
         return self.title

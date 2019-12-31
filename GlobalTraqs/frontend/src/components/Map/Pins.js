@@ -4,6 +4,7 @@ import { getPins, deletePins } from "../../actions//pins";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import PinForm from "./PinForm";
+import Sidebar from "../layout/Sidebar";
 import community from "./images/community.png"; // Tell Webpack this JS file uses this image
 import historical from "./images/historical.png";
 import personal from "./images/personal.png";
@@ -78,7 +79,8 @@ export class Pins extends Component {
       submitAddress: true,
       modal: false,
       categoryType: personalIcon,
-      editButtonValue: "Edit Story"
+      editButtonValue: "Edit Story",
+      open: false,
     };
   }
 
@@ -89,6 +91,7 @@ export class Pins extends Component {
     auth: PropTypes.object.isRequired
   };
   componentDidMount() {
+    this.map = this.mapInstance.leafletElement;
     this.props.getPins();
     this.getLocation();
     // this.intervalID = setInterval(this.props.getPins.bind(this), 5000); //every 5 seconds it gets data
@@ -121,6 +124,12 @@ export class Pins extends Component {
   };
 
   addMarker = e => {
+    if(e.button == 2) {
+      console.log("right!");
+    }
+    else {
+      console.log("not right");
+    }
     this.setState({ userlat: e.latlng.lat });
     this.setState({ userlng: e.latlng.lng });
     this.createStory(false);
@@ -132,6 +141,7 @@ export class Pins extends Component {
     this.setState({ lat: 34.0522 });
     this.setState({ lng: -118.2437 });
   };
+
   getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -160,17 +170,25 @@ export class Pins extends Component {
     const userposition = [this.state.userlat, this.state.userlng];
     let isAdminOrModerator = false;
     let adminModeratorEditStory = "";
+    let sidebarOpen = true;
+
 
     return (
       <Fragment>
+              {/*<a*/}
+              {/*  onClick={() => props.handleName(sidebarOpen)}*/}
+              {/*  />*/}
+              <Sidebar yeet={sidebarOpen} />
         <Map
           center={userposition}
           zoom={15}
           maxZoom={30} //shows map
           id="map"
           style={divStyle}
+          ref={e => { this.mapInstance = e }}
           //user click for location
-          onClick={this.addMarker}
+          // right click to add pin
+          onContextMenu={this.addMarker}
         >
           <TileLayer
             attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
@@ -191,13 +209,20 @@ export class Pins extends Component {
                 onClick={() => this.getLocation()}
                 className="btn btn-primary add-story-button"
               >
-                User<br></br>Location
+                ys
               </button>
             </div>
           </Control>
 
           <MarkerClusterGroup>
             {this.props.pins.map((marker, index) => {
+              // let newlyAddedMarker = false;
+              // if (index == this.props.pins.length - 1) {
+              //   // last one
+              //   console.log("newest");
+              //   console.log(marker.title);
+              //   newlyAddedMarker = true;
+              // }
               let post = [marker.latitude, marker.longitude];
               let categoryIcon = "";
               if (marker.category == 1) {
@@ -208,35 +233,31 @@ export class Pins extends Component {
                 categoryIcon = historicalIcon;
               }
 
-              if (isAuthenticated) {
-                console.log("user is authenticated!");
-                if (
-                  user.is_administrator ||
-                  user.is_moderator ||
-                  marker.owner == user.id
-                ) {
-                  isAdminOrModerator = true;
-                  console.log("user is admin or moderator! let them edit!");
-                  adminModeratorEditStory = (
-                    <div className="admin-moderator-edit">
-                      <button
-                        onClick={this.editStory}
-                        className="btn btn-success admin-moderator-edit"
-                      >
-                        {this.state.editButtonValue}
-                      </button>
-                    </div>
-                  );
-                }
-              }
+               if (isAuthenticated) {
+                  console.log("user is authenticated!");
+                    if (user.is_administrator || user.is_moderator || marker.owner == user.id) {
+                      isAdminOrModerator = true;
+                      console.log("user is admin or moderator! let them edit!");
+                      adminModeratorEditStory = (
+                          <div className="admin-moderator-edit">
+                            <button
+                                onClick={this.editStory}
+                                className="btn btn-success admin-moderator-edit"
+                            >
+                              {this.state.editButtonValue}
+                            </button>
+                          </div>
+                      );
+                      console.log("user is an admin or moderator!");
+                    }
+               }
               //const id = marker.id;
-
+              let markerInstance;
               return (
                 <Marker key={index} position={post} icon={categoryIcon}>
                   <Popup>
-                    <strong>{marker.title}</strong>
-                    <br />
-                    {marker.description}
+
+                  <strong>{marker.title}</strong><br/>{marker.description}
                     <br />
                     <br />
 
@@ -267,17 +288,15 @@ export class Pins extends Component {
                       </button>
                     </Link>
                     {isAdminOrModerator ? (
-                      <button
-                        onClick={this.props.deletePins.bind(this, marker.id)}
-                        type="button"
-                        className="btn btn-danger btn-sm"
-                      >
-                        Delete
-                      </button>
-                    ) : (
-                      ""
-                    )}
+                          <button onClick={this.props.deletePins.bind(this, marker.id)}
+                                  type="button"
+                                  className="btn btn-danger btn-sm">
+                            Delete
+                          </button>
+                            )
+                        : ""}
                   </Popup>
+                  {/*{newlyAddedMarker ? this.leafletElement.openPopup() : ""}*/}
                 </Marker>
               );
             })}
@@ -297,8 +316,8 @@ export class Pins extends Component {
             userlng={this.state.userlng}
             submitAddress={this.state.submitAddress}
             toggle={this.toggle}
-            refreshList={this.refreshList}
             owner={userid}
+            map={this.map}
           />
         ) : null}
         {/*<PinForm userlat={this.state.userlat} userlng={this.state.userlng} />*/}

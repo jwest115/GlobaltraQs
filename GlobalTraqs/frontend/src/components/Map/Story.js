@@ -19,7 +19,8 @@ import default_marker from "./images/default.png";
 import community from "./images/community.png";
 import historical from "./images/historical.png";
 import personal from "./images/personal.png";
-import AddComment from "./AddComment";
+import MarkerClusterGroup from "react-leaflet-markercluster";
+
 const divStyle = {
   height: "40vh",
   width: "100%",
@@ -75,9 +76,7 @@ export class Story extends Component {
     flaggerId: "",
     hasFlaggedBefore: "",
     flagId: "",
-    flagger: "",
-    storytitle: "",
-    description: ""
+    flagger: ""
   };
 
   componentDidMount() {
@@ -95,11 +94,12 @@ export class Story extends Component {
       flagger: userid
     });
     this.state.upVoter = userid;
-    console.log("the user id is: " + id);
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-        if (response.data.owner != null) {
+        if(response.data.owner != null) {
+          console.log("not null")
+          this.getAuthor(response.data.owner);
         }
         console.log(response.data);
         console.log("is the data");
@@ -116,7 +116,9 @@ export class Story extends Component {
         const userUpvotedBefore = upvotedData ? true : false;
         const stateofUpvote = userUpvotedBefore ? upvotedData.upvote : false;
         const upvoteid = userUpvotedBefore ? upvotedData.id : false; //gets  id of upvotted story
-
+        response.data.commentstory.map((marker, index) => {
+          console.log(marker.username + " " + marker.description);
+        });
         console.log(response.data.commentstory[0]);
         this.setState({
           userStory: response.data,
@@ -125,10 +127,7 @@ export class Story extends Component {
           upvote: stateofUpvote,
           hasVotedBefore: userUpvotedBefore,
           upVoteId: upvoteid,
-          updotes: response.data.updooots,
-          commentStory: response.data.commentstory,
-          storytitle: response.data.title,
-          description: response.data.description
+          updotes: response.data.updooots
         });
       })
       .catch(error => {
@@ -208,8 +207,6 @@ export class Story extends Component {
         console.log("number: " + response.data.updooots);
         this.setState({
           userStory: response.data,
-          storytitle: response.data.title,
-          description: response.data.description,
           updotes: response.data.updooots
         });
       })
@@ -223,12 +220,7 @@ export class Story extends Component {
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-        this.setState({
-          userStory: response.data,
-          storytitle: response.data.title,
-          description: response.data.description,
-          commentStory: response.data.commentstory
-        });
+        this.setState({ userStory: response.data });
         console.log(response.data);
       })
       .catch(error => {
@@ -250,17 +242,11 @@ export class Story extends Component {
     }
   };
 
-  onUpdate = v => {
-    console.log(v.title + "title from onujpdate");
+  getAuthor = user_id => {
     axios
-      .get(`api/pins/${this.state.pinId}`)
-      .then(response => {
-        this.setState({
-          userStory: response.data,
-          storytitle: response.data.title,
-          description: response.data.description
-        });
-        console.log(this.state.userStory.title);
+      .get(`/api/auth/users/${user_id}/`)
+      .then(res => {
+        this.setState({ storyAuthor: res.data });
       })
       .catch(error => {
         console.log(error);
@@ -277,27 +263,26 @@ export class Story extends Component {
     let adminModeratorEditStory = "";
     const { isAuthenticated, user } = this.props.auth;
     if (isAuthenticated) {
-      if (
-        user.is_administrator ||
-        user.is_moderator ||
-        user.id == this.state.storyAuthor.id
-      ) {
-        isAdminOrModerator = true;
-        adminModeratorEditStory = (
-          <div className="admin-moderator-edit">
-            <button
-              onClick={this.editStory}
-              className="btn btn-success admin-moderator-edit"
-            >
-              {this.state.editButtonValue}
-            </button>
-          </div>
-        );
+      console.log("user is authenticated!");
+        if (user.is_administrator || user.is_moderator || this.state.userStory.owner == user.id) {
+          isAdminOrModerator = true;
+          console.log("user is admin or moderator! let them edit!");
+          adminModeratorEditStory = (
+              <div className="admin-moderator-edit">
+                <button
+                    onClick={this.editStory}
+                    className="btn btn-success admin-moderator-edit"
+                >
+                  {this.state.editButtonValue}
+                </button>
+              </div>
+          );
+          console.log("user IS admin or moderator!");
       }
     }
-    let authorName = this.state.userStory.username;
-    if (!this.state.userStory.username) {
-      authorName = "Anonymous";
+    let authorName = "Anonymous";
+    if (this.state.userStory.owner != null) {
+      authorName = this.state.userStory.username;
     }
     // console.log("lat " + this.state.userStory.latitude);
     const position = [
@@ -320,16 +305,20 @@ export class Story extends Component {
         {this.state.upvote ? "Downvote" : "Upvote"}
       </button>
     );
+
     // const {author} = this.props.user;
+    let startDate = this.state.userStory.startDate.split('-');
+    let start = new Date(startDate[0], startDate[1], startDate[2]);
+    console.log("start " + startDate[1] + "/" + startDate[2] + "/" + startDate[0]);
+    console.log("start " + start);
+
+    startDate = startDate[1] + "/" + startDate[2] + "/" + startDate[0];
+    let endDate = this.state.userStory.endDate.split('-');
+    let end = new Date(endDate[0], endDate[1], endDate[2]);
+    console.log("end " + end);
+    endDate = endDate[1] + "/" + endDate[2] + "/" + endDate[0];
     return (
       <div className="container-fluid" style={divStyle2}>
-        <form onSubmit={this.onSubmit}>
-          <h2>
-            number of upvotes {this.state.userStory.updooots}{" "}
-            {isAuthenticated ? upVoteButton : "login to upvote"}
-          </h2>
-        </form>
-
         <h2> {isAuthenticated ? flaggedButton : ""}</h2>
         <Map center={position} zoom={15} maxZoom={30} id="map" style={divStyle}>
           <TileLayer
@@ -337,6 +326,7 @@ export class Story extends Component {
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           />
 
+        <MarkerClusterGroup>
           {this.props.pins.map((marker, index) => {
             let post = [marker.latitude, marker.longitude];
             let categoryIcon = "";
@@ -350,25 +340,25 @@ export class Story extends Component {
             const id = marker.id;
 
             return (
+
               <Marker key={index} position={post} icon={categoryIcon}>
                 <Popup>
                   <strong>{marker.title}</strong> <br />{" "}
                   {marker.description.substring(0, 200)}
                   <br />
                   <br />
-                  <Link to={`${marker.id}`}>
-                    <button
-                      type="button"
-                      className="btn btn-primary btn-sm"
-                      onClick={() => this.updateStoryId(id)}
-                    >
-                      View Story
-                    </button>
-                  </Link>
+                  <button
+                    onClick={() => this.updateStoryId(id)}
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                  >
+                    View Story
+                  </button>
                 </Popup>
               </Marker>
             );
           })}
+          </MarkerClusterGroup>
         </Map>
         <div className="container-fluid" style={storyBody}>
           {this.state.showEditForm && (
@@ -378,19 +368,27 @@ export class Story extends Component {
               userlat={this.state.userStory.latitude}
               userlng={this.state.userStory.longitude}
               storyid={id}
-              user_id={this.state.userStory.user_id}
-              onUpdate={this.onUpdate.bind(this)}
+              userId={this.state.userStory.owner}
+              startDate={start}
+              endDate={end}
             />
           )}
           {isAdminOrModerator ? adminModeratorEditStory : ""}
           <h2>
-            <strong>{this.state.storytitle}</strong>
+            <strong>{this.state.userStory.title}</strong>
           </h2>
+          <p> {startDate} - {endDate} </p>
           <p>By: {authorName}</p>
+          <form onSubmit={this.onSubmit}>
+          <h6>
+            {this.state.userStory.updooots}{" "} upvotes
+            {isAuthenticated ? upVoteButton : <Link to="/login">  &nbsp;Login to upvote!</Link>}
+          </h6>
+          </form>
           <hr></hr>
-          <p>{this.state.description}</p>
+          <p>{this.state.userStory.description}</p>
 
-          {this.state.commentStory.map((marker, index) => {
+          {this.state.userStory.commentstory.map((marker, index) => {
             console.log(marker.username);
             return (
               <div className="container-md jumbotron" key={index} style={style}>
@@ -404,7 +402,6 @@ export class Story extends Component {
             );
           })}
         </div>
-        {/* <AddComment userlat={this.state.userlat} userlng={this.state.userlng} /> */}
       </div>
     );
   }
