@@ -27,7 +27,7 @@ class ForgotPassword extends Component {
             });
         } else {
             axios
-                .post('/api/auth/users/', {
+                .post('/api/password_reset/', {
                     email: this.state.email,
                 })
                 .then(response => {
