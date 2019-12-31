@@ -25,8 +25,10 @@ import Manage from "./components/accounts/manage";
 import ProfilePage from "./components/profile/ProfilePage";
 import Settings from "./components/profile/Settings";
 import EditStory from "./components/Map/EditStory";
-import ForgotPassword from "./components/accounts/ForgotPassword";
 
+import ForgotPassword from "./components/accounts/ForgotPassword";
+import AddComment from "./components/Map/AddComment";
+import PinForm from "./components/Map/PinForm";
 const divStyle = {
   position: "relative"
 };
