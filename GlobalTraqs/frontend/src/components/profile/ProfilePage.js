@@ -84,6 +84,19 @@ export class ProfilePage extends Component {
                   return <h5 class="card-title" key={index}>Title: {marker.title} <br/>
                   Description: {marker.description.substring(0, 200)}</h5>; //key is needed for html stuff so it wont get mixed up
                 })}
+
+                {this.state.userStories.map((marker, index) => {
+                  return <Link
+                      to={`Story/${marker.id}`}
+                      params={{ testvalue: "hello" }}
+                      key={index}
+                    >
+                      <button type="button" className="btn btn-primary btn-sm">
+                        View Story
+                      </button>
+                    </Link>
+                })}
+
            </div>
         </div>
       </div>
