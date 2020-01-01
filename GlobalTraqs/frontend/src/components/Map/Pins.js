@@ -4,7 +4,7 @@ import { getPins, deletePins } from "../../actions//pins";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import PinForm from "./PinForm";
-import Sidebar from "../layout/Sidebar";
+import SearchSidebar from "../layout/SidebarTest";
 import community from "./images/community.png"; // Tell Webpack this JS file uses this image
 import historical from "./images/historical.png";
 import personal from "./images/personal.png";
@@ -178,7 +178,6 @@ export class Pins extends Component {
               {/*<a*/}
               {/*  onClick={() => props.handleName(sidebarOpen)}*/}
               {/*  />*/}
-              <Sidebar yeet={sidebarOpen} />
         <Map
           center={userposition}
           zoom={15}
@@ -322,6 +321,9 @@ export class Pins extends Component {
         ) : null}
         {/*<PinForm userlat={this.state.userlat} userlng={this.state.userlng} />*/}
         {/* change AddPin PinForm for working form */}
+        {/*  <div id={"sidebar"}>*/}
+        {/*      <SearchSidebar />*/}
+        {/*    </div>*/}
       </Fragment>
     );
   }
