@@ -70,6 +70,8 @@ export const editPin = (pin, id) => dispatch => {
         type: EDIT_PIN,
         payload: res.data
       });
+       console.log("In edit pin");
+      console.log(res.data);
     })
     .catch(err => console.log(err));
 };

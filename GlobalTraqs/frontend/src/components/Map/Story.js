@@ -216,6 +216,10 @@ export class Story extends Component {
       });
   }
 
+  onUpdate = (title, description, startDate, endDate) => {
+    this.setState({title: title, description: description, startDate: startDate, endDate: endDate })
+  };
+
   updateStoryId = id => {
     axios
       .get(`api/pins/${id}`)
@@ -347,13 +351,18 @@ export class Story extends Component {
                   {marker.description.substring(0, 200)}
                   <br />
                   <br />
-                  <button
-                    onClick={() => this.updateStoryId(id)}
-                    type="button"
-                    className="btn btn-primary btn-sm"
-                  >
-                    View Story
-                  </button>
+                  <Link
+                      to={`/Story/${marker.id}`}
+                      params={{ storyId: marker.id }}
+                    >
+                       <button
+                      onClick={() => this.updateStoryId(id)}
+                      type="button"
+                      className="btn btn-primary btn-sm"
+                      >
+                      View Story
+                    </button>
+                    </Link>
                 </Popup>
               </Marker>
             );
@@ -371,6 +380,7 @@ export class Story extends Component {
               userId={this.state.userStory.owner}
               startDate={start}
               endDate={end}
+              onUpdate = {this.onUpdate}
             />
           )}
           {isAdminOrModerator ? adminModeratorEditStory : ""}

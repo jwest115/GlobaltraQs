@@ -286,7 +286,7 @@ export class Pins extends Component {
                     {/*{isAdminOrModerator ? adminModeratorEditStory : ""}*/}
                     <Link
                       to={`Story/${marker.id}`}
-                      params={{ testvalue: "hello" }}
+                      params={{ storyId: marker.id }}
                     >
                       <button type="button" className="btn btn-primary btn-sm">
                         View Story

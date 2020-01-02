@@ -143,7 +143,6 @@ export class EditPin extends Component {
           <input
             type="hidden"
             name="latitude"
-            onChange={this.onChange}
             // value={this.props.userlat}
             value={latitude}
           />
@@ -151,7 +150,6 @@ export class EditPin extends Component {
           <input
             type="hidden"
             name="longitude"
-            onChange={this.onChange}
             // value={this.props.userlat}
             value={longitude}
           />
