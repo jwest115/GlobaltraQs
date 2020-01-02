@@ -81,7 +81,7 @@
 }
 
 .sidebar {
-    zIndex: 2;
+    zIndex: 1000;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -102,10 +102,11 @@
     WebkitOverflowScrolling: touch;
     transition: left .3s ease-out, right .3s ease-out;
     z-index: 1000;
+    width: 35%;
   }
 
 .overlay {
-    zIndex: 1;
+    zIndex: 999;
     position: fixed;
     top: 0;
     left: 0;
@@ -140,6 +141,6 @@
 }
 
 #open-sidebar-button {
-    z-index:1000;
+    z-index:998;
     position: absolute;
 }

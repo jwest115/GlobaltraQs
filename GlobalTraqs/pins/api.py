@@ -40,7 +40,8 @@ class PinViewSet(viewsets.ModelViewSet):
 class PinSearchViewSet(viewsets.ModelViewSet):
     queryset = pin.objects.all()
     serializer_class = PinSerializer
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    filterset_fields = '__all__'
     search_fields = ['title', 'description']
 
 

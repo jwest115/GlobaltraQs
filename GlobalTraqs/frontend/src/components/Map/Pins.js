@@ -18,7 +18,7 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 //import LocateControl from "react-leaflet-locate-control";
 
 const divStyle = {
-  height: "100%",
+  height: "90%",
   width: "100%"
 };
 
@@ -90,6 +90,7 @@ export class Pins extends Component {
     deletePins: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
   };
+
   componentDidMount() {
     this.map = this.mapInstance.leafletElement;
     this.props.getPins();
