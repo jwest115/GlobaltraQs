@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import { Map, Marker, Popup, TileLayer, ZoomControl } from "react-leaflet";
 import { getPins, deletePins } from "../../actions//pins";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -16,6 +16,8 @@ import Modal from "./Modal";
 import Control from "react-leaflet-control";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 //import LocateControl from "react-leaflet-locate-control";
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import MyLocationIcon from '@material-ui/icons/MyLocation';
 
 const divStyle = {
   height: "90%",
@@ -184,32 +186,35 @@ export class Pins extends Component {
           zoom={15}
           maxZoom={30} //shows map
           id="map"
+          zoomControl = {false}
           style={divStyle}
           ref={e => { this.mapInstance = e }}
           //user click for location
           // right click to add pin
           onContextMenu={this.addMarker}
         >
+          <ZoomControl position="bottomleft" />
           <TileLayer
             attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           />
 
-          <Control>
-            <div>
-              <button
-                onClick={() => this.createStory(true)}
-                className="btn btn-primary add-story-button"
-              >
-                Add<br></br>Story
-              </button>
-            </div>
+          <Control
+            position={"bottomright"}>
+            {/*<div>*/}
+            {/*  <button*/}
+            {/*    onClick={() => this.createStory(true)}*/}
+            {/*    className="btn btn-primary add-story-button"*/}
+            {/*  >*/}
+            {/*    <AddBoxIcon></AddBoxIcon>*/}
+            {/*  </button>*/}
+            {/*</div>*/}
             <div>
               <button
                 onClick={() => this.getLocation()}
-                className="btn btn-primary add-story-button"
+                className="btn btn-primary"
               >
-                ys
+                <MyLocationIcon></MyLocationIcon>
               </button>
             </div>
           </Control>

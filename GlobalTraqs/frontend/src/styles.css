@@ -143,4 +143,5 @@
 #open-sidebar-button {
     z-index:998;
     position: absolute;
+    margin-top: 10px;
 }
