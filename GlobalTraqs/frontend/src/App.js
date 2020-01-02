@@ -29,6 +29,7 @@ import EditStory from "./components/Map/EditStory";
 import ForgotPassword from "./components/accounts/ForgotPassword";
 import AddComment from "./components/Map/AddComment";
 import PinForm from "./components/Map/PinForm";
+import resetPassword from "./components/accounts/resetPassword";
 const divStyle = {
   position: "relative"
 };
@@ -58,7 +59,7 @@ export class App extends Component {
                 <Route exact path="/manage" component={Manage} />
                 <Route path="/Story/:id/edit" exact component={EditStory} />
                 <Route path="/forgotPassword" component={ForgotPassword} />
-                {/* <Route path="/resetPassword" componenet={resetPassword} /> */}
+                <Route path="/resetPassword" componenet={resetPassword} />
 
                 {/* <MapDashboard /> */}
               </Switch>
