@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 
-class resetPassword extends Component {
+class ResetPassword extends Component {
     constructor(props) {
         super(props);
 
@@ -90,7 +90,7 @@ class resetPassword extends Component {
         return (
             <div className="col-md-6 m-auto">
                 <div className="card card-body mt-5">
-                    <h2 className="text-center">Forgot Password</h2>
+                    <h2 className="text-center">Reset Password</h2>
                     <form className="profile-form" onSubmit={this.confirmPass}>
                         <div className="form-group">
                             <p>
@@ -131,4 +131,4 @@ class resetPassword extends Component {
     }
 }
 
-export default resetPassword;
+export default ResetPassword;
