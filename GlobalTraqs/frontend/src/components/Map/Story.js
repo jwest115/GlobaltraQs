@@ -84,21 +84,21 @@ export class Story extends Component {
     const { id } = this.props.match.params;
     this.setState({ pinId: id });
     const { isAuthenticated, user } = this.props.auth;
-    const userid = user ? user.id : "";
+    const userid = user ? user.id : "no id";
 
-    this.state.upVoterId = userid;
+    console.log("current user id is " + user.id);
     this.setState({
       upVoterId: userid,
       upVoter: userid,
 
       flagger: userid
     });
-    this.state.upVoter = userid;
+
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-        if(response.data.owner != null) {
-          console.log("not null")
+        if (response.data.owner != null) {
+          console.log("not null");
           this.getAuthor(response.data.owner);
         }
         console.log(response.data);
@@ -134,10 +134,27 @@ export class Story extends Component {
         console.log(error);
       });
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.id !== this.props.match.params.id) {
+      console.log("this is true" + nextProps.match.params.id);
+      const id = nextProps.match.params.id;
+      axios
+        .get(`api/pins/${id}`)
+        .then(response => {
+          this.setState({ userStory: response.data });
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }
+
   onFlag = e => {
     e.preventDefault();
     this.state.flagged = true;
-    console.log("flag these losers");
+    console.log("flag these losers" + this.state.flagger);
     const { flagged, pinId, flagger } = this.state;
     const upVoteStoryPin = { flagged, pinId, flagger };
     axios
@@ -217,7 +234,12 @@ export class Story extends Component {
   }
 
   onUpdate = (title, description, startDate, endDate) => {
-    this.setState({title: title, description: description, startDate: startDate, endDate: endDate })
+    this.setState({
+      title: title,
+      description: description,
+      startDate: startDate,
+      endDate: endDate
+    });
   };
 
   updateStoryId = id => {
@@ -268,20 +290,24 @@ export class Story extends Component {
     const { isAuthenticated, user } = this.props.auth;
     if (isAuthenticated) {
       console.log("user is authenticated!");
-        if (user.is_administrator || user.is_moderator || this.state.userStory.owner == user.id) {
-          isAdminOrModerator = true;
-          console.log("user is admin or moderator! let them edit!");
-          adminModeratorEditStory = (
-              <div className="admin-moderator-edit">
-                <button
-                    onClick={this.editStory}
-                    className="btn btn-success admin-moderator-edit"
-                >
-                  {this.state.editButtonValue}
-                </button>
-              </div>
-          );
-          console.log("user IS admin or moderator!");
+      if (
+        user.is_administrator ||
+        user.is_moderator ||
+        this.state.userStory.owner == user.id
+      ) {
+        isAdminOrModerator = true;
+        console.log("user is admin or moderator! let them edit!");
+        adminModeratorEditStory = (
+          <div className="admin-moderator-edit">
+            <button
+              onClick={this.editStory}
+              className="btn btn-success admin-moderator-edit"
+            >
+              {this.state.editButtonValue}
+            </button>
+          </div>
+        );
+        console.log("user IS admin or moderator!");
       }
     }
     let authorName = "Anonymous";
@@ -311,13 +337,15 @@ export class Story extends Component {
     );
 
     // const {author} = this.props.user;
-    let startDate = this.state.userStory.startDate.split('-');
+    let startDate = this.state.userStory.startDate.split("-");
     let start = new Date(startDate[0], startDate[1], startDate[2]);
-    console.log("start " + startDate[1] + "/" + startDate[2] + "/" + startDate[0]);
+    console.log(
+      "start " + startDate[1] + "/" + startDate[2] + "/" + startDate[0]
+    );
     console.log("start " + start);
 
     startDate = startDate[1] + "/" + startDate[2] + "/" + startDate[0];
-    let endDate = this.state.userStory.endDate.split('-');
+    let endDate = this.state.userStory.endDate.split("-");
     let end = new Date(endDate[0], endDate[1], endDate[2]);
     console.log("end " + end);
     endDate = endDate[1] + "/" + endDate[2] + "/" + endDate[0];
@@ -330,43 +358,38 @@ export class Story extends Component {
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           />
 
-        <MarkerClusterGroup>
-          {this.props.pins.map((marker, index) => {
-            let post = [marker.latitude, marker.longitude];
-            let categoryIcon = "";
-            if (marker.category == 1) {
-              categoryIcon = personalIcon;
-            } else if (marker.category == 2) {
-              categoryIcon = communityIcon;
-            } else {
-              categoryIcon = historicalIcon;
-            }
-            const id = marker.id;
+          <MarkerClusterGroup>
+            {this.props.pins.map((marker, index) => {
+              let post = [marker.latitude, marker.longitude];
+              let categoryIcon = "";
+              if (marker.category == 1) {
+                categoryIcon = personalIcon;
+              } else if (marker.category == 2) {
+                categoryIcon = communityIcon;
+              } else {
+                categoryIcon = historicalIcon;
+              }
+              const id = marker.id;
 
-            return (
-
-              <Marker key={index} position={post} icon={categoryIcon}>
-                <Popup>
-                  <strong>{marker.title}</strong> <br />{" "}
-                  {marker.description.substring(0, 200)}
-                  <br />
-                  <br />
-                  <Link
-                      to={`/Story/${marker.id}`}
-                      params={{ storyId: marker.id }}
-                    >
-                       <button
+              return (
+                <Marker key={index} position={post} icon={categoryIcon}>
+                  <Popup>
+                    <strong>{marker.title}</strong> <br />{" "}
+                    {marker.description.substring(0, 200)}
+                    <br />
+                    <br />
+                    <Link to={`${marker.id}`}> e </Link> View{" "}
+                    <button
                       onClick={() => this.updateStoryId(id)}
                       type="button"
                       className="btn btn-primary btn-sm"
-                      >
+                    >
                       View Story
                     </button>
-                    </Link>
-                </Popup>
-              </Marker>
-            );
-          })}
+                  </Popup>
+                </Marker>
+              );
+            })}
           </MarkerClusterGroup>
         </Map>
         <div className="container-fluid" style={storyBody}>
@@ -380,20 +403,27 @@ export class Story extends Component {
               userId={this.state.userStory.owner}
               startDate={start}
               endDate={end}
-              onUpdate = {this.onUpdate}
+              onUpdate={this.onUpdate}
             />
           )}
           {isAdminOrModerator ? adminModeratorEditStory : ""}
           <h2>
             <strong>{this.state.userStory.title}</strong>
           </h2>
-          <p> {startDate} - {endDate} </p>
+          <p>
+            {" "}
+            {startDate} - {endDate}{" "}
+          </p>
           <p>By: {authorName}</p>
           <form onSubmit={this.onSubmit}>
-          <h6>
-            {this.state.userStory.updooots}{" "} upvotes
-            {isAuthenticated ? upVoteButton : <Link to="/login">  &nbsp;Login to upvote!</Link>}
-          </h6>
+            <h6>
+              {this.state.userStory.updooots} upvotes
+              {isAuthenticated ? (
+                upVoteButton
+              ) : (
+                <Link to="/login"> &nbsp;Login to upvote!</Link>
+              )}
+            </h6>
           </form>
           <hr></hr>
           <p>{this.state.userStory.description}</p>
