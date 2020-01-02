@@ -20,6 +20,10 @@ import community from "./images/community.png";
 import historical from "./images/historical.png";
 import personal from "./images/personal.png";
 import MarkerClusterGroup from "react-leaflet-markercluster";
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 
 const divStyle = {
   height: "40vh",
@@ -44,6 +48,11 @@ const storyBody = {
   paddingRight: "50px"
 };
 
+const months = [ "January", "February", "March", "April", "May", "June",
+           "July", "August", "September", "October", "November", "December" ];
+
+
+
 export class Story extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
@@ -59,7 +68,13 @@ export class Story extends Component {
       showEditForm: false,
       editButtonValue: "Edit Story",
       storyAuthor: "",
-      storyId: ""
+      storyId: "",
+      title: "",
+      description: "",
+      startDate: new Date(),
+      endDate: new Date(),
+      startDateFormatted: "",
+      endDateFormatted: ""
     };
   }
 
@@ -120,14 +135,38 @@ export class Story extends Component {
           console.log(marker.username + " " + marker.description);
         });
         console.log(response.data.commentstory[0]);
+
+      let startSplit = response.data.startDate.split('-');
+      let start = new Date(startSplit[0], Number.parseInt(startSplit[1]) - 1, startSplit[2]);
+      console.log("start " + startSplit[1] + "/" + startSplit[2] + "/" + startSplit[0]);
+      console.log("start " + start);
+
+      let selectedStartMonthName = months[start.getMonth()];
+      let startDateFormatted = selectedStartMonthName + " " + start.getDate() + ", " + start.getFullYear();
+      console.log("original " + start);
+      let endSplit = response.data.endDate.split('-');
+      let end = new Date(endSplit[0], Number.parseInt(endSplit[1]) - 1, endSplit[2]);
+      console.log("end " + end);
+
+      let selectedEndMonthName = months[end.getMonth()];
+      let endDateFormatted = selectedEndMonthName + " " + end.getDate() + ", " + end.getFullYear();
+
         this.setState({
           userStory: response.data,
+          title: response.data.title,
+          description: response.data.description,
+          startDate: start,
+          startDateFormatted: startDateFormatted,
+          endDate: end,
+          endDateFormatted: endDateFormatted,
           upVotes: response.data.upVotes,
           hasFlaggedBefore: userFlaggedBefore,
           upvote: stateofUpvote,
           hasVotedBefore: userUpvotedBefore,
           upVoteId: upvoteid,
-          updotes: response.data.updooots
+          updotes: response.data.updooots,
+          showEditForm: false,
+          editButtonValue: "Edit Story"
         });
       })
       .catch(error => {
@@ -216,15 +255,49 @@ export class Story extends Component {
       });
   }
 
-  onUpdate = (title, description, startDate, endDate) => {
-    this.setState({title: title, description: description, startDate: startDate, endDate: endDate })
+  onUpdate = (title, description, startDate, endDate, formattedStartDate, formattedEndDate) => {
+
+    this.setState({
+        title: title,
+        description: description,
+        startDate: startDate,
+        endDate: endDate,
+        startDateFormatted: formattedStartDate,
+        endDateFormatted: formattedEndDate,
+        showEditForm: false,
+        editButtonValue: "Edit Story", })
   };
 
   updateStoryId = id => {
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-        this.setState({ userStory: response.data });
+        let startSplit = response.data.startDate.split('-');
+        let start = new Date(startSplit[0], Number.parseInt(startSplit[1]) - 1, startSplit[2]);
+        console.log("start " + startSplit[1] + "/" + startSplit[2] + "/" + startSplit[0]);
+        console.log("start " + start);
+
+        let selectedStartMonthName = months[start.getMonth()];
+        let startDateFormatted = selectedStartMonthName + " " + start.getDate() + ", " + start.getFullYear();
+        console.log("original " + start);
+        let endSplit = response.data.endDate.split('-');
+        let end = new Date(endSplit[0], Number.parseInt(endSplit[1]) - 1, endSplit[2]);
+        console.log("end " + end);
+
+        let selectedEndMonthName = months[end.getMonth()];
+        let endDateFormatted = selectedEndMonthName + " " + end.getDate() + ", " + end.getFullYear();
+        this.setState({
+            userStory: response.data,
+            title: response.data.title,
+            description: response.data.description,
+            startDate: start,
+            startDateFormatted: startDateFormatted,
+            endDate: end,
+            endDateFormatted: endDateFormatted,
+            upVotes: response.data.upVotes,
+            showEditForm: false,
+            editButtonValue: "Edit Story",
+        });
         console.log(response.data);
       })
       .catch(error => {
@@ -306,21 +379,23 @@ export class Story extends Component {
     );
     const upVoteButton = (
       <button type="submit" className="btn btn-primary">
-        {this.state.upvote ? "Downvote" : "Upvote"}
+        {this.state.upvote ? <ThumbDownIcon></ThumbDownIcon> : <ThumbUpIcon></ThumbUpIcon>}
       </button>
     );
 
     // const {author} = this.props.user;
-    let startDate = this.state.userStory.startDate.split('-');
-    let start = new Date(startDate[0], startDate[1], startDate[2]);
-    console.log("start " + startDate[1] + "/" + startDate[2] + "/" + startDate[0]);
-    console.log("start " + start);
+    // console.log("start date " + this.state.userStory.startDate);
+    // let startDate = this.state.userStory.startDate.split('-');
+    // let start = new Date(startDate[0], startDate[1], startDate[2]);
+    // console.log("start " + startDate[1] + "/" + startDate[2] + "/" + startDate[0]);
+    // console.log("start " + start);
+    //
+    // startDate = startDate[1] + "/" + startDate[2] + "/" + startDate[0];
+    // let endDate = this.state.userStory.endDate.split('-');
+    // let end = new Date(endDate[0], endDate[1], endDate[2]);
+    // console.log("end " + end);
+    // endDate = endDate[1] + "/" + endDate[2] + "/" + endDate[0];
 
-    startDate = startDate[1] + "/" + startDate[2] + "/" + startDate[0];
-    let endDate = this.state.userStory.endDate.split('-');
-    let end = new Date(endDate[0], endDate[1], endDate[2]);
-    console.log("end " + end);
-    endDate = endDate[1] + "/" + endDate[2] + "/" + endDate[0];
     return (
       <div className="container-fluid" style={divStyle2}>
         <h2> {isAuthenticated ? flaggedButton : ""}</h2>
@@ -372,22 +447,22 @@ export class Story extends Component {
         <div className="container-fluid" style={storyBody}>
           {this.state.showEditForm && (
             <EditPin
-              title={this.state.userStory.title}
-              description={this.state.userStory.description}
+              title={this.state.title}
+              description={this.state.description}
               userlat={this.state.userStory.latitude}
               userlng={this.state.userStory.longitude}
               storyid={id}
               userId={this.state.userStory.owner}
-              startDate={start}
-              endDate={end}
+              startDate={this.state.startDate}
+              endDate={this.state.endDate}
               onUpdate = {this.onUpdate}
             />
           )}
           {isAdminOrModerator ? adminModeratorEditStory : ""}
           <h2>
-            <strong>{this.state.userStory.title}</strong>
+            <strong>{this.state.title}</strong>
           </h2>
-          <p> {startDate} - {endDate} </p>
+          <p> {this.state.startDateFormatted} - {this.state.endDateFormatted} </p>
           <p>By: {authorName}</p>
           <form onSubmit={this.onSubmit}>
           <h6>
@@ -396,7 +471,7 @@ export class Story extends Component {
           </h6>
           </form>
           <hr></hr>
-          <p>{this.state.userStory.description}</p>
+          <p>{this.state.description}</p>
 
           {this.state.userStory.commentstory.map((marker, index) => {
             console.log(marker.username);

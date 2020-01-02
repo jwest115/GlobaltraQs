@@ -6,10 +6,15 @@ import { deletePins, editPin } from "../../actions/pins";
 import axios from "axios";
 import InputGroup from "react-bootstrap/InputGroup";
 import DatePicker from "react-datepicker";
+import  { Redirect } from 'react-router-dom'
+
 
 const labelStyle = {
   marginRight: "10px"
 };
+
+const months = [ "January", "February", "March", "April", "May", "June",
+           "July", "August", "September", "October", "November", "December" ];
 
 export class EditPin extends Component {
   state = {
@@ -20,11 +25,14 @@ export class EditPin extends Component {
     category: this.props.category,
     user: this.props.userId,
     startDate: this.props.startDate,
-    endDate: this.props.endDate
+    endDate: this.props.endDate,
+    pinDeleted: false
   };
   static propTypes = {
-    editPin: PropTypes.func.isRequired
+    editPin: PropTypes.func.isRequired,
+    deletePins: PropTypes.func.isRequired
   };
+
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   handleStartDateChange = date => {
@@ -32,6 +40,7 @@ export class EditPin extends Component {
       startDate: date
     });
   };
+
   handleEndDateChange = date => {
     this.setState({
       endDate: date
@@ -48,26 +57,44 @@ export class EditPin extends Component {
     this.state.latitude = a;
     this.state.longitude = b;
     this.state.id = c;
-    const { title, description, category, startDate, endDate } = this.state;
-    const pin = { title, description, category, startDate, endDate };
+    const { title, description, category, startDate, endDate} = this.state;
+    const pin = { title, description, category, startDate, endDate};
     this.props.editPin(pin, c);
     /*    axios.put(`/api/pins/${c}/`, pin)
                .then(res => {
                    console.log(res)
                    console.log(res.data)
                }) */
-    this.props.onUpdate(pin);
+
+
+     let selectedStartMonthName = months[startDate.getMonth()];
+     let startDateFormatted = selectedStartMonthName + " " + startDate.getDate() + ", " + startDate.getFullYear();
+
+     let selectedEndMonthName = months[endDate.getMonth()];
+     let endDateFormatted = selectedEndMonthName + " " + endDate.getDate() + ", " + endDate.getFullYear();
+     console.log("formatted start " + startDateFormatted);
+     console.log("formatted end " + endDateFormatted);
+
+    this.props.onUpdate(title, description, startDate, endDate, startDateFormatted, endDateFormatted);
     console.log(a + " " + this.state.latitude + "" + c);
+  };
+
+  deletePin = () => {
+    this.props.deletePins(this.props.storyid);
+    this.setState({pinDeleted: true});
   };
 
   render() {
     const { title, description, latitude, longitude, category, startDate, endDate } = this.state;
+      if(this.state.pinDeleted) {
+          return <Redirect to='/' />
+      }
 
     return (
       <div className="card card-body mt-4 mb-4">
         <div className="delete-button-div">
           <button
-            onClick={this.props.deletePins.bind(this, this.props.storyid)}
+            onClick={this.deletePin}
             type="button"
             className="delete-story-button btn btn-danger btn-sm"
           >
