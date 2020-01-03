@@ -86,7 +86,7 @@ export class Story extends Component {
     const { isAuthenticated, user } = this.props.auth;
     const userid = user ? user.id : "no id";
 
-    console.log("current user id is " + user.id);
+    console.log("current user id is ");
     this.setState({
       upVoterId: userid,
       upVoter: userid,
@@ -133,22 +133,6 @@ export class Story extends Component {
       .catch(error => {
         console.log(error);
       });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.match.params.id !== this.props.match.params.id) {
-      console.log("this is true" + nextProps.match.params.id);
-      const id = nextProps.match.params.id;
-      axios
-        .get(`api/pins/${id}`)
-        .then(response => {
-          this.setState({ userStory: response.data });
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
   }
 
   onFlag = e => {
@@ -350,97 +334,109 @@ export class Story extends Component {
     console.log("end " + end);
     endDate = endDate[1] + "/" + endDate[2] + "/" + endDate[0];
     return (
-      <div className="container-fluid" style={divStyle2}>
-        <h2> {isAuthenticated ? flaggedButton : ""}</h2>
-        <Map center={position} zoom={15} maxZoom={30} id="map" style={divStyle}>
-          <TileLayer
-            attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-            url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
-          />
+      <div>
+        <div className="container-fluid" style={divStyle2}>
+          <h2> {isAuthenticated ? flaggedButton : ""}</h2>
+          <Map
+            center={position}
+            zoom={15}
+            maxZoom={30}
+            id="map"
+            style={divStyle}
+          >
+            <TileLayer
+              attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+              url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
+            />
 
-          <MarkerClusterGroup>
-            {this.props.pins.map((marker, index) => {
-              let post = [marker.latitude, marker.longitude];
-              let categoryIcon = "";
-              if (marker.category == 1) {
-                categoryIcon = personalIcon;
-              } else if (marker.category == 2) {
-                categoryIcon = communityIcon;
-              } else {
-                categoryIcon = historicalIcon;
-              }
-              const id = marker.id;
+            <MarkerClusterGroup>
+              {this.props.pins.map((marker, index) => {
+                let post = [marker.latitude, marker.longitude];
+                let categoryIcon = "";
+                if (marker.category == 1) {
+                  categoryIcon = personalIcon;
+                } else if (marker.category == 2) {
+                  categoryIcon = communityIcon;
+                } else {
+                  categoryIcon = historicalIcon;
+                }
+                const id = marker.id;
 
+                return (
+                  <Marker key={index} position={post} icon={categoryIcon}>
+                    <Popup>
+                      <strong>{marker.title}</strong> <br />{" "}
+                      {marker.description.substring(0, 200)}
+                      <br />
+                      <br />
+                      <Link to={`${marker.id}`}> e </Link> View{" "}
+                      <button
+                        onClick={() => this.updateStoryId(id)}
+                        type="button"
+                        className="btn btn-primary btn-sm"
+                      >
+                        View Story
+                      </button>
+                    </Popup>
+                  </Marker>
+                );
+              })}
+            </MarkerClusterGroup>
+          </Map>
+          <div className="container-fluid" style={storyBody}>
+            {this.state.showEditForm && (
+              <EditPin
+                title={this.state.userStory.title}
+                description={this.state.userStory.description}
+                userlat={this.state.userStory.latitude}
+                userlng={this.state.userStory.longitude}
+                storyid={id}
+                userId={this.state.userStory.owner}
+                startDate={start}
+                endDate={end}
+                onUpdate={this.onUpdate}
+              />
+            )}
+            {isAdminOrModerator ? adminModeratorEditStory : ""}
+            <h2>
+              <strong>{this.state.userStory.title}</strong>
+            </h2>
+            <p>
+              {" "}
+              {startDate} - {endDate}{" "}
+            </p>
+            <p>By: {authorName}</p>
+            <form onSubmit={this.onSubmit}>
+              <h6>
+                {this.state.userStory.updooots} upvotes
+                {isAuthenticated ? (
+                  upVoteButton
+                ) : (
+                  <Link to="/login"> &nbsp;Login to upvote!</Link>
+                )}
+              </h6>
+            </form>
+            <hr></hr>
+            <p>{this.state.userStory.description}</p>
+
+            {this.state.userStory.commentstory.map((marker, index) => {
+              console.log(marker.username);
               return (
-                <Marker key={index} position={post} icon={categoryIcon}>
-                  <Popup>
-                    <strong>{marker.title}</strong> <br />{" "}
-                    {marker.description.substring(0, 200)}
-                    <br />
-                    <br />
-                    <Link to={`${marker.id}`}> e </Link> View{" "}
-                    <button
-                      onClick={() => this.updateStoryId(id)}
-                      type="button"
-                      className="btn btn-primary btn-sm"
-                    >
-                      View Story
-                    </button>
-                  </Popup>
-                </Marker>
+                <div
+                  className="container-md jumbotron"
+                  key={index}
+                  style={style}
+                >
+                  <p className="lead">
+                    <img src="https://via.placeholder.com/30" />
+                    {marker.username}
+                  </p>
+
+                  <p>{marker.description}</p>
+                </div>
               );
             })}
-          </MarkerClusterGroup>
-        </Map>
-        <div className="container-fluid" style={storyBody}>
-          {this.state.showEditForm && (
-            <EditPin
-              title={this.state.userStory.title}
-              description={this.state.userStory.description}
-              userlat={this.state.userStory.latitude}
-              userlng={this.state.userStory.longitude}
-              storyid={id}
-              userId={this.state.userStory.owner}
-              startDate={start}
-              endDate={end}
-              onUpdate={this.onUpdate}
-            />
-          )}
-          {isAdminOrModerator ? adminModeratorEditStory : ""}
-          <h2>
-            <strong>{this.state.userStory.title}</strong>
-          </h2>
-          <p>
-            {" "}
-            {startDate} - {endDate}{" "}
-          </p>
-          <p>By: {authorName}</p>
-          <form onSubmit={this.onSubmit}>
-            <h6>
-              {this.state.userStory.updooots} upvotes
-              {isAuthenticated ? (
-                upVoteButton
-              ) : (
-                <Link to="/login"> &nbsp;Login to upvote!</Link>
-              )}
-            </h6>
-          </form>
-          <hr></hr>
-          <p>{this.state.userStory.description}</p>
-
-          {this.state.userStory.commentstory.map((marker, index) => {
-            console.log(marker.username);
-            return (
-              <div className="container-md jumbotron" key={index} style={style}>
-                <p className="lead">
-                  <img src="https://via.placeholder.com/30" />
-                  {marker.username}
-                </p>
-
-                <p>{marker.description}</p>
-              </div>
-            );
-          })}
+          </div>
         </div>
       </div>
     );
