@@ -127,12 +127,6 @@ export class Pins extends Component {
   };
 
   addMarker = e => {
-    if(e.button == 2) {
-      console.log("right!");
-    }
-    else {
-      console.log("not right");
-    }
     this.setState({ userlat: e.latlng.lat });
     this.setState({ userlng: e.latlng.lng });
     this.createStory(false);
@@ -173,8 +167,6 @@ export class Pins extends Component {
     const userposition = [this.state.userlat, this.state.userlng];
     let isAdminOrModerator = false;
     let adminModeratorEditStory = "";
-    let sidebarOpen = true;
-
 
     return (
       <Fragment>
@@ -273,33 +265,33 @@ export class Pins extends Component {
                     {/*/>*/}
                     {/* <Link to="/Story"> */}
                     {/*  UNCOMMENT THIS TO SHOW EDIT FORM FOR VALIDATED AUTHORS AND ADMINS/MODERATORS  */}
-                    {/* {this.state.showEditForm && (*/}
-                    {/*  <EditPin*/}
-                    {/*    title={marker.title}*/}
-                    {/*    description={marker.description}*/}
-                    {/*    userlat={marker.latitude}*/}
-                    {/*    userlng={marker.longitude}*/}
-                    {/*    storyid={marker.id}*/}
-                    {/*    user_id={marker.owner}*/}
-                    {/*  />*/}
-                    {/*)}*/}
-                    {/*{isAdminOrModerator ? adminModeratorEditStory : ""}*/}
+                     {this.state.showEditForm && (
+                      <EditPin
+                        title={marker.title}
+                        description={marker.description}
+                        userlat={marker.latitude}
+                        userlng={marker.longitude}
+                        storyid={marker.id}
+                        user_id={marker.owner}
+                      />
+                    )}
+                    {isAdminOrModerator ? adminModeratorEditStory : ""}
                     <Link
-                      to={`Story/${marker.id}`}
+                      to={`/Story/${marker.id}`}
                       params={{ storyId: marker.id }}
                     >
                       <button type="button" className="btn btn-primary btn-sm">
                         View Story
                       </button>
                     </Link>
-                    {isAdminOrModerator ? (
-                          <button onClick={this.props.deletePins.bind(this, marker.id)}
-                                  type="button"
-                                  className="btn btn-danger btn-sm">
-                            Delete
-                          </button>
-                            )
-                        : ""}
+                    {/*{isAdminOrModerator ? (*/}
+                    {/*      <button onClick={this.props.deletePins.bind(this, marker.id)}*/}
+                    {/*              type="button"*/}
+                    {/*              className="btn btn-danger btn-sm">*/}
+                    {/*        Delete*/}
+                    {/*      </button>*/}
+                    {/*        )*/}
+                    {/*    : ""}*/}
                   </Popup>
                   {/*{newlyAddedMarker ? this.leafletElement.openPopup() : ""}*/}
                 </Marker>

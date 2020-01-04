@@ -3,25 +3,14 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { connect } from "react-redux";
 import EditPin from "./EditPin";
-import { getUser } from "../../actions/users";
-import { GET_USER } from "../../actions/types";
-import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import { Link } from "react-router-dom";
-import {
+import Pins, {
   communityIcon,
   defaultPointerIcon,
   historicalIcon,
   personalIcon
 } from "./Pins";
 import { getPins } from "../../actions/pins";
-import L from "leaflet";
-import default_marker from "./images/default.png";
-import community from "./images/community.png";
-import historical from "./images/historical.png";
-import personal from "./images/personal.png";
-import MarkerClusterGroup from "react-leaflet-markercluster";
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import Modal from "./Modal";
@@ -272,6 +261,14 @@ export class Story extends Component {
         editButtonValue: "Edit Story", })
   };
 
+  componentDidUpdate(prevProps) {
+  if (this.props.match.params !== prevProps.match.params) {
+        // call the fetch function again
+      console.log("url changes" + this.props.match.params.id);
+        this.updateStoryId(this.props.match.params.id);
+      }
+    }
+
   updateStoryId = id => {
     axios
       .get(`api/pins/${id}`)
@@ -405,84 +402,14 @@ export class Story extends Component {
       </button>
     );
 
-    // const {author} = this.props.user;
-    // console.log("start date " + this.state.userStory.startDate);
-    // let startDate = this.state.userStory.startDate.split('-');
-    // let start = new Date(startDate[0], startDate[1], startDate[2]);
-    // console.log("start " + startDate[1] + "/" + startDate[2] + "/" + startDate[0]);
-    // console.log("start " + start);
-    //
-    // startDate = startDate[1] + "/" + startDate[2] + "/" + startDate[0];
-    // let endDate = this.state.userStory.endDate.split('-');
-    // let end = new Date(endDate[0], endDate[1], endDate[2]);
-    // console.log("end " + end);
-    // endDate = endDate[1] + "/" + endDate[2] + "/" + endDate[0];
 
     return (
       <div className="container-fluid" style={divStyle2}>
         <h2> {isAuthenticated ? flaggedButton : ""}</h2>
-        <Map
-             center={position}
-             zoom={15}
-             maxZoom={30}
-             id="map"
-             style={divStyle}
-             onContextMenu={this.addMarker}
-        >
+          <div style={{ height: '45%'}}>
+            <Pins />
+          </div>
 
-          <TileLayer
-            attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-            url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
-          />
-
-        <MarkerClusterGroup>
-          {this.props.pins.map((marker, index) => {
-            let post = [marker.latitude, marker.longitude];
-            let categoryIcon = "";
-            if (marker.category == 1) {
-              categoryIcon = personalIcon;
-            } else if (marker.category == 2) {
-              categoryIcon = communityIcon;
-            } else {
-              categoryIcon = historicalIcon;
-            }
-            const id = marker.id;
-
-            return (
-
-              <Marker key={index} position={post} icon={categoryIcon}>
-                <Popup>
-                  <strong>{marker.title}</strong> <br />{" "}
-                  {marker.description.substring(0, 200)}
-                  <br />
-                  <br />
-                  <Link
-                      to={`/Story/${marker.id}`}
-                      params={{ storyId: marker.id }}
-                    >
-                       <button
-                      onClick={() => this.updateStoryId(id)}
-                      type="button"
-                      className="btn btn-primary btn-sm"
-                      >
-                      View Story
-                    </button>
-                    </Link>
-                </Popup>
-              </Marker>
-            );
-          })}
-          </MarkerClusterGroup>
-        </Map>
-        {this.state.modal ? (
-          <Modal
-            userlat={this.state.userlat}
-            userlng={this.state.userlng}
-            submitAddress={this.state.submitAddress}
-            toggle={this.toggle}
-            owner={userid}
-          />
-        ) : null }
         <div className="container-fluid" style={storyBody}>
           {this.state.showEditForm && (
             <EditPin
