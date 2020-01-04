@@ -34,7 +34,8 @@ export default function (state = initialState, action) {
         case EDIT_PIN:
             return {
                 ...state,
-                pins: [...state.pins, action.payload]
+                // fixes duplicated pin on map when editing pin
+                pins: [...state.pins.filter(pins => pins.id !== action.payload.id), action.payload]
             };
 
         default:

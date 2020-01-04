@@ -19,7 +19,7 @@ import store from "./store";
 import login from "./components/accounts/login";
 import PrivateRoute from "./components/common/PrivateRoute";
 import { loadUser } from "./actions/auth";
-import Story from "./components/Map/Story";
+import Story from "./components/Map/StoryTest";
 import { DisplayMap } from "./components/Map/DisplayMap";
 import Manage from "./components/accounts/manage";
 import ProfilePage from "./components/profile/ProfilePage";

@@ -13,6 +13,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -74,31 +75,8 @@ export default function Sidebar() {
     setState({ ...drawerState, [side]: open });
   };
 
-  const queryDb = () => {
-    var text = document.getElementById("searchForm");
-    var type = document.getElementById("pinForm");
-      //more data in the card? like author or creation data?
-      //cards with lizard use
-      ////{this.state.pinData.description}
-      if (text && type) {
-        console.log("Type" + pinType);
-        document.getElementById("searchButton").addEventListener("click", function () {
-          console.log("Searched For : " + text.value + ". Category is : " + pinType);
-          axios.get(`api/pinSearch?search=${text.value}&category=${pinType}`).then(response => {
-            setResultList(response.data);
-            // for (let i = 0; i < response.data.length; i++) {
-
-            //   console.log("length " + response.data.length);
-            //   console.log("title " + response.data[i].title + " description " + response.data[i].description);
-            // }
-          })
-            .catch(error => {
-              console.log(error);
-            });
-        });
-      }
-  };
-
+  var text = document.getElementById("searchForm");
+  var type = document.getElementById("pinForm");
   const sideList = side => (
     <div className={classes.list} role="presentation">
       <CssBaseline />
@@ -132,7 +110,7 @@ export default function Sidebar() {
           color="primary"
           id="searchButton"
           fullWidth
-        onClick={queryDb()}
+        //onClick={toggleDrawer("right", false)}
 
         >
           Search
@@ -141,6 +119,26 @@ export default function Sidebar() {
       </form>
     </div>
   );
+  //more data in the card? like author or creation data?
+  //cards with lizard use
+  ////{this.state.pinData.description}
+  if (text && type) {
+    console.log("Type" + pinType);
+    document.getElementById("searchButton").addEventListener("click", function () {
+      console.log("Searched For : " + text.value + ". Category is : " + pinType);
+      axios.get(`api/pinSearch?search=${text.value}&category=${pinType}`).then(response => {
+        setResultList(response.data);
+        // for (let i = 0; i < response.data.length; i++) {
+
+        //   console.log("length " + response.data.length);
+        //   console.log("title " + response.data[i].title + " description " + response.data[i].description);
+        // }
+      })
+        .catch(error => {
+          console.log(error);
+        });
+    });
+  }
 
   /*
           <Card className={classes.card}>

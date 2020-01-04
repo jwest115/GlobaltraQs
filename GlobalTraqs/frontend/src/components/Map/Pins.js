@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from "react";
-import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import { Map, Marker, Popup, TileLayer, ZoomControl } from "react-leaflet";
 import { getPins, deletePins } from "../../actions//pins";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import PinForm from "./PinForm";
-import Sidebar from "../layout/Sidebar";
+import SearchSidebar from "../layout/SidebarTest";
 import community from "./images/community.png"; // Tell Webpack this JS file uses this image
 import historical from "./images/historical.png";
 import personal from "./images/personal.png";
@@ -16,9 +16,11 @@ import Modal from "./Modal";
 import Control from "react-leaflet-control";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 //import LocateControl from "react-leaflet-locate-control";
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import MyLocationIcon from '@material-ui/icons/MyLocation';
 
 const divStyle = {
-  height: "100%",
+  height: "90%",
   width: "100%"
 };
 
@@ -90,6 +92,7 @@ export class Pins extends Component {
     deletePins: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
   };
+
   componentDidMount() {
     this.map = this.mapInstance.leafletElement;
     this.props.getPins();
@@ -124,12 +127,6 @@ export class Pins extends Component {
   };
 
   addMarker = e => {
-    if(e.button == 2) {
-      console.log("right!");
-    }
-    else {
-      console.log("not right");
-    }
     this.setState({ userlat: e.latlng.lat });
     this.setState({ userlng: e.latlng.lng });
     this.createStory(false);
@@ -170,46 +167,46 @@ export class Pins extends Component {
     const userposition = [this.state.userlat, this.state.userlng];
     let isAdminOrModerator = false;
     let adminModeratorEditStory = "";
-    let sidebarOpen = true;
-
 
     return (
       <Fragment>
               {/*<a*/}
               {/*  onClick={() => props.handleName(sidebarOpen)}*/}
               {/*  />*/}
-              <Sidebar yeet={sidebarOpen} />
         <Map
           center={userposition}
           zoom={15}
           maxZoom={30} //shows map
           id="map"
+          zoomControl = {false}
           style={divStyle}
           ref={e => { this.mapInstance = e }}
           //user click for location
           // right click to add pin
           onContextMenu={this.addMarker}
         >
+          <ZoomControl position="bottomleft" />
           <TileLayer
             attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           />
 
-          <Control>
-            <div>
-              <button
-                onClick={() => this.createStory(true)}
-                className="btn btn-primary add-story-button"
-              >
-                Add<br></br>Story
-              </button>
-            </div>
+          <Control
+            position={"bottomright"}>
+            {/*<div>*/}
+            {/*  <button*/}
+            {/*    onClick={() => this.createStory(true)}*/}
+            {/*    className="btn btn-primary add-story-button"*/}
+            {/*  >*/}
+            {/*    <AddBoxIcon></AddBoxIcon>*/}
+            {/*  </button>*/}
+            {/*</div>*/}
             <div>
               <button
                 onClick={() => this.getLocation()}
-                className="btn btn-primary add-story-button"
+                className="btn btn-primary"
               >
-                ys
+                <MyLocationIcon></MyLocationIcon>
               </button>
             </div>
           </Control>
@@ -268,33 +265,33 @@ export class Pins extends Component {
                     {/*/>*/}
                     {/* <Link to="/Story"> */}
                     {/*  UNCOMMENT THIS TO SHOW EDIT FORM FOR VALIDATED AUTHORS AND ADMINS/MODERATORS  */}
-                    {/* {this.state.showEditForm && (*/}
-                    {/*  <EditPin*/}
-                    {/*    title={marker.title}*/}
-                    {/*    description={marker.description}*/}
-                    {/*    userlat={marker.latitude}*/}
-                    {/*    userlng={marker.longitude}*/}
-                    {/*    storyid={marker.id}*/}
-                    {/*    user_id={marker.owner}*/}
-                    {/*  />*/}
-                    {/*)}*/}
-                    {/*{isAdminOrModerator ? adminModeratorEditStory : ""}*/}
+                     {this.state.showEditForm && (
+                      <EditPin
+                        title={marker.title}
+                        description={marker.description}
+                        userlat={marker.latitude}
+                        userlng={marker.longitude}
+                        storyid={marker.id}
+                        user_id={marker.owner}
+                      />
+                    )}
+                    {isAdminOrModerator ? adminModeratorEditStory : ""}
                     <Link
-                      to={`Story/${marker.id}`}
-                      params={{ testvalue: "hello" }}
+                      to={`/Story/${marker.id}`}
+                      params={{ storyId: marker.id }}
                     >
                       <button type="button" className="btn btn-primary btn-sm">
                         View Story
                       </button>
                     </Link>
-                    {isAdminOrModerator ? (
-                          <button onClick={this.props.deletePins.bind(this, marker.id)}
-                                  type="button"
-                                  className="btn btn-danger btn-sm">
-                            Delete
-                          </button>
-                            )
-                        : ""}
+                    {/*{isAdminOrModerator ? (*/}
+                    {/*      <button onClick={this.props.deletePins.bind(this, marker.id)}*/}
+                    {/*              type="button"*/}
+                    {/*              className="btn btn-danger btn-sm">*/}
+                    {/*        Delete*/}
+                    {/*      </button>*/}
+                    {/*        )*/}
+                    {/*    : ""}*/}
                   </Popup>
                   {/*{newlyAddedMarker ? this.leafletElement.openPopup() : ""}*/}
                 </Marker>
@@ -322,6 +319,9 @@ export class Pins extends Component {
         ) : null}
         {/*<PinForm userlat={this.state.userlat} userlng={this.state.userlng} />*/}
         {/* change AddPin PinForm for working form */}
+        {/*  <div id={"sidebar"}>*/}
+        {/*      <SearchSidebar />*/}
+        {/*    </div>*/}
       </Fragment>
     );
   }

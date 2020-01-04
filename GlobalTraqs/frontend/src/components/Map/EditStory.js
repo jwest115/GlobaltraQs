@@ -112,7 +112,7 @@ export class EditStory extends Component {
                     <div className="form-group">
                         <button type="submit" className="btn btn-primary">
                             Submit
-                </button>
+                        </button>
                     </div>
                 </form>
             </div >
