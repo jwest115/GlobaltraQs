@@ -8,11 +8,14 @@ import { getPins } from "../../actions/pins";
 import axios from "axios";
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Avatar } from 'antd';
+import { getUser } from "../../actions/users";
 
 export class ProfilePage extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
-    pins: PropTypes.array.isRequired
+    pins: PropTypes.array.isRequired,
+    getUser: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
     //  getPins: PropTypes.func.isRequired
     //deletePins: PropTypes.func.isRequired
   };
@@ -20,13 +23,29 @@ export class ProfilePage extends Component {
     super(props);
     this.state = {
       stories: "",
-      userStories: this.props.pins
+      userStories: this.props.pins,
     };
   }
 
+  updateProfileId = id => {
+    this.props.getUser(id);
+    };
+
+  componentDidUpdate(prevProps) {
+  if (this.props.match.params !== prevProps.match.params) {
+        // call the fetch function again
+      console.log("url changes" + this.props.match.params.id);
+        this.updateProfileId(this.props.match.params.id);
+      }
+    }
+
   componentDidMount() {
+    const { id } = this.props.match.params;
+    this.props.getUser(id);
+    // const { userProfile } = this.props.user;
+    // console.log(userProfile);
+
     // console.log(this.props.pins);
-    console.log("from component did mount");
     console.log(this.state.userStories);
     const { isAuthenticated, user } = this.props.auth;
     const userid = user ? user.id : "";
@@ -50,34 +69,49 @@ export class ProfilePage extends Component {
   }
 
   render() {
+    const { id } = this.props.match.params;
+    console.log("user profile is: ");
+    console.log(this.props.userProfile);
     console.log(this.state.userStories);
+
     const { isAuthenticated, login, user } = this.props.auth;
 
     const authLinks = (
-      <div>
-        <Typography variant="h5" component="h3" align="center">
-        <Avatar size={64} icon="user" />
-          {user ? ` ${user.username}'s Profile Page` : ""}
-            <p>
-              <strong>Bio: </strong>
-              Lorem ipsum dolor sit amet, justo a bibendum phasellus proodio
-              ligula, sit
-            </p>
-        </Typography>
-
-
-
-        <a className="btn btn-primary" href="/#/settings" role="button">
-          Setting
-        </a>
-      </div>
+        <Link
+          to={`/users/${id}/settings`}
+          params={{ testvalue: "hello" }}
+        >
+          <button type="button" className="btn btn-primary btn-sm">
+            Settings
+          </button>
+        </Link>
     );
 
-    const guestLinks = <div><Redirect to="/" /></div>;
+    let isOwner = false;
+
+    if(user != null && user.id == id) {
+        isOwner = true;
+    }
+
+    // const guestLinks = <div><Redirect to="/" /></div>;
+    const guestLinks = <div></div>;
 
     return (
       <div>
-        {isAuthenticated ? authLinks : guestLinks}
+          {this.props.userProfile ? (
+         <div>
+         <div>
+          <Typography variant="h5" component="h3" align="center">
+          <Avatar size={64} icon="user" />
+            {this.props.userProfile ? ` ${this.props.userProfile.username}'s Profile Page` : ""}
+              <p>
+                <strong>Bio: </strong>
+                Lorem ipsum dolor sit amet, justo a bibendum phasellus proodio
+                ligula, sit
+              </p>
+          </Typography>
+             {isOwner ? authLinks : guestLinks}
+        </div>
         <div class="card">
            <div class="card-body">
                 {this.state.userStories.map((marker, index) => {
@@ -87,7 +121,7 @@ export class ProfilePage extends Component {
 
                 {this.state.userStories.map((marker, index) => {
                   return <Link
-                      to={`Story/${marker.id}`}
+                      to={`/Story/${marker.id}`}
                       params={{ testvalue: "hello" }}
                       key={index}
                     >
@@ -99,17 +133,18 @@ export class ProfilePage extends Component {
 
            </div>
         </div>
+      </div> ) : ""}
       </div>
-
     );
   }
 }
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  pins: state.pins.pins
+  pins: state.pins.pins,
+  userProfile: state.auth.userProfile
 });
 
 ProfilePage.propTypes = {};
 
-export default connect(mapStateToProps, { login })(ProfilePage);
+export default connect(mapStateToProps, { login, getUser })(ProfilePage);

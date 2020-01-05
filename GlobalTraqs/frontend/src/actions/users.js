@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GET_USERS} from "./types";
+import {GET_USER, GET_USERS} from "./types";
 import {DELETE_USER} from "./types";
 
 
@@ -33,5 +33,11 @@ export const getUser = (id) => dispatch => {
                 payload: res.data
             });
         })
-        .catch(err => console.log(err));
+        .catch(function (error) {
+            console.log(error.response);
+             dispatch({
+                type: GET_USER,
+                payload: null
+            });
+         });
 };

@@ -9,16 +9,18 @@ import { login } from "../../actions/auth";
 
 export class Settings extends Component {
 
-
-
   static propTypes = {
     auth: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired
   };
    constructor() {
     super();
-    this.state = { checked: false };
+    this.state = {
+        checked: false,
+        accountDeleted: false
+    };
     this.handleChange = this.handleChange.bind(this);
+
   }
 
   handleChange(checked) {
@@ -26,27 +28,29 @@ export class Settings extends Component {
   }
 
  deleteAccount = id => {
-this.props.logout
+this.props.logout();
  axios.delete(`api/auth/users/${id}/`)
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-
- }
+    .then(response => {
+        console.log(response.data);
+    })
+    .catch(error => {
+        console.log(error);
+    });
+    this.setState({accountDeleted: true});
+ };
 
 
 
   render() {
-
+      if(this.state.accountDeleted) {
+          return <Redirect to='/' />
+      }
 
     const { isAuthenticated, user } = this.props.auth;
     const userid = user ? user.id : "";
 
      if (this.props.isAuthenticated) {
-            return <Redirect to="/" />;
+            // return <Redirect to="/" />;
         }
 
         const guestLinks = <div><Redirect to="/" /></div>;
@@ -78,7 +82,7 @@ this.props.logout
         <br/>
 
         <button  onClick={() => this.deleteAccount(userid)} type="button" className="btn btn-warning">Delete Account</button>
-        <Redirect to="/" />
+        {/*<Redirect to="/" />*/}
 
       </div>
     );

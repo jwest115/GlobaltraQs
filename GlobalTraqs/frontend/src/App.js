@@ -52,8 +52,8 @@ export class App extends Component {
                 <Route exact path="/faq" component={FAQ} />
                 <Route exact path="/login" component={login} />
                 <Route exact path="/register" component={register} />
-                <Route exact path="/profile" component={ProfilePage} />
-                <Route exact path="/settings" component={Settings} />
+                <Route exact path="/users/:id" component={ProfilePage} />
+                <Route exact path="/users/:id/settings" component={Settings} />
                 <Route exact path="/manage" component={Manage} />
                 <Route path="/Story/:id/edit" exact component={EditStory} />
                 <Route path="/forgotPassword" component={ForgotPassword} />

@@ -52,7 +52,7 @@ export class Header extends Component {
           </button>
           </li>
            <li className="nav-item">
-          <Link to="/profile" className="nav-link">
+          <Link to = {user ? `/users/${user.id}` : " "} className="nav-link">
             Profile
           </Link>
         </li>

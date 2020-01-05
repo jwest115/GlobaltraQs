@@ -16,9 +16,9 @@ const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
   isLoading: false,
-  user: '',
+  user: null,
+  userProfile: null,
   users: [],
-  story_author: null
 };
 
 export default function(state = initialState, action) {
@@ -26,7 +26,7 @@ export default function(state = initialState, action) {
     case GET_USER:
         return {
           ...state,
-          story_author: action.payload
+          userProfile: action.payload,
     };
     case DELETE_USER:
       return {
