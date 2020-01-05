@@ -9,6 +9,7 @@ import axios from "axios";
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Avatar } from 'antd';
 import { getUser } from "../../actions/users";
+import { getPinsByOwner } from "../../actions/pins";
 
 export class ProfilePage extends Component {
   static propTypes = {
@@ -16,6 +17,7 @@ export class ProfilePage extends Component {
     pins: PropTypes.array.isRequired,
     getUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
+    getPinsByOwner: PropTypes.func.isRequired
     //  getPins: PropTypes.func.isRequired
     //deletePins: PropTypes.func.isRequired
   };
@@ -23,7 +25,6 @@ export class ProfilePage extends Component {
     super(props);
     this.state = {
       stories: "",
-      userStories: this.props.pins,
     };
   }
 
@@ -42,6 +43,7 @@ export class ProfilePage extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.getUser(id);
+    this.props.getPinsByOwner(id);
     // const { userProfile } = this.props.user;
     // console.log(userProfile);
 
@@ -49,9 +51,7 @@ export class ProfilePage extends Component {
     console.log(this.state.userStories);
     const { isAuthenticated, user } = this.props.auth;
     const userid = user ? user.id : "";
-    this.setState({
-      userStories: this.state.userStories.filter(b => b.owner == userid)
-    });
+
     console.log(userid);
 
     /*   axios
@@ -114,23 +114,22 @@ export class ProfilePage extends Component {
         </div>
         <div class="card">
            <div class="card-body">
-                {this.state.userStories.map((marker, index) => {
-                  return <h5 class="card-title" key={index}>Title: {marker.title} <br/>
-                  Description: {marker.description.substring(0, 200)}</h5>; //key is needed for html stuff so it wont get mixed up
+                {this.props.pins.map((story, index) => {
+                  return (
+                      <div style={ {padding: "20px"} }>
+                        <h5 class="card-title" key={index}>Title: {story.title} <br/> Description: {story.description.substring(0, 200)}</h5>
+                        <Link
+                          to={`/Story/${story.id}`}
+                          params={{ testvalue: "hello" }}
+                          key={index}
+                        >
+                        <button type="button" className="btn btn-primary btn-sm">
+                          View Story
+                        </button>
+                        </Link>
+                      </div>
+                  )
                 })}
-
-                {this.state.userStories.map((marker, index) => {
-                  return <Link
-                      to={`/Story/${marker.id}`}
-                      params={{ testvalue: "hello" }}
-                      key={index}
-                    >
-                      <button type="button" className="btn btn-primary btn-sm">
-                        View Story
-                      </button>
-                    </Link>
-                })}
-
            </div>
         </div>
       </div> ) : ""}
@@ -147,4 +146,4 @@ const mapStateToProps = state => ({
 
 ProfilePage.propTypes = {};
 
-export default connect(mapStateToProps, { login, getUser })(ProfilePage);
+export default connect(mapStateToProps, { login, getUser, getPinsByOwner })(ProfilePage);

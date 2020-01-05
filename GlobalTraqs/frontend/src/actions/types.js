@@ -17,3 +17,4 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const GET_USERS = "GET_USERS";
 export const DELETE_USER = "DELETE_USER";
 export const GET_USER = "GET_USER";
+export const GET_PINS_BY_OWNER = "GET_PINS_BY_OWNER";
