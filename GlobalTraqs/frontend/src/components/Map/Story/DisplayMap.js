@@ -21,7 +21,10 @@ const divStyle = {
 };
 function DisplayMap({ pins }) {
   let { path, url } = useRouteMatch();
+
   const userpos = getUserLocation();
+
+  console.log(userpos);
   const position = [userpos.lat, userpos.lng];
   return (
     <div>
@@ -51,9 +54,9 @@ function DisplayMap({ pins }) {
                   {marker.description.substring(0, 200)}
                   <br />
                   <br />
-                  <Link to={`${marker.id}`}> e </Link> View{" "}
+                  <Link to={`${url}/${marker.id}`}> e </Link> View{" "}
                   <button
-                    onClick={() => this.updateStoryId(id)}
+                    onClick={() => this.updateStoryId(marker.latitude)}
                     type="button"
                     className="btn btn-primary btn-sm"
                   >
@@ -70,6 +73,8 @@ function DisplayMap({ pins }) {
 }
 
 export default DisplayMap;
+
+function updateLocation() {}
 
 function getUserLocation() {
   const [position, setPosition] = useState({

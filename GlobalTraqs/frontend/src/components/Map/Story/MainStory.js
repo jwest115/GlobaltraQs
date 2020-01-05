@@ -39,8 +39,7 @@ const divStyle2 = {
 
 function MainStory() {
   let { path, url } = useRouteMatch();
-  let { id } = useParams();
-  console.log("the id is: " + id);
+
   const pins = useSelector(state => state.pins.pins);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -50,14 +49,13 @@ function MainStory() {
 
   return (
     <div className="container-fluid" style={divStyle2}>
+      <DisplayMap pins={pins} />
       <Switch>
         <Route exact path={path}>
           <h3>Please select a topic.</h3>
           <Testa />
-          <DisplayMap pins={pins} />
         </Route>
         <Route path={`${path}/:id`}>
-          <DisplayMap pins={pins} />
           <Story />
           <Testa />
         </Route>
