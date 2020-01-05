@@ -125,10 +125,10 @@ export default function Sidebar() {
 
   if (text && type) {
     document.getElementById("searchButton").addEventListener("click", function () {
-      console.log("Searched For : " + text.value + ". Category is : " + type.value)
+      console.log("Searched For : " + text.value + ". Category is : " + type.value);
       axios.get(`api/pins?category=${type.value}`).then(response => {
         for (let i = 0; i < response.data.length; i++) {
-          console.log(response.data[i].title)
+          console.log(response.data[i].title);
           console.log(response.data[i].description)
         }
       })

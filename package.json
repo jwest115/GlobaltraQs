@@ -49,6 +49,7 @@
     "lodash": "^4.17.15",
     "nodemailer": "^6.3.1",
     "path-to-regexp": "^5.0.0",
+    "query-string": "^6.9.0",
     "react-alert": "^6.0.0",
     "react-alert-template-basic": "^1.0.0",
     "react-axios": "^2.0.3",
