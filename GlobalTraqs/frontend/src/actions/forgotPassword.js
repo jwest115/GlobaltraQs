@@ -32,7 +32,7 @@ module.exports = app => {
                             user:'resetglobaltraqs@gmail.com',
                             pass:'gl0b4ltr4qs'
                         }
-                    })
+                    });
                     const mailOptions = {
                         from: 'resetglobaltraqs@gmail.com',
                         to: '${user.email}',
@@ -56,4 +56,4 @@ module.exports = app => {
 
             })
     })
-}
+};

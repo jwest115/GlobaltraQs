@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import queryString from 'query-string';
 
 class ResetPassword extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            password1: '',
+            password: '',
             password2: '',
             token: '',
+            errors: {},
             showError: false,
-            messageFromServer: '',
-            errors: {}
+            messageFromServer: ''
         };
     }
 
@@ -23,6 +24,7 @@ class ResetPassword extends Component {
     };
     confirmPass = e => {
         e.preventDefault();
+        const values = queryString.parse(this.props.location.search)
         if (!this.formIsValid()) {
             this.setState({
                 showError: false,
@@ -31,8 +33,8 @@ class ResetPassword extends Component {
         } else {
             axios
                 .post('/api/password_reset/confirm/', {
-                    token: this.props.match.params.token,
-                    password: this.state.password1
+                    token: values.token,
+                    password: this.state.password
                 })
                 .then(response => {
                     console.log(response.data);
@@ -53,39 +55,41 @@ class ResetPassword extends Component {
                 });
         }
     };
-    formIsValid(){
+
+    formIsValid() {
         let errors = {};
         let formIsValid = true;
-        if(this.state.password1 === this.state.password2){
+        if (this.state.password === this.state.password2) {
             formIsValid = true;
             errors["password"] = "";
             errors["password2"] = "";
         }
-        if (this.state.password1.length < 8){
+        if (this.state.password.length < 8) {
             formIsValid = false;
             errors["password"] = "*Password must be at least 8 characters long."
         }
-        if (this.state.password1 !== this.state.password2) {
+        if (this.state.password !== this.state.password2) {
             formIsValid = false;
             errors["password2"] = "*Passwords do not Match";
         }
-        if (this.state.password1.search(/[!@#$%^&*_+()]/) === -1) {
+        if (this.state.password.search(/[!@#$%^&*_+()]/) === -1) {
             formIsValid = false;
             errors["password"] = "*Password must contain a special character like: !@#$%^&*)(_+"
         }
-        if(this.state.password1.search(/\d/) === -1){
+        if (this.state.password.search(/\d/) === -1) {
             formIsValid = false;
             errors["password"] = "*Password must contain at least 1 number"
         }
-        if (this.state.password1.search(/[a-zA-Z]/) === -1) {
+        if (this.state.password.search(/[a-zA-Z]/) === -1) {
             formIsValid = false;
             errors["password"] = "*Password must contain a Letter"
         }
-        this.setState({ errors: errors });
+        this.setState({errors: errors});
         return formIsValid;
     }
+
     render() {
-        const {password1, password2} = this.state;
+        const {password, password2, token, errors, showError, messageFromServer} = this.state;
 
         return (
             <div className="col-md-6 m-auto">
@@ -97,20 +101,20 @@ class ResetPassword extends Component {
                                 Please input your new password:
                             </p>
                             <TextField
-                                id='password1'
-                                label='password1'
-                                value={password1}
-                                onChange={this.handleChange('password1')}
+                                id='password'
+                                label='New Password'
+                                value={password}
+                                onChange={this.handleChange('password')}
                                 placeholder="password"
                             />
-                            <p className="text-danger">{this.state.errors["password1"]}</p>
+                            <p className="text-danger">{this.state.errors["password"]}</p>
 
                             <p>
                                 Please Confirm your password:
                             </p>
                             <TextField
                                 id='password2'
-                                label='password2'
+                                label='Confirm Password'
                                 value={password2}
                                 onChange={this.handleChange('password2')}
                                 placeholder="Confirm Password"

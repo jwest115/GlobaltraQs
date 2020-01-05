@@ -113,7 +113,7 @@ export class DisplayMap extends Component {
                   // can probably do this part better ---> only did it this way because of a bug I did not want to fix today
                     let post = [marker.latitude, marker.longitude];
                     let category = marker.category;
-                    let categoryIcon = ''
+                    let categoryIcon = '';
                     if(category == 'community') {
                         categoryIcon = communityIcon;
                     }

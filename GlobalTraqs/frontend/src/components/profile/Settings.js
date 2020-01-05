@@ -25,7 +25,7 @@ export class Settings extends Component {
   }
 
  deleteAccount = id => {
-this.props.logout
+this.props.logout;
  axios.delete(`api/auth/users/${id}/`)
             .then(response => {
                 console.log(response.data);
@@ -34,7 +34,7 @@ this.props.logout
                 console.log(error);
             });
 
- }
+ };
 
 
 

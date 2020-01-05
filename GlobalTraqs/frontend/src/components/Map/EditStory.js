@@ -16,28 +16,28 @@ export class EditStory extends Component {
         longitude: '',
         category: '',
         user: '',
-    }
+    };
     static propTypes = {
         editPin: PropTypes.func.isRequired
-    }
+    };
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
     onSubmit = e => {
         const { id } = this.props.match.params;
 
-        const a = this.props.userlat
-        const b = this.props.userlng
-        const c = this.props.storyid
-        const d = 1
-        this.state.user = d
+        const a = this.props.userlat;
+        const b = this.props.userlng;
+        const c = this.props.storyid;
+        const d = 1;
+        this.state.user = d;
         e.preventDefault(); //prevents refresh of page
-        this.state.latitude = a
-        this.state.longitude = b
-        this.state.id = c
+        this.state.latitude = a;
+        this.state.longitude = b;
+        this.state.id = c;
         console.log("story id "+ id);
-        const { title, description, category, latitude, longitude, user } = this.state
+        const { title, description, category, latitude, longitude, user } = this.state;
         const pin = { title, description, category, latitude, longitude, user };
-        console.log("title " + pin.title + "description " + pin.description + " category " + pin.category + " lat " + pin.latitude + " lon " + pin.longitude + " user " +  user.id + " pin")
+        console.log("title " + pin.title + "description " + pin.description + " category " + pin.category + " lat " + pin.latitude + " lon " + pin.longitude + " user " +  user.id + " pin");
         // this.props.editPin(pin, c)
         /*    axios.put(`/api/pins/${c}/`, pin)
                .then(res => {
@@ -46,11 +46,11 @@ export class EditStory extends Component {
                }) */
         console.log(a + ' ' + this.state.latitude + '' + c);
         return <Redirect to={`Story/${id}`}/>;
-    }
+    };
 
     render() {
 
-        const { title, description, latitude, longitude, category } = this.state
+        const { title, description, latitude, longitude, category } = this.state;
 
 
         return (
