@@ -9,7 +9,7 @@ import {
   REGISTER_FAIL,
   DELETE_USER,
   GET_USERS,
-  GET_USER
+  GET_USER, EDIT_USER
 } from "../actions/types";
 
 const initialState = {
@@ -27,6 +27,11 @@ export default function(state = initialState, action) {
         return {
           ...state,
           userProfile: action.payload,
+    };
+    case EDIT_USER:
+        return {
+          ...state,
+          user: action.payload,
     };
     case DELETE_USER:
       return {

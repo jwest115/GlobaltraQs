@@ -6,17 +6,18 @@ import Switch from "react-switch";
 import axios from 'axios';
 import { logout} from "../../actions/auth";
 import { login } from "../../actions/auth";
+import {editUser} from "../../actions/users";
 
 export class Settings extends Component {
 
   static propTypes = {
     auth: PropTypes.object.isRequired,
-    logout: PropTypes.func.isRequired
+    logout: PropTypes.func.isRequired,
+    editUser: PropTypes.func.isRequired
   };
-   constructor() {
-    super();
+   constructor(props) {
+    super(props);
     this.state = {
-        checked: false,
         accountDeleted: false
     };
     this.handleChange = this.handleChange.bind(this);
@@ -27,14 +28,22 @@ export class Settings extends Component {
     this.setState({ checked });
   }
 
- deleteAccount = id => {
-this.props.logout();
- axios.delete(`api/auth/users/${id}/`)
-    .then(response => {
-        console.log(response.data);
-    })
-    .catch(error => {
-        console.log(error);
+  updateAccessibility = () => {
+    const userId = this.props.auth.user.id;
+    const accessibility_mode_active = this.props.auth.user.accessibility_mode_active ? false : true;
+    const user = { accessibility_mode_active };
+    this.props.editUser(userId, user);
+  };
+
+
+   deleteAccount = id => {
+    this.props.logout();
+    axios.delete(`api/auth/users/${id}/`)
+        .then(response => {
+            console.log(response.data);
+        })
+        .catch(error => {
+            console.log(error);
     });
     this.setState({accountDeleted: true});
  };
@@ -42,9 +51,13 @@ this.props.logout();
 
 
   render() {
+
+      console.log("checked " + this.state.checked);
       if(this.state.accountDeleted) {
           return <Redirect to='/' />
       }
+       console.log(this.props.auth);
+
 
     const { isAuthenticated, user } = this.props.auth;
     const userid = user ? user.id : "";
@@ -65,7 +78,7 @@ this.props.logout();
           <br/>
 
             <span>Accessibility</span>
-            <Switch className="react-switch" onChange={this.handleChange} checked={this.state.checked} />
+            <Switch className="react-switch" onChange={this.updateAccessibility} checked={user ? user.accessibility_mode_active : false} />
 
 {/*
           <script type="text/javascript">
@@ -98,5 +111,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-    { logout, login}
+    { logout, login, editUser}
 )(Settings);
