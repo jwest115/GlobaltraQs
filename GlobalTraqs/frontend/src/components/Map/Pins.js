@@ -163,6 +163,15 @@ export class Pins extends Component {
   render() {
     const { isAuthenticated, user } = this.props.auth;
     const userid = user ? user.id : "";
+
+    let anonymousMap = false;
+    if(user == null) {
+      anonymousMap = true;
+    }
+    else if(user != null && user.is_anonymous_active) {
+      anonymousMap = true;
+    }
+
     const position = [this.state.lat, this.state.lng];
     const userposition = [this.state.userlat, this.state.userlng];
     let isAdminOrModerator = false;
@@ -186,10 +195,17 @@ export class Pins extends Component {
           onContextMenu={this.addMarker}
         >
           <ZoomControl position="bottomleft" />
+
+          {anonymousMap ? (
+           <TileLayer
+	        attribution= "Map tiles by &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>"
+            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          /> ) :
+
           <TileLayer
             attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
-          />
+          /> }
 
           <Control
             position={"bottomright"}>
