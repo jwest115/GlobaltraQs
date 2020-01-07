@@ -9,6 +9,7 @@ import {
   useRouteMatch
 } from "react-router-dom";
 import Upvote from "./Upvote";
+import Flag from "./Flag";
 const storyBody = {
   paddingTop: "50px",
   paddingLeft: "50px",
@@ -18,7 +19,7 @@ function Story() {
   let { id } = useParams();
   const pin = useSelector(state => state.pins.pin);
   const dispatch = useDispatch();
-  const upvoters = "test  ";
+
   useEffect(() => {
     dispatch(getPin(id));
   }, [dispatch, id]);
@@ -42,7 +43,7 @@ function Story() {
       <p>By: {pin.username}</p>
       <h6>
         {/* {pin.updooots} upvotes */}
-        {isAuthenticated ? "" : pin.updooots + " upvotes"}
+        {isAuthenticated ? "" : pin.updooots && " upvotes"}
         {/* need to figure out a way to update upvotes maybe websockets  */}
         {isAuthenticated
           ? pin &&
@@ -50,6 +51,13 @@ function Story() {
               <Upvote pin={pin.updotes} userid={user.id} numOf={pin.updooots} />
             )
           : upvoteButoon}
+        &nbsp;&nbsp;&nbsp;
+        {isAuthenticated
+          ? pin &&
+            pin.flaggerstory && (
+              <Flag userid={user.id} flag={pin.flaggerstory} />
+            )
+          : ""}
       </h6>
       <hr></hr>
       <p>{pin.description}</p>
