@@ -57,6 +57,7 @@
     "react-leaflet": "^2.5.0",
     "react-leaflet-control": "^2.1.1",
     "react-leaflet-markercluster": "^2.0.0-rc3",
+    "react-popup": "^0.10.0",
     "react-recaptcha": "^2.3.10",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",

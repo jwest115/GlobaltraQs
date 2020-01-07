@@ -37,7 +37,9 @@ class ResetPassword extends Component {
                     password: this.state.password
                 })
                 .then(response => {
-                    console.log(response.data);
+                    if(response.data.toString().includes("object")){
+                        window.alert("Your password has been reset");
+                    }
                     if (response.data === 'email not in db') {
                         this.setState({
                             showError: true,
