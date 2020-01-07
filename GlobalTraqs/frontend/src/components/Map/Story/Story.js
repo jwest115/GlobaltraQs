@@ -18,11 +18,14 @@ function Story() {
   let { id } = useParams();
   const pin = useSelector(state => state.pins.pin);
   const dispatch = useDispatch();
+  const upvoters = "test  ";
   useEffect(() => {
     dispatch(getPin(id));
   }, [dispatch, id]);
+
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
+  const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
 
   //console.log(pin.flaggerstory);
   return (
@@ -38,12 +41,15 @@ function Story() {
       {/* <p>By: {authorName}</p> */}
       <p>By: {pin.username}</p>
       <h6>
-        {pin.updooots} upvotes
-        {isAuthenticated ? (
-          <Upvote pin={pin.updotes} userid={user.id} />
-        ) : (
-          <Link to="/login"> &nbsp;Login to upvote!</Link>
-        )}
+        {/* {pin.updooots} upvotes */}
+        {isAuthenticated ? "" : pin.updooots + " upvotes"}
+        {/* need to figure out a way to update upvotes maybe websockets  */}
+        {isAuthenticated
+          ? pin &&
+            pin.updotes && (
+              <Upvote pin={pin.updotes} userid={user.id} numOf={pin.updooots} />
+            )
+          : upvoteButoon}
       </h6>
       <hr></hr>
       <p>{pin.description}</p>

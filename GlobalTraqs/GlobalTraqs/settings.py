@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'knox',
     'accounts',
     'users',
-    'passwordReset',
+    # 'passwordReset',
     'django_filters',
     # 'django_rest_passwordreset',
 ]
@@ -149,8 +149,6 @@ USE_TZ = True
 OLD_PASSWORD_FIELD_ENABLED = True
 
 LOGOUT_ON_PASSWORD_CHANGE = False
-
-
 
 
 # Static files (CSS, JavaScript, Images)
