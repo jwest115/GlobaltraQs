@@ -32,7 +32,7 @@ class ForgotPassword extends Component {
                 })
                 .then(response => {
                     if(response.data.toString().includes("object")){
-                        window.alert("An e-mail has been sent with a link to reset your password")
+                        window.alert("An e-mail has been sent with a link to change your password")
                     }
                     if (response.data === 'email not in db') {
                         this.setState({
