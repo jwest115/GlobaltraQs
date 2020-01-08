@@ -20,12 +20,19 @@ class PinViewSet(viewsets.ModelViewSet):
   #      updoot=Coalesce(Sum('pinsUpvote__upvote'), Value(1))
    # )
     queryset = pin.objects.annotate(
+        flagscore=Sum(Case(
+            When(flaggerstory__flagged=True, then=1),
+            default=Value(0),
+            output_field=IntegerField()
+        )),
         #updooots=Coalesce(Sum('updotes__upvote'), Value(0))
         updooots=Sum(Case(
             When(updotes__upvote=True, then=1),
             default=Value(0),
             output_field=IntegerField()
-        ))
+        )),
+
+
     )
 
     permission_classes = [

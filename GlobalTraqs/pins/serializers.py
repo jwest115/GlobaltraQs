@@ -43,6 +43,7 @@ class PinSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
     # pinsUpvote = upVoteStorySerializer(many=True, read_only=True)
     #pinsUpvoted = upVoteStorySerializer(many=True, read_only=True)
     updooots = serializers.IntegerField(read_only=True)
+    flagscore = serializers.IntegerField(read_only=True)
     flaggerstory = FlagStorySerializer(many=True, read_only=True)
     updotes = upVoteStorySerializer(many=True, read_only=True)
     commentstory = CommentStorySerializer(many=True, read_only=True)

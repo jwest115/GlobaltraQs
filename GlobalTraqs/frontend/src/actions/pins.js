@@ -7,7 +7,8 @@ import {
   EDIT_PIN,
   GET_PIN,
   GET_USER,
-  SEARCH_PINS
+  SEARCH_PINS,
+  GET_UPVOTE
 } from "./types";
 
 //GET PINS
@@ -70,7 +71,7 @@ export const editPin = (pin, id) => dispatch => {
         type: EDIT_PIN,
         payload: res.data
       });
-       console.log("In edit pin");
+      console.log("In edit pin");
       console.log(res.data);
     })
     .catch(err => console.log(err));
@@ -86,6 +87,18 @@ export const getPin = id => dispatch => {
       });
       console.log(res.data);
       console.log("is the pin!");
+    })
+    .catch(error => console.log(error));
+};
+
+export const getUpvote = (pinId, userid) => {
+  axios
+    .get(`api/upVoteStory?pinId=${pinId}&userid=${userid}`)
+    .then(res => {
+      dispatch({
+        type: GET_UPVOTE,
+        payload: res.data
+      });
     })
     .catch(error => console.log(error));
 };

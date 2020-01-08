@@ -4,12 +4,14 @@ import {
   ADD_PIN,
   EDIT_PIN,
   GET_PIN,
-  SEARCH_PINS
+  SEARCH_PINS,
+  GET_UPVOTE
 } from "../actions/types.js";
 
 const initialState = {
   pins: [],
-  pin: []
+  pin: [],
+  upvote: false
 };
 export default function(state = initialState, action) {
   switch (action.type) {
