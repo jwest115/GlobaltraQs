@@ -27,7 +27,7 @@ function Story() {
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
   const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
-
+  console.log(auth);
   //console.log(pin.flaggerstory);
   return (
     <div className="container-fluid" style={storyBody}>
