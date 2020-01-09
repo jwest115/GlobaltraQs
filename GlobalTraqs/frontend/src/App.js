@@ -25,7 +25,7 @@ import Manage from "./components/AdminMod/Manage";
 import ProfilePage from "./components/profile/ProfilePage";
 import Settings from "./components/profile/Settings";
 import EditStory from "./components/Map/EditStory";
-
+import ManageFlag from "./components/AdminMod/ManageFlag";
 import ForgotPassword from "./components/accounts/ForgotPassword";
 import AddComment from "./components/Map/AddComment";
 import PinForm from "./components/Map/PinForm";
@@ -56,6 +56,7 @@ export class App extends Component {
                 <Route exact path="/profile" component={ProfilePage} />
                 <Route exact path="/settings" component={Settings} />
                 <Route exact path="/manage" component={Manage} />
+                <Route exact path="/manage/flag" component={ManageFlag} />
                 <Route path="/Story/:id/edit" exact component={EditStory} />
                 <Route path="/forgotPassword" component={ForgotPassword} />
                 {/* <Route path="/resetPassword" componenet={resetPassword} /> */}

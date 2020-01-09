@@ -2,18 +2,10 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { register } from "../../actions/auth";
-import { createMessage } from "../../actions/messages";
-import { Register } from "./register";
+
 import { getUsers } from "../../actions/users";
-import { Map } from "react-leaflet";
 
 export class Manage extends Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = { temperature: "" };
-  }
   static propTypes = {
     auth: PropTypes.object.isRequired,
     getUsers: PropTypes.func.isRequired,
@@ -27,6 +19,7 @@ export class Manage extends Component {
   render() {
     const { isAuthenticated, user } = this.props.auth;
     if (!isAuthenticated) {
+      console.log(this.props.auth);
       return <Redirect to="/" />;
     } else {
       if (user.is_administrator) {
