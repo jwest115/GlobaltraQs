@@ -21,7 +21,7 @@ import PrivateRoute from "./components/common/PrivateRoute";
 import { loadUser } from "./actions/auth";
 import Story from "./components/Map/StoryTest";
 import { DisplayMap } from "./components/Map/DisplayMap";
-import Manage from "./components/accounts/manage";
+import Manage from "./components/AdminMod/Manage";
 import ProfilePage from "./components/profile/ProfilePage";
 import Settings from "./components/profile/Settings";
 import EditStory from "./components/Map/EditStory";
