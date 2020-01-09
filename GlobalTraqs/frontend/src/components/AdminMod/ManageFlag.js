@@ -5,11 +5,12 @@ import Manage1 from "./Manage1";
 import { Alert } from "reactstrap";
 function ManageFlag() {
   const pins = useSelector(state => state.pins.pins);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // dispatches the action
 
   useEffect(() => {
+    //similar to component did mount
     dispatch(getPins());
-  }, [dispatch]);
+  }, []);
   console.log(pins);
   const adminDelete = id => {
     dispatch(deletePins(id));
@@ -17,7 +18,7 @@ function ManageFlag() {
   return (
     <div>
       MANAGE THE FLAG
-      <div className="container">manage these nuts</div>
+      <div className="container"></div>
       {pins && <ListFlags pins={pins} handleDelete={adminDelete} />}
     </div>
   );
