@@ -7,7 +7,9 @@ import {
   EDIT_PIN,
   GET_PIN,
   GET_USER,
-  SEARCH_PINS
+  SEARCH_PINS,
+  GET_PIN_BY_ID,
+  GET_PINS_BY_OWNER
 } from "./types";
 
 //GET PINS
@@ -86,6 +88,20 @@ export const getPin = id => dispatch => {
       });
       console.log(res.data);
       console.log("is the pin!");
+    })
+    .catch(error => console.log(error));
+};
+
+export const getPinsByOwner = ownerId => dispatch => {
+    axios
+    .get(`api/pins/?owner=${ownerId}`)
+    .then(res => {
+      dispatch({
+        type: GET_PINS_BY_OWNER,
+        payload: res.data
+      });
+      console.log(res.data);
+      console.log("is owner's pin!");
     })
     .catch(error => console.log(error));
 };

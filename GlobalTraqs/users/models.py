@@ -12,6 +12,7 @@ class User(AbstractUser):
     is_moderator = models.BooleanField(default=False)
     is_administrator = models.BooleanField(default=False)
     is_anonymous_active = models.BooleanField(default=False)
+    accessibility_mode_active = models.BooleanField(default=False)
     #  - - - Some more User fields according to your needs
 
     # This is the most important part to look upon to  define the custom permissions related to User.
