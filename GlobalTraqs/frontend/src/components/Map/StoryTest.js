@@ -407,7 +407,7 @@ export class Story extends Component {
       <div className="container-fluid" style={divStyle2}>
         <h2> {isAuthenticated ? flaggedButton : ""}</h2>
           <div style={{ height: '45%'}}>
-            <Pins />
+            <Pins latitude={this.state.userStory.latitude} longitude={this.state.userStory.longitude}/>
           </div>
 
         <div className="container-fluid" style={storyBody}>

@@ -173,7 +173,11 @@ export class Pins extends Component {
     }
 
     const position = [this.state.lat, this.state.lng];
-    const userposition = [this.state.userlat, this.state.userlng];
+    let userposition = [this.state.userlat, this.state.userlng];
+    if(this.props.latitude && this.props.longitude) {
+      userposition = [this.props.latitude, this.props.longitude];
+        console.log("lat and long are set from props");
+    }
     let isAdminOrModerator = false;
     let adminModeratorEditStory = "";
 
