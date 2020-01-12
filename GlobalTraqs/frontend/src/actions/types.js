@@ -19,3 +19,4 @@ export const DELETE_USER = "DELETE_USER";
 export const GET_USER = "GET_USER";
 export const SEARCH_PINS = "SEARCH_PINS";
 export const GET_UPVOTE = "GET_UPVOTE";
+export const GET_FLAG_STATE = "GET_FLAG_STATE";

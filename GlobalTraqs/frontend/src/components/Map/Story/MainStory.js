@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPins } from "../../../actions/pins";
+import { getPins, getPin } from "../../../actions/pins";
 
 import {
   Switch,
@@ -38,7 +38,6 @@ function MainStory() {
   useEffect(() => {
     dispatch(getPins());
   }, [dispatch]);
-  console.log(pins);
 
   return (
     <div className="container-fluid" style={divStyle2}>

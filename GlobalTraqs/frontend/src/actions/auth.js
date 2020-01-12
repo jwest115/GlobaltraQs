@@ -10,7 +10,8 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  GET_FLAG_STATE
 } from "./types";
 
 // CHECK TOKEN & LOAD USER
@@ -124,3 +125,4 @@ export const tokenConfig = getState => {
 
   return config;
 };
+export const getFlagState 

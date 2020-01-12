@@ -18,16 +18,19 @@ const storyBody = {
 function Story() {
   let { id } = useParams();
   const pin = useSelector(state => state.pins.pin);
+  const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
+  const { isAuthenticated, user } = auth;
+
+  const [flagState, setflagState] = useState(false);
   useEffect(() => {
     dispatch(getPin(id));
-  }, [dispatch, id]);
+  }, [id]);
 
-  const auth = useSelector(state => state.auth);
-  const { isAuthenticated, user } = auth;
   const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
-  console.log(auth);
+  let test = isAuthenticated ? true : "yeet";
+  console.log(test);
   //console.log(pin.flaggerstory);
   return (
     <div className="container-fluid" style={storyBody}>
