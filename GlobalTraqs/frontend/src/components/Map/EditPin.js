@@ -75,7 +75,7 @@ export class EditPin extends Component {
      console.log("formatted start " + startDateFormatted);
      console.log("formatted end " + endDateFormatted);
 
-    this.props.onUpdate(title, description, startDate, endDate, startDateFormatted, endDateFormatted);
+    this.props.onUpdate(category, title, description, startDate, endDate, startDateFormatted, endDateFormatted);
     console.log(a + " " + this.state.latitude + "" + c);
   };
 
@@ -113,17 +113,17 @@ export class EditPin extends Component {
         <form onSubmit={this.onSubmit}>
            <div className="form-group">
             <label>Category</label>
-
             <select
+              value={this.state.category}
               name="category"
               className="form-control"
               onChange={this.onChange}
             >
               {/* someone put like user must select an option error handling something blah blah */}
-              <option disabled selected value>
-                {" "}
-                -- select an option --{" "}
-              </option>
+              {/*<option disabled selected value>*/}
+              {/*  {" "}*/}
+              {/*  -- select an option --{" "}*/}
+              {/*</option>*/}
               <option value="1">Personal</option>
               <option value="2">Community</option>
               <option value="3">Historical</option>

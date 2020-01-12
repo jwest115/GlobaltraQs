@@ -24,6 +24,9 @@ const divStyle = {
   width: "100%"
 };
 
+const months = [ "January", "February", "March", "April", "May", "June",
+           "July", "August", "September", "October", "November", "December" ];
+
 export const defaultPointerIcon = new L.Icon({
   iconUrl: default_marker,
   iconRetinaUrl: default_marker,
@@ -175,7 +178,7 @@ export class Pins extends Component {
     const position = [this.state.lat, this.state.lng];
     let userposition = [this.state.userlat, this.state.userlng];
     if(this.props.latitude && this.props.longitude) {
-      userposition = [this.props.latitude, this.props.longitude];
+        userposition = [this.props.latitude, this.props.longitude];
         console.log("lat and long are set from props");
     }
     let isAdminOrModerator = false;
@@ -250,6 +253,21 @@ export class Pins extends Component {
                 categoryIcon = historicalIcon;
               }
 
+              let startSplit = marker.startDate.split('-');
+              let start = new Date(startSplit[0], Number.parseInt(startSplit[1]) - 1, startSplit[2]);
+              console.log("start " + startSplit[1] + "/" + startSplit[2] + "/" + startSplit[0]);
+              console.log("start " + start);
+
+              let selectedStartMonthName = months[start.getMonth()];
+              let startDateFormatted = selectedStartMonthName + " " + start.getDate() + ", " + start.getFullYear();
+              console.log("original " + start);
+              let endSplit = marker.endDate.split('-');
+              let end = new Date(endSplit[0], Number.parseInt(endSplit[1]) - 1, endSplit[2]);
+              console.log("end " + end);
+
+              let selectedEndMonthName = months[end.getMonth()];
+              let endDateFormatted = selectedEndMonthName + " " + end.getDate() + ", " + end.getFullYear();
+
                if (isAuthenticated) {
                   console.log("user is authenticated!");
                     if (user.is_administrator || user.is_moderator || marker.owner == user.id) {
@@ -274,7 +292,7 @@ export class Pins extends Component {
                 <Marker key={index} position={post} icon={categoryIcon}>
                   <Popup>
 
-                  <strong>{marker.title}</strong><br/>{marker.description}
+                    <strong>{marker.title}</strong><br/>{startDateFormatted} - {endDateFormatted} <br/> <br/> {marker.description}
                     <br />
                     <br />
 
@@ -293,6 +311,8 @@ export class Pins extends Component {
                         userlng={marker.longitude}
                         storyid={marker.id}
                         user_id={marker.owner}
+                        startDate={start}
+                        endDate={end}
                       />
                     )}
                     {isAdminOrModerator ? adminModeratorEditStory : ""}
