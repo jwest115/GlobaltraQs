@@ -22,6 +22,7 @@ import { loadUser } from "./actions/auth";
 import Story from "./components/Map/StoryTest";
 import { DisplayMap } from "./components/Map/DisplayMap";
 import Manage from "./components/AdminMod/Manage";
+import ManageUsers from "./components/AdminMod/ManageUsers";
 import ProfilePage from "./components/profile/ProfilePage";
 import Settings from "./components/profile/Settings";
 import EditStory from "./components/Map/EditStory";
@@ -57,6 +58,7 @@ export class App extends Component {
                 <Route exact path="/settings" component={Settings} />
                 <Route exact path="/manage" component={Manage} />
                 <Route exact path="/manage/flag" component={ManageFlag} />
+                <Route exact path="/manage/users" component={ManageUsers} />
                 <Route path="/Story/:id/edit" exact component={EditStory} />
                 <Route path="/forgotPassword" component={ForgotPassword} />
                 {/* <Route path="/resetPassword" componenet={resetPassword} /> */}

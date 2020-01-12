@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { getUsers } from "../../actions/users";
 
-export class Manage extends Component {
+export class ManageUsers extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
     getUsers: PropTypes.func.isRequired,
@@ -60,4 +60,4 @@ const mapStateToProps = state => ({
   users: state.users.users
 });
 
-export default connect(mapStateToProps, { getUsers })(Manage);
+export default connect(mapStateToProps, { getUsers })(ManageUsers);

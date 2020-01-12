@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPins, deletePins } from "../../actions/pins";
-import Manage1 from "./Manage1";
+import { Link, Redirect } from "react-router-dom";
 import { Alert } from "reactstrap";
 function ManageFlag() {
   const pins = useSelector(state => state.pins.pins);
@@ -15,6 +15,13 @@ function ManageFlag() {
   const adminDelete = id => {
     dispatch(deletePins(id));
   };
+  const auth = useSelector(state => state.auth);
+
+  const { isAuthenticated, user } = auth;
+
+  if (!isAuthenticated) {
+    return <Redirect to="/" />;
+  }
   return (
     <div>
       MANAGE THE FLAG
@@ -40,10 +47,14 @@ function ListFlags({ pins, handleDelete }) {
                 <td>
                   <button
                     onClick={e => handleDelete(pin.id, e)}
-                    className="btn btn-success"
+                    className="btn btn-danger"
                   >
-                    Edit
+                    Delete
                   </button>
+                </td>
+
+                <td>
+                  <Link to={`/Story/${pin.id}`}>View Story</Link>
                 </td>
               </tr>
             );
