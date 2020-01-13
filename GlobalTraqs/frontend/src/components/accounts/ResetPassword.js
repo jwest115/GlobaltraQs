@@ -105,6 +105,7 @@ class ResetPassword extends Component {
                             <TextField
                                 id='password'
                                 label='New Password'
+                                type="password"
                                 value={password}
                                 onChange={this.handleChange('password')}
                                 placeholder="password"
@@ -117,6 +118,7 @@ class ResetPassword extends Component {
                             <TextField
                                 id='password2'
                                 label='Confirm Password'
+                                type="password"
                                 value={password2}
                                 onChange={this.handleChange('password2')}
                                 placeholder="Confirm Password"
