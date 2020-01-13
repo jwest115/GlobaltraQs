@@ -8,7 +8,7 @@ import Recaptcha from "react-recaptcha";
 export class Login extends Component {
     constructor(props) {
         super(props);
-        this.reCaptchaLoaded = this.reCaptchaLoaded.bind(this)
+        this.reCaptchaLoaded = this.reCaptchaLoaded.bind(this);
         this.verifyCallback = this.verifyCallback.bind(this)
     }
     reCaptchaLoaded(){
@@ -39,7 +39,7 @@ export class Login extends Component {
 
 
     onSubmit = e =>{
-        this.setState({ counter: this.state.counter + 1 })
+        this.setState({ counter: this.state.counter + 1 });
         console.log("initial: " + this.state.counter);
         if (this.state.counter < 3){
             e.preventDefault();
@@ -50,7 +50,7 @@ export class Login extends Component {
             e.preventDefault();
             this.setState({
                 attempts: true
-            })
+            });
             if(this.state.captchaIsVerified){
                 e.preventDefault();
                 console.log("With captcha: "+ this.state.counter);
@@ -84,7 +84,7 @@ export class Login extends Component {
             formIsValid = false;
             errors["password"] = "*Please enter your password.";
         }
-        this.setState({errors:errors})
+        this.setState({errors:errors});
         return formIsValid;
     }
     onChange = e => this.setState({ [e.target.name]: e.target.value });
