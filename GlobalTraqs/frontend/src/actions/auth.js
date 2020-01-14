@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import { returnErrors } from "./messages";
 
@@ -96,7 +95,7 @@ export const logout = () => (dispatch, getState) => {
   axios
     .post("/api/auth/logout/", null, tokenConfig(getState))
     .then(res => {
-      dispatch({ type: 'CLEAR_LEADS' });
+      dispatch({ type: "CLEAR_LEADS" });
       dispatch({
         type: LOGOUT_SUCCESS
       });
@@ -125,4 +124,3 @@ export const tokenConfig = getState => {
 
   return config;
 };
-export const getFlagState 

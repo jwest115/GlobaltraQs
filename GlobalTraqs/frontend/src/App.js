@@ -49,6 +49,8 @@ export class App extends Component {
               {/*<div className="container-fluid" style={divStyle}>*/}
               <Switch>
                 <Route exact path="/" component={MapDashboard} />
+                <Route exact path="/test" component={MapDashboard} />
+                <Route exact path="/test/:id" component={MapDashboard} />
                 <Route exact path="/About" component={About} />
                 <Route path="/Story/:id" exact component={Story} />
                 <Route exact path="/faq" component={FAQ} />
