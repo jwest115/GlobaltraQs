@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import Control from "react-leaflet-control";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
-
+import ModalPinForm from "./ModalPinForm";
 export const defaultPointerIcon = new L.Icon({
   iconUrl: default_marker,
   iconRetinaUrl: default_marker,
@@ -127,7 +127,7 @@ const LeafletMap = props => {
                   <br />
                   <br />
 
-                  <Link to={`Story/${marker.id}`}>
+                  <Link to={`map/${marker.id}`}>
                     <button type="button" className="btn btn-primary btn-sm">
                       View Story
                     </button>
@@ -151,6 +151,11 @@ const LeafletMap = props => {
 
         <Marker position={userposition} icon={defaultPointerIcon}></Marker>
       </Map>
+      <ModalPinForm
+        show={props.show}
+        handleClose={props.handleClose}
+        handleShow={props.handleShow}
+      />
       {/* {this.state.modal ? (
         <Modal
           userlat={this.state.userlat}

@@ -53,25 +53,32 @@ export default function MapDashboard() {
     dispatch(getPins());
   }, [dispatch]);
   const [state, setstate] = useState(1335);
-  const Convert = () => {
-    useEffect(() => {
-      setdivStyle({
-        height: "40vh",
-        width: "100%",
-        left: "0"
-      });
-    }, []);
-  };
+  const [modalState, setmodalstate] = useState(false);
+  const [show, setShow] = useState(true);
+
+  function handleClose() {
+    setShow(false);
+  }
+  function handleShow() {
+    setShow(true);
+  }
+
   const addMarker = e => {
     if (e.button === 2) {
       console.log("right");
     } else {
       console.log("elft");
     }
+    console.log(e.latlng);
     setplacement({
       userlat: e.latlng.lat,
       userlng: e.latlng.lng
     });
+
+    setmodalstate(!modalState);
+  };
+  const toggle = () => {
+    setmodalstate(!modalState);
   };
   const Back = state => {
     setstate(1335);
@@ -86,32 +93,31 @@ export default function MapDashboard() {
           {" "}
           <h2> {state}</h2>
         </center>
-        <LeafletMap
-          pins={pins}
-          divStyle={divStyle}
-          userposition={userposition}
-          addMarker={addMarker}
-          placement={placement}
-        />
+
         <Switch>
           <Route exact path="/">
             <h3>Please select a topic. </h3>
-            <ChangeBack
-              state={state}
-              Back={Back}
-              divStyle={divStyle}
+
+            <LeafletMap
               pins={pins}
+              divStyle={divStyle}
               userposition={userposition}
+              addMarker={addMarker}
+              placement={placement}
+              modalState={modalState}
+              toggle={toggle}
+              show={show}
+              handleClose={handleClose}
+              handleShow={handleShow}
             />
           </Route>
           <Route path="/test">
-            lit{" "}
-            <Change
-              state={state}
-              convert={Convert}
-              divStyle={divStyle1}
+            <LeafletMap
               pins={pins}
+              divStyle={divStyle1}
               userposition={userposition}
+              addMarker={addMarker}
+              placement={placement}
             />
           </Route>
         </Switch>
@@ -125,13 +131,4 @@ export default function MapDashboard() {
       </Fragment>
     </div>
   );
-}
-
-function Change(props) {
-  props.convert();
-  return null;
-}
-function ChangeBack(props) {
-  props.Back(props.state);
-  return null;
 }
