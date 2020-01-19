@@ -106,8 +106,7 @@ export class ProfilePage extends Component {
             {this.props.userProfile ? ` ${this.props.userProfile.username}'s Profile Page` : ""}
               <p>
                 <strong>Bio: </strong>
-                Lorem ipsum dolor sit amet, justo a bibendum phasellus proodio
-                ligula, sit
+                {this.props.userProfile.bio}
               </p>
           </Typography>
              {isOwner ? authLinks : guestLinks}
