@@ -54,14 +54,6 @@ export default function MapDashboard() {
   }, [dispatch]);
   const [state, setstate] = useState(1335);
   const [modalState, setmodalstate] = useState(false);
-  const [show, setShow] = useState(true);
-
-  function handleClose() {
-    setShow(false);
-  }
-  function handleShow() {
-    setShow(true);
-  }
 
   const addMarker = e => {
     if (e.button === 2) {
@@ -106,9 +98,6 @@ export default function MapDashboard() {
               placement={placement}
               modalState={modalState}
               toggle={toggle}
-              show={show}
-              handleClose={handleClose}
-              handleShow={handleShow}
             />
           </Route>
           <Route path="/test">
