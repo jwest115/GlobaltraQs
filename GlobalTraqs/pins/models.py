@@ -14,6 +14,8 @@ class pin(models.Model):
         "categoryType", on_delete=models.CASCADE, null=True, related_name='selected_category')
     # 1 is community, 2: historical, 3: personal
     upVotes = models.PositiveSmallIntegerField(default=0)
+    startDate = models.DateField('Date', blank=True, null=True)
+    endDate = models.DateField('Date', blank=True, null=True)
 
     def __str__(self):
         """String for representing the Model object."""

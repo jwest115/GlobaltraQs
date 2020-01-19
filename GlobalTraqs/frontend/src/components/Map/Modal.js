@@ -4,6 +4,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { addPin } from "../../actions/pins";
+import DatePicker from "react-datepicker";
+
 
 import {
   Button,
@@ -18,6 +20,7 @@ import {
 } from "reactstrap";
 import connect from "react-redux/es/connect/connect";
 import { Marker, Popup } from "react-leaflet";
+import InputGroup from "react-bootstrap/InputGroup";
 
 const labelStyle = {
   marginRight: "10px"
@@ -39,7 +42,9 @@ export class CustomModal extends Component {
       radius: "none",
       upVotes: 0,
       toggle: this.props.toggle,
-      owner: ""
+      owner: "",
+      startDate: new Date(),
+      endDate: new Date()
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -60,6 +65,18 @@ export class CustomModal extends Component {
   handleRadiusChange(event) {
     this.setState({ radius: event.target.value });
   }
+
+  handleStartDateChange = date => {
+    this.setState({
+      startDate: date
+    });
+  };
+
+  handleEndDateChange = date => {
+    this.setState({
+      endDate: date
+    });
+  };
 
   randomizePin(lat, lng) {
     const radius = this.state.radius;
@@ -125,8 +142,11 @@ export class CustomModal extends Component {
       longitude,
       category,
       upVotes,
-      owner
+      owner,
+      startDate,
+      endDate
     } = this.state;
+
     const pin = {
       title,
       description,
@@ -134,9 +154,13 @@ export class CustomModal extends Component {
       longitude,
       category,
       upVotes,
-      owner
+      owner,
+      startDate,
+      endDate
     };
+
     this.props.addPin(pin);
+    this.props.map.flyTo([this.state.latitude, this.state.longitude], 15);
 
     console.log(
       "title " +
@@ -149,7 +173,8 @@ export class CustomModal extends Component {
         longitude +
         " category is " +
         category +
-        " id: "
+        "start date " + startDate +
+        "end date " + endDate
     );
     this.state.toggle();
   };
@@ -159,7 +184,6 @@ export class CustomModal extends Component {
 
     // can probably condense this a lot
     // address functionality has not been implemented
-    if (this.state.submitAddress == true) {
       return (
         <Modal
           size="lg"
@@ -169,19 +193,20 @@ export class CustomModal extends Component {
           toggle={toggle}
         >
           <ModalHeader toggle={toggle}> Add a story </ModalHeader>
-          {console.log(this.props.userlat + "pinform" + this.props.userlng)}
-
           <ModalBody>
             <Form onSubmit={this.onSubmit}>
-              <FormGroup>
-                <Label for="address">Address</Label>
-                <Input
-                  className="form-control"
-                  type="text"
-                  name="address"
-                  onChange={this.onChange}
-                  value={this.state.address}
-                />
+               <FormGroup>
+                <Label style={labelStyle} for="category">
+                  Category
+                </Label>
+                <select
+                  value={this.state.category}
+                  onChange={this.handleChange}
+                >
+                  <option value="1">Personal</option>
+                  <option value="2">Community</option>
+                  <option value="3">Historical</option>
+                </select>
               </FormGroup>
               <FormGroup>
                 <Label for="title">Title</Label>
@@ -197,24 +222,12 @@ export class CustomModal extends Component {
                 <Label for="description">Description</Label>
                 <Input
                   className="form-control"
-                  type="text"
+                  type="textarea"
+                  rows="5"
                   name="description"
                   onChange={this.onChange}
                   value={this.state.description}
                 />
-              </FormGroup>
-              <FormGroup>
-                <Label style={labelStyle} for="category">
-                  Category
-                </Label>
-                <select
-                  value={this.state.category}
-                  onChange={this.handleChange}
-                >
-                  <option value="1">Personal</option>
-                  <option value="2">Community</option>
-                  <option value="3">Historical</option>
-                </select>
               </FormGroup>
               <FormGroup>
                 <Label style={labelStyle} for="radius">
@@ -230,88 +243,23 @@ export class CustomModal extends Component {
                   <option value="max">Maximum</option>
                 </select>
               </FormGroup>
-              <input
-                type="hidden"
-                name="latitude"
-                onChange={this.onChange}
-                value={this.latitude}
-              />
-
-              <input
-                type="hidden"
-                name="longitude"
-                onChange={this.onChange}
-                value={this.longitude}
-              />
-              <Button style={buttonStyle} color="success">
-                Save
-              </Button>
-            </Form>
-          </ModalBody>
-          {/*<ModalFooter>*/}
-
-          {/*</ModalFooter>*/}
-        </Modal>
-      );
-    } else {
-      return (
-        <Modal
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-          isOpen={true}
-          toggle={toggle}
-        >
-          <ModalHeader toggle={toggle}> Add a story </ModalHeader>
-          <ModalBody>
-            <Form onSubmit={this.onSubmit}>
-              <FormGroup>
-                <Label for="title">Title</Label>
-                <Input
-                  className="form-control"
-                  type="text"
-                  name="title"
-                  onChange={this.onChange}
-                  value={this.state.title}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="description">Description</Label>
-                <Input
-                  className="form-control"
-                  type="text"
-                  name="description"
-                  onChange={this.onChange}
-                  value={this.state.description}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label style={labelStyle} for="category">
-                  Category
+              <InputGroup>
+                <Label style={labelStyle} for="startDate">
+                  Start Date
                 </Label>
-                <select
-                  value={this.state.category}
-                  onChange={this.handleChange}
-                >
-                  <option value="1">Personal</option>
-                  <option value="2">Community</option>
-                  <option value="3">Historical</option>
-                </select>
-              </FormGroup>
-              <FormGroup>
-                <Label style={labelStyle} for="radius">
-                  Anonymity radius
+                 <DatePicker
+                    selected={this.state.startDate}
+                    onChange={this.handleStartDateChange}
+                  />
+                <Label style={labelStyle} for="endDate">
+                  &nbsp;&nbsp;&nbsp;End Date
                 </Label>
-                <select
-                  value={this.state.radius}
-                  onChange={this.handleRadiusChange}
-                >
-                  <option value="none">None</option>
-                  <option value="min">Minimum</option>
-                  <option value="mod">Moderate</option>
-                  <option value="max">Maximum</option>
-                </select>
-              </FormGroup>
+                 <DatePicker
+                    selected={this.state.endDate}
+                    onChange={this.handleEndDateChange}
+                  />
+              </InputGroup>
+
               <input
                 type="hidden"
                 name="latitude"
@@ -335,7 +283,6 @@ export class CustomModal extends Component {
           {/*</ModalFooter>*/}
         </Modal>
       );
-    }
   }
 }
 export default connect(null, { addPin })(CustomModal);

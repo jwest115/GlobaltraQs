@@ -13,6 +13,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -53,7 +54,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Sidebar() {
   const [pinType, setPinType] = React.useState('');
-
+  const [results, setResultList] = React.useState('');
   const classes = useStyles();
   const [drawerState, setState] = React.useState({
     top: false,
@@ -87,7 +88,6 @@ export default function Sidebar() {
           margin="none"
           fullWidth
           variant="filled">
-
         </TextField>
         <div>
           <FormControl>
@@ -115,22 +115,24 @@ export default function Sidebar() {
         >
           Search
       </Button>
-    
+
       </form>
     </div>
   );
   //more data in the card? like author or creation data?
   //cards with lizard use
   ////{this.state.pinData.description}
-
   if (text && type) {
+    console.log("Type" + pinType);
     document.getElementById("searchButton").addEventListener("click", function () {
-      console.log("Searched For : " + text.value + ". Category is : " + type.value)
-      axios.get(`api/pins?category=${type.value}`).then(response => {
-        for (let i = 0; i < response.data.length; i++) {
-          console.log(response.data[i].title)
-          console.log(response.data[i].description)
-        }
+      console.log("Searched For : " + text.value + ". Category is : " + pinType);
+      axios.get(`api/pinSearch?search=${text.value}&category=${pinType}`).then(response => {
+        setResultList(response.data);
+        // for (let i = 0; i < response.data.length; i++) {
+
+        //   console.log("length " + response.data.length);
+        //   console.log("title " + response.data[i].title + " description " + response.data[i].description);
+        // }
       })
         .catch(error => {
           console.log(error);
@@ -154,8 +156,34 @@ export default function Sidebar() {
   */
 
   const handleChange = event => {
+    console.log("pin type " + event.target.value);
     setPinType(event.target.value);
   };
+
+  const displayResults = results => {
+    const stories = [];
+    
+    for (let i = 0; i < results.length; i++) {
+       stories.push (
+        <Card className={classes.card}>
+          <CardActionArea>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                {results[i].title}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                {results[i].description}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+       );
+    }
+    return (
+        <div>{ stories }</div>
+    )
+  };
+
   return (
     <div>
       <Button
@@ -171,6 +199,8 @@ export default function Sidebar() {
         onClose={toggleDrawer("right", false)}
       >
         {sideList("right")}
+        {displayResults(results)}
+        { console.log("count of results is  " + results.length)}
       </Drawer>
     </div>
 

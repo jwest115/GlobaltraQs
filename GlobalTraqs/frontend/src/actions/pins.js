@@ -1,12 +1,15 @@
 import axios from "axios";
 
 import {
-    GET_PINS,
-    DELETE_PINS,
-    ADD_PIN,
-    EDIT_PIN,
-    GET_PIN,
-    GET_USER, GET_PIN_BY_ID, GET_PINS_BY_OWNER
+  GET_PINS,
+  DELETE_PINS,
+  ADD_PIN,
+  EDIT_PIN,
+  GET_PIN,
+  GET_USER,
+  SEARCH_PINS,
+  GET_PIN_BY_ID,
+  GET_PINS_BY_OWNER
 } from "./types";
 
 //GET PINS
@@ -16,6 +19,18 @@ export const getPins = () => dispatch => {
     .then(res => {
       dispatch({
         type: GET_PINS,
+        payload: res.data
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+export const searchPins = (searchQuery, category) => dispatch => {
+  axios
+    .get(`api/pinSearch?search=${searchQuery}&category=${category}`)
+    .then(res => {
+      dispatch({
+        type: SEARCH_PINS,
         payload: res.data
       });
     })
@@ -57,6 +72,8 @@ export const editPin = (pin, id) => dispatch => {
         type: EDIT_PIN,
         payload: res.data
       });
+       console.log("In edit pin");
+      console.log(res.data);
     })
     .catch(err => console.log(err));
 };

@@ -9,16 +9,18 @@ import {
   REGISTER_FAIL,
   DELETE_USER,
   GET_USERS,
-  GET_USER, EDIT_USER
+  GET_USER,
+  EDIT_USER
 } from "../actions/types";
 
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
   isLoading: false,
-  user: null,
-  userProfile: null,
+  user: '',
   users: [],
+  userProfile: null,
+  story_author: null
 };
 
 export default function(state = initialState, action) {
@@ -26,7 +28,7 @@ export default function(state = initialState, action) {
     case GET_USER:
         return {
           ...state,
-          userProfile: action.payload,
+          userProfile: action.payload
     };
     case EDIT_USER:
         return {

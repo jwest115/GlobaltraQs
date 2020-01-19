@@ -2,6 +2,7 @@ from rest_framework import serializers
 from pins.models import pin, categoryType, upVoteStory, flagStory, commentStory
 from django_restql.mixins import DynamicFieldsMixin
 from django.contrib.auth.models import User
+import datetime
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -45,6 +46,8 @@ class PinSerializer(serializers.ModelSerializer):
     flaggerstory = FlagStorySerializer(many=True, read_only=True)
     updotes = upVoteStorySerializer(many=True, read_only=True)
     commentstory = CommentStorySerializer(many=True, read_only=True)
+    start_date = serializers.DateField(initial=datetime.date.today, required=False)
+    end_date = serializers.DateField(initial=datetime.date.today, required=False)
 
     class Meta:
         model = pin

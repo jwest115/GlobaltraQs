@@ -51,6 +51,7 @@ export class Settings extends Component {
 
 
   render() {
+      console.log("params are " + this.props.match.params.id);
 
       console.log("checked " + this.state.checked);
       if(this.state.accountDeleted) {
@@ -62,42 +63,33 @@ export class Settings extends Component {
     const { isAuthenticated, user } = this.props.auth;
     const userid = user ? user.id : "";
 
-     if (this.props.isAuthenticated) {
-            // return <Redirect to="/" />;
-        }
+    let userCanEdit = "";
 
-        const guestLinks = <div><Redirect to="/" /></div>;
+    if(this.props.match.params.id == userid) {
+        userCanEdit = (
+             <div>
+                <div>
 
+                  <br/>
+
+                    <span>Accessibility</span>
+                    <Switch className="react-switch" onChange={this.updateAccessibility} checked={user ? user.accessibility_mode_active : false} />
+
+                </div>
+
+                <br/>
+
+                <button  onClick={() => this.deleteAccount(userid)} type="button" className="btn btn-warning">Delete Account</button>
+                {/*<Redirect to="/" />*/}
+
+            </div>
+        )
+    }
+
+    const guestLinks = <div><Redirect to="/" /></div>;
 
     return (
-
-      <div>
-
-        <div>
-
-          <br/>
-
-            <span>Accessibility</span>
-            <Switch className="react-switch" onChange={this.updateAccessibility} checked={user ? user.accessibility_mode_active : false} />
-
-{/*
-          <script type="text/javascript">
-          var _userway_config = {
-          account: 'BHN2wadYhB'
-          };
-          </script>
-          <script type="text/javascript" src="https://cdn.userway.org/widget.js"></script>
-
-*/}
-
-        </div>
-
-        <br/>
-
-        <button  onClick={() => this.deleteAccount(userid)} type="button" className="btn btn-warning">Delete Account</button>
-        {/*<Redirect to="/" />*/}
-
-      </div>
+      userCanEdit
     );
   }
 }

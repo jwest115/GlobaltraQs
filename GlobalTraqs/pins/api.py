@@ -8,6 +8,10 @@ from django.contrib.auth.models import User
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models.functions import Coalesce
 from django.db.models import Count, Sum, Value
+from django.db.models import F, Q, When
+from django.db.models import Case, CharField, Value
+from django.db.models import IntegerField
+from rest_framework import filters
 
 
 class PinViewSet(viewsets.ModelViewSet):
@@ -16,7 +20,12 @@ class PinViewSet(viewsets.ModelViewSet):
   #      updoot=Coalesce(Sum('pinsUpvote__upvote'), Value(1))
    # )
     queryset = pin.objects.annotate(
-        updooots=Coalesce(Sum('updotes__upvote'), Value(0))
+        #updooots=Coalesce(Sum('updotes__upvote'), Value(0))
+        updooots=Sum(Case(
+            When(updotes__upvote=True, then=1),
+            default=Value(0),
+            output_field=IntegerField()
+        ))
     )
 
     permission_classes = [
@@ -26,6 +35,14 @@ class PinViewSet(viewsets.ModelViewSet):
     serializer_class = PinSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
+
+
+class PinSearchViewSet(viewsets.ModelViewSet):
+    queryset = pin.objects.all()
+    serializer_class = PinSerializer
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    filterset_fields = '__all__'
+    search_fields = ['title', 'description']
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -72,6 +89,5 @@ class CommentStoryViewSet(viewsets.ModelViewSet):
 
 """     def get_queryset(self):
         return self.request.user.pins.all()
-
     def perform_create(self, serializer):  # saves user id
         serializer.save(owner=self.request.user) """

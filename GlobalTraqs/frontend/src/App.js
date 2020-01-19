@@ -19,15 +19,17 @@ import store from "./store";
 import login from "./components/accounts/login";
 import PrivateRoute from "./components/common/PrivateRoute";
 import { loadUser } from "./actions/auth";
-import Story from "./components/Map/Story";
+import Story from "./components/Map/StoryTest";
 import { DisplayMap } from "./components/Map/DisplayMap";
 import Manage from "./components/accounts/manage";
 import ProfilePage from "./components/profile/ProfilePage";
 import Settings from "./components/profile/Settings";
 import EditStory from "./components/Map/EditStory";
-import resetPassword from "./components/accounts/resetPassword";
-import ForgotPassword from "./components/accounts/ForgotPassword";
 
+import ForgotPassword from "./components/accounts/ForgotPassword";
+import AddComment from "./components/Map/AddComment";
+import PinForm from "./components/Map/PinForm";
+import ResetPassword from "./components/accounts/ResetPassword";
 const divStyle = {
   position: "relative"
 };
@@ -57,7 +59,7 @@ export class App extends Component {
                 <Route exact path="/manage" component={Manage} />
                 <Route path="/Story/:id/edit" exact component={EditStory} />
                 <Route path="/forgotPassword" component={ForgotPassword} />
-                <Route path="/resetPassword" componenet={resetPassword} />
+                <Route path="/resetPassword" component={ResetPassword} />
 
                 {/* <MapDashboard /> */}
               </Switch>

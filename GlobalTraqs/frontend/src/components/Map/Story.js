@@ -19,6 +19,12 @@ import default_marker from "./images/default.png";
 import community from "./images/community.png";
 import historical from "./images/historical.png";
 import personal from "./images/personal.png";
+import MarkerClusterGroup from "react-leaflet-markercluster";
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import Modal from "./Modal";
 
 const divStyle = {
   height: "40vh",
@@ -43,6 +49,11 @@ const storyBody = {
   paddingRight: "50px"
 };
 
+const months = [ "January", "February", "March", "April", "May", "June",
+           "July", "August", "September", "October", "November", "December" ];
+
+
+
 export class Story extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
@@ -58,7 +69,16 @@ export class Story extends Component {
       showEditForm: false,
       editButtonValue: "Edit Story",
       storyAuthor: "",
-      storyId: ""
+      storyId: "",
+      title: "",
+      description: "",
+      startDate: new Date(),
+      endDate: new Date(),
+      startDateFormatted: "",
+      endDateFormatted: "",
+      userlat: 34.0668,
+      userlng: -118.1684,
+      modal: false,
     };
   }
 
@@ -93,10 +113,15 @@ export class Story extends Component {
       flagger: userid
     });
     this.state.upVoter = userid;
-    console.log("the user id is: " + id);
     axios
       .get(`api/pins/${id}`)
       .then(response => {
+        if(response.data.owner != null) {
+          console.log("not null")
+          this.getAuthor(response.data.owner);
+        }
+        console.log(response.data);
+        console.log("is the data");
         const flaggedData = response.data.flaggerstory.filter(
           b => b.flagger == userid
         )[0]; //gets the first value of the filter even tho its the only one
@@ -114,14 +139,38 @@ export class Story extends Component {
           console.log(marker.username + " " + marker.description);
         });
         console.log(response.data.commentstory[0]);
+
+      let startSplit = response.data.startDate.split('-');
+      let start = new Date(startSplit[0], Number.parseInt(startSplit[1]) - 1, startSplit[2]);
+      console.log("start " + startSplit[1] + "/" + startSplit[2] + "/" + startSplit[0]);
+      console.log("start " + start);
+
+      let selectedStartMonthName = months[start.getMonth()];
+      let startDateFormatted = selectedStartMonthName + " " + start.getDate() + ", " + start.getFullYear();
+      console.log("original " + start);
+      let endSplit = response.data.endDate.split('-');
+      let end = new Date(endSplit[0], Number.parseInt(endSplit[1]) - 1, endSplit[2]);
+      console.log("end " + end);
+
+      let selectedEndMonthName = months[end.getMonth()];
+      let endDateFormatted = selectedEndMonthName + " " + end.getDate() + ", " + end.getFullYear();
+
         this.setState({
           userStory: response.data,
+          title: response.data.title,
+          description: response.data.description,
+          startDate: start,
+          startDateFormatted: startDateFormatted,
+          endDate: end,
+          endDateFormatted: endDateFormatted,
           upVotes: response.data.upVotes,
           hasFlaggedBefore: userFlaggedBefore,
           upvote: stateofUpvote,
           hasVotedBefore: userUpvotedBefore,
           upVoteId: upvoteid,
-          updotes: response.data.updooots
+          updotes: response.data.updooots,
+          showEditForm: false,
+          editButtonValue: "Edit Story"
         });
       })
       .catch(error => {
@@ -210,11 +259,49 @@ export class Story extends Component {
       });
   }
 
+  onUpdate = (title, description, startDate, endDate, formattedStartDate, formattedEndDate) => {
+
+    this.setState({
+        title: title,
+        description: description,
+        startDate: startDate,
+        endDate: endDate,
+        startDateFormatted: formattedStartDate,
+        endDateFormatted: formattedEndDate,
+        showEditForm: false,
+        editButtonValue: "Edit Story", })
+  };
+
   updateStoryId = id => {
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-        this.setState({ userStory: response.data });
+        let startSplit = response.data.startDate.split('-');
+        let start = new Date(startSplit[0], Number.parseInt(startSplit[1]) - 1, startSplit[2]);
+        console.log("start " + startSplit[1] + "/" + startSplit[2] + "/" + startSplit[0]);
+        console.log("start " + start);
+
+        let selectedStartMonthName = months[start.getMonth()];
+        let startDateFormatted = selectedStartMonthName + " " + start.getDate() + ", " + start.getFullYear();
+        console.log("original " + start);
+        let endSplit = response.data.endDate.split('-');
+        let end = new Date(endSplit[0], Number.parseInt(endSplit[1]) - 1, endSplit[2]);
+        console.log("end " + end);
+
+        let selectedEndMonthName = months[end.getMonth()];
+        let endDateFormatted = selectedEndMonthName + " " + end.getDate() + ", " + end.getFullYear();
+        this.setState({
+            userStory: response.data,
+            title: response.data.title,
+            description: response.data.description,
+            startDate: start,
+            startDateFormatted: startDateFormatted,
+            endDate: end,
+            endDateFormatted: endDateFormatted,
+            upVotes: response.data.upVotes,
+            showEditForm: false,
+            editButtonValue: "Edit Story",
+        });
         console.log(response.data);
       })
       .catch(error => {
@@ -234,6 +321,21 @@ export class Story extends Component {
         editButtonValue: "Close"
       });
     }
+  };
+
+   addMarker = e => {
+    this.setState({ userlat: e.latlng.lat });
+    this.setState({ userlng: e.latlng.lng });
+    this.createStory(false);
+  };
+
+   createStory = address => {
+    const item = { title: "", description: "", address: "" };
+    this.setState({ submitAddress: address, modal: !this.state.modal });
+  };
+
+   toggle = () => {
+    this.setState({ modal: !this.state.modal });
   };
 
   getAuthor = user_id => {
@@ -256,27 +358,29 @@ export class Story extends Component {
     let isAdminOrModerator = false;
     let adminModeratorEditStory = "";
     const { isAuthenticated, user } = this.props.auth;
+
+    const userid = user ? user.id : "";
+
     if (isAuthenticated) {
-      if (
-        user.is_administrator ||
-        user.is_moderator ||
-        this.state.userStory.user_id == this.state.storyAuthor.id
-      ) {
-        isAdminOrModerator = true;
-        adminModeratorEditStory = (
-          <div className="admin-moderator-edit">
-            <button
-              onClick={this.editStory}
-              className="btn btn-success admin-moderator-edit"
-            >
-              {this.state.editButtonValue}
-            </button>
-          </div>
-        );
+      console.log("user is authenticated!");
+        if (user.is_administrator || user.is_moderator || this.state.userStory.owner == user.id) {
+          isAdminOrModerator = true;
+          console.log("user is admin or moderator! let them edit!");
+          adminModeratorEditStory = (
+              <div className="admin-moderator-edit">
+                <button
+                    onClick={this.editStory}
+                    className="btn btn-success admin-moderator-edit"
+                >
+                  {this.state.editButtonValue}
+                </button>
+              </div>
+          );
+          console.log("user IS admin or moderator!");
       }
     }
     let authorName = "Anonymous";
-    if (this.state.userStory.username != "") {
+    if (this.state.userStory.owner != null) {
       authorName = this.state.userStory.username;
     }
     // console.log("lat " + this.state.userStory.latitude);
@@ -297,26 +401,41 @@ export class Story extends Component {
     );
     const upVoteButton = (
       <button type="submit" className="btn btn-primary">
-        {this.state.upvote ? "Downvote" : "Upvote"}
+        {this.state.upvote ? <ThumbDownIcon></ThumbDownIcon> : <ThumbUpIcon></ThumbUpIcon>}
       </button>
     );
+
     // const {author} = this.props.user;
+    // console.log("start date " + this.state.userStory.startDate);
+    // let startDate = this.state.userStory.startDate.split('-');
+    // let start = new Date(startDate[0], startDate[1], startDate[2]);
+    // console.log("start " + startDate[1] + "/" + startDate[2] + "/" + startDate[0]);
+    // console.log("start " + start);
+    //
+    // startDate = startDate[1] + "/" + startDate[2] + "/" + startDate[0];
+    // let endDate = this.state.userStory.endDate.split('-');
+    // let end = new Date(endDate[0], endDate[1], endDate[2]);
+    // console.log("end " + end);
+    // endDate = endDate[1] + "/" + endDate[2] + "/" + endDate[0];
+
     return (
       <div className="container-fluid" style={divStyle2}>
-        <form onSubmit={this.onSubmit}>
-          <h2>
-            number of upvotes {this.state.userStory.updooots}{" "}
-            {isAuthenticated ? upVoteButton : "login to upvote"}
-          </h2>
-        </form>
-
         <h2> {isAuthenticated ? flaggedButton : ""}</h2>
-        <Map center={position} zoom={15} maxZoom={30} id="map" style={divStyle}>
+        <Map
+             center={position}
+             zoom={15}
+             maxZoom={30}
+             id="map"
+             style={divStyle}
+             onContextMenu={this.addMarker}
+        >
+
           <TileLayer
             attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           />
 
+        <MarkerClusterGroup>
           {this.props.pins.map((marker, index) => {
             let post = [marker.latitude, marker.longitude];
             let categoryIcon = "";
@@ -330,42 +449,68 @@ export class Story extends Component {
             const id = marker.id;
 
             return (
+
               <Marker key={index} position={post} icon={categoryIcon}>
                 <Popup>
                   <strong>{marker.title}</strong> <br />{" "}
                   {marker.description.substring(0, 200)}
                   <br />
                   <br />
-                  <button
-                    onClick={() => this.updateStoryId(id)}
-                    type="button"
-                    className="btn btn-primary btn-sm"
-                  >
-                    View Story
-                  </button>
+                  <Link
+                      to={`/Story/${marker.id}`}
+                      params={{ storyId: marker.id }}
+                    >
+                       <button
+                      onClick={() => this.updateStoryId(id)}
+                      type="button"
+                      className="btn btn-primary btn-sm"
+                      >
+                      View Story
+                    </button>
+                    </Link>
                 </Popup>
               </Marker>
             );
           })}
+          </MarkerClusterGroup>
         </Map>
+        {this.state.modal ? (
+          <Modal
+            userlat={this.state.userlat}
+            userlng={this.state.userlng}
+            submitAddress={this.state.submitAddress}
+            toggle={this.toggle}
+            owner={userid}
+          />
+        ) : null }
         <div className="container-fluid" style={storyBody}>
           {this.state.showEditForm && (
             <EditPin
-              title={this.state.userStory.title}
-              description={this.state.userStory.description}
+              title={this.state.title}
+              description={this.state.description}
               userlat={this.state.userStory.latitude}
               userlng={this.state.userStory.longitude}
               storyid={id}
-              user_id={this.state.userStory.user_id}
+              userId={this.state.userStory.owner}
+              startDate={this.state.startDate}
+              endDate={this.state.endDate}
+              onUpdate = {this.onUpdate}
             />
           )}
           {isAdminOrModerator ? adminModeratorEditStory : ""}
           <h2>
-            <strong>{this.state.userStory.title}</strong>
+            <strong>{this.state.title}</strong>
           </h2>
+          <p> {this.state.startDateFormatted} - {this.state.endDateFormatted} </p>
           <p>By: {authorName}</p>
+          <form onSubmit={this.onSubmit}>
+          <h6>
+            {this.state.userStory.updooots}{" "} upvotes
+            {isAuthenticated ? upVoteButton : <Link to="/login"> Login to upvote!</Link>}
+          </h6>
+          </form>
           <hr></hr>
-          <p>{this.state.userStory.description}</p>
+          <p>{this.state.description}</p>
 
           {this.state.userStory.commentstory.map((marker, index) => {
             console.log(marker.username);
