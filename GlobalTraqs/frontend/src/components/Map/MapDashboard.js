@@ -52,9 +52,15 @@ export default function MapDashboard() {
   useEffect(() => {
     dispatch(getPins());
   }, [dispatch]);
-  const [state, setstate] = useState(1335);
-  const [modalState, setmodalstate] = useState(false);
 
+  const [modalState, setmodalstate] = useState(false);
+  const [userForm, setuserForm] = useState({
+    title: "",
+    description: "",
+    category: "",
+    startDate: "",
+    endDate: ""
+  });
   const addMarker = e => {
     if (e.button === 2) {
       console.log("right");
@@ -72,20 +78,14 @@ export default function MapDashboard() {
   const toggle = () => {
     setmodalstate(!modalState);
   };
-  const Back = state => {
-    setstate(1335);
-    return state;
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(placement);
   };
-
   return (
     // <div id={"map-dashboard"}>
     <div>
       <Fragment>
-        <center>
-          {" "}
-          <h2> {state}</h2>
-        </center>
-
         <Switch>
           <Route exact path="/">
             <h3>Please select a topic. </h3>
@@ -98,6 +98,7 @@ export default function MapDashboard() {
               placement={placement}
               modalState={modalState}
               toggle={toggle}
+              handleSubmit={handleSubmit}
             />
           </Route>
           <Route path="/test">

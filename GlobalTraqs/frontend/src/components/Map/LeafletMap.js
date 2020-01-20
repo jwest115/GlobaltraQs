@@ -151,17 +151,11 @@ const LeafletMap = props => {
 
         <Marker position={userposition} icon={defaultPointerIcon}></Marker>
       </Map>
-      <ModalPinForm toggle={props.toggle} modalState={props.modalState} />
-      {/* {this.state.modal ? (
-        <Modal
-          userlat={this.state.userlat}
-          userlng={this.state.userlng}
-          submitAddress={this.state.submitAddress}
-          toggle={this.toggle}
-          owner={userid}
-          map={this.map}
-        />
-      ) : null} */}
+      <ModalPinForm
+        toggle={props.toggle}
+        modalState={props.modalState}
+        handleSubmit={props.handleSubmit}
+      />
     </div>
   );
 };

@@ -31,7 +31,7 @@ function ModalPinForm(props) {
       >
         <ModalHeader toggle={props.toggle}> Add a story </ModalHeader>
         <ModalBody>
-          <Form>
+          <Form onSubmit={props.handleSubmit}>
             <FormGroup>
               <Label style={labelStyle} for="category">
                 Category
