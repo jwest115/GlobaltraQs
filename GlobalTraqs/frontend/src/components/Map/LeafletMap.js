@@ -155,15 +155,10 @@ const LeafletMap = props => {
         toggle={props.toggle}
         modalState={props.modalState}
         onSubmit={props.onSubmit}
-        register={props.register}
-        handleSubmit={props.handleSubmit}
-        watch={props.watch}
-        errors={props.errors}
-        control={props.control}
-        startDate={props.startDate}
-        setStartDate={props.setStartDate}
-        enddate={props.enddate}
-        setendDate={props.setendDate}
+        userForm={props.userForm}
+        setuserForm={props.setuserForm}
+        radiusUser={props.radiusUser}
+        setAnonRadius={props.setAnonRadius}
       />
     </div>
   );

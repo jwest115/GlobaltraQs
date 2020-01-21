@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { getPins, getPin } from "../../actions/pins";
+import { getPins, getPin, addPin } from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 import Pins from "./Pins";
@@ -32,14 +32,6 @@ const sidebarStyle = {
 
 export default function MapDashboard() {
   let { path, url } = useRouteMatch();
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    errors,
-    control
-  } = useForm();
 
   const [divStyle, setdivStyle] = useState({
     height: "90%",
@@ -50,29 +42,32 @@ export default function MapDashboard() {
     width: "100%",
     left: "0"
   });
-  const [startDate, setStartDate] = useState(new Date());
-
-  const [enddate, setendDate] = useState(new Date());
 
   const [placement, setplacement] = useState({
     userlat: 34.0522,
     userlng: -118.2437
   });
-  const userposition = [34, -120];
+
   const pins = useSelector(state => state.pins.pins);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPins());
   }, []);
+  const auth = useSelector(state => state.auth);
+  const { isAuthenticated, user } = auth;
 
   const [modalState, setmodalstate] = useState(false);
   const [userForm, setuserForm] = useState({
     title: "",
     description: "",
-    category: "",
+    category: 1,
     startDate: "",
-    endDate: ""
+    endDate: "",
+    owner: isAuthenticated ? user.id : "",
+    latitude: placement.userlat,
+    longitude: placement.userlng
   });
+  const [radiusUser, setRadiusUser] = useState(1);
   const addMarker = e => {
     if (e.button === 2) {
       console.log("right");
@@ -84,15 +79,98 @@ export default function MapDashboard() {
       userlat: e.latlng.lat,
       userlng: e.latlng.lng
     });
+    setuserForm({
+      ...userForm,
+      latitude: e.latlng.lat,
+      longitude: e.latlng.lng
+    });
 
     setmodalstate(!modalState);
   };
   const toggle = () => {
     setmodalstate(!modalState);
   };
-  const onSubmit = data => {
-    console.log(data);
+  const resetState = () => {
+    setuserForm({
+      title: "",
+      description: "",
+      category: 1,
+      startDate: "",
+      endDate: "",
+      owner: isAuthenticated ? user.id : "",
+      latitude: "",
+      longitude: ""
+    });
   };
+  const onSubmit = e => {
+    e.preventDefault();
+    console.log("submit");
+    console.log(userForm);
+    dispatch(addPin(userForm));
+    resetState();
+    setmodalstate(!modalState);
+  };
+  const setAnonRadius = radius => {
+    setRadiusUser(radius);
+
+    let randomLat;
+    let randomLng;
+    const lat = placement.userlat;
+    const lng = placement.userlng;
+    let sign1 = Math.round(Math.random());
+    let sign2 = Math.round(Math.random());
+    if (radius === "2") {
+      if (sign1 == 0) {
+        randomLat = lat - (Math.random() * (0.008 - 0.001) + 0.001);
+      } else {
+        randomLat = Math.random() * (0.008 - 0.001) + 0.001 + lat;
+      }
+      if (sign2 == 0) {
+        randomLng = lng - (Math.random() * (0.008 - 0.001) + 0.001);
+      } else {
+        randomLng = Math.random() * (0.008 - 0.001) + 0.001 + lng;
+      }
+    } else if (radius === "3") {
+      if (sign1 == 0) {
+        randomLat = lat - (Math.random() * (0.03 - 0.01) + 0.01);
+      } else {
+        randomLat = Math.random() * (0.03 - 0.01) + 0.01 + lat;
+      }
+      if (sign2 == 0) {
+        randomLng = lng - (Math.random() * (0.03 - 0.01) + 0.01);
+      } else {
+        randomLng = Math.random() * (0.03 - 0.01) + 0.01 + lng;
+      }
+    } else if (radius === "4") {
+      if (sign1 == 0) {
+        randomLat = lat - (Math.random() * (0.1 - 0.05) + 0.05);
+      } else {
+        randomLat = Math.random() * (0.1 - 0.05) + 0.05 + lat;
+      }
+      if (sign2 == 0) {
+        randomLng = lng - (Math.random() * (0.1 - 0.05) + 0.05);
+      } else {
+        randomLng = Math.random() * (0.1 - 0.05) + 0.05 + lng;
+      }
+    } else {
+      randomLat = lat;
+      randomLng = lng;
+    }
+    console.log(
+      "random lat is " +
+        randomLat +
+        " random lng is " +
+        randomLng +
+        " the selection is " +
+        radius
+    );
+    setuserForm({
+      ...userForm,
+      latitude: randomLat,
+      longitude: randomLng
+    });
+  };
+  console.log(userForm);
   return (
     // <div id={"map-dashboard"}>
     <div>
@@ -102,30 +180,30 @@ export default function MapDashboard() {
             <LeafletMap
               pins={pins}
               divStyle={divStyle}
-              userposition={userposition}
               addMarker={addMarker}
               placement={placement}
               modalState={modalState}
               toggle={toggle}
               onSubmit={onSubmit}
-              register={register}
-              handleSubmit={handleSubmit}
-              watch={watch}
-              errors={errors}
-              control={control}
-              startDate={startDate}
-              setStartDate={setStartDate}
-              enddate={enddate}
-              setendDate={setendDate}
+              userForm={userForm}
+              setuserForm={setuserForm}
+              radiusUser={radiusUser}
+              setAnonRadius={setAnonRadius}
             />
           </Route>
           <Route path="/test">
             <LeafletMap
               pins={pins}
               divStyle={divStyle1}
-              userposition={userposition}
               addMarker={addMarker}
               placement={placement}
+              modalState={modalState}
+              toggle={toggle}
+              onSubmit={onSubmit}
+              userForm={userForm}
+              setuserForm={setuserForm}
+              radiusUser={radiusUser}
+              setAnonRadius={setAnonRadius}
             />
           </Route>
         </Switch>
