@@ -154,7 +154,16 @@ const LeafletMap = props => {
       <ModalPinForm
         toggle={props.toggle}
         modalState={props.modalState}
+        onSubmit={props.onSubmit}
+        register={props.register}
         handleSubmit={props.handleSubmit}
+        watch={props.watch}
+        errors={props.errors}
+        control={props.control}
+        startDate={props.startDate}
+        setStartDate={props.setStartDate}
+        enddate={props.enddate}
+        setendDate={props.setendDate}
       />
     </div>
   );

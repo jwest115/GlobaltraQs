@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { getPins, getPin } from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useForm, Controller } from "react-hook-form";
 import Pins from "./Pins";
-
+import DatePicker from "react-datepicker";
 import {
   Switch,
   Route,
@@ -32,6 +32,15 @@ const sidebarStyle = {
 
 export default function MapDashboard() {
   let { path, url } = useRouteMatch();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    errors,
+    control
+  } = useForm();
+
   const [divStyle, setdivStyle] = useState({
     height: "90%",
     width: "100%"
@@ -41,6 +50,9 @@ export default function MapDashboard() {
     width: "100%",
     left: "0"
   });
+  const [startDate, setStartDate] = useState(new Date());
+
+  const [enddate, setendDate] = useState(new Date());
 
   const [placement, setplacement] = useState({
     userlat: 34.0522,
@@ -51,7 +63,7 @@ export default function MapDashboard() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPins());
-  }, [dispatch]);
+  }, []);
 
   const [modalState, setmodalstate] = useState(false);
   const [userForm, setuserForm] = useState({
@@ -78,9 +90,8 @@ export default function MapDashboard() {
   const toggle = () => {
     setmodalstate(!modalState);
   };
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log(placement);
+  const onSubmit = data => {
+    console.log(data);
   };
   return (
     // <div id={"map-dashboard"}>
@@ -88,8 +99,6 @@ export default function MapDashboard() {
       <Fragment>
         <Switch>
           <Route exact path="/">
-            <h3>Please select a topic. </h3>
-
             <LeafletMap
               pins={pins}
               divStyle={divStyle}
@@ -98,7 +107,16 @@ export default function MapDashboard() {
               placement={placement}
               modalState={modalState}
               toggle={toggle}
+              onSubmit={onSubmit}
+              register={register}
               handleSubmit={handleSubmit}
+              watch={watch}
+              errors={errors}
+              control={control}
+              startDate={startDate}
+              setStartDate={setStartDate}
+              enddate={enddate}
+              setendDate={setendDate}
             />
           </Route>
           <Route path="/test">
