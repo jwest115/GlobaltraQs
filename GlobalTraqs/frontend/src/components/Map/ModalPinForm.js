@@ -107,6 +107,7 @@ function ModalPinForm(props) {
                 &nbsp;&nbsp;&nbsp;End Date
               </Label>
               <DatePicker
+                name="enddate"
                 selected={props.enddate}
                 onChange={date => props.setendDate(date)}
               />
