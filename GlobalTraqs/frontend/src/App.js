@@ -29,7 +29,7 @@ import EditStory from "./components/Map/EditStory";
 import ForgotPassword from "./components/accounts/ForgotPassword";
 import AddComment from "./components/Map/AddComment";
 import PinForm from "./components/Map/PinForm";
-import ResetPassword from "./components/accounts/ResetPassword";
+import ResetPassword from "./components/accounts/resetPassword";
 const divStyle = {
   position: "relative"
 };

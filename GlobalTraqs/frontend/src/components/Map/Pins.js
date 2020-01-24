@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Map, Marker, Popup, TileLayer, ZoomControl, withLeaflet } from "react-leaflet";
-import { getPins, deletePins } from "../../actions//pins";
+import { getPins, deletePins } from "../../actions/pins";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import PinForm from "./PinForm";
