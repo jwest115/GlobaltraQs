@@ -14,6 +14,7 @@ import { getPins } from "../../actions/pins";
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import Modal from "./Modal";
+import { Markup } from 'interweave';
 
 const divStyle = {
   height: "40vh",
@@ -442,7 +443,7 @@ export class Story extends Component {
           </h6>
           </form>
           <hr></hr>
-          <p>{this.state.description}</p>
+          <Markup content={this.state.description} />
 
           {this.state.userStory.commentstory.map((marker, index) => {
             console.log(marker.username);
@@ -453,7 +454,7 @@ export class Story extends Component {
                   {marker.username}
                 </p>
 
-                <p>{marker.description}</p>
+                 <Markup content={marker.description}/>
               </div>
             );
           })}

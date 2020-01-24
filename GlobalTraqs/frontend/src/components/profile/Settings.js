@@ -18,11 +18,15 @@ export class Settings extends Component {
    constructor(props) {
     super(props);
     this.state = {
-        accountDeleted: false
+        accountDeleted: false,
+        bio: ""
     };
     this.handleChange = this.handleChange.bind(this);
 
   }
+
+  onChange = e => this.setState({ [e.target.name]: e.target.value });
+
 
   handleChange(checked) {
     this.setState({ checked });
@@ -31,8 +35,8 @@ export class Settings extends Component {
   updateAccessibility = () => {
     const userId = this.props.auth.user.id;
     const accessibility_mode_active = this.props.auth.user.accessibility_mode_active ? false : true;
-    const user = { accessibility_mode_active };
-    this.props.editUser(userId, user);
+    const userData = { accessibility_mode_active };
+    this.props.editUser(userId, userData);
   };
 
 
@@ -48,9 +52,24 @@ export class Settings extends Component {
     this.setState({accountDeleted: true});
  };
 
+   onSubmit = (e) => {
+       e.preventDefault(); //prevents refresh of page
 
+       const userId = this.props.auth.user.id;
+       const bio = this.state.bio;
+       const userData = { bio };
+       this.props.editUser(userId, userData);
+   };
 
-  render() {
+   componentDidMount() {
+       const { isAuthenticated, user } = this.props.auth;
+       if(user) {
+           console.log("setting bio");
+           this.setState({bio : user.bio})
+       }
+   }
+
+    render() {
       console.log("params are " + this.props.match.params.id);
 
       console.log("checked " + this.state.checked);
@@ -67,7 +86,7 @@ export class Settings extends Component {
 
     if(this.props.match.params.id == userid) {
         userCanEdit = (
-             <div>
+             <div style={{ padding: "20px" }}>
                 <div>
 
                   <br/>
@@ -81,6 +100,25 @@ export class Settings extends Component {
 
                 <button  onClick={() => this.deleteAccount(userid)} type="button" className="btn btn-warning">Delete Account</button>
                 {/*<Redirect to="/" />*/}
+
+                <form onSubmit={this.onSubmit}>
+                  <div className="form-group">
+                  <br />
+                    <label>Bio</label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      name="bio"
+                      onChange={this.onChange}
+                      value={this.state.bio}
+                    />
+                  </div>
+                    <div className="form-group">
+                    <button type="submit" className="btn btn-primary">
+                      Submit
+                    </button>
+                  </div>
+                </form>
 
             </div>
         )

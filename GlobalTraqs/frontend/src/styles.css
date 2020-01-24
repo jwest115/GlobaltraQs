@@ -1,6 +1,6 @@
 @import url("~react-leaflet-markercluster/dist/styles.min.css");
 @import url("~react-datepicker/dist/react-datepicker.css");
-
+@import url("https://unpkg.com/leaflet-geosearch@2.6.0/assets/css/leaflet.css");
 .top-bar {
     padding: 18px 0px 10px 30px;
     background-color: black;

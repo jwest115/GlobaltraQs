@@ -25,9 +25,9 @@ export const getPins = () => dispatch => {
     .catch(err => console.log(err));
 };
 
-export const searchPins = (searchQuery, category) => dispatch => {
+export const searchPins = (searchQuery, categories, startDate, endDate) => dispatch => {
   axios
-    .get(`api/pinSearch?search=${searchQuery}&category=${category}`)
+    .get(`api/pinSearch?search=${searchQuery}&categories=${categories}&startDate_gte=${startDate}&endDate_lte=${endDate}`)
     .then(res => {
       dispatch({
         type: SEARCH_PINS,

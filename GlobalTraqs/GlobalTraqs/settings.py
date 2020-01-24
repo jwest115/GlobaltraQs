@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_filters',
     #'django_rest_passwordreset',
     'corsheaders',
+    'management'
 ]
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
@@ -114,7 +115,7 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db3',
+        'NAME': 'db',
     }
 }
 
@@ -160,7 +161,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'resetglobaltraqs@gmail.com'
-EMAIL_HOST_PASSWORD = 'gl0b4ltr4qs'
+EMAIL_HOST_PASSWORD = 'oiwjlhboomruvteo'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

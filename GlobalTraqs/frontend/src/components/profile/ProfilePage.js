@@ -10,6 +10,7 @@ import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import { Avatar } from 'antd';
 import { getUser } from "../../actions/users";
 import { getPinsByOwner } from "../../actions/pins";
+import { Markup } from 'interweave';
 
 export class ProfilePage extends Component {
   static propTypes = {
@@ -106,8 +107,7 @@ export class ProfilePage extends Component {
             {this.props.userProfile ? ` ${this.props.userProfile.username}'s Profile Page` : ""}
               <p>
                 <strong>Bio: </strong>
-                Lorem ipsum dolor sit amet, justo a bibendum phasellus proodio
-                ligula, sit
+                {this.props.userProfile.bio}
               </p>
           </Typography>
              {isOwner ? authLinks : guestLinks}
@@ -117,7 +117,8 @@ export class ProfilePage extends Component {
                 {this.props.pins.map((story, index) => {
                   return (
                       <div style={ {padding: "20px"} }>
-                        <h5 class="card-title" key={index}>Title: {story.title} <br/> Description: {story.description.substring(0, 200)}</h5>
+                        <h5 class="card-title" key={index}>{story.title} <br/></h5>
+                        <Markup content={story.description}/>
                         <Link
                           to={`/Story/${story.id}`}
                           params={{ testvalue: "hello" }}

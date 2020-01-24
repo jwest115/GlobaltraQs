@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Map, Marker, Popup, TileLayer, ZoomControl } from "react-leaflet";
+import { Map, Marker, Popup, TileLayer, ZoomControl, withLeaflet } from "react-leaflet";
 import { getPins, deletePins } from "../../actions//pins";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -15,9 +15,14 @@ import L from "leaflet";
 import Modal from "./Modal";
 import Control from "react-leaflet-control";
 import MarkerClusterGroup from "react-leaflet-markercluster";
+import { Markup } from 'interweave';
+
 //import LocateControl from "react-leaflet-locate-control";
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
+import { ReactLeafletSearch } from 'react-leaflet-search';
+// import
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 
 const divStyle = {
   height: "90%",
@@ -86,6 +91,8 @@ export class Pins extends Component {
       categoryType: personalIcon,
       editButtonValue: "Edit Story",
       open: false,
+      searchText: '',
+      provider:  new OpenStreetMapProvider()
     };
   }
 
@@ -98,6 +105,23 @@ export class Pins extends Component {
 
   componentDidMount() {
     this.map = this.mapInstance.leafletElement;
+    const searchControl = new GeoSearchControl({
+      provider: this.state.provider,
+      autocomplete: true,
+      style: 'bar',
+      animateZoom: true,
+      retainZoomLevel: true,
+      searchLabel: 'Add story by address',
+      showMarker: false,
+      showPopup: false,
+      autoClose: true,
+      keepResult: true
+    });
+
+    this.map.addControl(searchControl);
+    this.map.on('geosearch/showlocation', this.addressSearch);
+
+
     this.props.getPins();
     this.getLocation();
     // this.intervalID = setInterval(this.props.getPins.bind(this), 5000); //every 5 seconds it gets data
@@ -105,6 +129,8 @@ export class Pins extends Component {
   /*   componentWillUnmount() {
     clearInterval(this.intervalID);
   } */
+
+  onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   editStory = () => {
     if (this.state.showEditForm) {
@@ -163,7 +189,26 @@ export class Pins extends Component {
       );
     }
   };
+
+  addressSearch = (e) => {
+    console.log(e);
+    const provider = this.state.provider;
+    const longitude = e.location.x;
+    const latitude = e.location.y;
+    this.setState({userlat : latitude, userlng: longitude, modal: true});
+
+      // .search({ query: this.state.searchText })
+      // .then(function(result) {
+      //   // do something with result;
+      //   console.log(result)
+      // });
+    console.log("here");
+  };
+
+
   render() {
+
+
     const { isAuthenticated, user } = this.props.auth;
     const userid = user ? user.id : "";
 
@@ -177,12 +222,17 @@ export class Pins extends Component {
 
     const position = [this.state.lat, this.state.lng];
     let userposition = [this.state.userlat, this.state.userlng];
+    // TODO need to fix this in order to show current marker position in individual story page
     if(this.props.latitude && this.props.longitude) {
-        userposition = [this.props.latitude, this.props.longitude];
+       userposition=[this.props.latitude, this.props.longitude];
         console.log("lat and long are set from props");
     }
+    console.log(this.props.latitude);
+    console.log(this.props.longitude);
+
     let isAdminOrModerator = false;
     let adminModeratorEditStory = "";
+
 
     return (
       <Fragment>
@@ -193,6 +243,7 @@ export class Pins extends Component {
           center={userposition}
           zoom={15}
           maxZoom={30} //shows map
+          minZoom={5}
           id="map"
           zoomControl = {false}
           style={divStyle}
@@ -232,6 +283,25 @@ export class Pins extends Component {
                 <MyLocationIcon></MyLocationIcon>
               </button>
             </div>
+          </Control>
+          <Control position={"topright"}>
+            <div>
+            </div>
+            {/*<div>*/}
+            {/*  <form onSubmit={this.addressSearch}>*/}
+            {/*       <input*/}
+            {/*        className="form-control"*/}
+            {/*        label="Search"*/}
+            {/*        placeholder={"Add story by address"}*/}
+            {/*        name={"searchText"}*/}
+            {/*        onChange={this.onChange}*/}
+            {/*        value={this.state.searchText}*/}
+            {/*     />*/}
+            {/*      <button type="submit" style={{ float: "right" }} className="btn btn-primary">*/}
+            {/*        Search*/}
+            {/*      </button>*/}
+            {/*  </form>*/}
+            {/*</div>*/}
           </Control>
 
           <MarkerClusterGroup>
@@ -292,7 +362,8 @@ export class Pins extends Component {
                 <Marker key={index} position={post} icon={categoryIcon}>
                   <Popup>
 
-                    <strong>{marker.title}</strong><br/>{startDateFormatted} - {endDateFormatted} <br/> <br/> {marker.description}
+                    <strong>{marker.title}</strong><br/>{startDateFormatted} - {endDateFormatted} <br/> <br/>
+                    <Markup content={marker.description} />
                     <br />
                     <br />
 
@@ -346,7 +417,17 @@ export class Pins extends Component {
                     {console.log(this.state.userlng)} */}
 
           <Marker position={userposition} icon={defaultPointerIcon}></Marker>
+          {/*<ReactLeafletSearchComponent*/}
+          {/*  position="topright"*/}
+          {/*  inputPlaceholder="Add story by address"*/}
+          {/*  openSearchOnLoad={true}*/}
+          {/*  closeResultsOnClick={true}*/}
+          {/*  zoom={15}*/}
+          {/*  markerIcon={defaultPointerIcon}*/}
+          {/*  showPopup={false}*/}
+          {/*/>*/}
         </Map>
+
         {this.state.modal ? (
           <Modal
             userlat={this.state.userlat}
