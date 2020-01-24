@@ -21,11 +21,12 @@ import PrivateRoute from "./components/common/PrivateRoute";
 import { loadUser } from "./actions/auth";
 import Story from "./components/Map/StoryTest";
 import { DisplayMap } from "./components/Map/DisplayMap";
-import Manage from "./components/accounts/manage";
+import Manage from "./components/AdminMod/Manage";
+import ManageUsers from "./components/AdminMod/ManageUsers";
 import ProfilePage from "./components/profile/ProfilePage";
 import Settings from "./components/profile/Settings";
 import EditStory from "./components/Map/EditStory";
-
+import ManageFlag from "./components/AdminMod/ManageFlag";
 import ForgotPassword from "./components/accounts/ForgotPassword";
 import AddComment from "./components/Map/AddComment";
 import PinForm from "./components/Map/PinForm";
@@ -57,6 +58,8 @@ export class App extends Component {
                 <Route exact path="/users/:id" component={ProfilePage} />
                 <Route exact path="/users/:id/settings" component={Settings} />
                 <Route exact path="/manage" component={Manage} />
+                <Route exact path="/manage/flag" component={ManageFlag} />
+                <Route exact path="/manage/users" component={ManageUsers} />
                 <Route path="/Story/:id/edit" exact component={EditStory} />
                 <Route path="/forgotPassword" component={ForgotPassword} />
                 <Route path="/resetPassword" component={ResetPassword} />

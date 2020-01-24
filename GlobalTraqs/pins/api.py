@@ -64,7 +64,13 @@ class PinViewSet(viewsets.ModelViewSet):
             When(updotes__upvote=True, then=1),
             default=Value(0),
             output_field=IntegerField()
+        )),
+        flagscore=Sum(Case(
+            When(flaggerstory__flagged=True, then=1),
+            default=Value(0),
+            output_field=IntegerField()
         ))
+
     )
 
     permission_classes = [
