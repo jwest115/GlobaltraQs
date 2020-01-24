@@ -6,6 +6,7 @@ from datetime import datetime
 from io import BytesIO
 from django.core.files import File
 
+
 class pin(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               null=True, on_delete=models.CASCADE)
@@ -16,9 +17,6 @@ class pin(models.Model):
     category = models.ForeignKey(
         "categoryType", on_delete=models.CASCADE, null=True, related_name='selected_category')
     # 1 is community, 2: historical, 3: personal
-    upVotes = models.PositiveSmallIntegerField(default=0)
-    startDate = models.DateField('Date', blank=True, null=True)
-    endDate = models.DateField('Date', blank=True, null=True)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -33,6 +31,7 @@ class categoryType(models.Model):
         return path
 
     image_url = models.ImageField(null=True, upload_to=upload_photo_dir)
+
     def __str__(self):
         """String for representing the Model object."""
         return self.categoryName
@@ -53,6 +52,7 @@ class upVoteStory(models.Model):
 
         ]
 
+
 class aboutUs(models.Model):
     aboutDesc = models.TextField()
 
@@ -60,6 +60,7 @@ class aboutUs(models.Model):
 class Faq(models.Model):
     faqQuestionDesc = models.TextField()
     faqAnswerDesc = models.TextField()
+
 
 class flagStory(models.Model):
     pinId = models.ForeignKey(

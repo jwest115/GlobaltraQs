@@ -95,7 +95,7 @@ WSGI_APPLICATION = 'GlobalTraqs.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-#
+    #
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     #     'NAME': 'lbsggtda',
@@ -112,11 +112,18 @@ DATABASES = {
     #     'HOST': 'localhost',
     #     'PORT': '5432',
     # }
-
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'trazbetq',
+        'USER': 'trazbetq',
+        'PASSWORD': 'AZNxT-5R-D3tDIm_zhEeP_OZfLCkXrhM',
+        'HOST': 'rajje.db.elephantsql.com',
+        'PORT': '5432',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': 'db',
+    # }
 }
 
 
