@@ -19,6 +19,7 @@ import {
 } from "react-router-dom";
 import LeafletMap from "./LeafletMap";
 import SearchSidebar from "../layout/SidebarTest";
+import Story from "./Story/Story";
 
 const sidebarStyle = {
   position: "absolute",
@@ -56,9 +57,14 @@ export default function MapDashboard() {
 
   const pins = useSelector(state => state.pins.pins);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getPins());
   }, []);
+  useEffect(() => {
+    getLocation();
+  }, []);
+
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
 
@@ -89,6 +95,7 @@ export default function MapDashboard() {
     dispatch(editPin(editPinForm, editPinForm.id));
     editToggle();
     seteditPinForm({
+      //clears
       id: "",
       title: "",
       description: "",
@@ -97,13 +104,6 @@ export default function MapDashboard() {
   };
   const [radiusUser, setRadiusUser] = useState(1); //radius for anon
   const addMarker = e => {
-    //drops a pin on right click
-    if (e.button === 2) {
-      console.log("right");
-    } else {
-      console.log("elft");
-    }
-    console.log(e.latlng);
     setplacement({
       ...placement,
       userlat: e.latlng.lat,
@@ -216,6 +216,34 @@ export default function MapDashboard() {
     console.log("confirm delted" + editPinForm.id);
   };
 
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        succes => {
+          console.log(succes.coords.latitude + "" + succes.coords.longitude);
+          setplacement({
+            ...placement,
+            userlat: succes.coords.latitude,
+            userlng: succes.coords.longitude
+          });
+        },
+        error => {
+          console.log(error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 1000,
+          maximumAge: 0
+        }
+      );
+    }
+  }
+
+  const [userComment, setuserComment] = useState({
+    commenter: isAuthenticated ? user.id : "",
+    pin: "",
+    description: ""
+  });
   return (
     // <div id={"map-dashboard"}>
     <div>
@@ -223,6 +251,7 @@ export default function MapDashboard() {
         <Switch>
           <Route exact path="/">
             <LeafletMap
+              maplink={"/test"}
               pins={pins}
               divStyle={divStyle}
               addMarker={addMarker}
@@ -244,12 +273,14 @@ export default function MapDashboard() {
               setDeleteConfirmation={setDeleteConfirmation}
               onDelete={onDelete}
               toggleDelete={toggleDelete}
+              getLocation={getLocation}
             />
           </Route>
           <Route path="/test">
             <LeafletMap
+              maplink={"/test"}
               pins={pins}
-              divStyle={divStyle}
+              divStyle={divStyle1}
               addMarker={addMarker}
               placement={placement}
               modalState={modalState}
@@ -269,7 +300,9 @@ export default function MapDashboard() {
               setDeleteConfirmation={setDeleteConfirmation}
               onDelete={onDelete}
               toggleDelete={toggleDelete}
+              getLocation={getLocation}
             />
+            <StoryDisplay />
           </Route>
         </Switch>
         {/* <Pins /> */}
@@ -282,4 +315,30 @@ export default function MapDashboard() {
       </Fragment>
     </div>
   );
+}
+function StoryDisplay() {
+  let match = useRouteMatch();
+
+  return (
+    <div>
+      <Switch>
+        <Route path={`${match.path}/:id`}>
+          <IndividualStory />
+        </Route>
+        <Route path={match.path}>
+          <h3>Please select an IndividualStory.</h3>
+        </Route>
+      </Switch>
+    </div>
+  );
+}
+
+function IndividualStory() {
+  let { id } = useParams();
+  const pin = useSelector(state => state.pins.pin);
+  const dispatch = useDispatch();
+
+  useEffect(() => dispatch(getPin(id)), [id]);
+  console.log(pin);
+  return <Story pin={pin} />;
 }

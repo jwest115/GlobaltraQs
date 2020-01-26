@@ -25,7 +25,7 @@ import Manage from "./components/accounts/manage";
 import ProfilePage from "./components/profile/ProfilePage";
 import Settings from "./components/profile/Settings";
 import EditStory from "./components/Map/EditStory";
-import MapStory from "./components/Map/MapStory";
+
 import ForgotPassword from "./components/accounts/ForgotPassword";
 import MainStory from "./components/Map/Story/MainStory";
 import AddComment from "./components/Map/AddComment";

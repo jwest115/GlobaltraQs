@@ -5,7 +5,13 @@ import community from "./images/community.png"; // Tell Webpack this JS file use
 import historical from "./images/historical.png";
 import personal from "./images/personal.png";
 import default_marker from "./images/default.png";
-import { Link } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch
+} from "react-router-dom";
 import Control from "react-leaflet-control";
 import ModalEditPinForm from "./ModalEditPinForm";
 import ModalDeleteConfirm from "./ModalDeleteConfirm";
@@ -52,10 +58,12 @@ export const personalIcon = new L.Icon({
   shadowAnchor: [20, 92]
 });
 const LeafletMap = props => {
-  const userposition = [props.placement.userlat, props.placement.userlng];
+  let { path, url } = useRouteMatch();
 
+  const userposition = [props.placement.userlat, props.placement.userlng];
+  console.log(userposition);
   return (
-    <div>
+    <div className="map-container" style={props.divStyle}>
       {" "}
       <Map
         center={userposition}
@@ -67,6 +75,7 @@ const LeafletMap = props => {
         // ref={e => {
         //   this.mapInstance = e;
         // }}
+        //   onClick={props.addMarker}
         onContextMenu={props.addMarker}
       >
         <ZoomControl position="bottomleft" />
@@ -77,10 +86,7 @@ const LeafletMap = props => {
 
         <Control position={"bottomright"}>
           <div>
-            <button
-              onClick={() => this.getLocation()}
-              className="btn btn-primary"
-            >
+            <button onClick={props.getLocation} className="btn btn-primary">
               <MyLocationIcon></MyLocationIcon>
             </button>
           </div>
@@ -143,7 +149,7 @@ const LeafletMap = props => {
                   <br />
                   <br />
 
-                  <Link to={`map/${marker.id}`}>
+                  <Link to={`${props.maplink}/${marker.id}`}>
                     <button type="button" className="btn btn-primary btn-sm">
                       View Story
                     </button>
@@ -168,17 +174,6 @@ const LeafletMap = props => {
                   >
                     Delete
                   </button>
-                  {/* {isAdminOrModerator ? (
-                    <button
-                      //   onClick={this.props.deletePins.bind(this, marker.id)}
-                      type="button"
-                      className="btn btn-danger btn-sm"
-                    >
-                      Delete
-                    </button>
-                  ) : (
-                    ""
-                  )} */}
                 </Popup>
               </Marker>
             );

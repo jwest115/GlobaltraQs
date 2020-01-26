@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import CommentStory from "./CommentStory";
 import { getPin } from "../../../actions/pins";
 import {
   Switch,
@@ -15,7 +16,7 @@ const storyBody = {
   paddingLeft: "50px",
   paddingRight: "50px"
 };
-function Story() {
+function Story(props) {
   let { id } = useParams();
   const pin = useSelector(state => state.pins.pin);
   const auth = useSelector(state => state.auth);
@@ -36,21 +37,21 @@ function Story() {
     <div className="container-fluid" style={storyBody}>
       {" "}
       <h2>
-        <strong>{pin.title}</strong>
+        <strong>{props.pin.title}</strong>
       </h2>
       <p>
         {" "}
-        {pin.startDate} - {pin.endDate}{" "}
+        {props.pin.startDate} - {props.pin.endDate}{" "}
       </p>
       {/* <p>By: {authorName}</p> */}
-      <p>By: {pin.username}</p>
+      <p>By: {props.pin.username}</p>
       <h6>
-        {/* {pin.updooots} upvotes */}
-        {isAuthenticated ? "" : pin.updooots && " upvotes"}
+        {/* {props.pin.updooots} upvotes */}
+        {isAuthenticated ? "" : props.pin.updooots && " upvotes"}
         {/* need to figure out a way to update upvotes maybe websockets  */}
         {isAuthenticated
-          ? pin &&
-            pin.updotes && (
+          ? props.pin &&
+            props.pin.updotes && (
               <Upvote pin={pin.updotes} userid={user.id} numOf={pin.updooots} />
             )
           : upvoteButoon}
@@ -63,7 +64,10 @@ function Story() {
           : ""}
       </h6>
       <hr></hr>
-      <p>{pin.description}</p>
+      <p>{props.pin.description}</p>
+      {props.pin && props.pin.commentstory && (
+        <CommentStory comment={props.pin.commentstory} />
+      )}
     </div>
   );
 }

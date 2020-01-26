@@ -33,7 +33,8 @@ export default function(state = initialState, action) {
     case DELETE_PINS:
       return {
         ...state,
-        pins: state.pins.filter(pins => pins.id !== action.payload)
+        pins: state.pins.filter(pins => pins.id !== action.payload),
+        pin: []
       };
     case ADD_PIN:
       return {
@@ -47,7 +48,8 @@ export default function(state = initialState, action) {
         pins: [
           ...state.pins.filter(pins => pins.id !== action.payload.id),
           action.payload
-        ]
+        ],
+        pin: action.payload
       };
 
     default:
