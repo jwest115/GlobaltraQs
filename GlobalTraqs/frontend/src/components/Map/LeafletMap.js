@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Component, Fragment } from "react";
-
 import { Map, Marker, Popup, TileLayer, ZoomControl } from "react-leaflet";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import community from "./images/community.png"; // Tell Webpack this JS file uses this image
@@ -8,6 +7,8 @@ import personal from "./images/personal.png";
 import default_marker from "./images/default.png";
 import { Link } from "react-router-dom";
 import Control from "react-leaflet-control";
+import ModalEditPinForm from "./ModalEditPinForm";
+import ModalDeleteConfirm from "./ModalDeleteConfirm";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
 import ModalPinForm from "./ModalPinForm";
@@ -52,6 +53,7 @@ export const personalIcon = new L.Icon({
 });
 const LeafletMap = props => {
   const userposition = [props.placement.userlat, props.placement.userlng];
+
   return (
     <div>
       {" "}
@@ -119,7 +121,21 @@ const LeafletMap = props => {
             //   }
             // }
             return (
-              <Marker key={index} position={post} icon={categoryIcon}>
+              <Marker
+                key={index}
+                position={post}
+                icon={categoryIcon}
+                onClick={() =>
+                  props.seteditPin({
+                    id: marker.id,
+                    title: marker.title,
+                    description: marker.description,
+                    category: marker.category,
+                    startDate: marker.startDate,
+                    endDate: marker.endDate
+                  })
+                }
+              >
                 <Popup>
                   <strong>{marker.title}</strong>
                   <br />
@@ -132,6 +148,26 @@ const LeafletMap = props => {
                       View Story
                     </button>
                   </Link>
+                  <div className="admin-moderator-edit">
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm"
+                      onClick={e =>
+                        props.seteditpinmodalState(!props.editpinmodalState)
+                      }
+                    >
+                      Edit
+                    </button>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    onClick={e =>
+                      props.setDeleteConfirmation(!props.deleteConfirmation)
+                    }
+                  >
+                    Delete
+                  </button>
                   {/* {isAdminOrModerator ? (
                     <button
                       //   onClick={this.props.deletePins.bind(this, marker.id)}
@@ -159,6 +195,18 @@ const LeafletMap = props => {
         setuserForm={props.setuserForm}
         radiusUser={props.radiusUser}
         setAnonRadius={props.setAnonRadius}
+      />
+      <ModalEditPinForm
+        toggle={props.editToggle}
+        modalState={props.editpinmodalState}
+        onSubmit={props.onEditSubmit}
+        userForm={props.editPin}
+        setuserForm={props.seteditPin}
+      />
+      <ModalDeleteConfirm
+        toggle={props.toggleDelete}
+        modalState={props.deleteConfirmation}
+        onSubmit={props.onDelete}
       />
     </div>
   );

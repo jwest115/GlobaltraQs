@@ -1,5 +1,11 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { getPins, getPin, addPin } from "../../actions/pins";
+import {
+  getPins,
+  getPin,
+  addPin,
+  editPin,
+  deletePins
+} from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 import Pins from "./Pins";
@@ -12,7 +18,6 @@ import {
   useRouteMatch
 } from "react-router-dom";
 import LeafletMap from "./LeafletMap";
-import PinForm from "./PinForm";
 import SearchSidebar from "../layout/SidebarTest";
 
 const sidebarStyle = {
@@ -44,6 +49,7 @@ export default function MapDashboard() {
   });
 
   const [placement, setplacement] = useState({
+    id: "",
     userlat: 34.0522,
     userlng: -118.2437
   });
@@ -56,8 +62,10 @@ export default function MapDashboard() {
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
 
-  const [modalState, setmodalstate] = useState(false);
+  const [modalState, setmodalstate] = useState(false); //opens modal for adding new pins
+  const [editpinmodalState, seteditpinmodalState] = useState(false); // opens modal for editing pin
   const [userForm, setuserForm] = useState({
+    // fields for new pins
     title: "",
     description: "",
     category: 1,
@@ -67,8 +75,29 @@ export default function MapDashboard() {
     latitude: placement.userlat,
     longitude: placement.userlng
   });
-  const [radiusUser, setRadiusUser] = useState(1);
+  const [editPinForm, seteditPinForm] = useState({
+    //fields for editng
+    id: "1",
+    title: "1",
+    description: "1",
+    category: "1"
+  });
+  const onEditSubmit = e => {
+    //patches the selected pin
+    e.preventDefault();
+
+    dispatch(editPin(editPinForm, editPinForm.id));
+    editToggle();
+    seteditPinForm({
+      id: "",
+      title: "",
+      description: "",
+      category: 1
+    });
+  };
+  const [radiusUser, setRadiusUser] = useState(1); //radius for anon
   const addMarker = e => {
+    //drops a pin on right click
     if (e.button === 2) {
       console.log("right");
     } else {
@@ -76,6 +105,7 @@ export default function MapDashboard() {
     }
     console.log(e.latlng);
     setplacement({
+      ...placement,
       userlat: e.latlng.lat,
       userlng: e.latlng.lng
     });
@@ -89,6 +119,9 @@ export default function MapDashboard() {
   };
   const toggle = () => {
     setmodalstate(!modalState);
+  };
+  const editToggle = () => {
+    seteditpinmodalState(!editpinmodalState);
   };
   const resetState = () => {
     setuserForm({
@@ -170,7 +203,19 @@ export default function MapDashboard() {
       longitude: randomLng
     });
   };
-  console.log(userForm);
+
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+
+  const toggleDelete = () => {
+    setDeleteConfirmation(!deleteConfirmation);
+  };
+  const onDelete = e => {
+    e.preventDefault();
+    dispatch(deletePins(editPinForm.id));
+    toggleDelete();
+    console.log("confirm delted" + editPinForm.id);
+  };
+
   return (
     // <div id={"map-dashboard"}>
     <div>
@@ -187,14 +232,24 @@ export default function MapDashboard() {
               onSubmit={onSubmit}
               userForm={userForm}
               setuserForm={setuserForm}
+              editPin={editPinForm}
+              seteditPin={seteditPinForm}
+              editToggle={editToggle}
+              editpinmodalState={editpinmodalState}
+              seteditpinmodalState={seteditpinmodalState}
+              onEditSubmit={onEditSubmit}
               radiusUser={radiusUser}
               setAnonRadius={setAnonRadius}
+              deleteConfirmation={deleteConfirmation}
+              setDeleteConfirmation={setDeleteConfirmation}
+              onDelete={onDelete}
+              toggleDelete={toggleDelete}
             />
           </Route>
           <Route path="/test">
             <LeafletMap
               pins={pins}
-              divStyle={divStyle1}
+              divStyle={divStyle}
               addMarker={addMarker}
               placement={placement}
               modalState={modalState}
@@ -202,8 +257,18 @@ export default function MapDashboard() {
               onSubmit={onSubmit}
               userForm={userForm}
               setuserForm={setuserForm}
+              editPin={editPinForm}
+              seteditPin={seteditPinForm}
+              editToggle={editToggle}
+              editpinmodalState={editpinmodalState}
+              seteditpinmodalState={seteditpinmodalState}
+              onEditSubmit={onEditSubmit}
               radiusUser={radiusUser}
               setAnonRadius={setAnonRadius}
+              deleteConfirmation={deleteConfirmation}
+              setDeleteConfirmation={setDeleteConfirmation}
+              onDelete={onDelete}
+              toggleDelete={toggleDelete}
             />
           </Route>
         </Switch>
