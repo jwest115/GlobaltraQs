@@ -244,6 +244,7 @@ export default function MapDashboard() {
     pin: "",
     description: ""
   });
+  const [toggleComment, settoggleComment] = useState(false);
   return (
     // <div id={"map-dashboard"}>
     <div>
@@ -302,7 +303,12 @@ export default function MapDashboard() {
               toggleDelete={toggleDelete}
               getLocation={getLocation}
             />
-            <StoryDisplay />
+            <StoryDisplay
+              placement={placement}
+              setplacement={setplacement}
+              toggle={toggleComment}
+              settoggleComment={settoggleComment}
+            />
           </Route>
         </Switch>
         {/* <Pins /> */}
@@ -316,14 +322,14 @@ export default function MapDashboard() {
     </div>
   );
 }
-function StoryDisplay() {
+function StoryDisplay(props) {
   let match = useRouteMatch();
 
   return (
     <div>
       <Switch>
         <Route path={`${match.path}/:id`}>
-          <IndividualStory />
+          <IndividualStory {...props} />
         </Route>
         <Route path={match.path}>
           <h3>Please select an IndividualStory.</h3>
@@ -333,12 +339,16 @@ function StoryDisplay() {
   );
 }
 
-function IndividualStory() {
+function IndividualStory(props) {
   let { id } = useParams();
   const pin = useSelector(state => state.pins.pin);
   const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+  const { isAuthenticated, user } = auth;
 
   useEffect(() => dispatch(getPin(id)), [id]);
-  console.log(pin);
-  return <Story pin={pin} />;
+  console.log(props);
+  return (
+    <Story pin={pin} user={user} isAuthenticated={isAuthenticated} {...props} />
+  );
 }

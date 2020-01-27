@@ -66,7 +66,11 @@ function Story(props) {
       <hr></hr>
       <p>{props.pin.description}</p>
       {props.pin && props.pin.commentstory && (
-        <CommentStory comment={props.pin.commentstory} />
+        <CommentStory
+          comment={props.pin.commentstory}
+          toggle={props.toggleComment}
+          settoggleComment={props.settoggleComment}
+        />
       )}
     </div>
   );
