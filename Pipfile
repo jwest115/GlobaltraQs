@@ -18,6 +18,7 @@ django-email-users = "*"
 django-rest-passwordreset = "*"
 django-rest-knox = "*"
 pillow = "*"
+django-cleanup = "*"
 
 [requires]
 python_version = "3.7"

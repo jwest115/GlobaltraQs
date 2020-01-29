@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django_filters',
     # 'django_rest_passwordreset',
     'corsheaders',
-    'management'
+    'management',
+    'django_cleanup.apps.CleanupConfig',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
