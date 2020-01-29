@@ -4,13 +4,16 @@ export default function Support() {
   const [image, setimage] = useState({
     title: "cat",
     image_url: "",
-    uploader: 2
+    uploader: 1
   });
   const onSubmit = e => {
     e.preventDefault();
-    console.log(image);
+    let data = new FormData();
+    data.append("image_url", image.image_url);
+    data.append("title", image.title);
+    data.append("uploader", image.uploader);
     axios
-      .post("/api/photo/", image)
+      .post("/api/photo/", data)
       .then(function(response) {
         console.log(response);
       })
@@ -20,16 +23,19 @@ export default function Support() {
   };
   return (
     <div>
+      LAOLS
       <form onSubmit={onSubmit}>
         <input
           type="file"
-          name="file"
+          id="image"
+          accept="image/png, image/jpeg"
           onChange={e =>
             setimage({
               ...image,
-              image_url: e.target.value
+              image_url: e.target.files[0]
             })
           }
+          required
         />
         <button>PUSH</button>
       </form>
