@@ -91,6 +91,9 @@ export class ProfilePage extends Component {
 
     if(user != null && user.id == id) {
         isOwner = true;
+        if(user.is_profile_private) {
+
+        }
     }
 
     // const guestLinks = <div><Redirect to="/" /></div>;

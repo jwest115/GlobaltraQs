@@ -21,7 +21,9 @@ export class Settings extends Component {
         accountDeleted: false,
         bio: ""
     };
+
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangePrivate = this.handleChangePrivate.bind(this);
 
   }
 
@@ -31,14 +33,21 @@ export class Settings extends Component {
   handleChange(checked) {
     this.setState({ checked });
   }
-
+  handleChangePrivate(checked) {
+    this.setState({ checked });
+  }
   updateAccessibility = () => {
     const userId = this.props.auth.user.id;
     const accessibility_mode_active = this.props.auth.user.accessibility_mode_active ? false : true;
     const userData = { accessibility_mode_active };
     this.props.editUser(userId, userData);
   };
-
+  updateProfileMode = () => {
+    const userId = this.props.auth.user.id;
+    const is_profile_private = this.props.auth.user.is_profile_private ? false : true;
+    const userData = { is_profile_private };
+    this.props.editUser(userId, userData);
+  };
 
    deleteAccount = id => {
     this.props.logout();
@@ -93,6 +102,16 @@ export class Settings extends Component {
 
                     <span>Accessibility</span>
                     <Switch className="react-switch" onChange={this.updateAccessibility} checked={user ? user.accessibility_mode_active : false} />
+
+                </div>
+
+                <br/>
+                <div>
+
+                  <br/>
+
+                    <span>Make Account Public/Private</span>
+                    <Switch className="react-switch" onChange={this.updateProfileMode} checked={user ? user.is_profile_private : false} />
 
                 </div>
 

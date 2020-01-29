@@ -14,6 +14,7 @@ class User(AbstractUser):
     is_anonymous_active = models.BooleanField(default=False)
     accessibility_mode_active = models.BooleanField(default=False)
     bio = models.CharField(blank=True, max_length=300)
+    is_profile_private = models.BooleanField(default=False)
     #  - - - Some more User fields according to your needs
 
     # This is the most important part to look upon to  define the custom permissions related to User.
