@@ -28,6 +28,7 @@ import Settings from "./components/profile/Settings";
 import EditStory from "./components/Map/EditStory";
 import ManageFlag from "./components/AdminMod/ManageFlag";
 import ForgotPassword from "./components/accounts/ForgotPassword";
+import MainStory from "./components/Map/Story/MainStory";
 import AddComment from "./components/Map/AddComment";
 import PinForm from "./components/Map/PinForm";
 import Support from "./components/AboutPage/Support";
@@ -51,6 +52,8 @@ export class App extends Component {
               {/*<div className="container-fluid" style={divStyle}>*/}
               <Switch>
                 <Route exact path="/" component={MapDashboard} />
+                <Route exact path="/test" component={MapDashboard} />
+                <Route exact path="/test/:id" component={MapDashboard} />
                 <Route exact path="/About" component={About} />
                 <Route path="/Story/:id" exact component={Story} />
                 <Route exact path="/faq" component={FAQ} />
@@ -61,6 +64,14 @@ export class App extends Component {
                 <Route exact path="/manage" component={Manage} />
                 <Route exact path="/manage/flag" component={ManageFlag} />
                 <Route exact path="/manage/users" component={ManageUsers} />
+                <Route path="/map">
+                  {" "}
+                  <MainStory />{" "}
+                </Route>
+                <Route path="/map/:id">
+                  {" "}
+                  <MainStory />{" "}
+                </Route>
                 <Route path="/Story/:id/edit" exact component={EditStory} />
                 <Route path="/forgotPassword" component={ForgotPassword} />
                 <Route path="/resetPassword" component={ResetPassword} />

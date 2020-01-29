@@ -12,7 +12,7 @@ import default_marker from "./images/default.png";
 import { Link } from "react-router-dom";
 import EditPin from "./EditPin";
 import L from "leaflet";
-import Modal from "./Modal";
+//import Modal from "./Modal1";
 import Control from "react-leaflet-control";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { Markup } from 'interweave';
@@ -233,21 +233,22 @@ export class Pins extends Component {
     let isAdminOrModerator = false;
     let adminModeratorEditStory = "";
 
-
     return (
       <Fragment>
-              {/*<a*/}
-              {/*  onClick={() => props.handleName(sidebarOpen)}*/}
-              {/*  />*/}
+        {/*<a*/}
+        {/*  onClick={() => props.handleName(sidebarOpen)}*/}
+        {/*  />*/}
         <Map
           center={userposition}
           zoom={15}
           maxZoom={30} //shows map
           minZoom={5}
           id="map"
-          zoomControl = {false}
+          zoomControl={false}
           style={divStyle}
-          ref={e => { this.mapInstance = e }}
+          ref={e => {
+            this.mapInstance = e;
+          }}
           //user click for location
           // right click to add pin
           onContextMenu={this.addMarker}
@@ -265,8 +266,7 @@ export class Pins extends Component {
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           /> }
 
-          <Control
-            position={"bottomright"}>
+          <Control position={"bottomright"}>
             {/*<div>*/}
             {/*  <button*/}
             {/*    onClick={() => this.createStory(true)}*/}
@@ -364,6 +364,8 @@ export class Pins extends Component {
 
                     <strong>{marker.title}</strong><br/>{startDateFormatted} - {endDateFormatted} <br/> <br/>
                     <Markup content={marker.description} />
+                    <br />
+                    {marker.description}
                     <br />
                     <br />
 

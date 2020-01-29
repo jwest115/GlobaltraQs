@@ -8,8 +8,11 @@ import {
   GET_PIN,
   GET_USER,
   SEARCH_PINS,
-  GET_PIN_BY_ID,
+  GET_UPVOTE,
+  ADD_COMMENT,
+  DELETE_COMMENT
   GET_PINS_BY_OWNER
+  GET_PIN_BY_ID,
 } from "./types";
 
 //GET PINS
@@ -72,7 +75,7 @@ export const editPin = (pin, id) => dispatch => {
         type: EDIT_PIN,
         payload: res.data
       });
-       console.log("In edit pin");
+      console.log("In edit pin");
       console.log(res.data);
     })
     .catch(err => console.log(err));
@@ -91,6 +94,44 @@ export const getPin = id => dispatch => {
     })
     .catch(error => console.log(error));
 };
+
+export const getUpvote = (pinId, userid) => {
+  axios
+    .get(`api/upVoteStory?pinId=${pinId}&userid=${userid}`)
+    .then(res => {
+      dispatch({
+        type: GET_UPVOTE,
+        payload: res.data
+      });
+    })
+    .catch(error => console.log(error));
+};
+export const addComment = comment => dispatch => {
+  axios
+    .post("api/commentStory/", comment)
+    .then(res => {
+      dispatch({
+        type: ADD_COMMENT,
+        payload: res.data
+      });
+
+      console.log(res.data);
+    })
+    .catch(err => console.log(err));
+};
+
+export const deleteComment = id => dispatch => {
+  axios
+    .delete(`api/commentStory/${id}/`)
+    .then(res => {
+      dispatch({
+        type: DELETE_COMMENT,
+        payload: id
+      });
+    })
+    .catch(err => console.log(err));
+};
+
 
 export const getPinsByOwner = ownerId => dispatch => {
     axios

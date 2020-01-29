@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'knox',
     'accounts',
     'users',
-    'passwordReset',
+    # 'passwordReset',
     'django_filters',
     #'django_rest_passwordreset',
     'corsheaders',
@@ -181,3 +181,5 @@ CORS_ORIGIN_WHITELIST = ['https://localhost:3000']
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 OPTIMIZED_IMAGE_METHOD = 'pillow'
+
+CORS_ORIGIN_WHITELIST = ['https://localhost:3000']

@@ -59,17 +59,18 @@ class PinViewSet(viewsets.ModelViewSet):
     #      updoot=Coalesce(Sum('pinsUpvote__upvote'), Value(1))
     # )
     queryset = pin.objects.annotate(
-        # updooots=Coalesce(Sum('updotes__upvote'), Value(0))
+        flagscore=Sum(Case(
+            When(flaggerstory__flagged=True, then=1),
+            default=Value(0),
+            output_field=IntegerField()
+        )),
+        #updooots=Coalesce(Sum('updotes__upvote'), Value(0))
         updooots=Sum(Case(
             When(updotes__upvote=True, then=1),
             default=Value(0),
             output_field=IntegerField()
         )),
-        flagscore=Sum(Case(
-            When(flaggerstory__flagged=True, then=1),
-            default=Value(0),
-            output_field=IntegerField()
-        ))
+
 
     )
 
@@ -138,29 +139,3 @@ class CommentStoryViewSet(viewsets.ModelViewSet):
         return self.request.user.pins.all()
     def perform_create(self, serializer):  # saves user id
         serializer.save(owner=self.request.user) """
-
-class PhotoViewSet(viewsets.ModelViewSet):
-    queryset = photo.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-        # permissions.IsAuthenticated,
-    ]
-    serializer_class = PhotoSerializer
-
-
-class AboutUsViewSet(viewsets.ModelViewSet):
-    queryset = aboutUs.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-        # permissions.IsAuthenticated,
-    ]
-    serializer_class = AboutUsSerializer
-
-
-class FaqViewSet(viewsets.ModelViewSet):
-    queryset = Faq.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-        # permissions.IsAuthenticated,
-    ]
-    serializer_class = FaqSerializer

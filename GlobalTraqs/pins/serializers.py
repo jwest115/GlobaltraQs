@@ -44,7 +44,7 @@ class CommentStorySerializer(DynamicFieldsMixin, serializers.ModelSerializer):
         fields = '__all__'
 
 
-class PinSerializer(serializers.ModelSerializer):
+class PinSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
   #  updoot = serializers.IntegerField()
 
     username = serializers.CharField(
