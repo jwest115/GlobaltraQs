@@ -468,9 +468,8 @@ export class Story extends Component {
                       >
                       View Story
                     </button>
-                    </Link>
-                </Popup>
-              </Marker>
+                    </Popup>
+                </Marker>
             );
           })}
           </MarkerClusterGroup>

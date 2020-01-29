@@ -199,15 +199,12 @@ export class SearchSidebar extends Component {
                         </div>
                     </div>
                 }
-                open={this.state.sidebarOpen}
+                open={this.props.sidebarOpen}
                 onSetOpen={this.onSetSidebarOpen}
                 pullRight={true}
                 styles={{ sidebar: { background: "white", width: "40%", padding: "20px" } }}
                 >
                {console.log(this.props.pins.length + " is the length")}
-                <button className={"btn btn-primary"} id="open-sidebar-button" onClick={() => this.onSetSidebarOpen(!this.state.sidebarOpen)}>
-                <SearchIcon></SearchIcon>
-                </button>
             </Sidebar>
         );
     }

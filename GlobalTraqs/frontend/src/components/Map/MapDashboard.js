@@ -71,6 +71,7 @@ export default function MapDashboard() {
 
   const [modalState, setmodalstate] = useState(false); //opens modal for adding new pins
   const [editpinmodalState, seteditpinmodalState] = useState(false); // opens modal for editing pin
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userForm, setuserForm] = useState({
     // fields for new pins
     title: "",
@@ -262,6 +263,10 @@ export default function MapDashboard() {
     // <div id={"map-dashboard"}>
     <div>
       <Fragment>
+              <SearchSidebar
+                sidebarOpen={sidebarOpen}
+              />
+
         <Switch>
           <Route exact path="/">
             <LeafletMap
@@ -288,6 +293,8 @@ export default function MapDashboard() {
               onDelete={onDelete}
               toggleDelete={toggleDelete}
               getLocation={getLocation}
+              sidebarOpen={sidebarOpen}
+              setSidebarOpen={setSidebarOpen}
             />
           </Route>
           <Route path="/test">
@@ -332,7 +339,7 @@ export default function MapDashboard() {
 
         {/* <div id={"sidebar-style"}> */}
         <div>
-          {/* <SearchSidebar /> */}
+           {/*<SearchSidebar />*/}
           {/* <MapDisplay /> */}
         </div>
       </Fragment>

@@ -18,6 +18,9 @@ import ModalDeleteConfirm from "./ModalDeleteConfirm";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
 import ModalPinForm from "./ModalPinForm";
+import SearchIcon from '@material-ui/icons/Search';
+import SearchSidebar from "../layout/SidebarTest";
+
 export const defaultPointerIcon = new L.Icon({
   iconUrl: default_marker,
   iconRetinaUrl: default_marker,
@@ -84,6 +87,12 @@ const LeafletMap = props => {
           url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
         />
 
+        <Control position={"topleft"}>
+          <button className={"btn btn-primary"} id="open-sidebar-button" onClick={() => props.setSidebarOpen(!props.sidebarOpen)}>
+                <SearchIcon></SearchIcon>
+          </button>
+          {console.log(props.sidebarOpen)}
+        </Control>
         <Control position={"bottomright"}>
           <div>
             <button onClick={props.getLocation} className="btn btn-primary">

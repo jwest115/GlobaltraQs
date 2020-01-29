@@ -83,6 +83,24 @@ function ModalEditPinForm(props) {
                 }
               />
             </FormGroup>
+          {/*    <InputGroup>*/}
+          {/*    <label style={labelStyle} for="startDate">*/}
+          {/*      Start Date*/}
+          {/*    </label>*/}
+          {/*     <DatePicker*/}
+          {/*        selected={startDate}*/}
+          {/*        onChange={this.handleStartDateChange}*/}
+          {/*        value={startDate}*/}
+          {/*      />*/}
+          {/*    <label style={labelStyle} for="endDate">*/}
+          {/*      &nbsp;&nbsp;&nbsp;End Date*/}
+          {/*    </label>*/}
+          {/*     <DatePicker*/}
+          {/*        selected={endDate}*/}
+          {/*        onChange={this.handleEndDateChange}*/}
+          {/*        value={endDate}*/}
+          {/*      />*/}
+          {/*</InputGroup>*/}
 
             <Button style={buttonStyle} color="success">
               Save
