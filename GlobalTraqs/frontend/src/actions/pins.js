@@ -10,9 +10,9 @@ import {
   SEARCH_PINS,
   GET_UPVOTE,
   ADD_COMMENT,
-  DELETE_COMMENT
-  GET_PINS_BY_OWNER
-  GET_PIN_BY_ID,
+  DELETE_COMMENT,
+  GET_PINS_BY_OWNER,
+  GET_PIN_BY_ID
 } from "./types";
 
 //GET PINS
@@ -28,9 +28,16 @@ export const getPins = () => dispatch => {
     .catch(err => console.log(err));
 };
 
-export const searchPins = (searchQuery, categories, startDate, endDate) => dispatch => {
+export const searchPins = (
+  searchQuery,
+  categories,
+  startDate,
+  endDate
+) => dispatch => {
   axios
-    .get(`api/pinSearch?search=${searchQuery}&categories=${categories}&startDate_gte=${startDate}&endDate_lte=${endDate}`)
+    .get(
+      `api/pinSearch?search=${searchQuery}&categories=${categories}&startDate_gte=${startDate}&endDate_lte=${endDate}`
+    )
     .then(res => {
       dispatch({
         type: SEARCH_PINS,
@@ -132,9 +139,8 @@ export const deleteComment = id => dispatch => {
     .catch(err => console.log(err));
 };
 
-
 export const getPinsByOwner = ownerId => dispatch => {
-    axios
+  axios
     .get(`api/pins/?owner=${ownerId}`)
     .then(res => {
       dispatch({

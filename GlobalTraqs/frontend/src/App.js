@@ -64,14 +64,6 @@ export class App extends Component {
                 <Route exact path="/manage" component={Manage} />
                 <Route exact path="/manage/flag" component={ManageFlag} />
                 <Route exact path="/manage/users" component={ManageUsers} />
-                <Route path="/map">
-                  {" "}
-                  <MainStory />{" "}
-                </Route>
-                <Route path="/map/:id">
-                  {" "}
-                  <MainStory />{" "}
-                </Route>
                 <Route path="/Story/:id/edit" exact component={EditStory} />
                 <Route path="/forgotPassword" component={ForgotPassword} />
                 <Route path="/resetPassword" component={ResetPassword} />
