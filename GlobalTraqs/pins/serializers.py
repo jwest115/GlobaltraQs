@@ -62,10 +62,6 @@ class PinSerializer(serializers.ModelSerializer):
     flaggerstory = FlagStorySerializer(many=True, read_only=True)
     updotes = upVoteStorySerializer(many=True, read_only=True)
     commentstory = CommentStorySerializer(many=True, read_only=True)
-    startDate = serializers.DateField(
-        initial=datetime.date.today, required=False)
-    endDate = serializers.DateField(
-        initial=datetime.date.today, required=False)
 
     class Meta:
         model = pin

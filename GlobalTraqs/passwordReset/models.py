@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
 
@@ -24,7 +23,6 @@ __all__ = [
 ]
 
 
-@python_2_unicode_compatible
 class ResetPasswordToken(models.Model):
     class Meta:
         verbose_name = _("Password Reset Token")
@@ -43,7 +41,8 @@ class ResetPasswordToken(models.Model):
         AUTH_USER_MODEL,
         related_name='password_reset_tokens',
         on_delete=models.CASCADE,
-        verbose_name=_("The User which is associated to this password reset token")
+        verbose_name=_(
+            "The User which is associated to this password reset token")
     )
 
     created_at = models.DateTimeField(
@@ -107,6 +106,7 @@ def clear_expired(expiry_time):
     """
     ResetPasswordToken.objects.filter(created_at__lte=expiry_time).delete()
 
+
 def eligible_for_reset(self):
     if not self.is_active:
         # if the user is active we dont bother checking
@@ -118,6 +118,7 @@ def eligible_for_reset(self):
     else:
         # otherwise return True because we dont care about the result of has_usable_password()
         return True
+
 
 # add eligible_for_reset to the user class
 UserModel = get_user_model()

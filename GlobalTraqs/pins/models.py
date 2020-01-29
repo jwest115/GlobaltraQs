@@ -5,6 +5,7 @@ from PIL import Image
 from datetime import datetime
 from io import BytesIO
 from django.core.files import File
+from django.utils.translation import gettext as _
 
 
 class pin(models.Model):
@@ -17,6 +18,8 @@ class pin(models.Model):
     category = models.ForeignKey(
         "categoryType", on_delete=models.CASCADE, null=True, related_name='selected_category')
     # 1 is community, 2: historical, 3: personal
+    startDate = models.DateField(_("Date"))
+    endDate = models.DateField(_("Date"))
 
     def __str__(self):
         """String for representing the Model object."""
