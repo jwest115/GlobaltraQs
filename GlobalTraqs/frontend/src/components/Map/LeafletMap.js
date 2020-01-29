@@ -61,7 +61,7 @@ const LeafletMap = props => {
   let { path, url } = useRouteMatch();
 
   const userposition = [props.placement.userlat, props.placement.userlng];
-  console.log(userposition);
+
   return (
     <div className="map-container" style={props.divStyle}>
       {" "}

@@ -5,7 +5,9 @@ import {
   EDIT_PIN,
   GET_PIN,
   SEARCH_PINS,
-  GET_UPVOTE
+  GET_UPVOTE,
+  ADD_COMMENT,
+  DELETE_COMMENT
 } from "../actions/types.js";
 
 const initialState = {
@@ -51,7 +53,32 @@ export default function(state = initialState, action) {
         ],
         pin: action.payload
       };
+    case ADD_COMMENT:
+      const newComment = {
+        ...state.pin,
+        commentstory: [...state.pin.commentstory, action.payload]
+      };
 
+      return {
+        ...state,
+        pin: newComment
+      };
+
+    case DELETE_COMMENT:
+      const newComments = state.pin.commentstory.filter(p => {
+        if (p.id !== action.payload) {
+          return p;
+        }
+      });
+
+      const delComment = {
+        ...state.pin,
+        commentstory: newComments
+      };
+      return {
+        ...state,
+        pin: delComment
+      };
     default:
       return state;
   }

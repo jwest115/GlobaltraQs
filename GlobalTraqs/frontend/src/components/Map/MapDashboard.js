@@ -4,12 +4,13 @@ import {
   getPin,
   addPin,
   editPin,
-  deletePins
+  deletePins,
+  addComment,
+  deleteComment
 } from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
-import { useForm, Controller } from "react-hook-form";
-import Pins from "./Pins";
-import DatePicker from "react-datepicker";
+import axios from "axios";
+
 import {
   Switch,
   Route,
@@ -240,11 +241,23 @@ export default function MapDashboard() {
   }
 
   const [userComment, setuserComment] = useState({
-    commenter: isAuthenticated ? user.id : "",
     pin: "",
-    description: ""
+    description: "lit"
   });
   const [toggleComment, settoggleComment] = useState(false);
+  const onSubmitComment = e => {
+    e.preventDefault();
+    const submit = {
+      ...userComment,
+      commenter: user.id
+    };
+    dispatch(addComment(submit));
+    // dispatch(addComment(userComment));
+  };
+  const onDeleteComment = commentid => {
+    dispatch(deleteComment(commentid));
+  };
+
   return (
     // <div id={"map-dashboard"}>
     <div>
@@ -306,8 +319,12 @@ export default function MapDashboard() {
             <StoryDisplay
               placement={placement}
               setplacement={setplacement}
-              toggle={toggleComment}
+              toggleComment={toggleComment}
               settoggleComment={settoggleComment}
+              userComment={userComment}
+              setuserComment={setuserComment}
+              onSubmitComment={onSubmitComment}
+              onDeleteComment={onDeleteComment}
             />
           </Route>
         </Switch>
@@ -347,7 +364,14 @@ function IndividualStory(props) {
   const { isAuthenticated, user } = auth;
 
   useEffect(() => dispatch(getPin(id)), [id]);
-  console.log(props);
+  useEffect(
+    () =>
+      props.setuserComment({
+        ...props.userComment,
+        pin: id
+      }),
+    [id]
+  );
   return (
     <Story pin={pin} user={user} isAuthenticated={isAuthenticated} {...props} />
   );

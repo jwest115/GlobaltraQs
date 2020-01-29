@@ -8,7 +8,9 @@ import {
   GET_PIN,
   GET_USER,
   SEARCH_PINS,
-  GET_UPVOTE
+  GET_UPVOTE,
+  ADD_COMMENT,
+  DELETE_COMMENT
 } from "./types";
 
 //GET PINS
@@ -101,4 +103,29 @@ export const getUpvote = (pinId, userid) => {
       });
     })
     .catch(error => console.log(error));
+};
+export const addComment = comment => dispatch => {
+  axios
+    .post("api/commentStory/", comment)
+    .then(res => {
+      dispatch({
+        type: ADD_COMMENT,
+        payload: res.data
+      });
+
+      console.log(res.data);
+    })
+    .catch(err => console.log(err));
+};
+
+export const deleteComment = id => dispatch => {
+  axios
+    .delete(`api/commentStory/${id}/`)
+    .then(res => {
+      dispatch({
+        type: DELETE_COMMENT,
+        payload: id
+      });
+    })
+    .catch(err => console.log(err));
 };

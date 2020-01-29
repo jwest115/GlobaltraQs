@@ -17,21 +17,15 @@ const storyBody = {
   paddingRight: "50px"
 };
 function Story(props) {
-  let { id } = useParams();
-  const pin = useSelector(state => state.pins.pin);
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   const { isAuthenticated, user } = auth;
 
   const [flagState, setflagState] = useState(false);
-  useEffect(() => {
-    dispatch(getPin(id));
-  }, [id]);
 
   const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
-  let test = isAuthenticated ? true : "yeet";
-  console.log(test);
+
   //console.log(pin.flaggerstory);
   return (
     <div className="container-fluid" style={storyBody}>
@@ -49,27 +43,33 @@ function Story(props) {
         {/* {props.pin.updooots} upvotes */}
         {isAuthenticated ? "" : props.pin.updooots && " upvotes"}
         {/* need to figure out a way to update upvotes maybe websockets  */}
-        {isAuthenticated
+        {/*    {isAuthenticated
           ? props.pin &&
             props.pin.updotes && (
               <Upvote pin={pin.updotes} userid={user.id} numOf={pin.updooots} />
             )
-          : upvoteButoon}
+          : upvoteButoon} */}
         &nbsp;&nbsp;&nbsp;
-        {isAuthenticated
+        {/*    {isAuthenticated
           ? pin &&
             pin.flaggerstory && (
               <Flag userid={user.id} flag={pin.flaggerstory} />
             )
-          : ""}
+          : ""} */}
       </h6>
       <hr></hr>
       <p>{props.pin.description}</p>
       {props.pin && props.pin.commentstory && (
         <CommentStory
+          user={user}
           comment={props.pin.commentstory}
-          toggle={props.toggleComment}
+          toggleComment={props.toggleComment}
           settoggleComment={props.settoggleComment}
+          isAuthenticated={props.isAuthenticated}
+          onSubmitComment={props.onSubmitComment}
+          userComment={props.userComment}
+          setuserComment={props.setuserComment}
+          onDeleteComment={props.onDeleteComment}
         />
       )}
     </div>
