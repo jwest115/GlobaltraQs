@@ -13,6 +13,7 @@ import {
 import InputGroup from "react-bootstrap/InputGroup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import TinyMCE from 'react-tinymce';
 
 const buttonStyle = {
   float: "right"
@@ -21,6 +22,7 @@ const labelStyle = {
   marginRight: "10px"
 };
 function ModalPinForm(props) {
+
   return (
     <>
       <Modal
@@ -69,19 +71,33 @@ function ModalPinForm(props) {
             </FormGroup>
             <FormGroup>
               <Label for="description">Description</Label>
-              <Input
-                className="form-control"
-                type="textarea"
-                rows="5"
-                name="description"
-                value={props.userForm.description}
-                onChange={e =>
+               <TinyMCE
+                  content={props.userForm.description}
+                  config={{
+                    height: 300,
+                    fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+                    plugins: 'autolink link image lists print preview',
+                    toolbar: 'undo redo | bold italic'
+                  }}
+                  onChange={e =>
                   props.setuserForm({
                     ...props.userForm,
-                    description: e.target.value
-                  })
-                }
-              />
+                    description: e.target.getContent()
+                  })}
+                />
+              {/*<Input*/}
+              {/*  className="form-control"*/}
+              {/*  type="textarea"*/}
+              {/*  rows="5"*/}
+              {/*  name="description"*/}
+              {/*  value={props.userForm.description}*/}
+              {/*  onChange={e =>*/}
+              {/*    props.setuserForm({*/}
+              {/*      ...props.userForm,*/}
+              {/*      description: e.target.value*/}
+              {/*    })*/}
+              {/*  }*/}
+              {/*/>*/}
             </FormGroup>
             <FormGroup>
               <Label style={labelStyle} for="radius">

@@ -2,10 +2,9 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 from PIL import Image
-import datetime
+from datetime import datetime
 from io import BytesIO
 from django.core.files import File
-from django.utils.translation import gettext as _
 
 
 class pin(models.Model):
@@ -18,8 +17,9 @@ class pin(models.Model):
     category = models.ForeignKey(
         "categoryType", on_delete=models.CASCADE, null=True, related_name='selected_category')
     # 1 is community, 2: historical, 3: personal
-    startDate = models.DateField(default=datetime.date.today)
-    endDate = models.DateField(default=datetime.date.today)
+    upVotes = models.PositiveSmallIntegerField(default=0)
+    startDate = models.DateField('Date', blank=True, null=True)
+    endDate = models.DateField('Date', blank=True, null=True)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -90,9 +90,8 @@ class photo(models.Model):
   #  image_url = models.ImageField(upload_to="pins", null=True,)
 
     def upload_photo_dir(self, filename):
-        path = './pins/{}'.format(filename)
-        # datetime.today().strftime(
-        # '%Y_%m_%d_%H_%M_%S_') + '_' + self.title + '_' + self.uploader.username + '.jpg')
+        path = './pins/{}'.format(datetime.today().strftime(
+            '%Y_%m_%d_%H_%M_%S_') + '_' + self.title + '_' + self.uploader.username + '.jpg')
         return path
     image_url = models.ImageField(null=True, upload_to=upload_photo_dir)
 

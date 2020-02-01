@@ -16,11 +16,13 @@ import {
   Route,
   Link,
   useParams,
+  Redirect,
   useRouteMatch
 } from "react-router-dom";
 import LeafletMap from "./LeafletMap";
-import SearchSidebar from "../layout/SidebarTest";
+import SearchSidebar from "../layout/SidebarHooks";
 import Story from "./Story/Story";
+
 
 const sidebarStyle = {
   position: "absolute",
@@ -72,6 +74,7 @@ export default function MapDashboard() {
   const [modalState, setmodalstate] = useState(false); //opens modal for adding new pins
   const [editpinmodalState, seteditpinmodalState] = useState(false); // opens modal for editing pin
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showSidebarButton, setShowSidebarButton] = useState(false);
   const [userForm, setuserForm] = useState({
     // fields for new pins
     title: "",
@@ -207,6 +210,7 @@ export default function MapDashboard() {
   };
 
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
+  const [pinDeleted, setPinDeleted] = useState(false);
 
   const toggleDelete = () => {
     setDeleteConfirmation(!deleteConfirmation);
@@ -215,6 +219,7 @@ export default function MapDashboard() {
     e.preventDefault();
     dispatch(deletePins(editPinForm.id));
     toggleDelete();
+    setPinDeleted(true);
     console.log("confirm delted" + editPinForm.id);
   };
 
@@ -260,21 +265,23 @@ export default function MapDashboard() {
   };
 
   return (
-    // <div id={"map-dashboard"}>
-    <div>
+    <div id={"map-dashboard"}>
+    {/*<div>*/}
       <Fragment>
-              <SearchSidebar
-                sidebarOpen={sidebarOpen}
-              />
-
         <Switch>
           <Route exact path="/">
+             <div id={"sidebar-style"}>
+                <SearchSidebar
+                  sidebarOpen={sidebarOpen}
+                />
+              </div>
             <LeafletMap
               maplink={"/test"}
               pins={pins}
               divStyle={divStyle}
               addMarker={addMarker}
               placement={placement}
+              setPlacement={setplacement}
               modalState={modalState}
               toggle={toggle}
               onSubmit={onSubmit}
@@ -295,15 +302,24 @@ export default function MapDashboard() {
               getLocation={getLocation}
               sidebarOpen={sidebarOpen}
               setSidebarOpen={setSidebarOpen}
+              pinDeleted={pinDeleted}
+              setPinDeleted={setPinDeleted}
+              showSidebarButton={true}
             />
           </Route>
           <Route path="/test">
+             {console.log("the placement:")}
+            {console.log(placement)}
+             {pinDeleted ? (
+                <Redirect to={"/"}/> )
+                : null}
             <LeafletMap
               maplink={"/test"}
               pins={pins}
               divStyle={divStyle1}
               addMarker={addMarker}
               placement={placement}
+              setPlacement={setplacement}
               modalState={modalState}
               toggle={toggle}
               onSubmit={onSubmit}
@@ -322,6 +338,9 @@ export default function MapDashboard() {
               onDelete={onDelete}
               toggleDelete={toggleDelete}
               getLocation={getLocation}
+              sidebarOpen={sidebarOpen}
+              setSidebarOpen={setSidebarOpen}
+              showSidebarButton={false}
             />
             <StoryDisplay
               placement={placement}

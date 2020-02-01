@@ -11,6 +11,9 @@ import {
 } from "react-router-dom";
 import Upvote from "./Upvote";
 import Flag from "./Flag";
+import Moment from 'react-moment';
+import Markup from 'interweave';
+
 const storyBody = {
   paddingTop: "50px",
   paddingLeft: "50px",
@@ -35,10 +38,11 @@ function Story(props) {
       </h2>
       <p>
         {" "}
-        {props.pin.startDate} - {props.pin.endDate}{" "}
+          <Moment format="MM/DD/YYYY">{props.pin.startDate}</Moment> - <Moment format="MM/DD/YYYY">{props.pin.endDate}</Moment>
+        {" "}
       </p>
       {/* <p>By: {authorName}</p> */}
-      <p>By: {props.pin.username}</p>
+      { props.pin.username ? <p>By: {props.pin.username}</p> : <p>By: Anonymous</p> }
       <h6>
         {/* {props.pin.updooots} upvotes */}
         {isAuthenticated ? "" : props.pin.updooots && " upvotes"}
@@ -58,7 +62,8 @@ function Story(props) {
           : ""} */}
       </h6>
       <hr></hr>
-      <p>{props.pin.description}</p>
+      <Markup content={props.pin.description}/>
+
       {props.pin && props.pin.commentstory && (
         <CommentStory
           user={user}

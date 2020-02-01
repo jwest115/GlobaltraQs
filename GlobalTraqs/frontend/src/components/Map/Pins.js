@@ -25,7 +25,7 @@ import { ReactLeafletSearch } from 'react-leaflet-search';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 
 const divStyle = {
-  height: "90%",
+  height: "100%",
   width: "100%"
 };
 
