@@ -13,7 +13,7 @@ import {
 import InputGroup from "react-bootstrap/InputGroup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import TinyMCE from 'react-tinymce';
+import TinyMCE from "react-tinymce";
 
 const buttonStyle = {
   float: "right"
@@ -22,7 +22,6 @@ const labelStyle = {
   marginRight: "10px"
 };
 function ModalPinForm(props) {
-
   return (
     <>
       <Modal
@@ -34,17 +33,24 @@ function ModalPinForm(props) {
       >
         <ModalHeader toggle={props.toggle}> Add a story </ModalHeader>
         <ModalBody>
-          <Form onSubmit={props.onSubmit}>
+          <Form onSubmit={props.handleAddPinSubmit}>
             <FormGroup>
               <Label style={labelStyle} for="category">
                 Category
               </Label>
               <select
                 name="category"
-                value={props.userForm.category}
+                //  value={props.userForm.category}
+                value={props.addPinValues.category}
+                // onChange={e =>
+                //   props.setuserForm({
+                //     ...props.userForm,
+                //     category: e.target.value
+                //   })
+                // }
                 onChange={e =>
-                  props.setuserForm({
-                    ...props.userForm,
+                  props.setaddPinValues({
+                    ...props.addPinValues,
                     category: e.target.value
                   })
                 }
@@ -60,10 +66,10 @@ function ModalPinForm(props) {
                 className="form-control"
                 type="text"
                 name="title"
-                value={props.userForm.title}
+                value={props.addPinValues.title}
                 onChange={e =>
-                  props.setuserForm({
-                    ...props.userForm,
+                  props.setaddPinValues({
+                    ...props.addPinValues,
                     title: e.target.value
                   })
                 }
@@ -71,20 +77,21 @@ function ModalPinForm(props) {
             </FormGroup>
             <FormGroup>
               <Label for="description">Description</Label>
-               <TinyMCE
-                  content={props.userForm.description}
-                  config={{
-                    height: 300,
-                    fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
-                    plugins: 'autolink link image lists print preview',
-                    toolbar: 'undo redo | bold italic'
-                  }}
-                  onChange={e =>
-                  props.setuserForm({
-                    ...props.userForm,
+              <TinyMCE
+                content={props.addPinValues.description}
+                config={{
+                  height: 300,
+                  fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+                  plugins: "autolink link image lists print preview",
+                  toolbar: "undo redo | bold italic"
+                }}
+                onChange={e =>
+                  props.setaddPinValues({
+                    ...props.addPinValues,
                     description: e.target.getContent()
-                  })}
-                />
+                  })
+                }
+              />
               {/*<Input*/}
               {/*  className="form-control"*/}
               {/*  type="textarea"*/}
@@ -105,7 +112,7 @@ function ModalPinForm(props) {
               </Label>
               <select
                 name="anonradius"
-                value={props.userRadius}
+                value={props.addPinValues.userRadius}
                 onChange={e => props.setAnonRadius(e.target.value)}
               >
                 <option value="1">None</option>
@@ -130,11 +137,11 @@ function ModalPinForm(props) {
               <DatePicker
                 isClearable
                 todayButton="Today"
-                name="start"
-                selected={props.userForm.startDate}
+                name="startDate"
+                selected={props.addPinValues.startDate}
                 onChange={date =>
-                  props.setuserForm({
-                    ...props.userForm,
+                  props.setaddPinValues({
+                    ...props.addPinValues,
                     startDate: date
                   })
                 }
@@ -145,12 +152,12 @@ function ModalPinForm(props) {
               <DatePicker
                 isClearable
                 todayButton="Today"
-                name="enddate"
-                selected={props.userForm.endDate}
-                onChange={date =>
-                  props.setuserForm({
-                    ...props.userForm,
-                    endDate: date
+                name="endDate"
+                selected={props.addPinValues.endDate}
+                onChange={dat =>
+                  props.setaddPinValues({
+                    ...props.addPinValues,
+                    endDate: dat
                   })
                 }
               />

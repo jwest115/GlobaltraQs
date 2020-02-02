@@ -10,7 +10,7 @@ import {
 } from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-
+import useAddPinForm from "./CustomHooks/useAddPinForm";
 import {
   Switch,
   Route,
@@ -22,7 +22,6 @@ import {
 import LeafletMap from "./LeafletMap";
 import SearchSidebar from "../layout/SidebarHooks";
 import Story from "./Story/Story";
-
 
 const sidebarStyle = {
   position: "absolute",
@@ -67,25 +66,28 @@ export default function MapDashboard() {
   useEffect(() => {
     getLocation();
   }, []);
+  const {
+    addPinValues,
+    setaddPinValues,
+    handleAddPinSubmit,
+    handleAddPinChange,
+    modalState,
+    setmodalstate,
+
+    setAnonRadius
+  } = useAddPinForm(userAddedPin);
+  function userAddedPin() {
+    console.log(addPinValues);
+  }
 
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
 
-  const [modalState, setmodalstate] = useState(false); //opens modal for adding new pins
+  //opens modal for adding new pins
   const [editpinmodalState, seteditpinmodalState] = useState(false); // opens modal for editing pin
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showSidebarButton, setShowSidebarButton] = useState(false);
-  const [userForm, setuserForm] = useState({
-    // fields for new pins
-    title: "",
-    description: "",
-    category: 1,
-    startDate: "",
-    endDate: "",
-    owner: isAuthenticated ? user.id : "",
-    latitude: placement.userlat,
-    longitude: placement.userlng
-  });
+
   const [editPinForm, seteditPinForm] = useState({
     //fields for editng
     id: "1",
@@ -114,8 +116,8 @@ export default function MapDashboard() {
       userlat: e.latlng.lat,
       userlng: e.latlng.lng
     });
-    setuserForm({
-      ...userForm,
+    setaddPinValues({
+      ...addPinValues,
       latitude: e.latlng.lat,
       longitude: e.latlng.lng
     });
@@ -127,86 +129,6 @@ export default function MapDashboard() {
   };
   const editToggle = () => {
     seteditpinmodalState(!editpinmodalState);
-  };
-  const resetState = () => {
-    setuserForm({
-      title: "",
-      description: "",
-      category: 1,
-      startDate: "",
-      endDate: "",
-      owner: isAuthenticated ? user.id : "",
-      latitude: "",
-      longitude: ""
-    });
-  };
-  const onSubmit = e => {
-    e.preventDefault();
-    console.log("submit");
-    console.log(userForm);
-    dispatch(addPin(userForm));
-    resetState();
-    setmodalstate(!modalState);
-  };
-  const setAnonRadius = radius => {
-    setRadiusUser(radius);
-
-    let randomLat;
-    let randomLng;
-    const lat = placement.userlat;
-    const lng = placement.userlng;
-    let sign1 = Math.round(Math.random());
-    let sign2 = Math.round(Math.random());
-    if (radius === "2") {
-      if (sign1 == 0) {
-        randomLat = lat - (Math.random() * (0.008 - 0.001) + 0.001);
-      } else {
-        randomLat = Math.random() * (0.008 - 0.001) + 0.001 + lat;
-      }
-      if (sign2 == 0) {
-        randomLng = lng - (Math.random() * (0.008 - 0.001) + 0.001);
-      } else {
-        randomLng = Math.random() * (0.008 - 0.001) + 0.001 + lng;
-      }
-    } else if (radius === "3") {
-      if (sign1 == 0) {
-        randomLat = lat - (Math.random() * (0.03 - 0.01) + 0.01);
-      } else {
-        randomLat = Math.random() * (0.03 - 0.01) + 0.01 + lat;
-      }
-      if (sign2 == 0) {
-        randomLng = lng - (Math.random() * (0.03 - 0.01) + 0.01);
-      } else {
-        randomLng = Math.random() * (0.03 - 0.01) + 0.01 + lng;
-      }
-    } else if (radius === "4") {
-      if (sign1 == 0) {
-        randomLat = lat - (Math.random() * (0.1 - 0.05) + 0.05);
-      } else {
-        randomLat = Math.random() * (0.1 - 0.05) + 0.05 + lat;
-      }
-      if (sign2 == 0) {
-        randomLng = lng - (Math.random() * (0.1 - 0.05) + 0.05);
-      } else {
-        randomLng = Math.random() * (0.1 - 0.05) + 0.05 + lng;
-      }
-    } else {
-      randomLat = lat;
-      randomLng = lng;
-    }
-    console.log(
-      "random lat is " +
-        randomLat +
-        " random lng is " +
-        randomLng +
-        " the selection is " +
-        radius
-    );
-    setuserForm({
-      ...userForm,
-      latitude: randomLat,
-      longitude: randomLng
-    });
   };
 
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
@@ -266,15 +188,13 @@ export default function MapDashboard() {
 
   return (
     <div id={"map-dashboard"}>
-    {/*<div>*/}
+      {/*<div>*/}
       <Fragment>
         <Switch>
           <Route exact path="/">
-             <div id={"sidebar-style"}>
-                <SearchSidebar
-                  sidebarOpen={sidebarOpen}
-                />
-              </div>
+            <div id={"sidebar-style"}>
+              <SearchSidebar sidebarOpen={sidebarOpen} />
+            </div>
             <LeafletMap
               maplink={"/test"}
               pins={pins}
@@ -284,17 +204,12 @@ export default function MapDashboard() {
               setPlacement={setplacement}
               modalState={modalState}
               toggle={toggle}
-              onSubmit={onSubmit}
-              userForm={userForm}
-              setuserForm={setuserForm}
               editPin={editPinForm}
               seteditPin={seteditPinForm}
               editToggle={editToggle}
               editpinmodalState={editpinmodalState}
               seteditpinmodalState={seteditpinmodalState}
               onEditSubmit={onEditSubmit}
-              radiusUser={radiusUser}
-              setAnonRadius={setAnonRadius}
               deleteConfirmation={deleteConfirmation}
               setDeleteConfirmation={setDeleteConfirmation}
               onDelete={onDelete}
@@ -305,14 +220,15 @@ export default function MapDashboard() {
               pinDeleted={pinDeleted}
               setPinDeleted={setPinDeleted}
               showSidebarButton={true}
+              addPinValues={addPinValues}
+              handleAddPinChange={handleAddPinChange}
+              handleAddPinSubmit={handleAddPinSubmit}
+              setaddPinValues={setaddPinValues}
+              setAnonRadius={setAnonRadius}
             />
           </Route>
           <Route path="/test">
-             {console.log("the placement:")}
-            {console.log(placement)}
-             {pinDeleted ? (
-                <Redirect to={"/"}/> )
-                : null}
+            {pinDeleted ? <Redirect to={"/"} /> : null}
             <LeafletMap
               maplink={"/test"}
               pins={pins}
@@ -322,17 +238,12 @@ export default function MapDashboard() {
               setPlacement={setplacement}
               modalState={modalState}
               toggle={toggle}
-              onSubmit={onSubmit}
-              userForm={userForm}
-              setuserForm={setuserForm}
               editPin={editPinForm}
               seteditPin={seteditPinForm}
               editToggle={editToggle}
               editpinmodalState={editpinmodalState}
               seteditpinmodalState={seteditpinmodalState}
               onEditSubmit={onEditSubmit}
-              radiusUser={radiusUser}
-              setAnonRadius={setAnonRadius}
               deleteConfirmation={deleteConfirmation}
               setDeleteConfirmation={setDeleteConfirmation}
               onDelete={onDelete}
@@ -340,7 +251,14 @@ export default function MapDashboard() {
               getLocation={getLocation}
               sidebarOpen={sidebarOpen}
               setSidebarOpen={setSidebarOpen}
-              showSidebarButton={false}
+              pinDeleted={pinDeleted}
+              setPinDeleted={setPinDeleted}
+              showSidebarButton={true}
+              addPinValues={addPinValues}
+              handleAddPinChange={handleAddPinChange}
+              handleAddPinSubmit={handleAddPinSubmit}
+              setaddPinValues={setaddPinValues}
+              setAnonRadius={setAnonRadius}
             />
             <StoryDisplay
               placement={placement}
@@ -358,7 +276,7 @@ export default function MapDashboard() {
 
         {/* <div id={"sidebar-style"}> */}
         <div>
-           {/*<SearchSidebar />*/}
+          {/*<SearchSidebar />*/}
           {/* <MapDisplay /> */}
         </div>
       </Fragment>
@@ -393,11 +311,13 @@ function IndividualStory(props) {
   useEffect(
     () =>
       props.setuserComment({
-        ...props.userComment,
+        description: "",
         pin: id
       }),
     [id]
   );
+
+  console.log(pin);
   return (
     <Story pin={pin} user={user} isAuthenticated={isAuthenticated} {...props} />
   );

@@ -18,9 +18,9 @@ import ModalDeleteConfirm from "./ModalDeleteConfirm";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
 import ModalPinForm from "./ModalPinForm";
-import SearchIcon from '@material-ui/icons/Search';
+import SearchIcon from "@material-ui/icons/Search";
 import SearchSidebar from "../layout/SidebarTest";
-import { Markup } from 'interweave';
+import { Markup } from "interweave";
 
 export const defaultPointerIcon = new L.Icon({
   iconUrl: default_marker,
@@ -68,8 +68,7 @@ const LeafletMap = props => {
 
   return (
     <div className="map-container" style={props.divStyle}>
-      {props.setPinDeleted ? props.setPinDeleted(false) : ""}
-      {" "}
+      {props.setPinDeleted ? props.setPinDeleted(false) : ""}{" "}
       <Map
         center={userposition}
         zoom={15}
@@ -89,15 +88,17 @@ const LeafletMap = props => {
           url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
         />
 
-        {props.showSidebarButton ?
-            (
-            <Control position={"topleft"}>
-              <button className={"btn btn-primary"} id="open-sidebar-button" onClick={() => props.setSidebarOpen(!props.sidebarOpen)}>
-                    <SearchIcon></SearchIcon>
-              </button>
-              {console.log(props.sidebarOpen)}
-            </Control>
-            ) : null}
+        {props.showSidebarButton ? (
+          <Control position={"topleft"}>
+            <button
+              className={"btn btn-primary"}
+              id="open-sidebar-button"
+              onClick={() => props.setSidebarOpen(!props.sidebarOpen)}
+            >
+              <SearchIcon></SearchIcon>
+            </button>
+          </Control>
+        ) : null}
         <Control position={"bottomright"}>
           <div>
             <button onClick={props.getLocation} className="btn btn-primary">
@@ -159,17 +160,22 @@ const LeafletMap = props => {
                 <Popup>
                   <strong>{marker.title}</strong>
                   <br />
-                  <Markup content={marker.description}/>
+                  <Markup content={marker.description} />
                   <br />
                   <br />
 
                   <Link to={`${props.maplink}/${marker.id}`}>
-                    <button type="button" onClick={() => props.setPlacement(
-                        { id: marker.id,
+                    <button
+                      type="button"
+                      onClick={() =>
+                        props.setPlacement({
+                          id: marker.id,
                           userlat: marker.latitude,
                           userlng: marker.longitude
-                        })}
-                      className="btn btn-primary btn-sm">
+                        })
+                      }
+                      className="btn btn-primary btn-sm"
+                    >
                       View Story
                     </button>
                   </Link>
@@ -204,11 +210,8 @@ const LeafletMap = props => {
       <ModalPinForm
         toggle={props.toggle}
         modalState={props.modalState}
-        onSubmit={props.onSubmit}
-        userForm={props.userForm}
-        setuserForm={props.setuserForm}
-        radiusUser={props.radiusUser}
         setAnonRadius={props.setAnonRadius}
+        {...props}
       />
       <ModalEditPinForm
         toggle={props.editToggle}
