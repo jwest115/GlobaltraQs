@@ -16,7 +16,9 @@ const useAddPinForm = callback => {
     longitude: -118,
     startDate: new Date(),
     endDate: new Date(),
-    anonradius: 1
+    anonradius: 1,
+    title: " ",
+    description: " "
   });
 
   const handleAddPinSubmit = e => {
