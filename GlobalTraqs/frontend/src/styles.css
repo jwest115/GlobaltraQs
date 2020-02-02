@@ -145,3 +145,20 @@
     position: absolute;
     margin-top: 10px;
 }
+
+/* fix for bold Tiny MCE text not showing up in some pages */
+b, strong {
+    font-weight: bold !important; /* make this styling take precedence over bootstrap 'bolder' style */
+}
+
+.userway{
+    visibility: hidden;
+}
+
+/*.userway-hide {*/
+/*    visibility: hidden !important;*/
+/*}*/
+
+/*.userway-show {*/
+/*    visibility: visible !important;*/
+/*}*/

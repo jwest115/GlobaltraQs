@@ -24,8 +24,10 @@ export class Header extends Component {
 
     render() {
         let accessibilityWidget = document.body.getElementsByClassName("userway")[0];
+        console.log("accessibility is");
+        console.log(accessibilityWidget);
         if(accessibilityWidget) {
-            accessibilityWidget.style.display = "none";
+            accessibilityWidget.style.visibility = "hidden";
         }
         const { isAuthenticated, user } = this.props.auth;
 
@@ -42,12 +44,12 @@ export class Header extends Component {
 
             if(user.accessibility_mode_active) {
                 if(accessibilityWidget != undefined) {
-                    accessibilityWidget.style.display = "block";
+                    accessibilityWidget.style.visibility = "visible";
                 }
             }
             else {
                 if(accessibilityWidget != undefined) {
-                    accessibilityWidget.style.display = "none";
+                    accessibilityWidget.style.visibility = "hidden";
                 }
             }
 
@@ -77,7 +79,7 @@ export class Header extends Component {
         }
         else {
             if(accessibilityWidget != undefined) {
-                accessibilityWidget.style.display = "none";
+                accessibilityWidget.style.visibility = "hidden";
             }
         }
 

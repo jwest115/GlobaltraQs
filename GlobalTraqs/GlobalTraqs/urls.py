@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # url(r'^api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     path('api/password_reset/', include('passwordReset.urls')),
-    path('api/management', include('management.urls')),
+    path('api/management/', include('management.urls')),
     path('', include('pins.urls')),
     path('', include('accounts.urls')),
 

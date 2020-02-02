@@ -67,16 +67,21 @@ function SearchSidebar(props)  {
         const start = startDate.getFullYear() + "-" + (startDate.getMonth() + 1)  + "-" + startDate.getDate();
         const end = endDate.getFullYear() + "-" + (endDate.getMonth() + 1)  + "-" + endDate.getDate();
         let categorySearchQuery = "";
-        for(const [index, value] of selectedCategories.entries()) {
-            if(index < selectedCategories.length - 1) {
-                console.log(value.value);
-                categorySearchQuery += value.value + ",";
-                console.log("is the num")
-            }
-            else {
-                console.log(value.value);
-                categorySearchQuery += value.value;
-                console.log("is the num")
+        if(selectedCategories == null) {
+            setSelectedCategories(options);
+        }
+        else {
+            for(const [index, value] of selectedCategories.entries()) {
+                if(index < selectedCategories.length - 1) {
+                    console.log(value.value);
+                    categorySearchQuery += value.value + ",";
+                    console.log("is the num")
+                }
+                else {
+                    console.log(value.value);
+                    categorySearchQuery += value.value;
+                    console.log("is the num")
+                }
             }
         }
         console.log(categorySearchQuery);
@@ -126,19 +131,6 @@ function SearchSidebar(props)  {
                                 onChange={(date) => setEndDate(date)}
                               />
                           </InputGroup>
-                        {/*<div className="form-group">*/}
-                        {/*    <select*/}
-                        {/*      className="form-control"*/}
-                        {/*      id="pinForm"*/}
-                        {/*      name={"pinType"}*/}
-                        {/*      value={this.state.pinType}*/}
-                        {/*      onChange={this.onChange}*/}
-                        {/*    >*/}
-                        {/*      <option value={1}>Personal</option>*/}
-                        {/*      <option value={2}>Community</option>*/}
-                        {/*      <option value={3}>Historical</option>*/}
-                        {/*    </select>*/}
-                        {/*</div>*/}
                         <div className="form-group">
                             <button type="submit" style={{ float: "right" }} className="btn btn-primary">
                                 Search

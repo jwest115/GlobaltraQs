@@ -1,4 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { withLeaflet } from "react-leaflet";
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+
 import {
   getPins,
   getPin,
@@ -76,6 +79,9 @@ export default function MapDashboard() {
     setAnonRadius
   } = useAddPinForm(userAddedPin);
   function userAddedPin() {
+    console.log(mapReference);
+    console.log("is the ref");
+    mapReference.flyTo([addPinValues.latitude, addPinValues.longitude], 15);
     console.log(addPinValues);
   }
 
@@ -86,6 +92,8 @@ export default function MapDashboard() {
   const [editpinmodalState, seteditpinmodalState] = useState(false); // opens modal for editing pin
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showSidebarButton, setShowSidebarButton] = useState(false);
+  const [mapReference, setMapReference] = useState();
+  const [map, setMap] = useState();
 
   const [editPinForm, seteditPinForm] = useState({
     //fields for editng
@@ -94,6 +102,7 @@ export default function MapDashboard() {
     description: "1",
     category: "1"
   });
+
   const onEditSubmit = e => {
     //patches the selected pin
     e.preventDefault();
@@ -122,6 +131,7 @@ export default function MapDashboard() {
     });
 
     setmodalstate(!modalState);
+
   };
   const toggle = () => {
     setmodalstate(!modalState);
@@ -166,6 +176,7 @@ export default function MapDashboard() {
       );
     }
   }
+
 
   const [userComment, setuserComment] = useState({
     pin: "",
@@ -226,6 +237,8 @@ export default function MapDashboard() {
               setAnonRadius={setAnonRadius}
               darkMode={darkMode}
               setdarkMode={setdarkMode}
+              mapReference={mapReference}
+              setMapReference={setMapReference}
             />
           </Route>
           <Route path="/test">
@@ -262,6 +275,8 @@ export default function MapDashboard() {
               setAnonRadius={setAnonRadius}
               darkMode={darkMode}
               setdarkMode={setdarkMode}
+              mapReference={mapReference}
+              setMapReference={setMapReference}
             />
             <StoryDisplay
               placement={placement}

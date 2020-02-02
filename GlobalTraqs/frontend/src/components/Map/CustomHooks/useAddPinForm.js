@@ -26,7 +26,7 @@ const useAddPinForm = callback => {
 
     const submit = { ...addPinValues, owner: isAuthenticated ? user.id : "" };
     console.log(submit);
-
+    dispatch(addPin(submit));
     callback();
     setaddPinValues({
       category: 1,

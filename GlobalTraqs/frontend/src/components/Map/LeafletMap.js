@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component, Fragment } from "react";
-import { Map, Marker, Popup, TileLayer, ZoomControl } from "react-leaflet";
+import { Map, Marker, Popup, TileLayer, ZoomControl, withLeaflet } from "react-leaflet";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import community from "./images/community.png"; // Tell Webpack this JS file uses this image
 import historical from "./images/historical.png";
@@ -21,6 +21,8 @@ import ModalPinForm from "./ModalPinForm";
 import SearchIcon from "@material-ui/icons/Search";
 import SearchSidebar from "../layout/SidebarTest";
 import { Markup } from "interweave";
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+import { EsriProvider } from 'leaflet-geosearch';
 
 export const defaultPointerIcon = new L.Icon({
   iconUrl: default_marker,
@@ -64,10 +66,73 @@ export const personalIcon = new L.Icon({
 const LeafletMap = props => {
   let { path, url } = useRouteMatch();
   console.log(props.darkMode + " darkmode ");
-  const userposition = [props.placement.userlat, props.placement.userlng];
+  const [userposition, setUserPosition] = useState([props.placement.userlat, props.placement.userlng]);
+  // EsriProvider allows for zip code search - nominatum (OSM) does not
+  // others include bing and google
+  const [provider, setProvider] = useState(new EsriProvider()); // new OpenStreetMapProvider();
+                                                                // can change provider to preference
+
+  const [mapInstance, setMapInstance] = useState();
+  // const [map, setMap] = useState();
+  const searchControl = new GeoSearchControl({
+      provider: provider,
+      autocomplete: true,
+      style: 'bar',
+      animateZoom: true,
+      retainZoomLevel: true,
+      searchLabel: 'Add story by address',
+      showMarker: false,
+      showPopup: false,
+      autoClose: true,
+      keepResult: true
+   });
+
+   const addressSearch = (e) => {
+    console.log(e);
+    const longitude = e.location.x;
+    const latitude = e.location.y;
+    console.log("lat and lng");
+    console.log(longitude);
+    console.log(latitude);
+    props.setPlacement({
+        id: "",
+        userlat : latitude,
+        userlng: longitude
+    });
+    props.setaddPinValues({
+         ...props.addPinValues,
+      latitude: latitude,
+      longitude: longitude
+    });
+
+    setUserPosition([latitude, longitude]);
+    console.log(props.placement);
+    console.log("was the coords");
+    props.toggle();
+    // this.setState({userlat : latitude, userlng: longitude, modal: true});
+
+      // .search({ query: this.state.searchText })
+      // .then(function(result) {
+      //   // do something with result;
+      //   console.log(result)
+      // });
+    console.log("here");
+  };
+
+  // used for adding the map reference for fly to and address search
+  useEffect(() => {
+      if(mapInstance) {
+          let map = mapInstance.leafletElement;
+          props.setMapReference(mapInstance.leafletElement);
+          console.log("trying to add address");
+          map.addControl(searchControl);
+          map.on('geosearch/showlocation', addressSearch);
+      }
+  }, mapInstance);
 
   return (
     <div className="map-container" style={props.divStyle}>
+      {/*{props.mapReference ? console.log(props.mapReference) : " map is undefined"}*/}
       {props.setPinDeleted ? props.setPinDeleted(false) : ""}{" "}
       <Map
         center={userposition}
@@ -76,9 +141,7 @@ const LeafletMap = props => {
         id="map"
         zoomControl={false}
         style={props.divStyle}
-        // ref={e => {
-        //   this.mapInstance = e;
-        // }}
+        ref={e => { setMapInstance(e) }}
         //   onClick={props.addMarker}
         onContextMenu={props.addMarker}
       >
