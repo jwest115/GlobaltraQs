@@ -73,7 +73,6 @@ export default function MapDashboard() {
     handleAddPinChange,
     modalState,
     setmodalstate,
-
     setAnonRadius
   } = useAddPinForm(userAddedPin);
   function userAddedPin() {
@@ -82,7 +81,7 @@ export default function MapDashboard() {
 
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
-
+  const [darkMode, setdarkMode] = useState(true);
   //opens modal for adding new pins
   const [editpinmodalState, seteditpinmodalState] = useState(false); // opens modal for editing pin
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -109,7 +108,7 @@ export default function MapDashboard() {
       category: 1
     });
   };
-  const [radiusUser, setRadiusUser] = useState(1); //radius for anon
+
   const addMarker = e => {
     setplacement({
       ...placement,
@@ -225,6 +224,8 @@ export default function MapDashboard() {
               handleAddPinSubmit={handleAddPinSubmit}
               setaddPinValues={setaddPinValues}
               setAnonRadius={setAnonRadius}
+              darkMode={darkMode}
+              setdarkMode={setdarkMode}
             />
           </Route>
           <Route path="/test">
@@ -259,6 +260,8 @@ export default function MapDashboard() {
               handleAddPinSubmit={handleAddPinSubmit}
               setaddPinValues={setaddPinValues}
               setAnonRadius={setAnonRadius}
+              darkMode={darkMode}
+              setdarkMode={setdarkMode}
             />
             <StoryDisplay
               placement={placement}

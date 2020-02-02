@@ -63,7 +63,7 @@ export const personalIcon = new L.Icon({
 });
 const LeafletMap = props => {
   let { path, url } = useRouteMatch();
-
+  console.log(props.darkMode + " darkmode ");
   const userposition = [props.placement.userlat, props.placement.userlng];
 
   return (
@@ -83,11 +83,17 @@ const LeafletMap = props => {
         onContextMenu={props.addMarker}
       >
         <ZoomControl position="bottomleft" />
-        <TileLayer
-          attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-          url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
-        />
-
+        {props.darkMode ? ( //pass in props of user
+          <TileLayer
+            attribution="Map tiles by &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>"
+            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          />
+        ) : (
+          <TileLayer
+            attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+            url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
+          />
+        )}
         {props.showSidebarButton ? (
           <Control position={"topleft"}>
             <button
@@ -99,6 +105,14 @@ const LeafletMap = props => {
             </button>
           </Control>
         ) : null}
+        <Control position={"topright"}>
+          <button
+            onClick={() => props.setdarkMode(!props.darkMode)}
+            className="btn btn-primary"
+          >
+            Dark Mode
+          </button>
+        </Control>
         <Control position={"bottomright"}>
           <div>
             <button onClick={props.getLocation} className="btn btn-primary">
