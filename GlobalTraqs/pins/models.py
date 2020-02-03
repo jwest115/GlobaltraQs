@@ -20,6 +20,7 @@ class pin(models.Model):
     upVotes = models.PositiveSmallIntegerField(default=0)
     startDate = models.DateField('Date', blank=True, null=True)
     endDate = models.DateField('Date', blank=True, null=True)
+    is_anonymous_pin = models.BooleanField(default=False, blank=False)
 
     def __str__(self):
         """String for representing the Model object."""

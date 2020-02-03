@@ -42,6 +42,7 @@ const sidebarStyle = {
 };
 
 export default function MapDashboard() {
+
   let { path, url } = useRouteMatch();
 
   const [divStyle, setdivStyle] = useState({
@@ -62,6 +63,7 @@ export default function MapDashboard() {
 
   const pins = useSelector(state => state.pins.pins);
   const dispatch = useDispatch();
+  const [userRoleVerified, setUserRoleVerified] = useState(false);
 
   useEffect(() => {
      if (isAuthenticated) {
@@ -75,9 +77,10 @@ export default function MapDashboard() {
         }
      }
      else {
+       console.log("user is not authenticated");
        setUserRoleVerified(false);
      }
-  }, []);
+  });
 
   useEffect(() => {
     dispatch(getPins());
@@ -111,7 +114,9 @@ export default function MapDashboard() {
   const [showSidebarButton, setShowSidebarButton] = useState(false);
   const [mapReference, setMapReference] = useState();
   const [map, setMap] = useState();
-  const [userRoleVerified, setUserRoleVerified] = useState(false);
+
+  console.log(isAuthenticated);
+  console.log("is the auth");
 
   const [editPinForm, seteditPinForm] = useState({
     //fields for editng

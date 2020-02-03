@@ -42,7 +42,7 @@ function Story(props) {
         {" "}
       </p>
       {/* <p>By: {authorName}</p> */}
-      { props.pin.username ? <p>By: {props.pin.username}</p> : <p>By: Anonymous</p> }
+      { props.pin.is_anonymous_pin ? <p>By: Anonymous</p> : <p>By: {props.pin.username}</p> }
       <h6>
         {/* {props.pin.updooots} upvotes */}
         {isAuthenticated ? "" : props.pin.updooots && " upvotes"}
