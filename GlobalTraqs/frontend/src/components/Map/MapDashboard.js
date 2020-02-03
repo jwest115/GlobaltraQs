@@ -64,11 +64,28 @@ export default function MapDashboard() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+     if (isAuthenticated) {
+        console.log("user is authenticated!");
+        if (user.is_administrator || user.is_moderator) {
+          console.log("user is an admin or moderator or owner!");
+          setUserRoleVerified(true);
+        }
+        else {
+          setUserRoleVerified(false);
+        }
+     }
+     else {
+       setUserRoleVerified(false);
+     }
+  }, []);
+
+  useEffect(() => {
     dispatch(getPins());
   }, []);
   useEffect(() => {
     getLocation();
   }, []);
+
   const {
     addPinValues,
     setaddPinValues,
@@ -94,6 +111,7 @@ export default function MapDashboard() {
   const [showSidebarButton, setShowSidebarButton] = useState(false);
   const [mapReference, setMapReference] = useState();
   const [map, setMap] = useState();
+  const [userRoleVerified, setUserRoleVerified] = useState(false);
 
   const [editPinForm, seteditPinForm] = useState({
     //fields for editng
@@ -119,6 +137,9 @@ export default function MapDashboard() {
   };
 
   const addMarker = e => {
+    console.log("here in add marker");
+    console.log("lat and lng");
+    console.log(e.latlng);
     setplacement({
       ...placement,
       userlat: e.latlng.lat,
@@ -131,11 +152,12 @@ export default function MapDashboard() {
     });
 
     setmodalstate(!modalState);
-
   };
+
   const toggle = () => {
     setmodalstate(!modalState);
   };
+
   const editToggle = () => {
     seteditpinmodalState(!editpinmodalState);
   };
@@ -146,12 +168,13 @@ export default function MapDashboard() {
   const toggleDelete = () => {
     setDeleteConfirmation(!deleteConfirmation);
   };
+
   const onDelete = e => {
     e.preventDefault();
     dispatch(deletePins(editPinForm.id));
     toggleDelete();
-    setPinDeleted(true);
     console.log("confirm delted" + editPinForm.id);
+    // setPinDeleted(true);
   };
 
   function getLocation() {
@@ -166,11 +189,12 @@ export default function MapDashboard() {
           });
         },
         error => {
+          console.log("error in getting user location");
           console.log(error);
         },
         {
           enableHighAccuracy: true,
-          timeout: 1000,
+          timeout: 5000,
           maximumAge: 0
         }
       );
@@ -239,6 +263,9 @@ export default function MapDashboard() {
               setdarkMode={setdarkMode}
               mapReference={mapReference}
               setMapReference={setMapReference}
+              userRoleVerified={userRoleVerified}
+              user={user}
+              isAuthenticated={isAuthenticated}
             />
           </Route>
           <Route path="/test">
@@ -277,6 +304,9 @@ export default function MapDashboard() {
               setdarkMode={setdarkMode}
               mapReference={mapReference}
               setMapReference={setMapReference}
+              userRoleVerified={userRoleVerified}
+              user={user}
+              isAuthenticated={isAuthenticated}
             />
             <StoryDisplay
               placement={placement}

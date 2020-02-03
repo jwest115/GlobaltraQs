@@ -64,9 +64,12 @@ export const personalIcon = new L.Icon({
   shadowAnchor: [20, 92]
 });
 const LeafletMap = props => {
+    console.log("----PLACEMENT----");
+    console.log(props.placement);
   let { path, url } = useRouteMatch();
   console.log(props.darkMode + " darkmode ");
-  const [userposition, setUserPosition] = useState([props.placement.userlat, props.placement.userlng]);
+  // need to enter props.placement directly - if not used directly, when placement is updated the marker does not center on proper coordinates
+  // const [userposition, setUserPosition] = useState([props.placement.userlat, props.placement.userlng]);
   // EsriProvider allows for zip code search - nominatum (OSM) does not
   // others include bing and google
   const [provider, setProvider] = useState(new EsriProvider()); // new OpenStreetMapProvider();
@@ -87,7 +90,17 @@ const LeafletMap = props => {
       keepResult: true
    });
 
-   const addressSearch = (e) => {
+  const centerMarker = (marker) => {
+    // setUserPosition([marker.latitude, marker.longitude]);
+
+    props.setPlacement({
+      id: marker.id,
+      userlat: marker.latitude,
+      userlng: marker.longitude
+    });
+  };
+
+  const addressSearch = (e) => {
     console.log(e);
     const longitude = e.location.x;
     const latitude = e.location.y;
@@ -103,9 +116,9 @@ const LeafletMap = props => {
          ...props.addPinValues,
       latitude: latitude,
       longitude: longitude
-    });
+  });
 
-    setUserPosition([latitude, longitude]);
+    // setUserPosition([latitude, longitude]);
     console.log(props.placement);
     console.log("was the coords");
     props.toggle();
@@ -118,6 +131,7 @@ const LeafletMap = props => {
       // });
     console.log("here");
   };
+
 
   // used for adding the map reference for fly to and address search
   useEffect(() => {
@@ -135,7 +149,7 @@ const LeafletMap = props => {
       {/*{props.mapReference ? console.log(props.mapReference) : " map is undefined"}*/}
       {props.setPinDeleted ? props.setPinDeleted(false) : ""}{" "}
       <Map
-        center={userposition}
+        center={[props.placement.userlat, props.placement.userlng]}
         zoom={15}
         maxZoom={30} //shows map
         id="map"
@@ -186,6 +200,7 @@ const LeafletMap = props => {
 
         <MarkerClusterGroup>
           {props.pins.map((marker, index) => {
+            let canManagePin = false;
             let post = [marker.latitude, marker.longitude];
             let categoryIcon = "";
             if (marker.category == 1) {
@@ -194,6 +209,12 @@ const LeafletMap = props => {
               categoryIcon = communityIcon;
             } else {
               categoryIcon = historicalIcon;
+            }
+
+            if(props.isAuthenticated) {
+                if(props.user.id == marker.owner || props.userRoleVerified) {
+                    canManagePin = true;
+                }
             }
 
             // if (isAuthenticated) {
@@ -244,29 +265,25 @@ const LeafletMap = props => {
                   <Link to={`${props.maplink}/${marker.id}`}>
                     <button
                       type="button"
-                      onClick={() =>
-                        props.setPlacement({
-                          id: marker.id,
-                          userlat: marker.latitude,
-                          userlng: marker.longitude
-                        })
-                      }
+                      onClick={() => centerMarker(marker)}
                       className="btn btn-primary btn-sm"
                     >
                       View Story
                     </button>
                   </Link>
-                  <div className="admin-moderator-edit">
-                    <button
-                      type="button"
-                      className="btn btn-primary btn-sm"
-                      onClick={e =>
-                        props.seteditpinmodalState(!props.editpinmodalState)
-                      }
-                    >
-                      Edit
-                    </button>
-                  </div>
+                    {canManagePin ? (
+                   <div>
+                   <div className="admin-moderator-edit">
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-sm"
+                          onClick={e =>
+                           props.seteditpinmodalState(!props.editpinmodalState)
+                          }
+                        >
+                        Edit
+                        </button>
+                   </div>
                   <button
                     type="button"
                     className="btn btn-primary btn-sm"
@@ -276,13 +293,15 @@ const LeafletMap = props => {
                   >
                     Delete
                   </button>
+                   </div>
+                    ) : null}
                 </Popup>
               </Marker>
             );
           })}
         </MarkerClusterGroup>
 
-        <Marker position={userposition} icon={defaultPointerIcon}></Marker>
+        <Marker position={[props.placement.userlat, props.placement.userlng]} icon={defaultPointerIcon}></Marker>
       </Map>
       <ModalPinForm
         toggle={props.toggle}
