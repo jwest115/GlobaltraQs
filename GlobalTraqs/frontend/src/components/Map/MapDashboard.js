@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { withLeaflet } from "react-leaflet";
-import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 
 import {
   getPins,
@@ -42,7 +42,6 @@ const sidebarStyle = {
 };
 
 export default function MapDashboard() {
-
   let { path, url } = useRouteMatch();
 
   const [divStyle, setdivStyle] = useState({
@@ -66,20 +65,18 @@ export default function MapDashboard() {
   const [userRoleVerified, setUserRoleVerified] = useState(false);
 
   useEffect(() => {
-     if (isAuthenticated) {
-        console.log("user is authenticated!");
-        if (user.is_administrator || user.is_moderator) {
-          console.log("user is an admin or moderator or owner!");
-          setUserRoleVerified(true);
-        }
-        else {
-          setUserRoleVerified(false);
-        }
-     }
-     else {
-       console.log("user is not authenticated");
-       setUserRoleVerified(false);
-     }
+    if (isAuthenticated) {
+      console.log("user is authenticated!");
+      if (user.is_administrator || user.is_moderator) {
+        console.log("user is an admin or moderator or owner!");
+        setUserRoleVerified(true);
+      } else {
+        setUserRoleVerified(false);
+      }
+    } else {
+      console.log("user is not authenticated");
+      setUserRoleVerified(false);
+    }
   });
 
   useEffect(() => {
@@ -205,7 +202,6 @@ export default function MapDashboard() {
       );
     }
   }
-
 
   const [userComment, setuserComment] = useState({
     pin: "",

@@ -24,24 +24,30 @@ const useAddPinForm = callback => {
   const handleAddPinSubmit = e => {
     if (e) e.preventDefault();
     let is_anonymous_pin = true;
-    if(isAuthenticated) {
-      if(!user.is_anonymous_active) {
+    if (isAuthenticated) {
+      if (!user.is_anonymous_active) {
         is_anonymous_pin = false;
       }
     }
-    const submit = { ...addPinValues, owner: isAuthenticated ? user.id : "", is_anonymous_pin: is_anonymous_pin };
+    const submit = {
+      ...addPinValues,
+      owner: isAuthenticated ? user.id : "",
+      is_anonymous_pin: is_anonymous_pin
+    };
     console.log(submit);
     dispatch(addPin(submit));
     callback();
+    setmodalstate(!modalState);
     setaddPinValues({
       category: 1,
       latitude: 34,
       longitude: -118,
       startDate: new Date(),
       endDate: new Date(),
-      anonradius: 1
+      anonradius: 1,
+      title: " ",
+      description: " "
     });
-    setmodalstate(!modalState);
   };
 
   const handleAddPinChange = e => {
