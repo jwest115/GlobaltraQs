@@ -23,7 +23,7 @@ import Story from "./components/Map/StoryTest";
 import { DisplayMap } from "./components/Map/DisplayMap";
 import Manage from "./components/AdminMod/Manage";
 import ManageUsers from "./components/AdminMod/ManageUsers";
-import ProfilePage from "./components/profile/ProfilePage";
+import ProfilePage from "./components/profile/ProfilePageHooks";
 import Settings from "./components/profile/Settings";
 import EditStory from "./components/Map/EditStory";
 import ManageFlag from "./components/AdminMod/ManageFlag";

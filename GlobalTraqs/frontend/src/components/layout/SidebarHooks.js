@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Component, Fragment } from "react";
-import { useSelector, useDispatch, useStore } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import connect from "react-redux/es/connect/connect";
 import Sidebar from "react-sidebar";

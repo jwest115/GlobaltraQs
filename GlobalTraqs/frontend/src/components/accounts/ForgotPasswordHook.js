@@ -7,6 +7,7 @@ export default function ForgotPassword() {
     const [email, setEmail] = useState('');
     const [showError, setShowError] = useState(false);
     const [messageFromServer, setMessageFromServer] = useState('');
+    // show null error?
 
     const sendEmail = e => {
         e.preventDefault();
@@ -60,7 +61,7 @@ export default function ForgotPassword() {
                             Forgot Password
                         </button>
                     </form>
-                    {showNullError && (
+                    {showNullError && ( //   ???????
                         <div>
                             <p className="text-danger">*You must input a email address </p>
                         </div>
