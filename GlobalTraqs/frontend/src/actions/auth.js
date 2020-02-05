@@ -13,6 +13,7 @@ import {
   GET_FLAG_STATE
 } from "./types";
 
+
 // CHECK TOKEN & LOAD USER
 export const loadUser = () => (dispatch, getState) => {
   // User Loading
