@@ -31,14 +31,20 @@ export default function(state = initialState, action) {
           userProfile: action.payload
     };
     case EDIT_USER:
-        return {
-          ...state,
-          user: action.payload,
-    };
+        if(action.payload == null) {
+           return {
+             ...state,
+           };
+        }
+        else {
+            return {
+              ...state,
+              user: action.payload,
+            };
+        }
     case DELETE_USER:
       return {
           ...state,
-          user: action.payload
       };
     case GET_USERS:
       return {

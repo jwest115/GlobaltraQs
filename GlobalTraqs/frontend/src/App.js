@@ -24,7 +24,7 @@ import { DisplayMap } from "./components/Map/DisplayMap";
 import Manage from "./components/AdminMod/Manage";
 import ManageUsers from "./components/AdminMod/ManageUsers";
 import ProfilePage from "./components/profile/ProfilePageHooks";
-import Settings from "./components/profile/Settings";
+import Settings from "./components/profile/SettingsHooks";
 import EditStory from "./components/Map/EditStory";
 import ManageFlag from "./components/AdminMod/ManageFlag";
 import ForgotPassword from "./components/accounts/ForgotPassword";

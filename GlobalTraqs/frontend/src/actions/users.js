@@ -14,14 +14,22 @@ export const getUsers = () => dispatch => {
         .catch(err => console.log(err));
 };
 
-export const editUser = (userId, user) => dispatch => {
+export const editUser = (userId, editorId, user) => dispatch => {
 console.log(user);
   axios.patch(`/api/auth/users/${userId}/`, user)
     .then(res => {
-      dispatch({
-        type: EDIT_USER,
-        payload: res.data
-      });
+        if(editorId == userId) {
+             dispatch({
+                type: EDIT_USER,
+                payload: res.data
+              });
+        }
+        else {
+            dispatch({
+                type: EDIT_USER,
+                payload: null
+              });
+        }
       console.log(res.data);
     })
     .catch(err => console.log(err));

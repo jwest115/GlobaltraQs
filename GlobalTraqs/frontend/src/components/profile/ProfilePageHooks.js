@@ -26,6 +26,7 @@ export default function ProfilePage(props) {
 
     const { isAuthenticated, user } = auth;
 
+
     const authLinks = (
       <Link to={`/users/${id}/settings`} params={{ testvalue: "hello" }}>
         <button type="button" className="btn btn-primary btn-sm">
@@ -34,10 +35,10 @@ export default function ProfilePage(props) {
       </Link>
     );
 
-    let isOwner = false;
+    let canEdit = false;
     if(isAuthenticated) {
-        if (user != null && user.id == id) {
-            isOwner = true;
+        if (user != null && user.id == id || user.is_administrator || user.is_moderator) {
+            canEdit = true;
         }
     }
 
@@ -60,7 +61,7 @@ export default function ProfilePage(props) {
                                 {userProfile.bio}
                             </p>
                         </Typography>
-                        {isOwner ? authLinks : ""}
+                        {canEdit ? authLinks : ""}
                     </div>
                     <div className="card">
                         <div className="card-body">
