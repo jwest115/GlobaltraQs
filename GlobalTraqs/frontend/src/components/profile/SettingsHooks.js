@@ -17,14 +17,23 @@ export default function Settings(props) {
     const [bio, setBio] = useState("");
     const { id } = props.match.params;
     const [checked, setChecked] = useState(false);
+    const [profileVisibilityChecked, setProfileVisibilityChecked] = useState(false);
 
-
-    const  updateAccessibility = () => {
+    const updateAccessibility = () => {
         setChecked(!checked);
         const accessibility_mode_active = !checked;
         console.log("accessibility....");
         console.log(userProfile.accessibility_mode_active);
         const userData = { accessibility_mode_active };
+        dispatch(editUser(id, user.id, userData));
+    };
+
+    const updateProfileVisibility = () => {
+        setProfileVisibilityChecked(!profileVisibilityChecked);
+        const is_profile_private = !profileVisibilityChecked;
+        console.log("profile visibility....");
+        console.log(userProfile.is_profile_private);
+        const userData = { is_profile_private };
         dispatch(editUser(id, user.id, userData));
     };
 
@@ -67,6 +76,7 @@ export default function Settings(props) {
             setBio(userProfile.bio);
             console.log(userProfile);
             setChecked(userProfile.accessibility_mode_active);
+            setProfileVisibilityChecked(user.is_profile_private);
         }
       }, userProfile);
 
@@ -92,6 +102,16 @@ export default function Settings(props) {
                   className="react-switch"
                   onChange={updateAccessibility}
                   checked={checked}
+                />
+              </div>
+                <div>
+                <br />
+
+                <span>Profile Visibility</span>
+                <Switch
+                  className="react-switch"
+                  onChange={updateProfileVisibility}
+                  checked={profileVisibilityChecked}
                 />
               </div>
 

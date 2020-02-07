@@ -66,22 +66,26 @@ export default function ProfilePage(props) {
                     <div className="card">
                         <div className="card-body">
                             {stories.map((story, index) => {
-                                return (
-                                    <div style={{padding: "20px"}} key={index}>
-                                        <h5 className="card-title">
-                                            {story.title} <br/>
-                                        </h5>
-                                        <Markup content={story.description}/>
-                                        <Link to={`/Story/${story.id}`}>
-                                            <button
-                                                type="button"
-                                                className="btn btn-primary btn-sm"
-                                            >
-                                                View Story
-                                            </button>
-                                        </Link>
-                                    </div>
-                                );
+                                if(!userProfile.is_profile_private || isAuthenticated && user.id == id) {
+                                    if (!story.is_anonymous_pin || isAuthenticated && user.id == id) {
+                                        return (
+                                            <div style={{padding: "20px"}} key={index}>
+                                                <h5 className="card-title">
+                                                    {story.title} <br/>
+                                                </h5>
+                                                <Markup content={story.description}/>
+                                                <Link to={`/Story/${story.id}`}>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-primary btn-sm"
+                                                    >
+                                                        View Story
+                                                    </button>
+                                                </Link>
+                                            </div>
+                                        );
+                                    }
+                                }
                             })}
                         </div>
                     </div>
