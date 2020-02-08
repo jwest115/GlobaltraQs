@@ -97,6 +97,24 @@ const LeafletMap = props => {
     keepResult: true
   });
 
+  const updatePin = marker => {
+    console.log("updating pin");
+     props.seteditPin({
+        id: marker.id,
+        title: marker.title,
+        description: marker.description,
+        category: marker.category,
+        startDate: marker.startDate,
+        endDate: marker.endDate
+     });
+     props.setPinData(marker);
+     props.setSidebarOpen(false);
+     if(!props.storySidebarOpen) {
+       props.setStorySidebarOpen(!props.storySidebarOpen);
+       console.log("story sidebar is " + !props.storySidebarOpen);
+     }
+  };
+
   const centerMarker = marker => {
     // setUserPosition([marker.latitude, marker.longitude]);
 
@@ -184,7 +202,7 @@ const LeafletMap = props => {
             <button
               className={"btn btn-primary"}
               id="open-sidebar-button"
-              onClick={() => props.setSidebarOpen(!props.sidebarOpen)}
+              onClick={() => { props.setStorySidebarOpen(false); props.setSidebarOpen(!props.sidebarOpen);}}
             >
               <SearchIcon></SearchIcon>
             </button>
@@ -252,16 +270,7 @@ const LeafletMap = props => {
                 key={index}
                 position={post}
                 icon={categoryIcon}
-                onClick={() =>
-                  props.seteditPin({
-                    id: marker.id,
-                    title: marker.title,
-                    description: marker.description,
-                    category: marker.category,
-                    startDate: marker.startDate,
-                    endDate: marker.endDate
-                  })
-                }
+                onClick={() => updatePin(marker) }
               >
                 <Popup>
                   <strong>{marker.title}</strong>

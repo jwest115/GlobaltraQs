@@ -25,6 +25,7 @@ import {
 import LeafletMap from "./LeafletMap";
 import SearchSidebar from "../layout/SidebarHooks";
 import Story from "./Story/Story";
+import StorySidebar from "../layout/StorySidebarHooks";
 
 const sidebarStyle = {
   position: "absolute",
@@ -108,9 +109,11 @@ export default function MapDashboard() {
   //opens modal for adding new pins
   const [editpinmodalState, seteditpinmodalState] = useState(false); // opens modal for editing pin
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [storySidebarOpen, setStorySidebarOpen] = useState(false);
   const [showSidebarButton, setShowSidebarButton] = useState(false);
   const [mapReference, setMapReference] = useState();
   const [map, setMap] = useState();
+  const [pinData, setPinData] = useState();
 
   console.log(isAuthenticated);
   console.log("is the auth");
@@ -229,6 +232,7 @@ export default function MapDashboard() {
           <Route exact path="/">
             <div id={"sidebar-style"}>
               <SearchSidebar sidebarOpen={sidebarOpen} />
+              <StorySidebar pinData={pinData} sidebarOpen={storySidebarOpen}/>
             </div>
             <LeafletMap
               maplink={"/test"}
@@ -267,6 +271,10 @@ export default function MapDashboard() {
               userRoleVerified={userRoleVerified}
               user={user}
               isAuthenticated={isAuthenticated}
+              storySidebarOpen={storySidebarOpen}
+              setStorySidebarOpen={setStorySidebarOpen}
+              pinData={pinData}
+              setPinData={setPinData}
             />
           </Route>
           <Route path="/test">
