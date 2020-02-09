@@ -26,3 +26,4 @@ export const GET_PINS_BY_OWNER = "GET_PINS_BY_OWNER";
 export const EDIT_USER = "EDIT_USER";
 export const UPDATE_ABOUT_US = "UPDATE_ABOUT_US";
 export const GET_ABOUT_US = "GET_ABOUT_US";
+export const USER_FLAG_PIN = "USER_FLAG_PIN";

@@ -71,10 +71,10 @@ export const personalIcon = new L.Icon({
   shadowAnchor: [20, 92]
 });
 const LeafletMap = props => {
-  console.log("----PLACEMENT----");
-  console.log(props.placement);
+  //  console.log("----PLACEMENT----");
+  //  console.log(props.placement);
   let { path, url } = useRouteMatch();
-  console.log(props.darkMode + " darkmode ");
+  //  console.log(props.darkMode + " darkmode ");
   // need to enter props.placement directly - if not used directly, when placement is updated the marker does not center on proper coordinates
   // const [userposition, setUserPosition] = useState([props.placement.userlat, props.placement.userlng]);
   // EsriProvider allows for zip code search - nominatum (OSM) does not
@@ -98,21 +98,21 @@ const LeafletMap = props => {
   });
 
   const updatePin = marker => {
-    console.log("updating pin");
-     props.seteditPin({
-        id: marker.id,
-        title: marker.title,
-        description: marker.description,
-        category: marker.category,
-        startDate: marker.startDate,
-        endDate: marker.endDate
-     });
-     props.setPinData(marker);
-     props.setSidebarOpen(false);
-     if(!props.storySidebarOpen) {
-       props.setStorySidebarOpen(!props.storySidebarOpen);
-       console.log("story sidebar is " + !props.storySidebarOpen);
-     }
+    //  console.log("updating pin");
+    props.seteditPin({
+      id: marker.id,
+      title: marker.title,
+      description: marker.description,
+      category: marker.category,
+      startDate: marker.startDate,
+      endDate: marker.endDate
+    });
+    props.setPinData(marker);
+    props.setSidebarOpen(false);
+    if (!props.storySidebarOpen) {
+      props.setStorySidebarOpen(!props.storySidebarOpen);
+      //  console.log("story sidebar is " + !props.storySidebarOpen);
+    }
   };
 
   const centerMarker = marker => {
@@ -126,12 +126,12 @@ const LeafletMap = props => {
   };
 
   const addressSearch = e => {
-    console.log(e);
+    //  console.log(e);
     const longitude = e.location.x;
     const latitude = e.location.y;
-    console.log("lat and lng");
-    console.log(longitude);
-    console.log(latitude);
+    //  console.log("lat and lng");
+    //  console.log(longitude);
+    //  console.log(latitude);
     props.setPlacement({
       id: "",
       userlat: latitude,
@@ -144,17 +144,17 @@ const LeafletMap = props => {
     });
 
     // setUserPosition([latitude, longitude]);
-    console.log(props.placement);
-    console.log("was the coords");
+    //  console.log(props.placement);
+    //  console.log("was the coords");
     props.toggle();
     // this.setState({userlat : latitude, userlng: longitude, modal: true});
 
     // .search({ query: this.state.searchText })
     // .then(function(result) {
     //   // do something with result;
-    //   console.log(result)
+
     // });
-    console.log("here");
+    //  console.log("here");
   };
 
   // used for adding the map reference for fly to and address search
@@ -162,7 +162,7 @@ const LeafletMap = props => {
     if (mapInstance) {
       let map = mapInstance.leafletElement;
       props.setMapReference(mapInstance.leafletElement);
-      console.log("trying to add address");
+      //  console.log("trying to add address");
       map.addControl(searchControl);
       map.on("geosearch/showlocation", addressSearch);
     }
@@ -202,7 +202,10 @@ const LeafletMap = props => {
             <button
               className={"btn btn-primary"}
               id="open-sidebar-button"
-              onClick={() => { props.setStorySidebarOpen(false); props.setSidebarOpen(!props.sidebarOpen);}}
+              onClick={() => {
+                props.setStorySidebarOpen(false);
+                props.setSidebarOpen(!props.sidebarOpen);
+              }}
             >
               <SearchIcon></SearchIcon>
             </button>
@@ -244,7 +247,7 @@ const LeafletMap = props => {
             }
 
             // if (isAuthenticated) {
-            //   console.log("user is authenticated!");
+            // //  console.log("user is authenticated!");
             //   if (
             //     user.is_administrator ||
             //     user.is_moderator ||
@@ -270,7 +273,7 @@ const LeafletMap = props => {
                 key={index}
                 position={post}
                 icon={categoryIcon}
-                onClick={() => updatePin(marker) }
+                onClick={() => updatePin(marker)}
               >
                 <Popup>
                   <strong>{marker.title}</strong>

@@ -8,23 +8,26 @@ import {
   GET_UPVOTE,
   ADD_COMMENT,
   DELETE_COMMENT,
-  GET_PINS_BY_OWNER
+  GET_PINS_BY_OWNER,
+  USER_FLAG_PIN
 } from "../actions/types.js";
-
 
 const initialState = {
   pins: [],
   pin: [],
-  upvote: false
+  upvote: false,
+  flagState: false,
+  validUser: false,
+  pinId: 0
 };
-        
+
 export default function(state = initialState, action) {
   switch (action.type) {
-       case GET_PINS_BY_OWNER:
-            return {
-                ...state,
-                pins: action.payload
-            };
+    case GET_PINS_BY_OWNER:
+      return {
+        ...state,
+        pins: action.payload
+      };
     case SEARCH_PINS:
       return {
         ...state,
@@ -33,7 +36,10 @@ export default function(state = initialState, action) {
     case GET_PIN:
       return {
         ...state,
-        pin: action.payload
+        pin: action.payload,
+        validUser: action.payload.validUser,
+        flagState: action.payload.flagState,
+        pinId: action.payload.id
       };
     case GET_PINS:
       return {
@@ -86,6 +92,17 @@ export default function(state = initialState, action) {
       return {
         ...state,
         pin: delComment
+      };
+    case USER_FLAG_PIN:
+      const userFlag = {
+        ...state.pin,
+        flaggerstory: [...state.pin.flaggerstory, action.payload],
+        flagState: true
+      };
+      console.log(action.payload);
+      return {
+        ...state,
+        pin: userFlag
       };
     default:
       return state;

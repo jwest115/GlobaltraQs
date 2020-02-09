@@ -7,7 +7,7 @@ const useAddPinForm = callback => {
   const dispatch = useDispatch();
   const { isAuthenticated, user } = auth;
   let x = new Date();
-  console.log(moment().format("MM/DD/YYYY"));
+
   const [modalState, setmodalstate] = useState(false);
 
   const [addPinValues, setaddPinValues] = useState({
@@ -34,7 +34,7 @@ const useAddPinForm = callback => {
       owner: isAuthenticated ? user.id : "",
       is_anonymous_pin: is_anonymous_pin
     };
-    console.log(submit);
+
     dispatch(addPin(submit));
     callback();
     setmodalstate(!modalState);
