@@ -51,14 +51,11 @@ function Story(props) {
         {/* {props.pin.updooots} upvotes */}
         {props.pin.updooots} upvotes
         {/* need to figure out a way to update upvotes maybe websockets  */}
-        {/*    {isAuthenticated
-          ? props.pin &&
-            props.pin.updotes && (
-              <Upvote pin={pin.updotes} userid={user.id} numOf={pin.updooots} />
-            )
-          : upvoteButoon} */}
+        {props.isAuthenticated
+          ? props.pin && props.pin.updotes && <Upvote {...props} />
+          : upvoteButoon}
         &nbsp;&nbsp;&nbsp;
-        {isAuthenticated
+        {props.isAuthenticated
           ? props.pin && props.pin.flaggerstory && <Flag {...props} />
           : ""}
       </h6>

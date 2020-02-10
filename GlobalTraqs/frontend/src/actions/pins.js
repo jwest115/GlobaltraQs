@@ -13,7 +13,9 @@ import {
   DELETE_COMMENT,
   GET_PINS_BY_OWNER,
   GET_PIN_BY_ID,
-  USER_FLAG_PIN
+  USER_FLAG_PIN,
+  USER_FIRST_UPVOTE,
+  USER_UPVOTE
 } from "./types";
 
 //GET PINS
@@ -96,12 +98,22 @@ export const getPin = (id, userid) => dispatch => {
     .then(res => {
       let validUser = false;
       let flagstateofuser = false;
+      let upvotedBefore = false;
+      let userCurrentUpvote = false;
       if (userid) {
         flagstateofuser = res.data.flaggerstory.some(a => a.flagger === userid);
+        upvotedBefore = res.data.updotes.some(b => b.upVoter === userid);
+        if (upvotedBefore)
+          userCurrentUpvote = res.data.updotes.filter(
+            b => b.upVoter === userid
+          )[0].upvote;
         validUser = true;
+        console.log("has this user upvoted before" + upvotedBefore);
       }
       const payload = {
         ...res.data,
+        userCurrentUpvote: userCurrentUpvote,
+        upvotedBefore: upvotedBefore,
         validUser: validUser,
         flagState: flagstateofuser
       };
@@ -170,7 +182,7 @@ export const userFlagPin = (pin, user, state) => dispatch => {
     pinId: pin,
     flagger: user
   };
-  console.log;
+
   axios
     .post(`api/flagStory/`, userflagged)
     .then(res => {
@@ -181,6 +193,40 @@ export const userFlagPin = (pin, user, state) => dispatch => {
       console.log(res.data);
       dispatch({
         type: USER_FLAG_PIN,
+        payload: res.data
+      });
+    })
+    .catch(error => console.log(error));
+};
+
+export const userFirstUpvote = (pin, user) => dispatch => {
+  console.log("over here");
+  const submit = {
+    upvote: true,
+    pinId: pin,
+    upVoter: user
+  };
+  axios
+    .post(`api/upVoteStory/`, submit)
+    .then(res => {
+      dispatch({
+        type: USER_FIRST_UPVOTE,
+        payload: res.data
+      });
+    })
+    .catch(error => console.log(error));
+};
+
+export const userUpovte = (id, state) => dispatch => {
+  const submit = {
+    upvote: !state
+  };
+  console.log(submit);
+  axios
+    .patch(`api/upVoteStory/${id}/`, submit)
+    .then(res => {
+      dispatch({
+        type: USER_UPVOTE,
         payload: res.data
       });
     })
