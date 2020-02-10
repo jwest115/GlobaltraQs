@@ -81,9 +81,31 @@ export const editPin = (pin, id) => dispatch => {
   axios
     .patch(`/api/pins/${id}/`, pin)
     .then(res => {
+      console.log(res.data);
+      let validUser = false;
+      let flagstateofuser = false;
+      let upvotedBefore = false;
+      let userCurrentUpvote = false;
+      if (userid) {
+        flagstateofuser = res.data.flaggerstory.some(a => a.flagger === userid);
+        upvotedBefore = res.data.updotes.some(b => b.upVoter === userid);
+        if (upvotedBefore)
+          userCurrentUpvote = res.data.updotes.filter(
+            b => b.upVoter === userid
+          )[0].upvote;
+        validUser = true;
+        console.log("has this user upvoted before" + upvotedBefore);
+      }
+      const payload = {
+        ...res.data,
+        userCurrentUpvote: userCurrentUpvote,
+        upvotedBefore: upvotedBefore,
+        validUser: validUser,
+        flagState: flagstateofuser
+      };
       dispatch({
         type: EDIT_PIN,
-        payload: res.data
+        payload: payload
       });
       console.log("In edit pin");
       console.log(res.data);
