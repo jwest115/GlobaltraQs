@@ -12,7 +12,8 @@ import {
   ADD_COMMENT,
   DELETE_COMMENT,
   GET_PINS_BY_OWNER,
-  GET_PIN_BY_ID
+  GET_PIN_BY_ID,
+  USER_FLAG_PIN
 } from "./types";
 
 //GET PINS
@@ -88,20 +89,30 @@ export const editPin = (pin, id) => dispatch => {
     .catch(err => console.log(err));
 };
 
-export const getPin = id => dispatch => {
+export const getPin = (id, userid) => dispatch => {
+  console.log("the user id in redux" + userid);
   axios
     .get(`api/pins/${id}/`)
     .then(res => {
+      let validUser = false;
+      let flagstateofuser = false;
+      if (userid) {
+        flagstateofuser = res.data.flaggerstory.some(a => a.flagger === userid);
+        validUser = true;
+      }
+      const payload = {
+        ...res.data,
+        validUser: validUser,
+        flagState: flagstateofuser
+      };
+
       dispatch({
         type: GET_PIN,
-        payload: res.data
+        payload: payload
       });
-      console.log(res.data);
-      console.log("is the pin!");
     })
     .catch(error => console.log(error));
 };
-
 export const getUpvote = (pinId, userid) => {
   axios
     .get(`api/upVoteStory?pinId=${pinId}&userid=${userid}`)
@@ -149,6 +160,29 @@ export const getPinsByOwner = ownerId => dispatch => {
       });
       console.log(res.data);
       console.log("is owner's pin!");
+    })
+    .catch(error => console.log(error));
+};
+
+export const userFlagPin = (pin, user, state) => dispatch => {
+  const userflagged = {
+    flagged: true,
+    pinId: pin,
+    flagger: user
+  };
+  console.log;
+  axios
+    .post(`api/flagStory/`, userflagged)
+    .then(res => {
+      const flagData = {
+        ...res.data,
+        flagState: true
+      };
+      console.log(res.data);
+      dispatch({
+        type: USER_FLAG_PIN,
+        payload: res.data
+      });
     })
     .catch(error => console.log(error));
 };

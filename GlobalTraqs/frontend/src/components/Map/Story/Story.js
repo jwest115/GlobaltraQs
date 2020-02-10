@@ -11,8 +11,8 @@ import {
 } from "react-router-dom";
 import Upvote from "./Upvote";
 import Flag from "./Flag";
-import Moment from 'react-moment';
-import Markup from 'interweave';
+import Moment from "react-moment";
+import Markup from "interweave";
 
 const storyBody = {
   paddingTop: "50px",
@@ -22,7 +22,7 @@ const storyBody = {
 function Story(props) {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
-
+  console.log(props.pin);
   const { isAuthenticated, user } = auth;
 
   const [flagState, setflagState] = useState(false);
@@ -38,14 +38,18 @@ function Story(props) {
       </h2>
       <p>
         {" "}
-          <Moment format="MM/DD/YYYY">{props.pin.startDate}</Moment> - <Moment format="MM/DD/YYYY">{props.pin.endDate}</Moment>
-        {" "}
+        <Moment format="MM/DD/YYYY">{props.pin.startDate}</Moment> -{" "}
+        <Moment format="MM/DD/YYYY">{props.pin.endDate}</Moment>{" "}
       </p>
       {/* <p>By: {authorName}</p> */}
-      { props.pin.is_anonymous_pin ? <p>By: Anonymous</p> : <p>By: {props.pin.username}</p> }
+      {props.pin.is_anonymous_pin ? (
+        <p>By: Anonymous</p>
+      ) : (
+        <p>By: {props.pin.username}</p>
+      )}
       <h6>
         {/* {props.pin.updooots} upvotes */}
-        {isAuthenticated ? "" : props.pin.updooots && " upvotes"}
+        {props.pin.updooots} upvotes
         {/* need to figure out a way to update upvotes maybe websockets  */}
         {/*    {isAuthenticated
           ? props.pin &&
@@ -54,16 +58,12 @@ function Story(props) {
             )
           : upvoteButoon} */}
         &nbsp;&nbsp;&nbsp;
-        {/*    {isAuthenticated
-          ? pin &&
-            pin.flaggerstory && (
-              <Flag userid={user.id} flag={pin.flaggerstory} />
-            )
-          : ""} */}
+        {isAuthenticated
+          ? props.pin && props.pin.flaggerstory && <Flag {...props} />
+          : ""}
       </h6>
       <hr></hr>
-      <Markup content={props.pin.description}/>
-
+      <Markup content={props.pin.description} />
       {props.pin && props.pin.commentstory && (
         <CommentStory
           user={user}

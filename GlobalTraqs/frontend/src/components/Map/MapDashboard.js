@@ -67,15 +67,15 @@ export default function MapDashboard() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      console.log("user is authenticated!");
+      // console.log("user is authenticated!");
       if (user.is_administrator || user.is_moderator) {
-        console.log("user is an admin or moderator or owner!");
+        // console.log("user is an admin or moderator or owner!");
         setUserRoleVerified(true);
       } else {
         setUserRoleVerified(false);
       }
     } else {
-      console.log("user is not authenticated");
+      // console.log("user is not authenticated");
       setUserRoleVerified(false);
     }
   });
@@ -97,10 +97,10 @@ export default function MapDashboard() {
     setAnonRadius
   } = useAddPinForm(userAddedPin);
   function userAddedPin() {
-    console.log(mapReference);
-    console.log("is the ref");
+    // console.log(mapReference);
+    // console.log("is the ref");
     mapReference.flyTo([addPinValues.latitude, addPinValues.longitude], 15);
-    console.log(addPinValues);
+    // console.log(addPinValues);
   }
 
   const auth = useSelector(state => state.auth);
@@ -115,9 +115,6 @@ export default function MapDashboard() {
   const [map, setMap] = useState();
   const [pinData, setPinData] = useState();
 
-  console.log(isAuthenticated);
-  console.log("is the auth");
-
   const [editPinForm, seteditPinForm] = useState({
     //fields for editng
     id: "1",
@@ -131,20 +128,21 @@ export default function MapDashboard() {
     e.preventDefault();
 
     dispatch(editPin(editPinForm, editPinForm.id));
-    editToggle();
-    seteditPinForm({
-      //clears
-      id: "",
-      title: "",
-      description: "",
-      category: 1
+    setPinData({
+        ...pinData,
+        title: editPinForm.title,
+        description: editPinForm.description,
+        category: editPinForm.category,
+        startDate: editPinForm.startDate,
+        endDate: editPinForm.endDate
     });
+    editToggle();
   };
 
   const addMarker = e => {
-    console.log("here in add marker");
-    console.log("lat and lng");
-    console.log(e.latlng);
+    // console.log("here in add marker");
+    // console.log("lat and lng");
+    // console.log(e.latlng);
     setplacement({
       ...placement,
       userlat: e.latlng.lat,
@@ -176,9 +174,10 @@ export default function MapDashboard() {
 
   const onDelete = e => {
     e.preventDefault();
+    console.log("setting sidebar " + !storySidebarOpen);
+    setStorySidebarOpen(!storySidebarOpen);
     dispatch(deletePins(editPinForm.id));
     toggleDelete();
-    console.log("confirm delted" + editPinForm.id);
     // setPinDeleted(true);
   };
 
@@ -186,7 +185,6 @@ export default function MapDashboard() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         succes => {
-          console.log(succes.coords.latitude + "" + succes.coords.longitude);
           setplacement({
             ...placement,
             userlat: succes.coords.latitude,
@@ -232,7 +230,17 @@ export default function MapDashboard() {
           <Route exact path="/">
             <div id={"sidebar-style"}>
               <SearchSidebar sidebarOpen={sidebarOpen} />
-              <StorySidebar pinData={pinData} sidebarOpen={storySidebarOpen}/>
+              <StorySidebar
+                  pinData={pinData}
+                  storySidebarOpen={storySidebarOpen}
+                  isAuthenticated={isAuthenticated}
+                  user={user}
+                  userRoleVerified={userRoleVerified}
+                  editpinmodalState={editpinmodalState}
+                  seteditpinmodalState={seteditpinmodalState}
+                  deleteConfirmation={deleteConfirmation}
+                  setDeleteConfirmation={setDeleteConfirmation}
+              />
             </div>
             <LeafletMap
               maplink={"/test"}
@@ -316,6 +324,7 @@ export default function MapDashboard() {
               userRoleVerified={userRoleVerified}
               user={user}
               isAuthenticated={isAuthenticated}
+              setPinData={setPinData}
             />
             <StoryDisplay
               placement={placement}
@@ -326,6 +335,8 @@ export default function MapDashboard() {
               setuserComment={setuserComment}
               onSubmitComment={onSubmitComment}
               onDeleteComment={onDeleteComment}
+              user={user}
+              isAuthenticated={isAuthenticated}
             />
           </Route>
         </Switch>
@@ -363,8 +374,8 @@ function IndividualStory(props) {
   const dispatch = useDispatch();
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
-
-  useEffect(() => dispatch(getPin(id)), [id]);
+  const userid = isAuthenticated ? user.id : false;
+  useEffect(() => dispatch(getPin(id, userid)), [id]);
   useEffect(
     () =>
       props.setuserComment({
@@ -374,8 +385,5 @@ function IndividualStory(props) {
     [id]
   );
 
-  console.log(pin);
-  return (
-    <Story pin={pin} user={user} isAuthenticated={isAuthenticated} {...props} />
-  );
+  return <Story pin={pin} {...props} />;
 }
