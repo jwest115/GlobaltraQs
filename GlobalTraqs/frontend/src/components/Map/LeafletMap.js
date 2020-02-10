@@ -17,7 +17,8 @@ import {
   Route,
   Link,
   useParams,
-  useRouteMatch
+  useRouteMatch,
+  useHistory
 } from "react-router-dom";
 import Control from "react-leaflet-control";
 import ModalEditPinForm from "./ModalEditPinForm";
@@ -81,6 +82,7 @@ const LeafletMap = props => {
   // others include bing and google
   const [provider, setProvider] = useState(new EsriProvider()); // new OpenStreetMapProvider();
   // can change provider to preference
+  let history = useHistory(); // should be called inside react component
 
   const [mapInstance, setMapInstance] = useState();
   // const [map, setMap] = useState();
@@ -98,20 +100,35 @@ const LeafletMap = props => {
   });
 
   const updatePin = marker => {
-    //  console.log("updating pin");
-    props.seteditPin({
-      id: marker.id,
-      title: marker.title,
-      description: marker.description,
-      category: marker.category,
-      startDate: marker.startDate,
-      endDate: marker.endDate
-    });
-    props.setPinData(marker);
-    props.setSidebarOpen(false);
-    if (!props.storySidebarOpen) {
-      props.setStorySidebarOpen(!props.storySidebarOpen);
-      //  console.log("story sidebar is " + !props.storySidebarOpen);
+    if(props.isIndividualStoryPage) {
+      props.seteditPin({
+        id: marker.id,
+        title: marker.title,
+        description: marker.description,
+        category: marker.category,
+        startDate: marker.startDate,
+        endDate: marker.endDate
+      });
+      console.log("should change url params");
+      props.setPinData(marker);
+      history.push(`${props.maplink}/${marker.id}`);
+    }
+    else {
+      //  console.log("updating pin");
+      props.seteditPin({
+        id: marker.id,
+        title: marker.title,
+        description: marker.description,
+        category: marker.category,
+        startDate: marker.startDate,
+        endDate: marker.endDate
+      });
+      props.setPinData(marker);
+      props.setSidebarOpen(false);
+      if (!props.storySidebarOpen) {
+        props.setStorySidebarOpen(!props.storySidebarOpen);
+        //  console.log("story sidebar is " + !props.storySidebarOpen);
+      }
     }
   };
 
@@ -274,51 +291,13 @@ const LeafletMap = props => {
                 key={index}
                 position={post}
                 icon={categoryIcon}
-                onClick={() => updatePin(marker)}
+                onClick={() => { centerMarker(marker); updatePin(marker); }}
                 onMouseOver={(e) => { e.target.openPopup(); }}
                 onMouseOut={(e) => { e.target.closePopup(); }}
 
               >
                 <Popup>
                   <strong>{marker.title}</strong>
-                  <br />
-                  <Markup content={marker.description} />
-                  <br />
-                  <br />
-
-                  <Link to={`${props.maplink}/${marker.id}`}>
-                    <button
-                      type="button"
-                      onClick={() => centerMarker(marker)}
-                      className="btn btn-primary btn-sm"
-                    >
-                      View Story
-                    </button>
-                  </Link>
-                  {canManagePin ? (
-                    <div>
-                      <div className="admin-moderator-edit">
-                        <button
-                          type="button"
-                          className="btn btn-primary btn-sm"
-                          onClick={e =>
-                            props.seteditpinmodalState(!props.editpinmodalState)
-                          }
-                        >
-                          Edit
-                        </button>
-                      </div>
-                      <button
-                        type="button"
-                        className="btn btn-primary btn-sm"
-                        onClick={e =>
-                          props.setDeleteConfirmation(!props.deleteConfirmation)
-                        }
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  ) : null}
                 </Popup>
               </Marker>
             );

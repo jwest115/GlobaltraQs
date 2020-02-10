@@ -178,7 +178,7 @@ export default function MapDashboard() {
     setStorySidebarOpen(!storySidebarOpen);
     dispatch(deletePins(editPinForm.id));
     toggleDelete();
-    // setPinDeleted(true);
+    setPinDeleted(true);
   };
 
   function getLocation() {
@@ -231,6 +231,7 @@ export default function MapDashboard() {
             <div id={"sidebar-style"}>
               <SearchSidebar sidebarOpen={sidebarOpen} />
               <StorySidebar
+                  maplink={"/test"}
                   pinData={pinData}
                   storySidebarOpen={storySidebarOpen}
                   isAuthenticated={isAuthenticated}
@@ -286,7 +287,6 @@ export default function MapDashboard() {
             />
           </Route>
           <Route path="/test">
-            {pinDeleted ? <Redirect to={"/"} /> : null}
             <LeafletMap
               maplink={"/test"}
               pins={pins}
@@ -325,6 +325,7 @@ export default function MapDashboard() {
               user={user}
               isAuthenticated={isAuthenticated}
               setPinData={setPinData}
+              isIndividualStoryPage={true}
             />
             <StoryDisplay
               placement={placement}
@@ -337,6 +338,13 @@ export default function MapDashboard() {
               onDeleteComment={onDeleteComment}
               user={user}
               isAuthenticated={isAuthenticated}
+              userRoleVerified={userRoleVerified}
+              editpinmodalState={editpinmodalState}
+              seteditpinmodalState={seteditpinmodalState}
+              deleteConfirmation={deleteConfirmation}
+              setDeleteConfirmation={setDeleteConfirmation}
+              pinDeleted={pinDeleted}
+              setPinDeleted={setPinDeleted}
             />
           </Route>
         </Switch>

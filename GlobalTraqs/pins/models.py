@@ -77,6 +77,7 @@ class flagStory(models.Model):
 class commentStory(models.Model):
     pin = models.ForeignKey(
         "pin", on_delete=models.CASCADE, null=True,  related_name='commentstory')
+    is_anonymous_comment = models.BooleanField(default=False)
     commenter = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     description = models.TextField()

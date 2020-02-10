@@ -91,6 +91,15 @@ function StorySidebar(props)  {
                                </button>
                            </div>
                        ) : null}
+                       <Link to={`${props.maplink}/${props.pinData.id}`}>
+                        <button
+                          type="button"
+                          // onClick={() => centerMarker(marker)}
+                          className="btn btn-primary btn-sm"
+                        >
+                          View Story
+                        </button>
+                      </Link>
                    </div>
                }
                open={props.storySidebarOpen}

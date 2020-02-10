@@ -6,6 +6,7 @@ import {
   Switch,
   Route,
   Link,
+  Redirect,
   useParams,
   useRouteMatch
 } from "react-router-dom";
@@ -20,18 +21,53 @@ const storyBody = {
   paddingRight: "50px"
 };
 function Story(props) {
-  const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
   console.log(props.pin);
-  const { isAuthenticated, user } = auth;
 
   const [flagState, setflagState] = useState(false);
 
   const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
 
+  if (props.pinDeleted) {
+      props.setPinDeleted(false);
+      return <Redirect to="/test" />;
+  }
+
+  let canManagePin = false;
+
+  if (props.isAuthenticated) {
+      if (props.user.id == props.pin.owner || props.userRoleVerified) {
+        canManagePin = true;
+      }
+  }
+
   //console.log(pin.flaggerstory);
   return (
     <div className="container-fluid" style={storyBody}>
+        {canManagePin ? (
+           <div>
+               <div className="admin-moderator-edit">
+                   <button
+                       type="button"
+                       className="btn btn-primary btn-sm"
+                       onClick={e =>
+                           props.seteditpinmodalState(!props.editpinmodalState)
+                       }
+                   >
+                       Edit
+                   </button>
+               </div>
+               <button
+                   type="button"
+                   className="btn btn-primary btn-sm"
+                   onClick={e =>
+                       props.setDeleteConfirmation(!props.deleteConfirmation)
+                   }
+               >
+                   Delete
+               </button>
+           </div>
+       ) : null}
       {" "}
       <h2>
         <strong>{props.pin.title}</strong>
@@ -58,7 +94,7 @@ function Story(props) {
             )
           : upvoteButoon} */}
         &nbsp;&nbsp;&nbsp;
-        {isAuthenticated
+        {props.isAuthenticated
           ? props.pin && props.pin.flaggerstory && <Flag {...props} />
           : ""}
       </h6>
@@ -66,7 +102,7 @@ function Story(props) {
       <Markup content={props.pin.description} />
       {props.pin && props.pin.commentstory && (
         <CommentStory
-          user={user}
+          user={props.user}
           comment={props.pin.commentstory}
           toggleComment={props.toggleComment}
           settoggleComment={props.settoggleComment}
