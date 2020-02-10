@@ -9,7 +9,9 @@ import {
   ADD_COMMENT,
   DELETE_COMMENT,
   GET_PINS_BY_OWNER,
-  USER_FLAG_PIN
+  USER_FLAG_PIN,
+  USER_FIRST_UPVOTE,
+  USER_UPVOTE
 } from "../actions/types.js";
 
 const initialState = {
@@ -103,6 +105,37 @@ export default function(state = initialState, action) {
       return {
         ...state,
         pin: userFlag
+      };
+    case USER_FIRST_UPVOTE:
+      const userFirstUpvote = {
+        ...state.pin,
+        updotes: [...state.pin.updotes, action.payload],
+        upvotedBefore: true,
+        userCurrentUpvote: true,
+        updooots: state.pin.updooots + 1
+      };
+      return {
+        ...state,
+        pin: userFirstUpvote
+      };
+    case USER_UPVOTE:
+      const userupvotes = 0;
+
+      const userUp = {
+        ...state.pin,
+        updotes: [
+          ...state.pin.updotes.filter(x => x.id !== action.payload.id),
+          action.payload
+        ],
+        userCurrentUpvote: action.payload.upvote,
+        updooots: action.payload.upvote
+          ? state.pin.updooots + 1
+          : state.pin.updooots - 1
+        // updooots: action.payload.upvote ? pin.updooots++ : pin.updoots--
+      };
+      return {
+        ...state,
+        pin: userUp
       };
     default:
       return state;

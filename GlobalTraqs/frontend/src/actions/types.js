@@ -27,3 +27,5 @@ export const EDIT_USER = "EDIT_USER";
 export const UPDATE_ABOUT_US = "UPDATE_ABOUT_US";
 export const GET_ABOUT_US = "GET_ABOUT_US";
 export const USER_FLAG_PIN = "USER_FLAG_PIN";
+export const USER_FIRST_UPVOTE = "USER_FIRST_UPVOTE";
+export const USER_UPVOTE = "USER_UPVOTE";

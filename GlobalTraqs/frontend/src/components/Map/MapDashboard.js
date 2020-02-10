@@ -128,7 +128,7 @@ export default function MapDashboard() {
     e.preventDefault();
 
     dispatch(editPin(editPinForm, editPinForm.id));
-    setPinData({
+     setPinData({
         ...pinData,
         title: editPinForm.title,
         description: editPinForm.description,
@@ -287,6 +287,7 @@ export default function MapDashboard() {
             />
           </Route>
           <Route path="/test">
+            {pinDeleted ? <Redirect to={"/"} /> : null}
             <LeafletMap
               maplink={"/test"}
               pins={pins}

@@ -75,6 +75,7 @@ const LeafletMap = props => {
   //  console.log("----PLACEMENT----");
   //  console.log(props.placement);
   let { path, url } = useRouteMatch();
+  const history = useHistory();
   //  console.log(props.darkMode + " darkmode ");
   // need to enter props.placement directly - if not used directly, when placement is updated the marker does not center on proper coordinates
   // const [userposition, setUserPosition] = useState([props.placement.userlat, props.placement.userlng]);
@@ -82,7 +83,6 @@ const LeafletMap = props => {
   // others include bing and google
   const [provider, setProvider] = useState(new EsriProvider()); // new OpenStreetMapProvider();
   // can change provider to preference
-  let history = useHistory(); // should be called inside react component
 
   const [mapInstance, setMapInstance] = useState();
   // const [map, setMap] = useState();
@@ -100,7 +100,7 @@ const LeafletMap = props => {
   });
 
   const updatePin = marker => {
-    if(props.isIndividualStoryPage) {
+     if(props.isIndividualStoryPage) {
       props.seteditPin({
         id: marker.id,
         title: marker.title,
@@ -294,7 +294,6 @@ const LeafletMap = props => {
                 onClick={() => { centerMarker(marker); updatePin(marker); }}
                 onMouseOver={(e) => { e.target.openPopup(); }}
                 onMouseOut={(e) => { e.target.closePopup(); }}
-
               >
                 <Popup>
                   <strong>{marker.title}</strong>

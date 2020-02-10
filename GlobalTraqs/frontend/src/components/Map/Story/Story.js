@@ -21,8 +21,10 @@ const storyBody = {
   paddingRight: "50px"
 };
 function Story(props) {
+  const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
   console.log(props.pin);
+  const { isAuthenticated, user } = auth;
 
   const [flagState, setflagState] = useState(false);
 
@@ -44,7 +46,7 @@ function Story(props) {
   //console.log(pin.flaggerstory);
   return (
     <div className="container-fluid" style={storyBody}>
-        {canManagePin ? (
+         {canManagePin ? (
            <div>
                <div className="admin-moderator-edit">
                    <button
@@ -87,12 +89,9 @@ function Story(props) {
         {/* {props.pin.updooots} upvotes */}
         {props.pin.updooots} upvotes
         {/* need to figure out a way to update upvotes maybe websockets  */}
-        {/*    {isAuthenticated
-          ? props.pin &&
-            props.pin.updotes && (
-              <Upvote pin={pin.updotes} userid={user.id} numOf={pin.updooots} />
-            )
-          : upvoteButoon} */}
+        {props.isAuthenticated
+          ? props.pin && props.pin.updotes && <Upvote {...props} />
+          : upvoteButoon}
         &nbsp;&nbsp;&nbsp;
         {props.isAuthenticated
           ? props.pin && props.pin.flaggerstory && <Flag {...props} />
@@ -102,7 +101,7 @@ function Story(props) {
       <Markup content={props.pin.description} />
       {props.pin && props.pin.commentstory && (
         <CommentStory
-          user={props.user}
+          user={user}
           comment={props.pin.commentstory}
           toggleComment={props.toggleComment}
           settoggleComment={props.settoggleComment}
