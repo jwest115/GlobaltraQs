@@ -1,43 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
   useParams,
-  useRouteMatch
+  useRouteMatch,
+  useLocation
 } from "react-router-dom";
-import Header from "./Header";
+import { useSelector, useDispatch, useStore } from "react-redux";
 import ManageFlag from "./ManageFlag";
+
 export default function Manage() {
   let { path, url } = useRouteMatch();
   console.log("the path is " + path + " and the url is " + url);
-  return (
-    <>
-      <div className="container-fluid">
-        {" "}
-        <div>
-          <ul>
-            <li>
-              <Link to={`/manage/flag`}>Check Flags</Link>
-            </li>
-            <li>
-              <Link to={`manage/users`}>Manage user</Link>
-            </li>
-          </ul>
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+  const { isAuthenticated, user } = auth;
 
-          <hr />
-        </div>
-        <Switch>
-          <Route exact path={path}>
-            <h3>Please select a topic.</h3>
-          </Route>
-          <Route path={`${path}/:setting`}>
-            <MainManage />
-          </Route>
-        </Switch>
+  return (
+    <div className="container-fluid">
+      {" "}
+      <div>
+        <ul>
+          <li>
+            <Link to={`/manage`}>Manage</Link>
+          </li>
+          <li>
+            <Link to={`/manage/flag`}>Check Flags</Link>
+          </li>
+          <li>
+            <Link to={`/manage/users`}>Manage user</Link>
+          </li>
+        </ul>
+
+        <hr />
       </div>
-    </>
+      <Switch>
+        <Route exact path={`/manage`}>
+          <h3>Please select a topic.</h3>
+          {path}
+          <Locate />
+        </Route>
+        <Route path={`/manage/flag`}>flag</Route>
+        <Route path={`/manage/users`}>users</Route>
+      </Switch>
+    </div>
   );
 }
 
@@ -50,4 +58,9 @@ function MainManage() {
       <h2>this is admin mod manage</h2>
     </div>
   );
+}
+
+function Locate() {
+  let location = useLocation();
+  return <div>{location.pathname}</div>;
 }
