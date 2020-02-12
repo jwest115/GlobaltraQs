@@ -13,7 +13,11 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
         } else if (!auth.isAuthenticated) {
           return <Redirect to="/" />;
         } else {
-          return <Component {...props} />;
+          if (auth.user.is_administrator)
+            return <Component {...props} />;
+          else {
+            return <Redirect to="/" />
+          }
         }
       }}
     />

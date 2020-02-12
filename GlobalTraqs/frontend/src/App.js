@@ -62,8 +62,8 @@ export class App extends Component {
                 <Route exact path="/users/:id" component={ProfilePage} />
                 <Route exact path="/users/:id/settings" component={Settings} />
                 <PrivateRoute exact path="/manage" component={Manage} />
-                <Route exact path="/manage/flag" component={Manage} />
-                <Route exact path="/manage/users" component={Manage} />
+                <PrivateRoute exact path="/manage/flag" component={Manage} />
+                <PrivateRoute exact path="/manage/users" component={Manage} />
                 <Route path="/Story/:id/edit" exact component={EditStory} />
                 <Route path="/forgotPassword" component={ForgotPassword} />
                 <Route path="/resetPassword" component={ResetPassword} />
