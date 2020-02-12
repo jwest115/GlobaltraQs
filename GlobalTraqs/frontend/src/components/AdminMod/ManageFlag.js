@@ -43,7 +43,7 @@ function ListFlags({ pins, handleDelete }) {
               <tr key={index}>
                 <td>{pin.title}</td>
                 <td>{pin.username ? pin.username : "Anon"}</td>
-                <td>{pin.flagscore}</td>
+                {/* <td>{pin.flagscore}</td> */}
                 <td>
                   <button
                     onClick={e => handleDelete(pin.id, e)}
