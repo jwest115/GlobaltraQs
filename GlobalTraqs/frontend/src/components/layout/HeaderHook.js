@@ -130,7 +130,7 @@ function Header() {
         onAction={onAction}
         debounce={250}
         //10 minutes
-        timeout={6000}
+        timeout={60 * 15 * 1000}
       />
       <div className="collapse navbar-collapse" id="navbarColor01">
         <ul className="navbar-nav mr-auto">
