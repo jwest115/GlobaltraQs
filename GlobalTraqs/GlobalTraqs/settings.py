@@ -107,14 +107,6 @@ DATABASES = {
     # }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'globaltraqs',
-    #     'USER': 'postgres',
-    #     'PASSWORD': '@Ziggy323',
-    #     'HOST': 'localhost',
-    #     'PORT': '5432',
-    # }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     #     'NAME': 'trazbetq',
     #     'USER': 'trazbetq',
     #     'PASSWORD': 'AZNxT-5R-D3tDIm_zhEeP_OZfLCkXrhM',
