@@ -34,9 +34,10 @@ function CommentStory(props) {
                 {/*Some quick example text to build on the card title and make up*/}
                 {/*the bulk of the card's content.*/}
               </p>
-              {props.user.id === userComment.commenter ||
-              props.user.is_moderator ||
-              props.user.is_administrator ? (
+              {props.isAuthenticated &&
+              (props.user.id === userComment.commenter ||
+                props.user.is_moderator ||
+                props.user.is_administrator) ? (
                 <button
                   type="button"
                   className="btn btn-primary btn-sm"
