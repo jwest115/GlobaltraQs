@@ -1,9 +1,10 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout} from "../../actions/auth";
 import { useSelector, useDispatch, useStore } from "react-redux";
+import {editUser} from "../../actions/users";
 
 function Header() {
     const dispatch = useDispatch();
@@ -11,8 +12,18 @@ function Header() {
     const { isAuthenticated, user } = auth;
     const [anonymousMode, setAnoynmousMode] = useState(false);
 
+    useEffect(() => {
+        if(user) {
+            setAnoynmousMode(user.is_anonymous_active);
+        }
+    });
+
     const toggleAnonymous = () => {
-       setAnoynmousMode(!anonymousMode);
+        const is_anonymous_active = !anonymousMode;
+        console.log("anonymous =....");
+        console.log(user.is_anonymous_active);
+        const userData = { is_anonymous_active };
+        dispatch(editUser(user.id, user.id, userData));
     };
 
     let accessibilityWidget = document.body.getElementsByClassName("userway")[0];
@@ -24,14 +35,7 @@ function Header() {
     let userRole = "";
     let adminManager = null;
 
-    let anonymousModeMenu = "";
     if(user != null) {
-           anonymousModeMenu = (
-                <li className="nav-item">
-                    <button onClick={toggleAnonymous} className="nav-link">Go Anonymous</button>
-                </li>
-            );
-
            if(user.accessibility_mode_active) {
                 if(accessibilityWidget != undefined) {
                     accessibilityWidget.style.visibility = "visible";
@@ -42,16 +46,7 @@ function Header() {
                     accessibilityWidget.style.visibility = "hidden";
                 }
            }
-
-           if(user.is_anonymous_active) {
-               user.username = "Anonymous";
-               anonymousModeMenu = (
-                    <li className="nav-item">
-                        <button onClick={toggleAnonymous} className="nav-link">Leave Anonymous Mode</button>
-                    </li>
-               );
-           }
-           else if(user.is_administrator) {
+           if(user.is_administrator) {
                 adminManager = (
                      <li className="nav-item">
                         <Link to="/manage" className="nav-link">Manage</Link>
@@ -61,11 +56,16 @@ function Header() {
                     <strong>(Administrator)</strong>
                 );
            }
-       else if(user.is_moderator) {
-            userRole = (
-                <strong>(Moderator)</strong>
-            );
-       }
+           else if(user.is_moderator) {
+                adminManager = (
+                     <li className="nav-item">
+                        <Link to="/manage" className="nav-link">Manage</Link>
+                     </li>
+                );
+                userRole = (
+                    <strong>(Moderator)</strong>
+                );
+           }
     }
     else {
         if(accessibilityWidget != undefined) {
@@ -74,9 +74,13 @@ function Header() {
     }
     const authLinks = (
        <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-        {/*{anonymousModeMenu}*/}
+        <li className="nav-item">
+            <button onClick={toggleAnonymous} className="nav-link btn btn-link btn-lg">
+                {anonymousMode ? "Leave Anonymous Mode" : "Go Anonymous"}
+            </button>
+        </li>
         <span className="navbar-text text-warning mr-5">
-          <strong>{user ? `Welcome ${user.username}` : ""} {userRole} </strong>
+          <strong>{user ? `Welcome ${user.is_anonymous_active ? "Anonymous" : user.username}` : ""} {userRole} </strong>
         </span>
         <li className="nav-item">
           <button

@@ -11,7 +11,7 @@ import {
   GET_PINS_BY_OWNER,
   USER_FLAG_PIN,
   USER_FIRST_UPVOTE,
-  USER_UPVOTE
+  USER_UPVOTE,
 } from "../actions/types.js";
 
 const initialState = {

@@ -17,12 +17,8 @@ export default function ProfilePage(props) {
 
     useEffect(() => {
         dispatch(getUser(id));
-    }, id);
-
-    useEffect(() => {
-        dispatch(getUser(id));
         dispatch(getPinsByOwner(id));
-    }, []);
+    }, id);
 
     const { isAuthenticated, user } = auth;
 
@@ -74,7 +70,7 @@ export default function ProfilePage(props) {
                                                     {story.title} <br/>
                                                 </h5>
                                                 <Markup content={story.description}/>
-                                                <Link to={`/Story/${story.id}`}>
+                                                <Link to={`/story/${story.id}`}>
                                                     <button
                                                         type="button"
                                                         className="btn btn-primary btn-sm"

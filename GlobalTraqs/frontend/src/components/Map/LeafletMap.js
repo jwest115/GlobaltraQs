@@ -1,11 +1,10 @@
-import React, { useState, useEffect, Component, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Map,
   Marker,
   Popup,
   TileLayer,
   ZoomControl,
-  withLeaflet
 } from "react-leaflet";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import community from "./images/community.png"; // Tell Webpack this JS file uses this image
@@ -13,10 +12,6 @@ import historical from "./images/historical.png";
 import personal from "./images/personal.png";
 import default_marker from "./images/default.png";
 import {
-  Switch,
-  Route,
-  Link,
-  useParams,
   useRouteMatch,
   useHistory
 } from "react-router-dom";
@@ -27,10 +22,9 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
 import ModalPinForm from "./ModalPinForm";
 import SearchIcon from "@material-ui/icons/Search";
-import SearchSidebar from "../layout/SidebarTest";
-import { Markup } from "interweave";
-import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
+import { GeoSearchControl } from "leaflet-geosearch";
 import { EsriProvider } from "leaflet-geosearch";
+import { useDispatch } from "react-redux";
 
 export const defaultPointerIcon = new L.Icon({
   iconUrl: default_marker,
@@ -72,20 +66,18 @@ export const personalIcon = new L.Icon({
   shadowAnchor: [20, 92]
 });
 const LeafletMap = props => {
-  //  console.log("----PLACEMENT----");
-  //  console.log(props.placement);
   let { path, url } = useRouteMatch();
   const history = useHistory();
-  //  console.log(props.darkMode + " darkmode ");
   // need to enter props.placement directly - if not used directly, when placement is updated the marker does not center on proper coordinates
-  // const [userposition, setUserPosition] = useState([props.placement.userlat, props.placement.userlng]);
   // EsriProvider allows for zip code search - nominatum (OSM) does not
   // others include bing and google
   const [provider, setProvider] = useState(new EsriProvider()); // new OpenStreetMapProvider();
   // can change provider to preference
+  const dispatch = useDispatch();
 
   const [mapInstance, setMapInstance] = useState();
-  // const [map, setMap] = useState();
+  const [markerClusterGroupInstance, setMarkerClusterGroupInstance] = useState();
+
   const searchControl = new GeoSearchControl({
     provider: provider,
     autocomplete: true,
@@ -114,7 +106,6 @@ const LeafletMap = props => {
       history.push(`${props.maplink}/${marker.id}`);
     }
     else {
-      //  console.log("updating pin");
       props.seteditPin({
         id: marker.id,
         title: marker.title,
@@ -124,17 +115,15 @@ const LeafletMap = props => {
         endDate: marker.endDate
       });
       props.setPinData(marker);
+      props.setPinCluster(false);
       props.setSidebarOpen(false);
       if (!props.storySidebarOpen) {
         props.setStorySidebarOpen(!props.storySidebarOpen);
-        //  console.log("story sidebar is " + !props.storySidebarOpen);
       }
     }
   };
 
   const centerMarker = marker => {
-    // setUserPosition([marker.latitude, marker.longitude]);
-
     props.setPlacement({
       id: marker.id,
       userlat: marker.latitude,
@@ -143,12 +132,8 @@ const LeafletMap = props => {
   };
 
   const addressSearch = e => {
-    //  console.log(e);
     const longitude = e.location.x;
     const latitude = e.location.y;
-    //  console.log("lat and lng");
-    //  console.log(longitude);
-    //  console.log(latitude);
     props.setPlacement({
       id: "",
       userlat: latitude,
@@ -159,19 +144,7 @@ const LeafletMap = props => {
       latitude: latitude,
       longitude: longitude
     });
-
-    // setUserPosition([latitude, longitude]);
-    //  console.log(props.placement);
-    //  console.log("was the coords");
     props.toggle();
-    // this.setState({userlat : latitude, userlng: longitude, modal: true});
-
-    // .search({ query: this.state.searchText })
-    // .then(function(result) {
-    //   // do something with result;
-
-    // });
-    //  console.log("here");
   };
 
   // used for adding the map reference for fly to and address search
@@ -179,32 +152,29 @@ const LeafletMap = props => {
     if (mapInstance) {
       let map = mapInstance.leafletElement;
       props.setMapReference(mapInstance.leafletElement);
-      //  console.log("trying to add address");
       map.addControl(searchControl);
       map.on("geosearch/showlocation", addressSearch);
     }
   }, [mapInstance]);
 
-  console.log(props.storySidebarOpen + " is the story sidebar");
   return (
     <div className="map-container" style={props.divStyle}>
-      {/*{props.mapReference ? console.log(props.mapReference) : " map is undefined"}*/}
       {props.setPinDeleted ? props.setPinDeleted(false) : ""}{" "}
       <Map
         center={[props.placement.userlat, props.placement.userlng]}
         zoom={15}
         maxZoom={30} //shows map
+        minZoom={5}
         id="map"
         zoomControl={false}
         style={props.divStyle}
         ref={e => {
           setMapInstance(e);
         }}
-        //   onClick={props.addMarker}
         onContextMenu={props.addMarker}
       >
         <ZoomControl position="bottomleft" />
-        {props.darkMode ? ( //pass in props of user
+        {props.user == undefined || props.user.is_anonymous_active ? ( //pass in props of user
           <TileLayer
             attribution="Map tiles by &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors &copy; <a href='https://carto.com/attributions'>CARTO</a>"
             url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
@@ -229,14 +199,6 @@ const LeafletMap = props => {
             </button>
           </Control>
         ) : null}
-        <Control position={"topright"}>
-          <button
-            onClick={() => props.setdarkMode(!props.darkMode)}
-            className="btn btn-primary"
-          >
-            Dark Mode
-          </button>
-        </Control>
         <Control position={"bottomright"}>
           <div>
             <button onClick={props.getLocation} className="btn btn-primary">
@@ -245,9 +207,22 @@ const LeafletMap = props => {
           </div>
         </Control>
 
-        <MarkerClusterGroup>
+        <MarkerClusterGroup
+            spiderfyOnMaxZoom={false}
+            maxClusterRadius={40}
+            onClusterClick={(e) => {
+              if(mapInstance.leafletElement.getZoom() > 24) {
+                let markers = e.layer.getAllChildMarkers();
+                console.log(markers);
+                console.log(mapInstance.leafletElement.getZoom() + " is the zoom");
+                props.setPinData(markers);
+                props.setPinCluster(true);
+                props.setStorySidebarOpen(true);
+              }
+            }}
+        >
+
           {props.pins.map((marker, index) => {
-            let canManagePin = false;
             let post = [marker.latitude, marker.longitude];
             let categoryIcon = "";
             if (marker.category == 1) {
@@ -258,39 +233,12 @@ const LeafletMap = props => {
               categoryIcon = historicalIcon;
             }
 
-            if (props.isAuthenticated) {
-              if (props.user.id == marker.owner || props.userRoleVerified) {
-                canManagePin = true;
-              }
-            }
-
-            // if (isAuthenticated) {
-            // //  console.log("user is authenticated!");
-            //   if (
-            //     user.is_administrator ||
-            //     user.is_moderator ||
-            //     marker.owner == user.id
-            //   ) {
-            //     isAdminOrModerator = true;
-            //     console.log("user is admin or moderator! let them edit!");
-            //     adminModeratorEditStory = (
-            //       <div className="admin-moderator-edit">
-            //         <button
-            //           //  onClick={this.editStory}
-            //           className="btn btn-success admin-moderator-edit"
-            //         >
-            //           {/* {this.state.editButtonValue} */}
-            //         </button>
-            //       </div>
-            //     );
-            //     console.log("user is an admin or moderator!");
-            //   }
-            // }
             return (
               <Marker
                 key={index}
                 position={post}
                 icon={categoryIcon}
+                data={marker}
                 onClick={() => { centerMarker(marker); updatePin(marker); }}
                 onMouseOver={(e) => { e.target.openPopup(); }}
                 onMouseOut={(e) => { e.target.closePopup(); }}

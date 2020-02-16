@@ -62,6 +62,7 @@ export default function MapDashboard() {
   });
 
   const pins = useSelector(state => state.pins.pins);
+
   const dispatch = useDispatch();
   const [userRoleVerified, setUserRoleVerified] = useState(false);
 
@@ -114,7 +115,7 @@ export default function MapDashboard() {
   const [mapReference, setMapReference] = useState();
   const [map, setMap] = useState();
   const [pinData, setPinData] = useState();
-
+  const [pinCluster, setPinCluster] = useState(false);
   const [editPinForm, seteditPinForm] = useState({
     //fields for editng
     id: "1",
@@ -231,8 +232,9 @@ export default function MapDashboard() {
             <div id={"sidebar-style"}>
               <SearchSidebar sidebarOpen={sidebarOpen} />
               <StorySidebar
-                  maplink={"/test"}
+                  maplink={"/story"}
                   pinData={pinData}
+                  setPinData={setPinData}
                   storySidebarOpen={storySidebarOpen}
                   isAuthenticated={isAuthenticated}
                   user={user}
@@ -241,10 +243,12 @@ export default function MapDashboard() {
                   seteditpinmodalState={seteditpinmodalState}
                   deleteConfirmation={deleteConfirmation}
                   setDeleteConfirmation={setDeleteConfirmation}
+                  pinCluster={pinCluster}
+                  setPinCluster={setPinCluster}
               />
             </div>
             <LeafletMap
-              maplink={"/test"}
+              maplink={"/story"}
               pins={pins}
               divStyle={divStyle}
               addMarker={addMarker}
@@ -284,12 +288,14 @@ export default function MapDashboard() {
               setStorySidebarOpen={setStorySidebarOpen}
               pinData={pinData}
               setPinData={setPinData}
+              pinCluster={pinCluster}
+              setPinCluster={setPinCluster}
             />
           </Route>
-          <Route path="/test">
+          <Route path="/story">
             {pinDeleted ? <Redirect to={"/"} /> : null}
             <LeafletMap
-              maplink={"/test"}
+              maplink={"/story"}
               pins={pins}
               divStyle={divStyle1}
               addMarker={addMarker}

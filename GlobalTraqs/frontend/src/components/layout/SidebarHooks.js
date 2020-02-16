@@ -145,7 +145,7 @@ function SearchSidebar(props)  {
                             <Card>
                                 <Link
                                     style={{ textDecoration: 'inherit'}}
-                                    to={`Story/${story.id}`}
+                                    to={`story/${story.id}`}
                                     params={{ testvalue: "hello" }}
                                 >
                               <CardActionArea>

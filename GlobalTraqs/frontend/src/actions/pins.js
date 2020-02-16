@@ -15,7 +15,7 @@ import {
   GET_PIN_BY_ID,
   USER_FLAG_PIN,
   USER_FIRST_UPVOTE,
-  USER_UPVOTE
+  USER_UPVOTE,
 } from "./types";
 
 //GET PINS
@@ -35,17 +35,18 @@ export const searchPins = (
   searchQuery,
   categories,
   startDate,
-  endDate
+  endDate,
 ) => dispatch => {
   axios
     .get(
       `api/pinSearch?search=${searchQuery}&categories=${categories}&startDate_gte=${startDate}&endDate_lte=${endDate}`
     )
     .then(res => {
-      dispatch({
-        type: SEARCH_PINS,
-        payload: res.data
-      });
+          console.log(res.data);
+          dispatch({
+              type: SEARCH_PINS,
+              payload: res.data
+          });
     })
     .catch(err => console.log(err));
 };
