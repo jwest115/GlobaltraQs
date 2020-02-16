@@ -85,6 +85,7 @@ function SearchSidebar(props)  {
             }
         }
         console.log(categorySearchQuery);
+        console.log("is the query");
         dispatch(searchPins(searchText, categorySearchQuery, start, end));
     };
 

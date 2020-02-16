@@ -1,10 +1,11 @@
-import React, { Component, useState, useEffect} from "react";
+import React, { Component, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout} from "../../actions/auth";
 import { useSelector, useDispatch, useStore } from "react-redux";
 import {editUser} from "../../actions/users";
+import IdleTimer from "react-idle-timer";
 
 function Header() {
     const dispatch = useDispatch();
@@ -17,6 +18,11 @@ function Header() {
             setAnoynmousMode(user.is_anonymous_active);
         }
     });
+    const idleTimer = useRef(null);
+    const onIdle = e => {
+        dispatch(logout())
+        window.location.replace("http://www.google.com");
+    };
 
     const toggleAnonymous = () => {
         const is_anonymous_active = !anonymousMode;
@@ -119,6 +125,14 @@ function Header() {
                 aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
+            <IdleTimer
+                ref={ref => idleTimer.current = ref}
+                element={document}
+                onIdle={onIdle}
+                debounce={250}
+                //15 minutes
+                timeout={15 * 60 * 1000}
+             />
 
             <div className="collapse navbar-collapse" id="navbarColor01">
                 <ul className="navbar-nav mr-auto">

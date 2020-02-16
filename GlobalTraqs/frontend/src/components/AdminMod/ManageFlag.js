@@ -19,6 +19,9 @@ function ManageFlag() {
 
   const { isAuthenticated, user } = auth;
 
+  if (!isAuthenticated) {
+    return <Redirect to="/" />;
+  }
   return (
     <div>
       MANAGE THE FLAG

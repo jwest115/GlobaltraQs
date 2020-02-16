@@ -531,6 +531,7 @@ export class Story extends Component {
             })}
           </div>
         </div>
+      </div>
     );
   }
 }
