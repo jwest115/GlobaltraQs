@@ -63,12 +63,21 @@ function StorySidebar(props)  {
                            <div>
                                <h1>{props.pinData.title}</h1>
                                <h5>By: {props.pinData.is_anonymous_pin ? "Anonymous" : props.pinData.username}</h5>
-                               <Moment format="MM/DD/YYYY">{props.pinData.startDate}</Moment> -{" "}<Moment
-                               format="MM/DD/YYYY">{props.pinData.endDate}</Moment>{" "}
+                               {props.pinData.startDate ? <Moment format="MM/DD/YYYY">{props.pinData.startDate}</Moment> : "No Start Date"} -{" "}
+                               {props.pinData.endDate ? <Moment format="MM/DD/YYYY">{props.pinData.endDate}</Moment> : "No End Date"}{" "}
                                <br/>
                                <br/>
                                <Markup content={props.pinData.description}/>
+                                 <Link to={`${props.maplink}/${props.pinData.id}`}>
+                                <button
+                                  type="button"
+                                  className="btn btn-primary btn-sm"
+                                >
+                                  View Story
+                                </button>
+                                 </Link>
                            </div>
+
                        ) : null}
                        {/* show edit/ delete button for story owners and admins/moderators */}
                        {!props.pinCluster && canManagePin ? (
@@ -93,14 +102,6 @@ function StorySidebar(props)  {
                                >
                                    Delete
                                </button>
-                               <Link to={`${props.maplink}/${props.pinData.id}`}>
-                                <button
-                                  type="button"
-                                  className="btn btn-primary btn-sm"
-                                >
-                                  View Story
-                                </button>
-                                 </Link>
                            </div>
                            ) : null }
                    </div>

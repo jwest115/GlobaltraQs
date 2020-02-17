@@ -76,8 +76,8 @@ function Story(props) {
       </h2>
       <p>
         {" "}
-        <Moment format="MM/DD/YYYY">{props.pin.startDate}</Moment> -{" "}
-        <Moment format="MM/DD/YYYY">{props.pin.endDate}</Moment>{" "}
+        {props.pin.startDate ? <Moment format="MM/DD/YYYY">{props.pin.startDate}</Moment> : "No Start Date"} -{" "}
+        {props.pin.endDate ? <Moment format="MM/DD/YYYY">{props.pin.endDate}</Moment> : "No End Date"}{" "}
       </p>
       {/* <p>By: {authorName}</p> */}
       {props.pin.is_anonymous_pin ? (
