@@ -128,14 +128,14 @@ export default function MapDashboard() {
     //patches the selected pin
     if (e) e.preventDefault();
 
-    dispatch(editPin(editPinForm, editPinForm.id));
-     setPinData({
-        ...pinData,
-        title: editPinForm.title,
-        description: editPinForm.description,
-        category: editPinForm.category,
-        // startDate: editPinForm.startDate,
-        // endDate: editPinForm.endDate
+    dispatch(editPin(editPinForm, editPinForm.id, user.id));
+    setPinData({
+      ...pinData,
+      title: editPinForm.title,
+      description: editPinForm.description,
+      category: editPinForm.category,
+      // startDate: editPinForm.startDate,
+      // endDate: editPinForm.endDate
     });
     editToggle();
   };
@@ -232,19 +232,19 @@ export default function MapDashboard() {
             <div id={"sidebar-style"}>
               <SearchSidebar sidebarOpen={sidebarOpen} />
               <StorySidebar
-                  maplink={"/story"}
-                  pinData={pinData}
-                  setPinData={setPinData}
-                  storySidebarOpen={storySidebarOpen}
-                  isAuthenticated={isAuthenticated}
-                  user={user}
-                  userRoleVerified={userRoleVerified}
-                  editpinmodalState={editpinmodalState}
-                  seteditpinmodalState={seteditpinmodalState}
-                  deleteConfirmation={deleteConfirmation}
-                  setDeleteConfirmation={setDeleteConfirmation}
-                  pinCluster={pinCluster}
-                  setPinCluster={setPinCluster}
+                maplink={"/story"}
+                pinData={pinData}
+                setPinData={setPinData}
+                storySidebarOpen={storySidebarOpen}
+                isAuthenticated={isAuthenticated}
+                user={user}
+                userRoleVerified={userRoleVerified}
+                editpinmodalState={editpinmodalState}
+                seteditpinmodalState={seteditpinmodalState}
+                deleteConfirmation={deleteConfirmation}
+                setDeleteConfirmation={setDeleteConfirmation}
+                pinCluster={pinCluster}
+                setPinCluster={setPinCluster}
               />
             </div>
             <LeafletMap
