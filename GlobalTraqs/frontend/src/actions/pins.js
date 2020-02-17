@@ -87,16 +87,18 @@ export const editPin = (pin, id) => dispatch => {
       let flagstateofuser = false;
       let upvotedBefore = false;
       let userCurrentUpvote = false;
-      if (userid) {
-        flagstateofuser = res.data.flaggerstory.some(a => a.flagger === userid);
-        upvotedBefore = res.data.updotes.some(b => b.upVoter === userid);
-        if (upvotedBefore)
-          userCurrentUpvote = res.data.updotes.filter(
-            b => b.upVoter === userid
-          )[0].upvote;
-        validUser = true;
-        console.log("has this user upvoted before" + upvotedBefore);
-      }
+      // !!!!!!!!!!!!!!!!!!!!!!!
+      // this causes it to error out and prevents the payload from being used in the reducer
+      // if (userid) {
+      //   flagstateofuser = res.data.flaggerstory.some(a => a.flagger === userid);
+      //   upvotedBefore = res.data.updotes.some(b => b.upVoter === userid);
+      //   if (upvotedBefore)
+      //     userCurrentUpvote = res.data.updotes.filter(
+      //       b => b.upVoter === userid
+      //     )[0].upvote;
+      //   validUser = true;
+      //   console.log("has this user upvoted before" + upvotedBefore);
+      // }
       const payload = {
         ...res.data,
         userCurrentUpvote: userCurrentUpvote,
@@ -106,7 +108,8 @@ export const editPin = (pin, id) => dispatch => {
       };
       dispatch({
         type: EDIT_PIN,
-        payload: payload
+        payload: res.data
+        // payload: payload
       });
       console.log("In edit pin");
       console.log(res.data);

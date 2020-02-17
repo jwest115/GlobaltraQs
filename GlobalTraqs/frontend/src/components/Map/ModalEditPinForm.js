@@ -22,6 +22,13 @@ const labelStyle = {
   marginRight: "10px"
 };
 function ModalEditPinForm(props) {
+  const validateEditForm = (e) => {
+      e.preventDefault();
+      console.log("validating edit pin...");
+      if(props.userForm.title && props.userForm.description) {
+          props.onSubmit();
+      }
+  };
   return (
     <>
       {" "}
@@ -34,7 +41,7 @@ function ModalEditPinForm(props) {
       >
         <ModalHeader toggle={props.toggle}> Add a story </ModalHeader>
         <ModalBody>
-          <Form onSubmit={props.onSubmit}>
+          <Form onSubmit={validateEditForm}>
             <FormGroup>
               <Label style={labelStyle} for="category">
                 Category
@@ -56,6 +63,7 @@ function ModalEditPinForm(props) {
             </FormGroup>
             <FormGroup>
               <Label for="title">Title</Label>
+              {!props.userForm.title ? ( <p className="text-danger">*Please enter a story title</p> ) : null }
               <Input
                 className="form-control"
                 type="text"
@@ -70,7 +78,9 @@ function ModalEditPinForm(props) {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="description">Description</Label>
+              <Label for="description">Description
+              {!props.userForm.description ? ( <p className="text-danger">*Please enter a story description</p> ) : null }
+              </Label>
               <TinyMCE
                   content={props.userForm.description}
                   config={{
@@ -124,9 +134,9 @@ function ModalEditPinForm(props) {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={props.toggle}>
-            Do Something
-          </Button>{" "}
+          {/*<Button color="primary" onClick={props.toggle}>*/}
+          {/*  Do Something*/}
+          {/*</Button>{" "}*/}
           <Button color="secondary" onClick={props.toggle}>
             Cancel
           </Button>

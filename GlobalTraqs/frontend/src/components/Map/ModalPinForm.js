@@ -151,14 +151,14 @@ function ModalPinForm(props) {
             </Button>
           </Form>
         </ModalBody>
-        {/*<ModalFooter>*/}
-        {/*  <Button color="primary" onClick={props.toggle}>*/}
-        {/*    Do Something*/}
-        {/*  </Button>{" "}*/}
-        {/*  <Button color="secondary" onClick={props.toggle}>*/}
-        {/*    Cancel*/}
-        {/*  </Button>*/}
-        {/*</ModalFooter>*/}
+        <ModalFooter>
+          {/*<Button color="primary" onClick={props.toggle}>*/}
+          {/*  Do Something*/}
+          {/*</Button>{" "}*/}
+          <Button color="secondary" onClick={props.toggle}>
+            Cancel
+          </Button>
+        </ModalFooter>
       </Modal>
     </>
   );

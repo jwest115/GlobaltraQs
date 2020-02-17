@@ -21,6 +21,9 @@ const storyBody = {
   paddingRight: "50px"
 };
 function Story(props) {
+    console.log("edit pin is ");
+    console.log(props.editPin);
+
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
   console.log(props.pin);
@@ -29,6 +32,7 @@ function Story(props) {
   const [flagState, setflagState] = useState(false);
 
   const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
+
 
   if (props.pinDeleted) {
       props.setPinDeleted(false);
@@ -52,9 +56,15 @@ function Story(props) {
                    <button
                        type="button"
                        className="btn btn-primary btn-sm"
-                       onClick={e =>
+                       onClick={e => {
+                            props.seteditPin({
+                                    id: props.pin.id,
+                                    title: props.pin.title,
+                                    description: props.pin.description,
+                                    category: props.pin.category
+                                });
                            props.seteditpinmodalState(!props.editpinmodalState)
-                       }
+                       }}
                    >
                        Edit
                    </button>
@@ -99,7 +109,7 @@ function Story(props) {
       </h6>
       <hr></hr>
       <Markup content={props.pin.description} />
-      {props.pin && props.pin.commentstory && (
+      {props.pin.commentstory && (
         <CommentStory
           user={user}
           comment={props.pin.commentstory}

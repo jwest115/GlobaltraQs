@@ -119,14 +119,14 @@ export default function MapDashboard() {
   const [editPinForm, seteditPinForm] = useState({
     //fields for editng
     id: "1",
-    title: "1",
-    description: "1",
+    title: "",
+    description: "",
     category: "1"
   });
 
   const onEditSubmit = e => {
     //patches the selected pin
-    e.preventDefault();
+    if (e) e.preventDefault();
 
     dispatch(editPin(editPinForm, editPinForm.id));
      setPinData({
@@ -134,8 +134,8 @@ export default function MapDashboard() {
         title: editPinForm.title,
         description: editPinForm.description,
         category: editPinForm.category,
-        startDate: editPinForm.startDate,
-        endDate: editPinForm.endDate
+        // startDate: editPinForm.startDate,
+        // endDate: editPinForm.endDate
     });
     editToggle();
   };
@@ -352,6 +352,8 @@ export default function MapDashboard() {
               setDeleteConfirmation={setDeleteConfirmation}
               pinDeleted={pinDeleted}
               setPinDeleted={setPinDeleted}
+              editPin={editPinForm}
+              seteditPin={seteditPinForm}
             />
           </Route>
         </Switch>
@@ -397,8 +399,16 @@ function IndividualStory(props) {
         description: "",
         pin: id
       }),
+
     [id]
   );
+  useEffect(() => {
+    props.seteditPin({
+      title: "",
+      description: "",
+      category: ""
+    });
+  }, [id]);
 
-  return <Story pin={pin} {...props} />;
+  return <Story pin={pin} pinData={props.pinData} {...props} />;
 }

@@ -25,6 +25,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { GeoSearchControl } from "leaflet-geosearch";
 import { EsriProvider } from "leaflet-geosearch";
 import { useDispatch } from "react-redux";
+import {getPins} from "../../actions/pins";
 
 export const defaultPointerIcon = new L.Icon({
   iconUrl: default_marker,

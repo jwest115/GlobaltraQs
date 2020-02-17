@@ -60,6 +60,7 @@ export default function(state = initialState, action) {
         pins: [...state.pins, action.payload]
       };
     case EDIT_PIN:
+      console.log(action.payload);
       return {
         ...state,
         // fixes duplicated pin on map when editing pin
