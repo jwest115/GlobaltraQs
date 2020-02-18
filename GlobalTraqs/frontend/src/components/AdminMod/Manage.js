@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import { useSelector, useDispatch, useStore } from "react-redux";
 import ManageFlag from "./ManageFlag";
-
+import ManageUsers from "./ManageUsers";
 export default function Manage() {
   let { path, url } = useRouteMatch();
   console.log("the path is " + path + " and the url is " + url);
@@ -38,12 +38,16 @@ export default function Manage() {
       </div>
       <Switch>
         <Route exact path={`/manage`}>
-          <h3>Please select a topic.</h3>
+          <MainManage />
           {path}
           <Locate />
         </Route>
-        <Route path={`/manage/flag`}>flag</Route>
-        <Route path={`/manage/users`}>users</Route>
+        <Route path={`/manage/flag`}>
+          <ManageFlag />
+        </Route>
+        <Route path={`/manage/users`}>
+          <ManageUsers />
+        </Route>
       </Switch>
     </div>
   );
