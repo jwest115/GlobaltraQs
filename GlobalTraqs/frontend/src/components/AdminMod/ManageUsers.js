@@ -1,109 +1,180 @@
-import React, { Component, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch, useStore } from "react-redux";
-
-import { getUsers } from "../../actions/users";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Form,
+  FormGroup,
+  Input,
+  Label
+} from "reactstrap";
+import { getUsers, editUserRole } from "../../actions/users";
 
 export default function ManageUsers() {
   const dispatch = useDispatch();
-  const auth = useSelector(state => state.auth);
-  const { isAuthenticated, user } = auth;
   const users = useSelector(state => state.users.users);
-
+  const [editUser, seteditUser] = useState();
+  const [modalState, setmodalState] = useState(false);
+  const [userRole, setuserRole] = useState(3);
   useEffect(() => {
     dispatch(getUsers());
   }, []);
-
-   if (!isAuthenticated) {
-      console.log(auth);
-      return <Redirect to="/" />;
+  const onSubmit = e => {
+    console.log(" the user role is " + userRole);
+    e.preventDefault();
+    let submit = {
+      id: editUser.id
+    };
+    if (userRole === "1") {
+      submit = {
+        ...submit,
+        is_moderator: false,
+        is_administrator: true
+      };
+    } else if (userRole === "2") {
+      submit = {
+        ...submit,
+        is_moderator: true,
+        is_administrator: false
+      };
     } else {
-      if (user.is_administrator) {
-        return (
-            <div className="container">
-              <table className="table table-bordered">
-                <tbody>
-                {users.map((user, index) => {
-                  let userRole = "";
-                  if (user.is_administrator) {
-                    userRole = <strong>Administrator</strong>;
-                  } else if (user.is_moderator) {
-                    userRole = <strong>Moderator</strong>;
-                  }
-                  return (
-                      <tr>
-                        <td>{user.username}</td>
-                        <td>{userRole}</td>
-                        <td>
-                          <button className="btn btn-success">Edit Role</button>
-                        </td>
-                      </tr>
-                  );
-                })}
-                </tbody>
-              </table>
-            </div>
-        );
-      } else {
-        return <Redirect to="/"/>;
-      }
+      submit = {
+        ...submit,
+        is_moderator: false,
+        is_administrator: false
+      };
     }
+    console.log(submit);
+    dispatch(editUserRole(editUser.id, submit));
+    setmodalState(!modalState);
+  };
+  const setEdit = (userInfo, selection) => {
+    setuserRole(selection);
+    seteditUser(userInfo);
+    setmodalState(!modalState);
+  };
+  const toggle = () => {
+    setmodalState(!modalState);
+  };
+
+  return (
+    <div className="container">
+      <ViewUsers
+        users={users}
+        onSubmit={onSubmit}
+        setEdit={setEdit}
+        modalState={modalState}
+        toggle={toggle}
+        userRole={userRole}
+        setuserRole={setuserRole}
+      />
+    </div>
+  );
 }
-// export class ManageUsers extends Component {
-//   static propTypes = {
-//     auth: PropTypes.object.isRequired,
-//     getUsers: PropTypes.func.isRequired,
-//     users: PropTypes.array.isRequired
-//   };
-//
-//   componentDidMount() {
-//     this.props.getUsers();
-//   }
-//
-//   render() {
-//     const { isAuthenticated, user } = this.props.auth;
-//     if (!isAuthenticated) {
-//       console.log(this.props.auth);
-//       return <Redirect to="/" />;
-//     } else {
-//       if (user.is_administrator) {
-//         return (
-//           <div className="container">
-//             <table className="table table-bordered">
-//               <tbody>
-//                 {this.props.users.map((user, index) => {
-//                   let userRole = "";
-//                   if (user.is_administrator) {
-//                     userRole = <strong>Administrator</strong>;
-//                   } else if (user.is_moderator) {
-//                     userRole = <strong>Moderator</strong>;
-//                   }
-//                   return (
-//                     <tr>
-//                       <td>{user.username}</td>
-//                       <td>{userRole}</td>
-//                       <td>
-//                         <button className="btn btn-success">Edit Role</button>
-//                       </td>
-//                     </tr>
-//                   );
-//                 })}
-//               </tbody>
-//             </table>
-//           </div>
-//         );
-//       } else {
-//         return <Redirect to="/" />;
-//       }
-//     }
-//   }
-// }
-//
-// const mapStateToProps = state => ({
-//   auth: state.auth,
-//   users: state.users.users
-// });
-//
-// export default connect(mapStateToProps, { getUsers })(ManageUsers);
+
+const ViewUsers = props => {
+  return (
+    <table className="table table-bordered">
+      <tbody>
+        {props.users.map((user, index) => {
+          let userRole = "";
+          let selection = 3;
+          if (user.is_administrator) {
+            userRole = <strong>Administrator</strong>;
+            selection = 1;
+          } else if (user.is_moderator) {
+            userRole = <strong>Moderator</strong>;
+            selection = 2;
+          }
+          return (
+            <tr key={index}>
+              <td>{user.username}</td>
+              <td>{userRole}</td>
+              <td>
+                <button
+                  onClick={() => props.setEdit(user, selection)}
+                  className="btn btn-success"
+                >
+                  Edit Role
+                </button>
+              </td>
+              <td>
+                <EditUserRole
+                  user={user}
+                  onSubmit={props.onSubmit}
+                  index={index}
+                  toggle={props.toggle}
+                  modalState={props.modalState}
+                  userRole={props.userRole}
+                  setuserRole={props.setuserRole}
+                />
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+};
+
+const EditUserRole = props => {
+  const buttonStyle = {
+    float: "right"
+  };
+  const labelStyle = {
+    marginRight: "10px"
+  };
+  console.log(props.userRole);
+  return (
+    <>
+      <Modal
+        isOpen={props.modalState}
+        toggle={props.toggle}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <ModalHeader toggle={props.toggle}>
+          {" "}
+          Changing Role for {props.user.username}{" "}
+        </ModalHeader>
+        <ModalBody>
+          <Form onSubmit={props.onSubmit}>
+            <FormGroup>
+              <Label style={labelStyle} for="category">
+                Select Role
+              </Label>
+              <select
+                name="Role"
+                value={props.userRole}
+                onChange={e => props.setuserRole(e.target.value)}
+                // value={props.userForm.category}
+                // onChange={e =>
+                //   props.setuserForm({
+                //     ...props.userForm,
+                //     category: e.target.value
+                //   })
+                // }
+              >
+                <option value="1">Administrator</option>
+                <option value="2">Moderator</option>
+                <option value="3">None </option>
+              </select>
+            </FormGroup>
+            <Button style={buttonStyle} color="success">
+              Save
+            </Button>
+          </Form>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={props.toggle}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
+    </>
+  );
+};

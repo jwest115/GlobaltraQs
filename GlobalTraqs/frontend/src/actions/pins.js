@@ -15,7 +15,7 @@ import {
   GET_PIN_BY_ID,
   USER_FLAG_PIN,
   USER_FIRST_UPVOTE,
-  USER_UPVOTE,
+  USER_UPVOTE
 } from "./types";
 
 //GET PINS
@@ -35,18 +35,18 @@ export const searchPins = (
   searchQuery,
   categories,
   startDate,
-  endDate,
+  endDate
 ) => dispatch => {
   axios
     .get(
       `api/pinSearch?search=${searchQuery}&categories=${categories}&startDate_gte=${startDate}&endDate_lte=${endDate}`
     )
     .then(res => {
-          console.log(res.data);
-          dispatch({
-              type: SEARCH_PINS,
-              payload: res.data
-          });
+      console.log(res.data);
+      dispatch({
+        type: SEARCH_PINS,
+        payload: res.data
+      });
     })
     .catch(err => console.log(err));
 };
@@ -77,7 +77,7 @@ export const addPin = pin => dispatch => {
     .catch(err => console.log(err));
 };
 
-export const editPin = (pin, id) => dispatch => {
+export const editPin = (pin, id, userid) => dispatch => {
   console.log(id + " " + pin.title);
   axios
     .patch(`/api/pins/${id}/`, pin)
@@ -87,6 +87,8 @@ export const editPin = (pin, id) => dispatch => {
       let flagstateofuser = false;
       let upvotedBefore = false;
       let userCurrentUpvote = false;
+      // !!!!!!!!!!!!!!!!!!!!!!!
+      // this causes it to error out and prevents the payload from being used in the reducer
       if (userid) {
         flagstateofuser = res.data.flaggerstory.some(a => a.flagger === userid);
         upvotedBefore = res.data.updotes.some(b => b.upVoter === userid);
@@ -106,7 +108,8 @@ export const editPin = (pin, id) => dispatch => {
       };
       dispatch({
         type: EDIT_PIN,
-        payload: payload
+        payload: res.data
+        // payload: payload
       });
       console.log("In edit pin");
       console.log(res.data);

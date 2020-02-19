@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addPin } from "../../../actions/pins";
 import moment from "moment";
+
 const useAddPinForm = callback => {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
@@ -17,8 +18,8 @@ const useAddPinForm = callback => {
     startDate: new Date(),
     endDate: new Date(),
     anonradius: 1,
-    title: " ",
-    description: " "
+    title: "",
+    description: ""
   });
 
   const handleAddPinSubmit = e => {
@@ -29,6 +30,10 @@ const useAddPinForm = callback => {
         is_anonymous_pin = false;
       }
     }
+    if(!addPinValues.startDate) {
+
+    }
+
     const submit = {
       ...addPinValues,
       owner: isAuthenticated ? user.id : "",
@@ -45,8 +50,8 @@ const useAddPinForm = callback => {
       startDate: new Date(),
       endDate: new Date(),
       anonradius: 1,
-      title: " ",
-      description: " "
+      title: "",
+      description: ""
     });
   };
 

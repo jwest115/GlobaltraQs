@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Modal,
@@ -8,7 +8,7 @@ import {
   Form,
   FormGroup,
   Input,
-  Label
+  Label,
 } from "reactstrap";
 import InputGroup from "react-bootstrap/InputGroup";
 import DatePicker from "react-datepicker";
@@ -22,6 +22,14 @@ const labelStyle = {
   marginRight: "10px"
 };
 function ModalPinForm(props) {
+
+  const validateAddPinForm = (e) => {
+      e.preventDefault();
+      console.log("validating add pin...");
+      if(props.addPinValues.title && props.addPinValues.description) {
+          props.handleAddPinSubmit();
+      }
+  };
   return (
     <>
       <Modal
@@ -33,21 +41,15 @@ function ModalPinForm(props) {
       >
         <ModalHeader toggle={props.toggle}> Add a story </ModalHeader>
         <ModalBody>
-          <Form onSubmit={props.handleAddPinSubmit}>
+          <Form onSubmit={validateAddPinForm}>
             <FormGroup>
               <Label style={labelStyle} for="category">
                 Category
               </Label>
               <select
                 name="category"
-                //  value={props.userForm.category}
                 value={props.addPinValues.category}
-                // onChange={e =>
-                //   props.setuserForm({
-                //     ...props.userForm,
-                //     category: e.target.value
-                //   })
-                // }
+
                 onChange={e =>
                   props.setaddPinValues({
                     ...props.addPinValues,
@@ -62,6 +64,7 @@ function ModalPinForm(props) {
             </FormGroup>
             <FormGroup>
               <Label for="title">Title</Label>
+              {!props.addPinValues.title ? ( <p className="text-danger">*Please enter a story title</p> ) : null }
               <Input
                 className="form-control"
                 type="text"
@@ -76,7 +79,9 @@ function ModalPinForm(props) {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="description">Description</Label>
+              <Label for="description">Description
+                  {!props.addPinValues.description ? ( <p className="text-danger">*Please enter a story description</p> ) : null }
+              </Label>
               <TinyMCE
                 content={props.addPinValues.description}
                 config={{
@@ -92,19 +97,6 @@ function ModalPinForm(props) {
                   })
                 }
               />
-              {/*<Input*/}
-              {/*  className="form-control"*/}
-              {/*  type="textarea"*/}
-              {/*  rows="5"*/}
-              {/*  name="description"*/}
-              {/*  value={props.userForm.description}*/}
-              {/*  onChange={e =>*/}
-              {/*    props.setuserForm({*/}
-              {/*      ...props.userForm,*/}
-              {/*      description: e.target.value*/}
-              {/*    })*/}
-              {/*  }*/}
-              {/*/>*/}
             </FormGroup>
             <FormGroup>
               <Label style={labelStyle} for="radius">
@@ -126,14 +118,6 @@ function ModalPinForm(props) {
                 Start Date
               </Label>
 
-              {/* <Controller
-                isClear
-                as={<DatePicker />}
-                name="start"
-                control={props.control}
-                onChange={date => props.setStartDate(date)}
-                defaultValue={props.startDate}
-              /> */}
               <DatePicker
                 isClearable
                 todayButton="Today"
@@ -168,9 +152,9 @@ function ModalPinForm(props) {
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={props.toggle}>
-            Do Something
-          </Button>{" "}
+          {/*<Button color="primary" onClick={props.toggle}>*/}
+          {/*  Do Something*/}
+          {/*</Button>{" "}*/}
           <Button color="secondary" onClick={props.toggle}>
             Cancel
           </Button>
