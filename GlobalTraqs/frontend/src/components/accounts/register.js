@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 import { register } from "../../actions/auth";
 import { createMessage } from "../../actions/messages";
 import Recaptcha from "react-recaptcha";
-//import * as EmailValidator from 'email-validator';
-//import { validateAll } from "indicative";
+import * as EmailValidator from 'email-validator';
+// import { validateAll } from "indicative";
 export class Register extends Component {
   //
   constructor(props) {
@@ -41,14 +41,13 @@ export class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    //if (this.formIsValid()) {
     if (this.state.captchaIsVerified) {
-      const { username, email, password, password2 } = this.state;
+      const {username, email, password, password2} = this.state;
       if (password !== password2) {
         this.props.createMessage({
           passwordNotMatch: "Passwords do not match"
         });
-      } else {
+      } else if(this.formIsValid()){
         const newUser = {
           username,
           password,
@@ -59,10 +58,10 @@ export class Register extends Component {
     } else {
       alert("please verify that you are a human!");
     }
-    //}
+    // this.formIsValid();
   };
 
-  formIsValid() {
+  formIsValid(){
     let errors = {};
     let formIsValid = true;
     if (this.state.username === "") {
@@ -100,6 +99,18 @@ export class Register extends Component {
     }
     if (this.state.password === this.state.password2) {
       errors["password2"] = null;
+    }
+    if (this.state.password.search(/[!@#$%^&*_+()]/) === -1) {
+      formIsValid = false;
+      errors["password"] = "*Password must contain a special character like: !@#$%^&*)(_+"
+    }
+    if(this.state.password.search(/\d/) === -1){
+      formIsValid = false;
+      errors["password"] = "*Password must contain at least 1 number"
+    }
+    if (this.state.password.search(/[a-zA-Z]/) === -1) {
+      formIsValid = false;
+      errors["password"] = "*Password must contain a Letter"
     }
     this.setState({ errors: errors });
     return formIsValid;

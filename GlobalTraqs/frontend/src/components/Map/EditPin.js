@@ -7,6 +7,7 @@ import axios from "axios";
 import InputGroup from "react-bootstrap/InputGroup";
 import DatePicker from "react-datepicker";
 import  { Redirect } from 'react-router-dom'
+import TinyMCE from 'react-tinymce';
 
 
 const labelStyle = {
@@ -34,6 +35,14 @@ export class EditPin extends Component {
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
+
+  handleEditorChange = (e) => {
+      this.setState({description: e.target.getContent()});
+      console.log(
+        'Content was updated:',
+        e.target.getContent()
+      );
+  };
 
   handleStartDateChange = date => {
     this.setState({
@@ -75,7 +84,7 @@ export class EditPin extends Component {
      console.log("formatted start " + startDateFormatted);
      console.log("formatted end " + endDateFormatted);
 
-    this.props.onUpdate(title, description, startDate, endDate, startDateFormatted, endDateFormatted);
+    this.props.onUpdate(category, title, description, startDate, endDate, startDateFormatted, endDateFormatted);
     console.log(a + " " + this.state.latitude + "" + c);
   };
 
@@ -113,17 +122,17 @@ export class EditPin extends Component {
         <form onSubmit={this.onSubmit}>
            <div className="form-group">
             <label>Category</label>
-
             <select
+              value={this.state.category}
               name="category"
               className="form-control"
               onChange={this.onChange}
             >
               {/* someone put like user must select an option error handling something blah blah */}
-              <option disabled selected value>
-                {" "}
-                -- select an option --{" "}
-              </option>
+              {/*<option disabled selected value>*/}
+              {/*  {" "}*/}
+              {/*  -- select an option --{" "}*/}
+              {/*</option>*/}
               <option value="1">Personal</option>
               <option value="2">Community</option>
               <option value="3">Historical</option>
@@ -141,12 +150,15 @@ export class EditPin extends Component {
           </div>
           <div className="form-group">
             <label>Description</label>
-            <input
-              className="form-control"
-              type="text"
-              name="description"
-              onChange={this.onChange}
-              value={description}
+            <TinyMCE
+                  content={description}
+                  config={{
+                    height: 300,
+                    fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+                    plugins: 'autolink link image lists print preview',
+                    toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+                  }}
+                  onChange={this.handleEditorChange}
             />
           </div>
           <InputGroup>

@@ -2,7 +2,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.urls import reverse
-from django_rest_passwordreset.signals import reset_password_token_created
+#from .signals import reset_password_token_created
 import django.dispatch
 
 __all__ = [
@@ -37,7 +37,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
         'current_user': reset_password_token.user,
         'username': reset_password_token.user.username,
         'email': reset_password_token.user.email,
-        'reset_password_url': "{}?token={}".format(reverse('password_reset:reset-password-request'),
+        'reset_password_url': "/#/resetPassword?token={1}".format(reverse('password_reset:reset-password-request'),
                                                    reset_password_token.key)
     }
 
@@ -51,7 +51,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
         # message:
         email_plaintext_message,
         # from:
-        "resetglobaltraqs@gmail.com",
+        "resetglobaltraqs@noreply.com",
         # to:
         [reset_password_token.user.email]
     )

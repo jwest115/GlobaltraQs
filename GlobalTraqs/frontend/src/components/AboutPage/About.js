@@ -1,50 +1,109 @@
-import React from 'react'
+import React from "react";
+import ReactDOM from "react-dom";
+
+import { useSelector, useDispatch, useStore } from "react-redux";
+
+import { updateAboutUs, getAboutUs } from "../../actions/management";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+import { Editor } from "@tinymce/tinymce-react";
+import TinyMCE from "react-tinymce";
+import { Markup } from "interweave";
 
 function About() {
-    return (
-        <div className="card card-body mt-4 mb-4">
+  const [aboutUs, setAboutUs] = useState("");
+  const [editButtonValue, setEditButtonValue] = useState("Edit");
+  const dispatch = useDispatch();
+  const aboutUsData = useSelector(state => state.management.about_us);
+  const auth = useSelector(state => state.auth);
+  const [editMode, setEditMode] = useState(false);
+  const { isAuthenticated, user } = auth;
+  const [editorContent, setEditorContent] = useState("");
 
-         {/*
-            <div className="col-lg-1">
-                <img src="https://picsum.photos/200/300" className="rounded" position="center" ></img>
+  let authorized = false;
 
-            </div>
-          */}
+  if (user) {
+    if (user.is_administrator || user.is_moderator) {
+      authorized = true;
+    }
+  }
 
-            <p>Drop a pin, tell a story!</p>
+  useEffect(() => {
+    dispatch(getAboutUs());
+    // setAboutUs(aboutUsData);
+  }, []);
 
-            <p>
-                Stories are important to us human critters. They let us remember things that are important. They guide and teach us how to be in the world.
-                Most importantly, they are used to facilitate understanding between people and groups. Through stories, we can understand how other people live,
-                how they think, what’s important to them.
-            </p>
-            <p>
-                Even though being not-so-straight is getting easier in many parts of the world, the struggle for tolerance, acceptance, dignity, or the mere right
-                to live honestly is still present. While the LGBTQ communities are gaining an increasingly global outlook, we, as individuals, still have very different
-                ways of negotiating our identities and living our everyday lives in different contexts. In some countries, mostly in the US and Europe, it is getting
-                easier and easier to be out and live openly. In many other countries, LGBTQ individuals are still very repressed. By sharing stories, we can give each
-                other hope, while also understanding what life is like for someone who is LGBTQ in a country we may not know a lot about.
-            </p>
-            <p>
-                GlobalTraQs' purpose is to map out YOUR stories, and give them a place in the world, and in history.
-            </p>
-            <ul>
-                <li>Was there something funny that happened last week at the gay bar when you were out with your friends? Show us where and when that happened, and tell us about it!</li>
-                <li>Where did you meet your partner(s)? Pin it!</li>
-                <li>Do you love to travel? Do you have tips in your favorite city, gay and lesbian hangouts that you want to tell other travelers about? We'd love to hear about them!</li>
-                <li>Go crazy and map out everywhere you had a first kiss! Or drop a pin where you had an awful date, and tell us what happened!</li>
-                <li>Are you straight, but have a queer relative? Tell us your stories!</li>
-            </ul>
-            <p>
-                No story is too insignificant to tell. Remember, you're contributing to a giant map of not-so-straight stories so people can visualize the once-invisible worlds of
-                LGBTQ communities. For people living in isolation, thinking they're the only person in their part of the world that feels the way they do, seeing other people's
-                stories might give them the strength to carry on.
-            </p>
+  const handleEditorChange = e => {
+    setEditorContent(e.target.getContent());
+    console.log("Content was updated:", e.target.getContent());
+  };
 
+  const submitEdit = () => {
+    console.log(editorContent);
+    const about_us = editorContent;
+    const aboutUsData = { about_us };
+    dispatch(updateAboutUs(aboutUsData));
+  };
 
+  const editAboutUs = () => {
+    if (editMode) {
+      setEditButtonValue("Edit");
+      setEditMode(false);
+    } else {
+      setEditButtonValue("Close");
+      setEditMode(true);
+    }
+    // show edit form
+  };
 
-        </div >
-    )
+  const canEdit = (
+    <div className="admin-moderator-edit">
+      <button
+        onClick={editAboutUs}
+        className="btn btn-success admin-moderator-edit"
+      >
+        {editButtonValue}
+      </button>
+    </div>
+  );
+
+  const showEditor = aboutUsContent => (
+    <div>
+      <TinyMCE
+        content={aboutUsContent}
+        config={{
+          height: 300,
+          fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+          plugins: "autolink link image lists print preview",
+          toolbar: "undo redo | bold italic | alignleft aligncenter alignright"
+        }}
+        onChange={handleEditorChange}
+      />
+      <button
+        onClick={submitEdit}
+        className="btn btn-success admin-moderator-edit"
+      >
+        Submit
+      </button>
+    </div>
+  );
+
+  return (
+    <div>
+      <div className="card card-body mt-4 mb-4">
+        {authorized ? canEdit : ""}
+        {editMode ? showEditor(aboutUsData) : ""}
+        <Markup content={aboutUsData} />
+        {/*
+                <div className="col-lg-1">
+                    <img src="https://picsum.photos/200/300" className="rounded" position="center" ></img>
+
+                </div>
+              */}
+      </div>
+    </div>
+  );
 }
 
-export default About
+export default About;

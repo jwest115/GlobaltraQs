@@ -31,7 +31,9 @@ class ForgotPassword extends Component {
                     email: this.state.email,
                 })
                 .then(response => {
-                    console.log(response.data);
+                    if(response.data.toString().includes("object")){
+                        window.alert("An e-mail has been sent with a link to change your password")
+                    }
                     if (response.data === 'email not in db') {
                         this.setState({
                             showError: true,
@@ -54,6 +56,7 @@ class ForgotPassword extends Component {
         const {email, messageFromServer, showNullError, showError} = this.state;
 
         return (
+
             <div className="col-md-6 m-auto">
                 <div className="card card-body mt-5">
                     <h2 className="text-center">Forgot Password</h2>
@@ -96,6 +99,7 @@ class ForgotPassword extends Component {
                     )}
                 </div>
             </div>
+
         )
     }
 }

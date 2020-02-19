@@ -5,6 +5,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { addPin } from "../../actions/pins";
 import DatePicker from "react-datepicker";
+import TinyMCE from 'react-tinymce';
 
 
 import {
@@ -44,7 +45,7 @@ export class CustomModal extends Component {
       toggle: this.props.toggle,
       owner: "",
       startDate: new Date(),
-      endDate: new Date()
+      endDate: new Date(),
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -61,6 +62,15 @@ export class CustomModal extends Component {
   handleChange(event) {
     this.setState({ category: event.target.value });
   }
+
+  handleEditorChange = (e) => {
+      this.setState({description: e.target.getContent()});
+      console.log(
+        'Content was updated:',
+        e.target.getContent()
+      );
+  };
+
 
   handleRadiusChange(event) {
     this.setState({ radius: event.target.value });
@@ -160,6 +170,7 @@ export class CustomModal extends Component {
     };
 
     this.props.addPin(pin);
+    this.props.map.flyTo([this.state.latitude, this.state.longitude], 15);
 
     console.log(
       "title " +
@@ -219,14 +230,25 @@ export class CustomModal extends Component {
               </FormGroup>
               <FormGroup>
                 <Label for="description">Description</Label>
-                <Input
-                  className="form-control"
-                  type="textarea"
-                  rows="5"
-                  name="description"
-                  onChange={this.onChange}
-                  value={this.state.description}
+                 <TinyMCE
+                  content={this.state.description}
+                  config={{
+                    height: 300,
+                    fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+                    plugins: 'autolink link image lists print preview',
+                    toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+                  }}
+                  onChange={this.handleEditorChange}
                 />
+                {/*<Label for="description">Description</Label>*/}
+                {/*<Input*/}
+                {/*  className="form-control"*/}
+                {/*  type="textarea"*/}
+                {/*  rows="5"*/}
+                {/*  name="description"*/}
+                {/*  onChange={this.onChange}*/}
+                {/*  value={this.state.description}*/}
+                {/*/>*/}
               </FormGroup>
               <FormGroup>
                 <Label style={labelStyle} for="radius">
