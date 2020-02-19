@@ -15,7 +15,7 @@ import {
   GET_PIN_BY_ID,
   USER_FLAG_PIN,
   USER_FIRST_UPVOTE,
-  USER_UPVOTE,
+  USER_UPVOTE
 } from "./types";
 
 //GET PINS
@@ -35,7 +35,7 @@ export const searchPins = (
   searchQuery,
   categories,
   startDate,
-  endDate,
+  endDate
 ) => dispatch => {
   axios
     .get(

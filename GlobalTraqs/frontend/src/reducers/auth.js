@@ -10,14 +10,15 @@ import {
   DELETE_USER,
   GET_USERS,
   GET_USER,
-  EDIT_USER
+  EDIT_USER,
+  EDIT_USER_ROLE
 } from "../actions/types";
 
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
   isLoading: false,
-  user: '',
+  user: "",
   users: [],
   userProfile: null,
   story_author: null
@@ -26,30 +27,37 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_USER:
+      return {
+        ...state,
+        userProfile: action.payload
+      };
+    case EDIT_USER:
+      if (action.payload == null) {
+        return {
+          ...state
+        };
+      } else {
         return {
           ...state,
-          userProfile: action.payload
-    };
-    case EDIT_USER:
-        if(action.payload == null) {
-           return {
-             ...state,
-           };
-        }
-        else {
-            return {
-              ...state,
-              user: action.payload,
-            };
-        }
+          user: action.payload
+        };
+      }
     case DELETE_USER:
       return {
-          ...state,
+        ...state
+      };
+    case EDIT_USER_ROLE:
+      return {
+        ...state,
+        users: [
+          ...state.users.filter(user => user.id !== action.payload.id),
+          action.payload
+        ]
       };
     case GET_USERS:
       return {
-          ...state,
-          users: action.payload
+        ...state,
+        users: action.payload
       };
     case USER_LOADING:
       return {
