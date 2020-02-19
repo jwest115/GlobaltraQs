@@ -9,14 +9,14 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import register from "./components/accounts/register";
+import register from "./components/accounts/registerHook";
 // if deployed to apache, mess with congig htt file
 import Alerts from "./components/layout/Alerts";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import { Provider } from "react-redux";
 import store from "./store";
-import login from "./components/accounts/login";
+import login from "./components/accounts/loginHooks";
 import PrivateRoute from "./components/common/PrivateRoute";
 import { loadUser } from "./actions/auth";
 import Story from "./components/Map/StoryTest";
@@ -27,12 +27,12 @@ import ProfilePage from "./components/profile/ProfilePageHooks";
 import Settings from "./components/profile/SettingsHooks";
 import EditStory from "./components/Map/EditStory";
 import ManageFlag from "./components/AdminMod/ManageFlag";
-import ForgotPassword from "./components/accounts/ForgotPassword";
+import ForgotPassword from "./components/accounts/ForgotPasswordHook";
 import MainStory from "./components/Map/Story/MainStory";
 import AddComment from "./components/Map/AddComment";
 import PinForm from "./components/Map/PinForm";
 import Support from "./components/AboutPage/Support";
-import ResetPassword from "./components/accounts/resetPassword";
+import ResetPassword from "./components/accounts/resetPasswordHook";
 const divStyle = {
   position: "relative"
 };
