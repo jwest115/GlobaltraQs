@@ -105,18 +105,18 @@ DATABASES = {
     #     'HOST': 'salt.db.elephantsql.com',
     #     'PORT': '5432',
     # }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'trazbetq',
-    #     'USER': 'trazbetq',
-    #     'PASSWORD': 'AZNxT-5R-D3tDIm_zhEeP_OZfLCkXrhM',
-    #     'HOST': 'rajje.db.elephantsql.com',
-    #     'PORT': '5432',
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db1',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ooiarmnn',
+        'USER': 'ooiarmnn',
+        'PASSWORD': '5tZaOHTt-xRz0rwfLK8lFO6fkNccO0KQ',
+        'HOST': 'rajje.db.elephantsql.com',
+        'PORT': '5432',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': 'db1',
+    # }
 }
 
 
