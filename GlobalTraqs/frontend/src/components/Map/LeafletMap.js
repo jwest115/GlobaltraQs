@@ -164,7 +164,7 @@ const LeafletMap = props => {
       <Map
         center={[props.placement.userlat, props.placement.userlng]}
         zoom={15}
-        maxZoom={30} //shows map
+        maxZoom={18} //shows map
         minZoom={5}
         id="map"
         zoomControl={false}
@@ -212,7 +212,7 @@ const LeafletMap = props => {
             spiderfyOnMaxZoom={false}
             maxClusterRadius={40}
             onClusterClick={(e) => {
-              if(mapInstance.leafletElement.getZoom() > 24) {
+              if(mapInstance.leafletElement.getZoom() > 16) {
                 let markers = e.layer.getAllChildMarkers();
                 console.log(markers);
                 console.log(mapInstance.leafletElement.getZoom() + " is the zoom");
