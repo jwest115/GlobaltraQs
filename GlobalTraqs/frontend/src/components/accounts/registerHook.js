@@ -5,6 +5,7 @@ import { register } from "../../actions/auth";
 import { createMessage } from "../../actions/messages";
 import Recaptcha from "react-recaptcha";
 import * as EmailValidator from "email-validator";
+import { REGISTER_FAIL } from "../../actions/types";
 
 export default function registerHook() {
   const auth = useSelector(state => state.auth);
@@ -38,7 +39,6 @@ export default function registerHook() {
           password: userForm.password,
           email: userForm.email
         };
-        // this.props.register(newUser);
         dispatch(register(newUser));
       }
     } else {
@@ -129,6 +129,7 @@ export default function registerHook() {
             />
             <div name="userStatus" />
             <p className="text-danger">{userForm.errors["username"]}</p>
+            <p className="text-danger"></p>
           </div>
           <div className="form-group">
             <label>Email</label>
