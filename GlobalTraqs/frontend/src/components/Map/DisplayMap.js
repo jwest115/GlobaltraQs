@@ -61,8 +61,10 @@ export class DisplayMap extends Component {
         this.state = {
             submitAddress: true,
             modal: false,
-            lat: (-90, -200),
-            lng: (90, 200),
+//            lat: (-90, -200),
+//            lng: (90, 200),
+            lat: 34.0668,
+            lng: -118.1684,
             zoom: 15,
             minZoom: 1,
             maxZoom: 30,
@@ -70,6 +72,7 @@ export class DisplayMap extends Component {
             userlat: 0,
             userlng: 0,
             noWrap: true,
+            maxBoundsViscosity: 1.0,
             categoryType: personalIcon
         }
     }
@@ -104,7 +107,7 @@ export class DisplayMap extends Component {
         const userposition = [this.state.userlat, this.state.userlng];
         return (
         <main>
-              <Map center={position} zoom={this.state.zoom} minZoom={this.state.minZoom} maxZoom = {this.state.maxZoom} noWrap={this.state.noWrap} onClick={this.addMarker}>
+              <Map center={position} zoom={this.state.zoom} minZoom={this.state.minZoom} maxZoom = {this.state.maxZoom} maxBoundsViscosity={this.state.maxBoundsViscosity} onClick={this.addMarker}>
 >
                 <TileLayer
                         attribution="Map tiles by <a href='http://stamen.com'>Stamen Design</a>, <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a> &mdash; Map data &copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
