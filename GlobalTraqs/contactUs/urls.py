@@ -1,5 +1,7 @@
 from django.urls import path
-from . import views
+from .views import email
+from django.conf.urls import url, include
+
 urlpatterns = [
-    path('', views.email)
+    url(r'^', email)
 ]

@@ -10,8 +10,7 @@ import axios from "axios";
 
 export default function contactUs() {
   const auth = useSelector(state => state.auth);
-  const dispatch = useDispatch();
-  const { isAuthenticated, user, registerFail } = auth;
+
   let token = localStorage.getItem("token");
   axios.defaults.headers.common["Authorization"] = token;
 
@@ -31,10 +30,21 @@ export default function contactUs() {
         });
     } else {
       setEmail("Anonymous@anon.com");
+      let data = JSON.stringify({
+        email: email,
+        message: message
+      });
       axios
-        .post("api/contactUs/", { email: email, message: message })
+        .post("api/contactUs/", data, {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
         .then(response => {
           console.log(response);
+        })
+        .catch(error => {
+          console.log(error.response);
         });
     }
   };
