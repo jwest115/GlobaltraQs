@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'passwordReset',
     'django_filters',
     # 'django_rest_passwordreset',
+    'contactUs',
     'corsheaders',
     'management',
     'django_cleanup.apps.CleanupConfig',

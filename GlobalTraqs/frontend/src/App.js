@@ -33,6 +33,7 @@ import AddComment from "./components/Map/AddComment";
 import PinForm from "./components/Map/PinForm";
 import Support from "./components/AboutPage/Support";
 import ResetPassword from "./components/accounts/resetPasswordHook";
+import contactUs from "./components/contactUs/contactUs";
 const divStyle = {
   position: "relative"
 };
@@ -68,6 +69,7 @@ export class App extends Component {
                 <Route path="/forgotPassword" component={ForgotPassword} />
                 <Route path="/resetPassword" component={ResetPassword} />
                 <Route path="/Support" component={Support} />
+                <Route path="/ContactUs" component={contactUs} />
                 {/* <MapDashboard /> */}
               </Switch>
             </div>
