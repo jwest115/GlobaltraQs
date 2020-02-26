@@ -11,7 +11,7 @@ import {
   Input,
   Label
 } from "reactstrap";
-import { getUsers, editUserRole } from "../../actions/users";
+import { getUsers, editUserRole, deleteUser } from "../../actions/users";
 
 export default function ManageUsers() {
   const dispatch = useDispatch();
@@ -76,6 +76,7 @@ export default function ManageUsers() {
 }
 
 const ViewUsers = props => {
+  const dispatch = useDispatch();
   return (
     <table className="table table-bordered">
       <tbody>
@@ -111,6 +112,9 @@ const ViewUsers = props => {
                   userRole={props.userRole}
                   setuserRole={props.setuserRole}
                 />
+              </td>
+              <td>
+                <button onClick={() => dispatch(deleteUser(user.id))}> Delete diz User</button>
               </td>
             </tr>
           );
@@ -151,13 +155,13 @@ const EditUserRole = props => {
                 name="Role"
                 value={props.userRole}
                 onChange={e => props.setuserRole(e.target.value)}
-                // value={props.userForm.category}
-                // onChange={e =>
-                //   props.setuserForm({
-                //     ...props.userForm,
-                //     category: e.target.value
-                //   })
-                // }
+              // value={props.userForm.category}
+              // onChange={e =>
+              //   props.setuserForm({
+              //     ...props.userForm,
+              //     category: e.target.value
+              //   })
+              // }
               >
                 <option value="1">Administrator</option>
                 <option value="2">Moderator</option>

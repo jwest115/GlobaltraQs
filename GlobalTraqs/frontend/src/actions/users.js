@@ -47,7 +47,7 @@ export const deleteUser = id => dispatch => {
     .then(res => {
       dispatch({
         type: DELETE_USER,
-        payload: res.data
+        payload: id
       });
     })
     .catch(err => console.log(err));
@@ -62,7 +62,7 @@ export const getUser = id => dispatch => {
         payload: res.data
       });
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error.response);
       dispatch({
         type: GET_USER,
@@ -80,7 +80,7 @@ export const editUserRole = (id, role) => dispatch => {
         payload: res.data
       });
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error.response);
     });
 };
