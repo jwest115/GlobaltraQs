@@ -11,9 +11,10 @@ import Pins, {
   personalIcon
 } from "./Pins";
 import { getPins } from "../../actions/pins";
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import Modal from "./Modal";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import ThumbDownIcon from "@material-ui/icons/ThumbDown";
+
+import { Markup } from "interweave";
 
 const divStyle = {
   height: "40vh",
@@ -38,10 +39,20 @@ const storyBody = {
   paddingRight: "50px"
 };
 
-const months = [ "January", "February", "March", "April", "May", "June",
-           "July", "August", "September", "October", "November", "December" ];
-
-
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
 
 export class Story extends Component {
   static propTypes = {
@@ -68,7 +79,7 @@ export class Story extends Component {
       endDateFormatted: "",
       userlat: 34.0668,
       userlng: -118.1684,
-      modal: false,
+      modal: false
     };
   }
 
@@ -106,8 +117,8 @@ export class Story extends Component {
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-        if(response.data.owner != null) {
-          console.log("not null")
+        if (response.data.owner != null) {
+          console.log("not null");
           this.getAuthor(response.data.owner);
         }
         console.log(response.data);
@@ -130,20 +141,36 @@ export class Story extends Component {
         });
         console.log(response.data.commentstory[0]);
 
-      let startSplit = response.data.startDate.split('-');
-      let start = new Date(startSplit[0], Number.parseInt(startSplit[1]) - 1, startSplit[2]);
-      console.log("start " + startSplit[1] + "/" + startSplit[2] + "/" + startSplit[0]);
-      console.log("start " + start);
+        let startSplit = response.data.startDate.split("-");
+        let start = new Date(
+          startSplit[0],
+          Number.parseInt(startSplit[1]) - 1,
+          startSplit[2]
+        );
+        console.log(
+          "start " + startSplit[1] + "/" + startSplit[2] + "/" + startSplit[0]
+        );
+        console.log("start " + start);
 
-      let selectedStartMonthName = months[start.getMonth()];
-      let startDateFormatted = selectedStartMonthName + " " + start.getDate() + ", " + start.getFullYear();
-      console.log("original " + start);
-      let endSplit = response.data.endDate.split('-');
-      let end = new Date(endSplit[0], Number.parseInt(endSplit[1]) - 1, endSplit[2]);
-      console.log("end " + end);
+        let selectedStartMonthName = months[start.getMonth()];
+        let startDateFormatted =
+          selectedStartMonthName +
+          " " +
+          start.getDate() +
+          ", " +
+          start.getFullYear();
+        console.log("original " + start);
+        let endSplit = response.data.endDate.split("-");
+        let end = new Date(
+          endSplit[0],
+          Number.parseInt(endSplit[1]) - 1,
+          endSplit[2]
+        );
+        console.log("end " + end);
 
-      let selectedEndMonthName = months[end.getMonth()];
-      let endDateFormatted = selectedEndMonthName + " " + end.getDate() + ", " + end.getFullYear();
+        let selectedEndMonthName = months[end.getMonth()];
+        let endDateFormatted =
+          selectedEndMonthName + " " + end.getDate() + ", " + end.getFullYear();
 
         this.setState({
           userStory: response.data,
@@ -250,58 +277,82 @@ export class Story extends Component {
       });
   }
 
-  onUpdate = (category, title, description, startDate, endDate, formattedStartDate, formattedEndDate) => {
-
+  onUpdate = (
+    category,
+    title,
+    description,
+    startDate,
+    endDate,
+    formattedStartDate,
+    formattedEndDate
+  ) => {
     this.setState({
-        category: category,
-        title: title,
-        description: description,
-        startDate: startDate,
-        endDate: endDate,
-        startDateFormatted: formattedStartDate,
-        endDateFormatted: formattedEndDate,
-        showEditForm: false,
-        editButtonValue: "Edit Story", })
+      category: category,
+      title: title,
+      description: description,
+      startDate: startDate,
+      endDate: endDate,
+      startDateFormatted: formattedStartDate,
+      endDateFormatted: formattedEndDate,
+      showEditForm: false,
+      editButtonValue: "Edit Story"
+    });
   };
 
   componentDidUpdate(prevProps) {
-  if (this.props.match.params !== prevProps.match.params) {
-        // call the fetch function again
+    if (this.props.match.params !== prevProps.match.params) {
+      // call the fetch function again
       console.log("url changes" + this.props.match.params.id);
-        this.updateStoryId(this.props.match.params.id);
-      }
+      this.updateStoryId(this.props.match.params.id);
     }
+  }
 
   updateStoryId = id => {
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-        let startSplit = response.data.startDate.split('-');
-        let start = new Date(startSplit[0], Number.parseInt(startSplit[1]) - 1, startSplit[2]);
-        console.log("start " + startSplit[1] + "/" + startSplit[2] + "/" + startSplit[0]);
+        let startSplit = response.data.startDate.split("-");
+        let start = new Date(
+          startSplit[0],
+          Number.parseInt(startSplit[1]) - 1,
+          startSplit[2]
+        );
+        console.log(
+          "start " + startSplit[1] + "/" + startSplit[2] + "/" + startSplit[0]
+        );
         console.log("start " + start);
 
         let selectedStartMonthName = months[start.getMonth()];
-        let startDateFormatted = selectedStartMonthName + " " + start.getDate() + ", " + start.getFullYear();
+        let startDateFormatted =
+          selectedStartMonthName +
+          " " +
+          start.getDate() +
+          ", " +
+          start.getFullYear();
         console.log("original " + start);
-        let endSplit = response.data.endDate.split('-');
-        let end = new Date(endSplit[0], Number.parseInt(endSplit[1]) - 1, endSplit[2]);
+        let endSplit = response.data.endDate.split("-");
+        let end = new Date(
+          endSplit[0],
+          Number.parseInt(endSplit[1]) - 1,
+          endSplit[2]
+        );
         console.log("end " + end);
 
         let selectedEndMonthName = months[end.getMonth()];
-        let endDateFormatted = selectedEndMonthName + " " + end.getDate() + ", " + end.getFullYear();
+        let endDateFormatted =
+          selectedEndMonthName + " " + end.getDate() + ", " + end.getFullYear();
         this.setState({
-            userStory: response.data,
-            category: response.data.category,
-            title: response.data.title,
-            description: response.data.description,
-            startDate: start,
-            startDateFormatted: startDateFormatted,
-            endDate: end,
-            endDateFormatted: endDateFormatted,
-            upVotes: response.data.upVotes,
-            showEditForm: false,
-            editButtonValue: "Edit Story",
+          userStory: response.data,
+          category: response.data.category,
+          title: response.data.title,
+          description: response.data.description,
+          startDate: start,
+          startDateFormatted: startDateFormatted,
+          endDate: end,
+          endDateFormatted: endDateFormatted,
+          upVotes: response.data.upVotes,
+          showEditForm: false,
+          editButtonValue: "Edit Story"
         });
         console.log(response.data);
       })
@@ -324,18 +375,18 @@ export class Story extends Component {
     }
   };
 
-   addMarker = e => {
+  addMarker = e => {
     this.setState({ userlat: e.latlng.lat });
     this.setState({ userlng: e.latlng.lng });
     this.createStory(false);
   };
 
-   createStory = address => {
+  createStory = address => {
     const item = { title: "", description: "", address: "" };
     this.setState({ submitAddress: address, modal: !this.state.modal });
   };
 
-   toggle = () => {
+  toggle = () => {
     this.setState({ modal: !this.state.modal });
   };
 
@@ -364,20 +415,24 @@ export class Story extends Component {
 
     if (isAuthenticated) {
       console.log("user is authenticated!");
-        if (user.is_administrator || user.is_moderator || this.state.userStory.owner == user.id) {
-          isAdminOrModerator = true;
-          console.log("user is admin or moderator! let them edit!");
-          adminModeratorEditStory = (
-              <div className="admin-moderator-edit">
-                <button
-                    onClick={this.editStory}
-                    className="btn btn-success admin-moderator-edit"
-                >
-                  {this.state.editButtonValue}
-                </button>
-              </div>
-          );
-          console.log("user IS admin or moderator!");
+      if (
+        user.is_administrator ||
+        user.is_moderator ||
+        this.state.userStory.owner == user.id
+      ) {
+        isAdminOrModerator = true;
+        console.log("user is admin or moderator! let them edit!");
+        adminModeratorEditStory = (
+          <div className="admin-moderator-edit">
+            <button
+              onClick={this.editStory}
+              className="btn btn-success admin-moderator-edit"
+            >
+              {this.state.editButtonValue}
+            </button>
+          </div>
+        );
+        console.log("user IS admin or moderator!");
       }
     }
     let authorName = "Anonymous";
@@ -402,17 +457,23 @@ export class Story extends Component {
     );
     const upVoteButton = (
       <button type="submit" className="btn btn-primary">
-        {this.state.upvote ? <ThumbDownIcon></ThumbDownIcon> : <ThumbUpIcon></ThumbUpIcon>}
+        {this.state.upvote ? (
+          <ThumbDownIcon></ThumbDownIcon>
+        ) : (
+          <ThumbUpIcon></ThumbUpIcon>
+        )}
       </button>
     );
-
 
     return (
       <div className="container-fluid" style={divStyle2}>
         <h2> {isAuthenticated ? flaggedButton : ""}</h2>
-          <div style={{ height: '45%'}}>
-            <Pins latitude={this.state.userStory.latitude} longitude={this.state.userStory.longitude}/>
-          </div>
+        <div style={{ height: "45%" }}>
+          <Pins
+            latitude={this.state.userStory.latitude}
+            longitude={this.state.userStory.longitude}
+          />
+        </div>
 
         <div className="container-fluid" style={storyBody}>
           {this.state.showEditForm && (
@@ -426,23 +487,30 @@ export class Story extends Component {
               userId={this.state.userStory.owner}
               startDate={this.state.startDate}
               endDate={this.state.endDate}
-              onUpdate = {this.onUpdate}
+              onUpdate={this.onUpdate}
             />
           )}
           {isAdminOrModerator ? adminModeratorEditStory : ""}
           <h2>
             <strong>{this.state.title}</strong>
           </h2>
-          <p> {this.state.startDateFormatted} - {this.state.endDateFormatted} </p>
+          <p>
+            {" "}
+            {this.state.startDateFormatted} - {this.state.endDateFormatted}{" "}
+          </p>
           <p>By: {authorName}</p>
           <form onSubmit={this.onSubmit}>
-          <h6>
-            {this.state.userStory.updooots}{" "} upvotes
-            {isAuthenticated ? upVoteButton : <Link to="/login"> Login to upvote!</Link>}
-          </h6>
+            <h6>
+              {this.state.userStory.updooots} upvotes
+              {isAuthenticated ? (
+                upVoteButton
+              ) : (
+                <Link to="/login"> Login to upvote!</Link>
+              )}
+            </h6>
           </form>
           <hr></hr>
-          <p>{this.state.description}</p>
+          <Markup content={this.state.description} />
 
           {this.state.userStory.commentstory.map((marker, index) => {
             console.log(marker.username);
@@ -453,7 +521,7 @@ export class Story extends Component {
                   {marker.username}
                 </p>
 
-                <p>{marker.description}</p>
+                <Markup content={marker.description} />
               </div>
             );
           })}

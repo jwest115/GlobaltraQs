@@ -1,6 +1,6 @@
 @import url("~react-leaflet-markercluster/dist/styles.min.css");
 @import url("~react-datepicker/dist/react-datepicker.css");
-
+@import url("https://unpkg.com/leaflet-geosearch@2.6.0/assets/css/leaflet.css");
 .top-bar {
     padding: 18px 0px 10px 30px;
     background-color: black;
@@ -71,59 +71,59 @@
     width: 40%;
 }
 
-.root {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-}
+/*.root {*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    overflow: hidden;*/
+/*}*/
 
-.sidebar {
-    zIndex: 1000;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    transition: transform .3s ease-out;
-    WebkitTransition: -webkit-transform .3s ease-out;
-    willChange: transform;
-    overflowY: auto;
-    width: 30%;
-}
+/*.sidebar {*/
+/*    zIndex: 1000;*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    bottom: 0;*/
+/*    transition: transform .3s ease-out;*/
+/*    WebkitTransition: -webkit-transform .3s ease-out;*/
+/*    willChange: transform;*/
+/*    overflowY: auto;*/
+/*    width: 30%;*/
+/*}*/
 
-.content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflowY: auto;
-    WebkitOverflowScrolling: touch;
-    transition: left .3s ease-out, right .3s ease-out;
-    z-index: 1000;
-    width: 35%;
-  }
+/*.content {*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    overflowY: auto;*/
+/*    WebkitOverflowScrolling: touch;*/
+/*    transition: left .3s ease-out, right .3s ease-out;*/
+/*    z-index: 1000;*/
+/*    width: 35%;*/
+/*  }*/
 
-.overlay {
-    zIndex: 999;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .3s ease-out, visibility .3s ease-out;
-    backgroundColor: rgba(0,0,0,.3);
-}
+/*.overlay {*/
+/*    zIndex: 0;*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    opacity: 0;*/
+/*    visibility: hidden;*/
+/*    !*transition: opacity .3s ease-out, visibility .3s ease-out;*!*/
+/*    backgroundColor: rgba(0,0,0,.3);*/
+/*}*/
 
-.dragHandle {
-    zIndex: 1;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-}
+/*.dragHandle {*/
+/*    zIndex: 1;*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    bottom: 0;*/
+/*}*/
 
 #map-dashboard {
     position: absolute;
@@ -145,3 +145,20 @@
     position: absolute;
     margin-top: 10px;
 }
+
+/* fix for bold Tiny MCE text not showing up in some pages */
+b, strong {
+    font-weight: bold !important; /* make this styling take precedence over bootstrap 'bolder' style */
+}
+
+.userway{
+    visibility: hidden;
+}
+
+/*.userway-hide {*/
+/*    visibility: hidden !important;*/
+/*}*/
+
+/*.userway-show {*/
+/*    visibility: visible !important;*/
+/*}*/

@@ -3,35 +3,63 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout} from "../../actions/auth";
+import {personalIcon} from "../Map/Pins";
 
 
 export class Header extends Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+        anonymousMode: this.props.auth.user.is_anonymous_active
+    };
+  }
   static propTypes = {
     auth: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired
   };
 
+    toggleAnonymous = () => {
+        this.setState({anonymousMode : !this.state.anonymousMode})
+    };
+
     render() {
         let accessibilityWidget = document.body.getElementsByClassName("userway")[0];
-
+        console.log("accessibility is");
+        console.log(accessibilityWidget);
+        if(accessibilityWidget) {
+            accessibilityWidget.style.visibility = "hidden";
+        }
         const { isAuthenticated, user } = this.props.auth;
 
-        var userRole = "";
-        var adminManager = null;
+        let userRole = "";
+        let adminManager = null;
+
+        let anonymousModeMenu = "";
         if(user != null) {
+           anonymousModeMenu = (
+                <li className="nav-item">
+                    <button onClick={this.toggleAnonymous} className="nav-link">Go Anonymous</button>
+                </li>
+            );
+
             if(user.accessibility_mode_active) {
                 if(accessibilityWidget != undefined) {
-                    accessibilityWidget.style.display = "block";
+                    accessibilityWidget.style.visibility = "visible";
                 }
             }
             else {
                 if(accessibilityWidget != undefined) {
-                    accessibilityWidget.style.display = "none";
+                    accessibilityWidget.style.visibility = "hidden";
                 }
             }
 
             if(user.is_anonymous_active) {
                user.username = "Anonymous";
+               anonymousModeMenu = (
+                    <li className="nav-item">
+                        <button onClick={this.toggleAnonymous} className="nav-link">Leave Anonymous Mode</button>
+                    </li>
+               );
             }
             else if(user.is_administrator) {
                 adminManager = (
@@ -51,13 +79,14 @@ export class Header extends Component {
         }
         else {
             if(accessibilityWidget != undefined) {
-                accessibilityWidget.style.display = "none";
+                accessibilityWidget.style.visibility = "hidden";
             }
         }
 
         const authLinks = (
 
            <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+            {/*{anonymousModeMenu}*/}
             <span className="navbar-text text-warning mr-5">
               <strong>{user ? `Welcome ${user.username}` : ""} {userRole} </strong>
             </span>

@@ -7,6 +7,7 @@ import axios from "axios";
 import InputGroup from "react-bootstrap/InputGroup";
 import DatePicker from "react-datepicker";
 import  { Redirect } from 'react-router-dom'
+import TinyMCE from 'react-tinymce';
 
 
 const labelStyle = {
@@ -34,6 +35,14 @@ export class EditPin extends Component {
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
+
+  handleEditorChange = (e) => {
+      this.setState({description: e.target.getContent()});
+      console.log(
+        'Content was updated:',
+        e.target.getContent()
+      );
+  };
 
   handleStartDateChange = date => {
     this.setState({
@@ -141,12 +150,15 @@ export class EditPin extends Component {
           </div>
           <div className="form-group">
             <label>Description</label>
-            <input
-              className="form-control"
-              type="text"
-              name="description"
-              onChange={this.onChange}
-              value={description}
+            <TinyMCE
+                  content={description}
+                  config={{
+                    height: 300,
+                    fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+                    plugins: 'autolink link image lists print preview',
+                    toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+                  }}
+                  onChange={this.handleEditorChange}
             />
           </div>
           <InputGroup>

@@ -103,21 +103,21 @@ export class Story extends Component {
     const { id } = this.props.match.params;
     this.setState({ pinId: id });
     const { isAuthenticated, user } = this.props.auth;
-    const userid = user ? user.id : "";
+    const userid = user ? user.id : "no id";
 
-    this.state.upVoterId = userid;
+    console.log("current user id is ");
     this.setState({
       upVoterId: userid,
       upVoter: userid,
 
       flagger: userid
     });
-    this.state.upVoter = userid;
+
     axios
       .get(`api/pins/${id}`)
       .then(response => {
-        if(response.data.owner != null) {
-          console.log("not null")
+        if (response.data.owner != null) {
+          console.log("not null");
           this.getAuthor(response.data.owner);
         }
         console.log(response.data);
@@ -177,10 +177,11 @@ export class Story extends Component {
         console.log(error);
       });
   }
+
   onFlag = e => {
     e.preventDefault();
     this.state.flagged = true;
-    console.log("flag these losers");
+    console.log("flag these losers" + this.state.flagger);
     const { flagged, pinId, flagger } = this.state;
     const upVoteStoryPin = { flagged, pinId, flagger };
     axios
@@ -363,20 +364,24 @@ export class Story extends Component {
 
     if (isAuthenticated) {
       console.log("user is authenticated!");
-        if (user.is_administrator || user.is_moderator || this.state.userStory.owner == user.id) {
-          isAdminOrModerator = true;
-          console.log("user is admin or moderator! let them edit!");
-          adminModeratorEditStory = (
-              <div className="admin-moderator-edit">
-                <button
-                    onClick={this.editStory}
-                    className="btn btn-success admin-moderator-edit"
-                >
-                  {this.state.editButtonValue}
-                </button>
-              </div>
-          );
-          console.log("user IS admin or moderator!");
+      if (
+        user.is_administrator ||
+        user.is_moderator ||
+        this.state.userStory.owner == user.id
+      ) {
+        isAdminOrModerator = true;
+        console.log("user is admin or moderator! let them edit!");
+        adminModeratorEditStory = (
+          <div className="admin-moderator-edit">
+            <button
+              onClick={this.editStory}
+              className="btn btn-success admin-moderator-edit"
+            >
+              {this.state.editButtonValue}
+            </button>
+          </div>
+        );
+        console.log("user IS admin or moderator!");
       }
     }
     let authorName = "Anonymous";
@@ -435,41 +440,36 @@ export class Story extends Component {
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           />
 
-        <MarkerClusterGroup>
-          {this.props.pins.map((marker, index) => {
-            let post = [marker.latitude, marker.longitude];
-            let categoryIcon = "";
-            if (marker.category == 1) {
-              categoryIcon = personalIcon;
-            } else if (marker.category == 2) {
-              categoryIcon = communityIcon;
-            } else {
-              categoryIcon = historicalIcon;
-            }
-            const id = marker.id;
+            <MarkerClusterGroup>
+              {this.props.pins.map((marker, index) => {
+                let post = [marker.latitude, marker.longitude];
+                let categoryIcon = "";
+                if (marker.category == 1) {
+                  categoryIcon = personalIcon;
+                } else if (marker.category == 2) {
+                  categoryIcon = communityIcon;
+                } else {
+                  categoryIcon = historicalIcon;
+                }
+                const id = marker.id;
 
-            return (
-
-              <Marker key={index} position={post} icon={categoryIcon}>
-                <Popup>
-                  <strong>{marker.title}</strong> <br />{" "}
-                  {marker.description.substring(0, 200)}
-                  <br />
-                  <br />
-                  <Link
-                      to={`/Story/${marker.id}`}
-                      params={{ storyId: marker.id }}
-                    >
-                       <button
-                      onClick={() => this.updateStoryId(id)}
-                      type="button"
-                      className="btn btn-primary btn-sm"
+                return (
+                  <Marker key={index} position={post} icon={categoryIcon}>
+                    <Popup>
+                      <strong>{marker.title}</strong> <br />{" "}
+                      {marker.description.substring(0, 200)}
+                      <br />
+                      <br />
+                      <Link to={`${marker.id}`}> e </Link> View{" "}
+                      <button
+                        onClick={() => this.updateStoryId(id)}
+                        type="button"
+                        className="btn btn-primary btn-sm"
                       >
                       View Story
                     </button>
-                    </Link>
-                </Popup>
-              </Marker>
+                    </Popup>
+                </Marker>
             );
           })}
           </MarkerClusterGroup>
@@ -512,19 +512,24 @@ export class Story extends Component {
           <hr></hr>
           <p>{this.state.description}</p>
 
-          {this.state.userStory.commentstory.map((marker, index) => {
-            console.log(marker.username);
-            return (
-              <div className="container-md jumbotron" key={index} style={style}>
-                <p className="lead">
-                  <img src="https://via.placeholder.com/30" />
-                  {marker.username}
-                </p>
+            {this.state.userStory.commentstory.map((marker, index) => {
+              console.log(marker.username);
+              return (
+                <div
+                  className="container-md jumbotron"
+                  key={index}
+                  style={style}
+                >
+                  <p className="lead">
+                    <img src="https://via.placeholder.com/30" />
+                    {marker.username}
+                  </p>
 
-                <p>{marker.description}</p>
-              </div>
-            );
-          })}
+                  <p>{marker.description}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     );
