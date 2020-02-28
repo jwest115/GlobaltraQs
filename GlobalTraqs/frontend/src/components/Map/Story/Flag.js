@@ -9,11 +9,7 @@ function Flag(props) {
 
   return (
     <>
-      {props.pin.flagState ? (
-        <button type="submit" className="btn btn-danger disabled">
-          Flagged
-        </button>
-      ) : (
+      {props.pin.userFlaggedBefore ? (
         <button
           onClick={e => {
             dispatch(
@@ -21,8 +17,12 @@ function Flag(props) {
             );
           }}
           type="submit"
-          className="btn btn-warning"
+          className="btn btn-danger disabled"
         >
+          Flag
+        </button>
+      ) : (
+        <button type="submit" className="btn btn-warning">
           Flag
         </button>
       )}

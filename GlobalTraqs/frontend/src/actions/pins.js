@@ -15,7 +15,8 @@ import {
   GET_PIN_BY_ID,
   USER_FLAG_PIN,
   USER_FIRST_UPVOTE,
-  USER_UPVOTE
+  USER_UPVOTE,
+  USER_UNFLAG
 } from "./types";
 
 //GET PINS
@@ -124,15 +125,22 @@ export const getPin = (id, userid) => dispatch => {
     .then(res => {
       let validUser = false;
       let flagstateofuser = false;
+      let userFlaggedBefore = false;
       let upvotedBefore = false;
       let userCurrentUpvote = false;
       if (userid) {
-        flagstateofuser = res.data.flaggerstory.some(a => a.flagger === userid);
+        userFlaggedBefore = res.data.flaggerstory.some(
+          a => a.flagger === userid
+        );
         upvotedBefore = res.data.updotes.some(b => b.upVoter === userid);
         if (upvotedBefore)
           userCurrentUpvote = res.data.updotes.filter(
             b => b.upVoter === userid
           )[0].upvote;
+        if (userFlaggedBefore)
+          flagstateofuser = res.data.flaggerstory.filter(
+            a => a.flagger === userid
+          )[0].flagged;
         validUser = true;
         console.log("has this user upvoted before" + upvotedBefore);
       }
@@ -141,7 +149,8 @@ export const getPin = (id, userid) => dispatch => {
         userCurrentUpvote: userCurrentUpvote,
         upvotedBefore: upvotedBefore,
         validUser: validUser,
-        flagState: flagstateofuser
+        flagState: flagstateofuser,
+        userFlaggedBefore: userFlaggedBefore
       };
 
       dispatch({
@@ -211,6 +220,27 @@ export const userFlagPin = (pin, user, state) => dispatch => {
 
   axios
     .post(`api/flagStory/`, userflagged)
+    .then(res => {
+      const flagData = {
+        ...res.data,
+        flagState: true
+      };
+      console.log(res.data);
+      dispatch({
+        type: USER_FLAG_PIN,
+        payload: res.data
+      });
+    })
+    .catch(error => console.log(error));
+};
+
+export const userUnFlagPin = (id, state) => dispatch => {
+  const userflagged = {
+    flagged: !state
+  };
+
+  axios
+    .patch(`api/flagStory/${id}`, userflagged)
     .then(res => {
       const flagData = {
         ...res.data,
