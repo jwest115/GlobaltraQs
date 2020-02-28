@@ -3,11 +3,21 @@ import { Link, Redirect } from "react-router-dom";
 import { login } from "../../actions/auth";
 import Recaptcha from "react-recaptcha";
 import { useDispatch, useSelector } from "react-redux";
+import Tooltip from '@material-ui/core/Tooltip';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+
 
 export default function loginHooks() {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const { isAuthenticated, user, loginFail } = auth;
+  const [open, setOpen] = useState(false);
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+  const handleTooltipOpen = () => {
+    setOpen(true);
+  };
   const [submitted, setSubmitted] = useState(false);
   const [userForm, setuserForm] = useState({
     username: "",
@@ -95,7 +105,13 @@ export default function loginHooks() {
     <div className="col-md-6 m-auto">
       {console.log(attempts)}
       {/* if form was submitted and login failed then show an error banner*/}
-      {submitted && loginFail ? "Login failed" : ""}
+      {submitted && loginFail ?
+        <div class="alert alert-danger" role="alert">
+          Login Failed.
+      </div>
+        :
+        ""}
+
       <div className="card card-body mt-5">
         <h2 className="text-center">Login</h2>
         <form onSubmit={submitForm}>
@@ -115,24 +131,38 @@ export default function loginHooks() {
             />
             <p className="text-danger">{userForm.errors["username"]}</p>
           </div>
-
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              onChange={e =>
-                setuserForm({
-                  ...userForm,
-                  password: e.target.value
-                })
-              }
-              value={userForm.password}
-            />
-            <p className="text-danger">{userForm.errors["password"]}</p>{" "}
-          </div>
-
+          <ClickAwayListener onClickAway={handleTooltipClose}>
+            <Tooltip
+              PopperProps={{
+                disablePortal: true,
+              }}
+              onClose={handleTooltipClose}
+              open={open}
+              placement="bottom-start"
+              disableFocusListener
+              disableHoverListener
+              disableTouchListener
+              title="Must be at least eight characters with one Uppercase, Lowercase, Number, and Special Character."
+            >
+              <div className="form-group">
+                <label>Password</label>
+                <input
+                onClick={handleTooltipOpen}
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  onChange={e =>
+                    setuserForm({
+                      ...userForm,
+                      password: e.target.value
+                    })
+                  }
+                  value={userForm.password}
+                />
+                <p className="text-danger">{userForm.errors["password"]}</p>{" "}
+              </div>
+            </Tooltip>
+          </ClickAwayListener>
           <div className="form-group row justify-content-between justify-content-around">
             <button type="submit" className="btn btn-primary float-left">
               Login
@@ -147,8 +177,8 @@ export default function loginHooks() {
                 onloadCallback={reCaptchaLoaded}
               />
             ) : (
-              ""
-            )}
+                ""
+              )}
           </div>
           <p>
             Don't have an account? <Link to="/register">Register</Link>

@@ -6,11 +6,21 @@ import { createMessage } from "../../actions/messages";
 import Recaptcha from "react-recaptcha";
 import * as EmailValidator from "email-validator";
 import { REGISTER_FAIL } from "../../actions/types";
+import Tooltip from '@material-ui/core/Tooltip';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 export default function registerHook() {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const { isAuthenticated, user, registerFail } = auth;
+  const [open, setOpen] = useState(false);
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setOpen(true);
+  };
   const [submitted, setSubmitted] = useState(false);
   const [userForm, setuserForm] = useState({
     username: "",
@@ -113,9 +123,16 @@ export default function registerHook() {
   return (
     <div className="col-md-6 m-auto">
       {/* if the form was submitted and register failed, show banner*/}
-      {submitted && registerFail ? "failed to register" : ""}
+
       <div className="card card-body mt-5">
         <h2 className="text-center">Register</h2>
+        {submitted && registerFail ?
+          <div className="card card-body mt-5 alert alert-danger" role="alert">
+            Username or Email already exists! Please use another.
+      </div>
+          :
+          ""
+        }
         <form onSubmit={onSubmit}>
           <div className="form-group">
             <label>Username</label>
@@ -152,22 +169,38 @@ export default function registerHook() {
             <div id="emailStatus" />
             <p className="text-danger">{userForm.errors["email"]}</p>
           </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              onChange={e =>
-                setuserForm({
-                  ...userForm,
-                  password: e.target.value
-                })
-              }
-              value={userForm.password}
-            />
-            <p className="text-danger">{userForm.errors["password"]}</p>
-          </div>
+          <ClickAwayListener onClickAway={handleTooltipClose}>
+            <Tooltip
+              PopperProps={{
+                disablePortal: true,
+              }}
+              onClose={handleTooltipClose}
+              open={open}
+              placement="bottom-start"
+              disableFocusListener
+              disableHoverListener
+              disableTouchListener
+              title="Must be at least eight characters with one Uppercase, Lowercase, Number, and Special Character."
+            >
+              <div className="form-group">
+                <label>Password</label>
+                <input
+                  onClick={handleTooltipOpen}
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  onChange={e =>
+                    setuserForm({
+                      ...userForm,
+                      password: e.target.value
+                    })
+                  }
+                  value={userForm.password}
+                />
+                <p className="text-danger">{userForm.errors["password"]}</p>
+              </div>
+            </Tooltip>
+          </ClickAwayListener>
           <div className="form-group">
             <label>Confirm Password</label>
             <input
