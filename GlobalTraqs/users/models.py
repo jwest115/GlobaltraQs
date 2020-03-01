@@ -30,7 +30,7 @@ class User(AbstractUser):
 
     # This is the most important part to look upon to  define the custom permissions related to User.
     class Meta:
-        ordering = ['-id']
+        ordering = ['id']
         permissions = (("can_add_stories", "Can add stories"),
                        ("can_edit_their_stories", "Can edit their stories"),
                        ("can_delete_their_stories", "Can delete their stories"),

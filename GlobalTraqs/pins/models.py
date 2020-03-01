@@ -22,6 +22,9 @@ class pin(models.Model):
     endDate = models.DateField('Date', blank=True, null=True)
     is_anonymous_pin = models.BooleanField(default=False, blank=False)
 
+    class Meta:
+        ordering = ['id']
+
     def __str__(self):
         """String for representing the Model object."""
         return self.title

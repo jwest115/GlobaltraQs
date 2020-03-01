@@ -16,7 +16,9 @@ import {
   USER_FLAG_PIN,
   USER_FIRST_UPVOTE,
   USER_UPVOTE,
-  USER_UNFLAG
+  USER_UNFLAG,
+  GET_FLAGGED_PINS,
+  GET_NEXT_FLAGGED_PINS
 } from "./types";
 
 //GET PINS
@@ -86,17 +88,22 @@ export const editPin = (pin, id, userid) => dispatch => {
       console.log(res.data);
       let validUser = false;
       let flagstateofuser = false;
+      let userFlaggedBefore = false;
       let upvotedBefore = false;
       let userCurrentUpvote = false;
-      // !!!!!!!!!!!!!!!!!!!!!!!
-      // this causes it to error out and prevents the payload from being used in the reducer
       if (userid) {
-        flagstateofuser = res.data.flaggerstory.some(a => a.flagger === userid);
+        userFlaggedBefore = res.data.flaggerstory.some(
+          a => a.flagger === userid
+        );
         upvotedBefore = res.data.updotes.some(b => b.upVoter === userid);
         if (upvotedBefore)
           userCurrentUpvote = res.data.updotes.filter(
             b => b.upVoter === userid
           )[0].upvote;
+        if (userFlaggedBefore)
+          flagstateofuser = res.data.flaggerstory.filter(
+            a => a.flagger === userid
+          )[0].flagged;
         validUser = true;
         console.log("has this user upvoted before" + upvotedBefore);
       }
@@ -105,8 +112,10 @@ export const editPin = (pin, id, userid) => dispatch => {
         userCurrentUpvote: userCurrentUpvote,
         upvotedBefore: upvotedBefore,
         validUser: validUser,
-        flagState: flagstateofuser
+        flagState: flagstateofuser,
+        userFlaggedBefore: userFlaggedBefore
       };
+
       dispatch({
         type: EDIT_PIN,
         payload: res.data
@@ -221,10 +230,6 @@ export const userFlagPin = (pin, user, state) => dispatch => {
   axios
     .post(`api/flagStory/`, userflagged)
     .then(res => {
-      const flagData = {
-        ...res.data,
-        flagState: true
-      };
       console.log(res.data);
       dispatch({
         type: USER_FLAG_PIN,
@@ -240,15 +245,11 @@ export const userUnFlagPin = (id, state) => dispatch => {
   };
 
   axios
-    .patch(`api/flagStory/${id}`, userflagged)
+    .patch(`api/flagStory/${id}/`, userflagged)
     .then(res => {
-      const flagData = {
-        ...res.data,
-        flagState: true
-      };
       console.log(res.data);
       dispatch({
-        type: USER_FLAG_PIN,
+        type: USER_UNFLAG,
         payload: res.data
       });
     })
@@ -283,6 +284,29 @@ export const userUpovte = (id, state) => dispatch => {
     .then(res => {
       dispatch({
         type: USER_UPVOTE,
+        payload: res.data
+      });
+    })
+    .catch(error => console.log(error));
+};
+
+export const getFlaggedPins = () => dispatch => {
+  axios
+    .get(`api/pinFlagged`)
+    .then(res => {
+      dispatch({
+        type: GET_FLAGGED_PINS,
+        payload: res.data
+      });
+    })
+    .catch(error => console.log(error));
+};
+export const getNextFlaggedPins = link => dispatch => {
+  axios
+    .get(`${link}`)
+    .then(res => {
+      dispatch({
+        type: GET_NEXT_FLAGGED_PINS,
         payload: res.data
       });
     })

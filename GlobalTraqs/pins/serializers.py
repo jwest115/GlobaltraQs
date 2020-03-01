@@ -68,6 +68,18 @@ class PinSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
         fields = '__all__'
 
 
+class PinFlaggedSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
+    username = serializers.CharField(
+        source="owner.username", read_only=True)
+    flagscore = serializers.IntegerField(read_only=True)
+    flaggerstory = FlagStorySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = pin
+        fields = ['id', 'owner', 'title',
+                  'username', 'flagscore', 'flaggerstory']
+
+
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = photo
