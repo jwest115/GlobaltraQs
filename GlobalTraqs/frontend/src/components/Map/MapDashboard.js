@@ -216,6 +216,7 @@ export default function MapDashboard() {
       ...userComment,
       commenter: user.id
     };
+    settoggleComment(false);
     dispatch(addComment(submit));
     // dispatch(addComment(userComment));
   };
@@ -230,12 +231,13 @@ export default function MapDashboard() {
         <Switch>
           <Route exact path="/">
             <div id={"sidebar-style"}>
-              <SearchSidebar sidebarOpen={sidebarOpen} />
+              <SearchSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
               <StorySidebar
                 maplink={"/story"}
                 pinData={pinData}
                 setPinData={setPinData}
                 storySidebarOpen={storySidebarOpen}
+                setStorySidebarOpen={setStorySidebarOpen}
                 isAuthenticated={isAuthenticated}
                 user={user}
                 userRoleVerified={userRoleVerified}

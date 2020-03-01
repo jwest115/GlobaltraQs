@@ -1,5 +1,6 @@
 import React, { useState} from "react";
 import { useDispatch } from "react-redux";
+import CloseIcon from '@material-ui/icons/Close';
 
 import Sidebar from "react-sidebar";
 import { Link } from "react-router-dom";
@@ -9,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { Markup } from 'interweave';
 import Moment from "react-moment";
+import { TextField, FormControl, MenuItem, IconButton, responsiveFontSizes } from "@material-ui/core";
 
 function StorySidebar(props)  {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -29,7 +31,10 @@ function StorySidebar(props)  {
        return (
            <Sidebar
                sidebar={
-                   <div>
+                    <div style={{ padding: "5px 5px 5px 5px" }}>
+                    <IconButton onClick={() => props.setStorySidebarOpen(false)} style={{float: "right"}} aria-label="close">
+                        <CloseIcon color="disabled"></CloseIcon>
+                    </IconButton>
                        {/* pin cluster - loop through markers and show them in the sidebar*/}
                        {props.pinData.length > 1 ? (
                             <div>
@@ -60,9 +65,17 @@ function StorySidebar(props)  {
                            ) :
                        //   not a pin cluster - show the individual story data
                        props.pinData ? (
-                           <div>
+                           <div style={{ padding: "25px 25px 25px 25px"}}>
                                <h1>{props.pinData.title}</h1>
-                               <h5>By: {props.pinData.is_anonymous_pin ? "Anonymous" : props.pinData.username}</h5>
+                               <h5>{props.pinData.is_anonymous_pin ? "By: Anonymous" : (
+                                   <Link
+                                        style={{ textDecoration: 'inherit'}}
+                                        to={`/users/${props.pinData.owner}`}
+                                        params={{ testvalue: "hello" }}
+                                    >
+                                   By: {props.pinData.username}
+                                   </Link>)
+                               }</h5>
                                {props.pinData.startDate ? <Moment format="MM/DD/YYYY">{props.pinData.startDate}</Moment> : "No Start Date"} -{" "}
                                {props.pinData.endDate ? <Moment format="MM/DD/YYYY">{props.pinData.endDate}</Moment> : "No End Date"}{" "}
                                <br/>

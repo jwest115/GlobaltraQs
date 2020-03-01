@@ -93,7 +93,13 @@ function Story(props) {
       {props.pin.is_anonymous_pin ? (
         <p>By: Anonymous</p>
       ) : (
-        <p>By: {props.pin.username}</p>
+          <Link
+            style={{ textDecoration: 'inherit'}}
+            to={`/users/${props.pin.owner}`}
+            params={{ testvalue: "hello" }}
+        >
+            <p>By: {props.pin.username}</p>
+          </Link>
       )}
       <h6>
         {/* {props.pin.updooots} upvotes */}

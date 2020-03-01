@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 export default function loginHooks() {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
-  const { isAuthenticated, user } = auth;
+  const { isAuthenticated, user, loginFail } = auth;
+  const [submitted, setSubmitted] = useState(false);
   const [userForm, setuserForm] = useState({
     username: "",
     password: "",
@@ -67,6 +68,7 @@ export default function loginHooks() {
     if (userForm.counter < 3) {
       e.preventDefault();
       dispatch(login(userForm.username, userForm.password));
+      setSubmitted(true);
       console.log("no captcha: " + userForm.counter);
     } else {
       e.preventDefault();
@@ -77,6 +79,7 @@ export default function loginHooks() {
         e.preventDefault();
         console.log("With captcha: " + userForm.counter);
         dispatch(login(userForm.username, userForm.password));
+        setSubmitted(true);
       } else {
         e.preventDefault();
         alert("please verify that you are a human!");
@@ -91,6 +94,8 @@ export default function loginHooks() {
   return (
     <div className="col-md-6 m-auto">
       {console.log(attempts)}
+      {/* if form was submitted and login failed then show an error banner*/}
+      {submitted && loginFail ? "Login failed" : ""}
       <div className="card card-body mt-5">
         <h2 className="text-center">Login</h2>
         <form onSubmit={submitForm}>

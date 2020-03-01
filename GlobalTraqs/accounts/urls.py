@@ -2,7 +2,7 @@
 from django.urls import path, include
 from rest_framework import routers
 from rest_framework import viewsets, permissions
-from .api import RegisterAPI, LoginAPI, UserAPI, UsersViewSet
+from .api import RegisterAPI, LoginAPI, UserAPI, UsersViewSet, UserSearchViewSet
 from knox import views as knox_views
 
 urlpatterns = [
@@ -17,4 +17,5 @@ urlpatterns = [
 router = routers.DefaultRouter()
 router.register('api/auth/users', UsersViewSet, 'user')
 router.register('api/auth/users/<int:pin_id>/', UsersViewSet, 'user')
+router.register('api/auth/userSearch', UserSearchViewSet, 'user'),
 urlpatterns += router.urls

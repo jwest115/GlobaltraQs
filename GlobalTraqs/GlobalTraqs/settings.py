@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'passwordReset',
     'django_filters',
     # 'django_rest_passwordreset',
+    'contactUs',
     'corsheaders',
     'management',
     'django_cleanup.apps.CleanupConfig',
@@ -105,18 +106,18 @@ DATABASES = {
     #     'HOST': 'salt.db.elephantsql.com',
     #     'PORT': '5432',
     # }
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ooiarmnn',
-        'USER': 'ooiarmnn',
-        'PASSWORD': '5tZaOHTt-xRz0rwfLK8lFO6fkNccO0KQ',
-        'HOST': 'rajje.db.elephantsql.com',
-        'PORT': '5432',
-    }
     # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': 'db1',
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'ooiarmnn',
+    #     'USER': 'ooiarmnn',
+    #     'PASSWORD': '5tZaOHTt-xRz0rwfLK8lFO6fkNccO0KQ',
+    #     'HOST': 'rajje.db.elephantsql.com',
+    #     'PORT': '5432',
     # }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db1',
+    }
 }
 
 
@@ -161,7 +162,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'resetglobaltraqs@gmail.com'
-EMAIL_HOST_PASSWORD = 'oiwjlhboomruvteo'
+EMAIL_HOST_PASSWORD = 'usjtonybaajrnftt'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
