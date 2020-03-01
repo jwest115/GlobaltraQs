@@ -13,7 +13,6 @@ import {
   GET_FLAG_STATE
 } from "./types";
 
-
 // CHECK TOKEN & LOAD USER
 export const loadUser = () => (dispatch, getState) => {
   // User Loading
@@ -82,12 +81,14 @@ export const register = ({ username, password, email }) => dispatch => {
         type: REGISTER_SUCCESS,
         payload: res.data
       });
+      console.log(res.data);
     })
     .catch(err => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch(returnErrors(err.data, err.status));
       dispatch({
         type: REGISTER_FAIL
       });
+      alert("Username/Email already exists");
     });
 };
 
