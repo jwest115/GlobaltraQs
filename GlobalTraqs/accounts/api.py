@@ -4,6 +4,7 @@ from knox.models import AuthToken
 from django_filters.rest_framework import DjangoFilterBackend
 from users.models import User
 from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from rest_framework.pagination import PageNumberPagination
 
 # Register API
 
@@ -48,12 +49,19 @@ class UserAPI(generics.RetrieveAPIView):
         return self.request.user
 
 
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
+
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     permission_classes = [
         permissions.AllowAny
     ]
     serializer_class = UserSerializer
+    pagination_class = StandardResultsSetPagination
 
 
 # filter_backends = [DjangoFilterBackend]
