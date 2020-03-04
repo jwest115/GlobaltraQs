@@ -44,10 +44,9 @@ INSTALLED_APPS = [
     'users',
     'passwordReset',
     'django_filters',
-    # 'django_rest_passwordreset',
+    #'django_rest_passwordreset',
     'corsheaders',
-    'management',
-    'django_cleanup.apps.CleanupConfig',
+    'management'
 ]
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
@@ -96,7 +95,7 @@ WSGI_APPLICATION = 'GlobalTraqs.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    #
+#
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     #     'NAME': 'lbsggtda',
@@ -105,18 +104,31 @@ DATABASES = {
     #     'HOST': 'salt.db.elephantsql.com',
     #     'PORT': '5432',
     # }
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ooiarmnn',
-        'USER': 'ooiarmnn',
-        'PASSWORD': '5tZaOHTt-xRz0rwfLK8lFO6fkNccO0KQ',
-        'HOST': 'rajje.db.elephantsql.com',
-        'PORT': '5432',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'globaltraqs',
+    #     'USER': 'postgres',
+    #     'PASSWORD': '@Ziggy323',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
+    # }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': 'db8',
+    # }
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': 'db1',
     # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'arqivedb',
+        'USER': 'arqivemaster',
+        'PASSWORD': 'secretarqive',
+        'HOST': 'database-1.cake6tjozc5q.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
+    }
 }
 
 
@@ -161,7 +173,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'resetglobaltraqs@gmail.com'
-EMAIL_HOST_PASSWORD = 'oiwjlhboomruvteo'
+EMAIL_HOST_PASSWORD = 'gl0b4ltr4qs'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -170,9 +182,4 @@ EMAIL_HOST_PASSWORD = 'oiwjlhboomruvteo'
 STATIC_URL = '/static/'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = ['https://localhost:3000']
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-OPTIMIZED_IMAGE_METHOD = 'pillow'
-
 CORS_ORIGIN_WHITELIST = ['https://localhost:3000']

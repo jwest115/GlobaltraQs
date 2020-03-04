@@ -1,44 +1,62 @@
 import React, { useState, useRef, useEffect } from "react";
-import axios from "axios";
+import paypal from 'paypal-checkout';
+import { PayPalButton } from "react-paypal-button-v2";
+
 export default function Support() {
-  const [image, setimage] = useState({
-    title: "cat",
-    image_url: "",
-    uploader: 1
-  });
-  const onSubmit = e => {
-    e.preventDefault();
-    let data = new FormData();
-    data.append("image_url", image.image_url);
-    data.append("title", image.title);
-    data.append("uploader", image.uploader);
-    axios
-      .post("/api/photo/", data)
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  };
-  return (
-    <div>
-      LAOLS
-      <form onSubmit={onSubmit}>
-        <input
-          type="file"
-          id="image"
-          accept="image/png, image/jpeg"
-          onChange={e =>
-            setimage({
-              ...image,
-              image_url: e.target.files[0]
-            })
-          }
-          required
-        />
-        <button>PUSH</button>
-      </form>
-    </div>
-  );
+
+    const [isEnabled, setIsEnabled] = useState(false);
+
+    // useEffect(() => {
+    //
+    //     setIsEnabled(true);
+    //     paypal.Button.render({
+    //         env: "sandbox",
+    //         client: {
+    //             sandbox: "AVUoHvbFGncgYpQ6TdvEuNBOEaLrpmO_R3wWB5_elvD_3IhmwTaP2DSjcqXOFv47S068KUTebJeCyg5O",
+    //             production: ""
+    //         },
+    //         payment: function (data, actions) {
+    //             return actions.payment.create({
+    //                 transactions: [
+    //                     {
+    //                         amount: {
+    //                             total: "1.00",
+    //                             currency: "USD"
+    //                         }
+    //                     }
+    //                 ]
+    //             })
+    //         },
+    //         commit: true,
+    //
+    //         onAuthorize: function (data, actions) {
+    //             return actions.payment.execute().then(function (response) {
+    //                 console.log("The payment was completed!");
+    //             })
+    //         },
+    //         onCancel: function (data) {
+    //             console.log("The payment was cancelled...");
+    //         }
+    //     }, '#paypal-express-btn');
+    // }, []);
+  {/*<div className={"container jumbotron"}>*/}
+           {/*{isEnabled ? <div id="paypal-express-btn"></div> : "Loading..."}*/}
+       {/*</div>*/}
+    return (
+        <div className={"container"}>
+            <PayPalButton
+            amount="0.01"
+            onSuccess={(details, data) => {
+                alert("Transaction completed by " + details.payer.name.given_name);
+            }}
+            onCancel={(data) => {
+                alert("Transaction was cancelled...");
+            }}
+            style={{
+                layout:  'vertical',
+                shape:   'rect',
+            }}
+            />
+        </div>
+    );
 }
