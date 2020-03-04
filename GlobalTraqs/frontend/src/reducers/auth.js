@@ -11,7 +11,8 @@ import {
   GET_USERS,
   GET_USER,
   EDIT_USER,
-  EDIT_USER_ROLE
+  EDIT_USER_ROLE,
+  GET_NEXT_PREVIOUS_USERS
 } from "../actions/types";
 
 const initialState = {
@@ -45,17 +46,31 @@ export default function(state = initialState, action) {
         };
       }
     case DELETE_USER:
-      return {
-        ...state
+      const filterUsersdel = state.users.results.filter(
+        a => a.id !== action.payload
+      );
+      const delUsers = {
+        ...state.users,
+        results: filterUsersdel
       };
-    case EDIT_USER_ROLE:
       return {
         ...state,
-        users: [
-          ...state.users.filter(user => user.id !== action.payload.id),
-          action.payload
-        ]
+        users: delUsers
       };
+    case EDIT_USER_ROLE:
+      const usersRole = [
+        ...state.users.results.filter(p => p.id !== action.payload),
+        action.payload
+      ];
+      const listUsers = {
+        ...state.users,
+        results: usersRole
+      };
+      return {
+        ...state,
+        users: listUsers
+      };
+    case GET_NEXT_PREVIOUS_USERS:
     case GET_USERS:
       return {
         ...state,

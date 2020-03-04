@@ -11,7 +11,12 @@ import {
   Input,
   Label
 } from "reactstrap";
-import { getUsers, editUserRole } from "../../actions/users";
+import {
+  getUsers,
+  editUserRole,
+  getNextPreviousUsers,
+  deleteUser
+} from "../../actions/users";
 
 export default function ManageUsers() {
   const dispatch = useDispatch();
@@ -62,8 +67,9 @@ export default function ManageUsers() {
 
   return (
     <div className="container">
+      <PrevNext next={users.next} previous={users.previous} />
       <ViewUsers
-        users={users}
+        users={users.results}
         onSubmit={onSubmit}
         setEdit={setEdit}
         modalState={modalState}
@@ -75,46 +81,84 @@ export default function ManageUsers() {
   );
 }
 
+const PrevNext = props => {
+  const dispatch = useDispatch();
+  return (
+    <>
+      {props.previous ? (
+        <button
+          className="btn btn-outline-primary"
+          onClick={() => dispatch(getNextPreviousUsers(props.previous))}
+        >
+          Previous
+        </button>
+      ) : (
+        ""
+      )}
+      {props.next ? (
+        <button
+          className="btn btn-outline-primary"
+          onClick={() => dispatch(getNextPreviousUsers(props.next))}
+        >
+          Next
+        </button>
+      ) : (
+        ""
+      )}
+    </>
+  );
+};
+
 const ViewUsers = props => {
+  const dispatch = useDispatch();
   return (
     <table className="table table-bordered">
       <tbody>
-        {props.users.map((user, index) => {
-          let userRole = "";
-          let selection = 3;
-          if (user.is_administrator) {
-            userRole = <strong>Administrator</strong>;
-            selection = 1;
-          } else if (user.is_moderator) {
-            userRole = <strong>Moderator</strong>;
-            selection = 2;
-          }
-          return (
-            <tr key={index}>
-              <td>{user.username}</td>
-              <td>{userRole}</td>
-              <td>
-                <button
-                  onClick={() => props.setEdit(user, selection)}
-                  className="btn btn-success"
-                >
-                  Edit Role
-                </button>
-              </td>
-              <td>
-                <EditUserRole
-                  user={user}
-                  onSubmit={props.onSubmit}
-                  index={index}
-                  toggle={props.toggle}
-                  modalState={props.modalState}
-                  userRole={props.userRole}
-                  setuserRole={props.setuserRole}
-                />
-              </td>
-            </tr>
-          );
-        })}
+        {props.users &&
+          props.users.map((user, index) => {
+            let userRole = "";
+            let selection = 3;
+            if (user.is_administrator) {
+              userRole = <strong>Administrator</strong>;
+              selection = 1;
+            } else if (user.is_moderator) {
+              userRole = <strong>Moderator</strong>;
+              selection = 2;
+            }
+            return (
+              <tr key={index}>
+                <td>{user.username}</td>
+                <td>{userRole}</td>
+                <td>
+                  <button
+                    onClick={() => props.setEdit(user, selection)}
+                    className="btn btn-success"
+                  >
+                    Edit Role
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => dispatch(deleteUser(user.id))}
+                    className="btn btn-danger"
+                  >
+                    Delete user
+                  </button>
+                </td>
+                <td>
+                  <EditUserRole
+                    user={user}
+                    onSubmit={props.onSubmit}
+                    index={index}
+                    toggle={props.toggle}
+                    modalState={props.modalState}
+                    userRole={props.userRole}
+                    setuserRole={props.setuserRole}
+                  />
+                </td>
+              </tr>
+            );
+          })}
       </tbody>
     </table>
   );

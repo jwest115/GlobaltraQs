@@ -4,8 +4,10 @@ import {
   EDIT_USER,
   GET_USER,
   GET_USERS,
-  EDIT_USER_ROLE
+  EDIT_USER_ROLE,
+  GET_NEXT_PREVIOUS_USERS
 } from "./types";
+
 import { DELETE_USER } from "./types";
 
 export const getUsers = () => dispatch => {
@@ -45,9 +47,10 @@ export const deleteUser = id => dispatch => {
   axios
     .delete(`/api/auth/users/${id}/`)
     .then(res => {
+      console.log(res.data);
       dispatch({
         type: DELETE_USER,
-        payload: res.data
+        payload: id
       });
     })
     .catch(err => console.log(err));
@@ -83,4 +86,16 @@ export const editUserRole = (id, role) => dispatch => {
     .catch(function(error) {
       console.log(error.response);
     });
+};
+
+export const getNextPreviousUsers = link => dispatch => {
+  axios
+    .get(`${link}`)
+    .then(res => {
+      dispatch({
+        type: GET_NEXT_PREVIOUS_USERS,
+        payload: res.data
+      });
+    })
+    .catch(error => console.log(error));
 };
