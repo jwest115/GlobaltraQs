@@ -87,6 +87,6 @@
     "styled-components": "^4.4.0",
     "tinymce": "^5.1.6",
     "url-loader": "^2.2.0",
-    "yarn": "^1.17.3"
+    "yarn": "^1.22.0"
   }
 }
