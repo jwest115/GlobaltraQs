@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Component, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
+import CloseIcon from '@material-ui/icons/Close';
 import connect from "react-redux/es/connect/connect";
 import Sidebar from "react-sidebar";
 import Button from "@material-ui/core/Button";
@@ -21,13 +21,16 @@ import SearchIcon from '@material-ui/icons/Search';
 import Select from 'react-select';
 import DatePicker from "react-datepicker";
 import { Markup } from 'interweave';
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
 
 import {
-  Label
+  Label,
 } from "reactstrap";
 
 import { Marker, Popup } from "react-leaflet";
 import InputGroup from "react-bootstrap/InputGroup";
+import {getUsers, searchUsers} from "../../actions/users";
 
 const options = [
   { value: '1', label: 'Personal' },
@@ -49,10 +52,15 @@ function SearchSidebar(props)  {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const pinData = useSelector(state => state.pins.pins);
-
+    const users = useSelector(state => state.auth.users);
+    const [userSearchText, setUserSearchText] = useState("");
 
     useEffect (() => {
         dispatch(getPins());
+    }, []);
+
+     useEffect (() => {
+        dispatch(getUsers());
     }, []);
 
    const onSetSidebarOpen = (open) => {
@@ -88,81 +96,150 @@ function SearchSidebar(props)  {
         console.log("is the query");
         dispatch(searchPins(searchText, categorySearchQuery, start, end));
     };
+   const submitUserSearch = e => {
+        e.preventDefault(); //prevents refresh of page
+        dispatch(searchUsers(userSearchText));
+    };
+
+     const storySearch = (
+       <div style={{ marginTop: "10px" }}>
+        <form onSubmit={submitSearch}>
+            <div className={"form-group"}>
+                <label>Search: </label>
+                 <input
+                    className="form-control"
+                    id="searchForm"
+                    label="Search"
+                    placeholder={"Search for stories"}
+                    name={"searchText"}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    value={searchText}
+                 />
+            </div>
+            <label>Category: </label>
+             <Select
+                isMulti
+                defaultValue = {options}
+                value={selectedCategories}
+                onChange={(categories) => setSelectedCategories(categories)}
+                options={options}
+              />
+              <InputGroup style={{marginTop: '20px'}}>
+                <Label style={labelStyle} for="startDate">
+                  Stories from
+                </Label>
+                 <DatePicker
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                  />
+                <Label style={{marginLeft:'20px', marginRight:'20px'}} for="startDate">
+                    to
+                </Label>
+                 <DatePicker
+                    selected={endDate}
+                    onChange={(date) => setEndDate(date)}
+                  />
+              </InputGroup>
+            <div className="form-group">
+                <button type="submit" style={{ float: "right" }} className="btn btn-primary">
+                    Search
+                </button>
+            </div>
+        </form>
+        <div>
+            <p style={{ marginTop: "50px", marginBottom: "20px" }}> {pinData.length} {pinData.length == 1 ? " search result" :  " search results"} </p>
+
+            {pinData.map((story, index) => {
+                return (
+                <Card style={{ marginTop: "5px" }}>
+                    <Link
+                        style={{ textDecoration: 'inherit'}}
+                        to={`story/${story.id}`}
+                        params={{ testvalue: "hello" }}
+                    >
+                  <CardActionArea>
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {story.title}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        <Markup content={story.description}/>
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  </Link>
+                </Card>
+                );
+            })}
+        </div>
+       </div>
+     );
+
+     const userSearch = (
+       <div style={{ marginTop: "10px" }}>
+        <form onSubmit={submitUserSearch}>
+            <div className={"form-group"}>
+                <label>Search: </label>
+                 <input
+                    className="form-control"
+                    id="searchForm"
+                    label="Search"
+                    placeholder={"Search for users"}
+                    name={"userSearchText"}
+                    onChange={(e) => setUserSearchText(e.target.value)}
+                    value={userSearchText}
+                 />
+            </div>
+            <div className="form-group">
+                <button type="submit" style={{ float: "right" }} className="btn btn-primary">
+                    Search
+                </button>
+            </div>
+        </form>
+        <div>
+            <p style={{ marginTop: "50px", marginBottom: "20px" }}> {users.length} {users.length == 1 ? " search result" :  " search results"} </p>
+
+            {users.map((user, index) => {
+                return (
+                <Card style={{ marginTop: "5px" }}>
+                    <Link
+                        style={{ textDecoration: 'inherit'}}
+                        to={`users/${user.id}`}
+                        params={{ testvalue: "hello" }}
+                    >
+                  <CardActionArea>
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {user.username}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  </Link>
+                </Card>
+                );
+            })}
+        </div>
+       </div>
+     );
 
     let resultCount = pinData.length;
 
     return (
         <Sidebar
             sidebar={
-                <div>
-                    <form onSubmit={submitSearch}>
-                        <div className={"form-group"}>
-                            <label>Search: </label>
-                             <input
-                                className="form-control"
-                                id="searchForm"
-                                label="Search"
-                                placeholder={"Search for stories"}
-                                name={"searchText"}
-                                onChange={(e) => setSearchText(e.target.value)}
-                                value={searchText}
-                             />
-                        </div>
-                        <label>Category: </label>
-                         <Select
-                            isMulti
-                            defaultValue = {options}
-                            value={selectedCategories}
-                            onChange={(categories) => setSelectedCategories(categories)}
-                            options={options}
-                          />
-                          <InputGroup style={{marginTop: '20px'}}>
-                            <Label style={labelStyle} for="startDate">
-                              Stories from
-                            </Label>
-                             <DatePicker
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)}
-                              />
-                            <Label style={{marginLeft:'20px', marginRight:'20px'}} for="startDate">
-                                to
-                            </Label>
-                             <DatePicker
-                                selected={endDate}
-                                onChange={(date) => setEndDate(date)}
-                              />
-                          </InputGroup>
-                        <div className="form-group">
-                            <button type="submit" style={{ float: "right" }} className="btn btn-primary">
-                                Search
-                            </button>
-                        </div>
-                    </form>
-                    <div>
-                        <p style={{ marginTop: "50px", marginBottom: "20px" }}> {resultCount} {resultCount == 1 ? " search result" :  " search results"} </p>
-
-                        {pinData.map((story, index) => {
-                            return (
-                            <Card>
-                                <Link
-                                    style={{ textDecoration: 'inherit'}}
-                                    to={`story/${story.id}`}
-                                    params={{ testvalue: "hello" }}
-                                >
-                              <CardActionArea>
-                                <CardContent>
-                                  <Typography gutterBottom variant="h5" component="h2">
-                                    {story.title}
-                                  </Typography>
-                                  <Typography variant="body2" color="textSecondary">
-                                    <Markup content={story.description}/>
-                                  </Typography>
-                                </CardContent>
-                              </CardActionArea>
-                              </Link>
-                            </Card>
-                            );
-                        })}
+                <div style={{ padding: "5px 5px 5px 5px" }}>
+                    <IconButton onClick={() => props.setSidebarOpen(false)} style={{float: "right"}} aria-label="close">
+                        <CloseIcon color="disabled"></CloseIcon>
+                    </IconButton>
+                    <div style={{ marginTop: "20px" }}>
+                        <Tabs defaultActiveKey="stories" id="uncontrolled-tab-example">
+                          <Tab eventKey="stories" title="Search Stories">
+                              {storySearch}
+                          </Tab>
+                          <Tab eventKey="users" title="Search Users">
+                              {userSearch}
+                          </Tab>
+                        </Tabs>
                     </div>
                 </div>
             }

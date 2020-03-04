@@ -10,7 +10,8 @@ import { REGISTER_FAIL } from "../../actions/types";
 export default function registerHook() {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
-  const { isAuthenticated, user } = auth;
+  const { isAuthenticated, user, registerFail } = auth;
+  const [submitted, setSubmitted] = useState(false);
   const [userForm, setuserForm] = useState({
     username: "",
     email: "",
@@ -40,6 +41,7 @@ export default function registerHook() {
           email: userForm.email
         };
         dispatch(register(newUser));
+        setSubmitted(true);
       }
     } else {
       alert("please verify that you are a human!");
@@ -110,6 +112,8 @@ export default function registerHook() {
   }
   return (
     <div className="col-md-6 m-auto">
+      {/* if the form was submitted and register failed, show banner*/}
+      {submitted && registerFail ? "failed to register" : ""}
       <div className="card card-body mt-5">
         <h2 className="text-center">Register</h2>
         <form onSubmit={onSubmit}>

@@ -55,10 +55,12 @@ export const login = (username, password) => dispatch => {
       });
     })
     .catch(err => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+      // dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
-        type: LOGIN_FAIL
+        type: LOGIN_FAIL,
+        payload: err.response.data
       });
+      console.log("login failed");
     });
 };
 
@@ -84,10 +86,12 @@ export const register = ({ username, password, email }) => dispatch => {
       console.log(res.data);
     })
     .catch(err => {
-      dispatch(returnErrors(err.data, err.status));
+      //dispatch(returnErrors(err.data, err.status));
       dispatch({
-        type: REGISTER_FAIL
+        type: REGISTER_FAIL,
+        payload: err.response.data
       });
+      console.log(err.response.data);
       alert("Username/Email already exists");
     });
 };

@@ -11,7 +11,7 @@ import {
   GET_USERS,
   GET_USER,
   EDIT_USER,
-  EDIT_USER_ROLE
+  EDIT_USER_ROLE, SEARCH_USERS
 } from "../actions/types";
 
 const initialState = {
@@ -21,11 +21,18 @@ const initialState = {
   user: "",
   users: [],
   userProfile: null,
-  story_author: null
+  story_author: null,
+  registerFail: false,
+  loginFail: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case SEARCH_USERS:
+      return {
+        ...state,
+        users: action.payload
+      };
     case GET_USER:
       return {
         ...state,
@@ -78,7 +85,9 @@ export default function(state = initialState, action) {
         ...state,
         ...action.payload,
         isAuthenticated: true,
-        isLoading: false
+        isLoading: false,
+        registerFail: false,
+        loginFail: false
       };
     case AUTH_ERROR:
     case LOGIN_FAIL:
@@ -87,10 +96,12 @@ export default function(state = initialState, action) {
       localStorage.removeItem("token");
       return {
         ...state,
+        registerFail: true,
         token: null,
         user: null,
         isAuthenticated: false,
-        isLoading: false
+        isLoading: false,
+        loginFail: true
       };
     default:
       return state;
