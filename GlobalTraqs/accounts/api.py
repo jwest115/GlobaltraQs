@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from knox.models import AuthToken
 from django_filters.rest_framework import DjangoFilterBackend
 from users.models import User
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, UserProfileSerializer
 from rest_framework.pagination import PageNumberPagination
 
 # Register API
@@ -66,3 +66,9 @@ class UsersViewSet(viewsets.ModelViewSet):
 
 # filter_backends = [DjangoFilterBackend]
 # filterset_fields = '__all__'
+
+class UserViewProfileViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = User.objects.all()
+
+    serializer_class = UserProfileSerializer
+    pagination_class = StandardResultsSetPagination
