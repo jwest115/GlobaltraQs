@@ -86,3 +86,5 @@ class UserViewProfileViewSet(viewsets.ReadOnlyModelViewSet):
 
     serializer_class = UserProfileSerializer
     pagination_class = StandardResultsSetPagination
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    search_fields = ['username']

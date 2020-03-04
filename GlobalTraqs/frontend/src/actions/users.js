@@ -13,7 +13,7 @@ import { DELETE_USER } from "./types";
 
 export const searchUsers = username => dispatch => {
   axios
-    .get(`/api/auth/userSearch/?search=${username}`)
+    .get(`/api/profile/users?search=${username}`)
     .then(res => {
       dispatch({
         type: SEARCH_USERS,
@@ -80,7 +80,7 @@ export const getUser = id => dispatch => {
         payload: res.data
       });
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error.response);
       dispatch({
         type: GET_USER,
@@ -98,7 +98,7 @@ export const editUserRole = (id, role) => dispatch => {
         payload: res.data
       });
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error.response);
     });
 };

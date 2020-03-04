@@ -226,24 +226,7 @@ function SearchSidebar(props) {
           {users.count === 1 ? " search result" : " search results"}{" "}
         </p>
 
-        {/* {users.map((user, index) => {
-          return (
-            <Card key={index} style={{ marginTop: "5px" }}>
-              <Link
-                style={{ textDecoration: "inherit" }}
-                to={`users/${user.id}`}
-              >
-                <CardActionArea>
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {user.username}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Link>
-            </Card>
-          );
-        })} */}
+
       </div>
     </div>
   );
@@ -268,6 +251,7 @@ function SearchSidebar(props) {
               </Tab>
               <Tab eventKey="users" title="Search Users">
                 {userSearch}
+                {users.results && <ListUsersSearch users={users.results} />}
               </Tab>
             </Tabs>
           </div>
@@ -292,3 +276,31 @@ function SearchSidebar(props) {
 }
 
 export default SearchSidebar;
+
+const ListUsersSearch = props => {
+
+  return (
+    <>
+      {props.users.map((user, index) => {
+        return (
+          <Card key={index} style={{ marginTop: "5px" }}>
+            <Link
+              style={{ textDecoration: "inherit" }}
+              to={`users/${user.id}`}
+            >
+              <CardActionArea>
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {user.username}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Link>
+          </Card>
+        )
+      })}
+    </>
+
+  )
+
+}

@@ -18,7 +18,7 @@ class PinSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = pin
-        fields = ['title', 'description', 'is_anonymous_pin']
+        fields = ['id', 'title', 'description', 'is_anonymous_pin']
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -26,7 +26,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['id', 'userStories', 'date_joined', 'first_name',
+                  'last_name', 'username', 'email', 'is_profile_private', 'image_url']
 
 
 class RegisterSerializer(serializers.ModelSerializer):
