@@ -11,7 +11,8 @@ import {
   GET_USERS,
   GET_USER,
   EDIT_USER,
-  EDIT_USER_ROLE, SEARCH_USERS
+  EDIT_USER_ROLE,
+  SEARCH_USERS,
   GET_NEXT_PREVIOUS_USERS
 } from "../actions/types";
 

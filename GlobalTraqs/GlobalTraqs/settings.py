@@ -125,18 +125,18 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': 'db8',
     # }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': 'db1',
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'arqivedb',
-        'USER': 'arqivemaster',
-        'PASSWORD': 'secretarqive',
-        'HOST': 'database-1.cake6tjozc5q.us-east-1.rds.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db1',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'arqivedb',
+    #     'USER': 'arqivemaster',
+    #     'PASSWORD': 'secretarqive',
+    #     'HOST': 'database-1.cake6tjozc5q.us-east-1.rds.amazonaws.com',
+    #     'PORT': '5432',
+    # }
 }
 
 

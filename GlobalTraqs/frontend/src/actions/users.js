@@ -5,21 +5,24 @@ import {
   GET_USER,
   GET_USERS,
   EDIT_USER_ROLE,
-  SEARCH_USERS
+  SEARCH_USERS,
   GET_NEXT_PREVIOUS_USERS
 } from "./types";
 
 import { DELETE_USER } from "./types";
 
-export const searchUsers = (username) => dispatch => {
-  axios.get(`/api/auth/userSearch/?search=${username}`).then(res => {
+export const searchUsers = username => dispatch => {
+  axios
+    .get(`/api/auth/userSearch/?search=${username}`)
+    .then(res => {
       dispatch({
-         type: SEARCH_USERS,
-         payload: res.data
+        type: SEARCH_USERS,
+        payload: res.data
       });
       console.log("user search");
       console.log(res.data);
-  }).catch(error => console.log(error.response.data));
+    })
+    .catch(error => console.log(error.response.data));
 };
 
 export const getUsers = () => dispatch => {
