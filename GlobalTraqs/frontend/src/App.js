@@ -69,7 +69,7 @@ export class App extends Component {
                 <Route path="/forgotPassword" component={ForgotPassword} />
                 <Route path="/resetPassword" component={ResetPassword} />
                 <Route path="/Support" component={Support} />
-                {/* <Route path="/ContactUs" component={contactUs} /> */}
+                <Route path="/ContactUs" component={ContactUs} />
                 {/* <MapDashboard /> */}
               </Switch>
             </div>

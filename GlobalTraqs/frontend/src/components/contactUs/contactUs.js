@@ -8,7 +8,7 @@ import * as EmailValidator from "email-validator";
 import { REGISTER_FAIL } from "../../actions/types";
 import axios from "axios";
 
-export default function contactUs() {
+export default function ContactUs() {
   const auth = useSelector(state => state.auth);
 
   let token = localStorage.getItem("token");
