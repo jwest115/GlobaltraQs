@@ -9,7 +9,7 @@ from django.core.files import File
 
 class pin(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
-                              null=True, on_delete=models.CASCADE)
+                              null=True, on_delete=models.CASCADE, related_name='userStories')
     title = models.CharField(max_length=50)
     description = models.TextField()
     latitude = models.CharField(max_length=50)
@@ -21,6 +21,9 @@ class pin(models.Model):
     startDate = models.DateField('Date', blank=True, null=True)
     endDate = models.DateField('Date', blank=True, null=True)
     is_anonymous_pin = models.BooleanField(default=False, blank=False)
+
+    class Meta:
+        ordering = ['id']
 
     def __str__(self):
         """String for representing the Model object."""

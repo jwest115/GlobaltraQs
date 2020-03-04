@@ -12,6 +12,9 @@ import {
   USER_FLAG_PIN,
   USER_FIRST_UPVOTE,
   USER_UPVOTE,
+  USER_UNFLAG,
+  GET_FLAGGED_PINS,
+  GET_NEXT_FLAGGED_PINS
 } from "../actions/types.js";
 
 const initialState = {
@@ -20,7 +23,8 @@ const initialState = {
   upvote: false,
   flagState: false,
   validUser: false,
-  pinId: 0
+  pinId: 0,
+  flaggedPins: []
 };
 
 export default function(state = initialState, action) {
@@ -49,9 +53,18 @@ export default function(state = initialState, action) {
         pins: action.payload
       };
     case DELETE_PINS:
+      const flaggedpins = state.flaggedPins.results.filter(
+        p => p.id !== action.payload
+      );
+
+      const delFlag = {
+        ...state.flaggedPins,
+        results: flaggedpins
+      };
       return {
         ...state,
         pins: state.pins.filter(pins => pins.id !== action.payload),
+        flaggedPins: delFlag,
         pin: []
       };
     case ADD_PIN:
@@ -100,12 +113,26 @@ export default function(state = initialState, action) {
       const userFlag = {
         ...state.pin,
         flaggerstory: [...state.pin.flaggerstory, action.payload],
-        flagState: true
+        userFlaggedBefore: true,
+        flagstate: action.payload.flagged
       };
       console.log(action.payload);
       return {
         ...state,
         pin: userFlag
+      };
+    case USER_UNFLAG:
+      const userUnFlag = {
+        ...state.pin,
+        flaggerstory: [
+          ...state.pin.flaggerstory.filter(x => x.id !== action.payload.id),
+          action.payload
+        ],
+        flagState: action.payload.flagged
+      };
+      return {
+        ...state,
+        pin: userUnFlag
       };
     case USER_FIRST_UPVOTE:
       const userFirstUpvote = {
@@ -137,6 +164,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         pin: userUp
+      };
+    case GET_NEXT_FLAGGED_PINS:
+    case GET_FLAGGED_PINS:
+      return {
+        ...state,
+        flaggedPins: action.payload
       };
     default:
       return state;

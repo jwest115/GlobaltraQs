@@ -213,7 +213,7 @@ const LeafletMap = props => {
             spiderfyOnMaxZoom={false}
             maxClusterRadius={40}
             onClusterClick={(e) => {
-              if(mapInstance.leafletElement.getZoom() > 16) {
+              if(mapInstance.leafletElement.getZoom() > 24) {
                 let markers = e.layer.getAllChildMarkers();
                 console.log(markers);
                 console.log(mapInstance.leafletElement.getZoom() + " is the zoom");

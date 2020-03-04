@@ -44,15 +44,23 @@ INSTALLED_APPS = [
     'users',
     'passwordReset',
     'django_filters',
-    #'django_rest_passwordreset',
+    # 'django_rest_passwordreset',
+    'contactUs',
     'corsheaders',
-    'management'
+    'management',
+    'django_cleanup.apps.CleanupConfig',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_AUTHENTICATION_CLASSES':
     ('knox.auth.TokenAuthentication',),
     'DATE_INPUT_FORMATS': ['iso-8601', '%Y-%m-%dT%H:%M:%S.%fZ'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    #   'DEFAULT_RENDERER_CLASSES': (
+    #     'rest_framework.renderers.JSONRenderer',
+    # ) enable this in production
+
+
 }
 
 MIDDLEWARE = [
@@ -95,7 +103,7 @@ WSGI_APPLICATION = 'GlobalTraqs.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-#
+    #
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     #     'NAME': 'lbsggtda',
@@ -106,10 +114,10 @@ DATABASES = {
     # }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'globaltraqs',
-    #     'USER': 'postgres',
-    #     'PASSWORD': '@Ziggy323',
-    #     'HOST': 'localhost',
+    #     'NAME': 'ooiarmnn',
+    #     'USER': 'ooiarmnn',
+    #     'PASSWORD': '5tZaOHTt-xRz0rwfLK8lFO6fkNccO0KQ',
+    #     'HOST': 'rajje.db.elephantsql.com',
     #     'PORT': '5432',
     # }
 
@@ -173,7 +181,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'resetglobaltraqs@gmail.com'
-EMAIL_HOST_PASSWORD = 'gl0b4ltr4qs'
+EMAIL_HOST_PASSWORD = 'usjtonybaajrnftt'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -182,4 +190,9 @@ EMAIL_HOST_PASSWORD = 'gl0b4ltr4qs'
 STATIC_URL = '/static/'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = ['https://localhost:3000']
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+OPTIMIZED_IMAGE_METHOD = 'pillow'
+
 CORS_ORIGIN_WHITELIST = ['https://localhost:3000']
