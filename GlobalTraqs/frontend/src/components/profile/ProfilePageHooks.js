@@ -1,12 +1,13 @@
 import React, { useState, useEffect, Component, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUser } from "../../actions/users";
-import { getPinsByOwner } from "../../actions/pins";
+import {editUser, getUser} from "../../actions/users";
+import {editPin, getPinsByOwner} from "../../actions/pins";
 import { Link, Redirect } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { Avatar } from "antd";
 import { Markup } from "interweave";
+import Switch from "react-switch";
 
 export default function ProfilePage(props) {
   const dispatch = useDispatch();
@@ -21,6 +22,14 @@ export default function ProfilePage(props) {
   }, id);
 
   const { isAuthenticated, user } = auth;
+
+  const updateStoryAnonymity = (pin) => {
+    const is_anonymous_pin = !pin.is_anonymous_pin;
+
+    const pinData = { is_anonymous_pin };
+
+    dispatch(editPin(pinData, pin.id, id));
+  };
 
   const authLinks = (
     <Link to={`/users/${id}/settings`}>
@@ -85,6 +94,13 @@ export default function ProfilePage(props) {
                             View Story
                           </button>
                         </Link>
+                        {isAuthenticated && user.id == id || canEdit ? (
+                        <Switch
+                          className="react-switch"
+                          onChange={() => updateStoryAnonymity(story)}
+                          checked={story.is_anonymous_pin}
+                        />
+                            ) : "" }
                       </div>
                     );
                   }
