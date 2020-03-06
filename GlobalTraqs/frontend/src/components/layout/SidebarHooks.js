@@ -34,7 +34,11 @@ import { Label } from "reactstrap";
 
 import { Marker, Popup } from "react-leaflet";
 import InputGroup from "react-bootstrap/InputGroup";
-import { getUsers, searchUsers, getNextPreviousUsers } from "../../actions/users";
+import {
+  getUsers,
+  searchUsers,
+  getNextPreviousUsers
+} from "../../actions/users";
 
 const options = [
   { value: "1", label: "Personal" },
@@ -194,8 +198,6 @@ function SearchSidebar(props) {
     </div>
   );
 
-
-
   let resultCount = pinData.length;
 
   return (
@@ -215,7 +217,14 @@ function SearchSidebar(props) {
                 {storySearch}
               </Tab>
               <Tab eventKey="users" title="Search Users">
-                <UserSearchForm previous={users.previous} next={users.next} count={users.count} onSubmit={submitUserSearch} setUserSearchText={setUserSearchText} userSearchText={userSearchText} />
+                <UserSearchForm
+                  previous={users.previous}
+                  next={users.next}
+                  count={users.count}
+                  onSubmit={submitUserSearch}
+                  setUserSearchText={setUserSearchText}
+                  userSearchText={userSearchText}
+                />
                 {users.results && <ListUsersSearch users={users.results} />}
               </Tab>
             </Tabs>
@@ -242,72 +251,75 @@ function SearchSidebar(props) {
 
 export default SearchSidebar;
 
-const UserSearchForm = (props) => {
+const UserSearchForm = props => {
   const dispatch = useDispatch();
   return (
-  <div style={{ marginTop: "10px" }}>
-    <form onSubmit={props.onSubmit}>
-      <div className={"form-group"}>
-        <label>Search: </label>
-        <input
-          className="form-control"
-          id="searchForm"
-          label="Search"
-          placeholder={"Search for users"}
-          name={"userSearchText"}
-          onChange={e => props.setUserSearchText(e.target.value)}
-          value={props.userSearchText}
-        />
+    <div style={{ marginTop: "10px" }}>
+      <form onSubmit={props.onSubmit}>
+        <div className={"form-group"}>
+          <label>Search: </label>
+          <input
+            className="form-control"
+            id="searchForm"
+            label="Search"
+            placeholder={"Search for users"}
+            name={"userSearchText"}
+            onChange={e => props.setUserSearchText(e.target.value)}
+            value={props.userSearchText}
+          />
+        </div>
+        <div className="form-group">
+          <button
+            type="submit"
+            style={{ float: "right" }}
+            className="btn btn-primary"
+          >
+            Search
+          </button>
+          {props.previous ? (
+            <button
+              type="submit"
+              style={{ float: "right" }}
+              className="btn btn-primary"
+              onClick={() => dispatch(getNextPreviousUsers(props.previous))}
+            >
+              Previous
+            </button>
+          ) : (
+            ""
+          )}
+          {props.next ? (
+            <button
+              type="submit"
+              style={{ float: "right" }}
+              className="btn btn-primary"
+              onClick={() => dispatch(getNextPreviousUsers(props.next))}
+            >
+              Next
+            </button>
+          ) : (
+            ""
+          )}
+        </div>
+      </form>
+      <div>
+        <p style={{ marginTop: "50px", marginBottom: "20px" }}>
+          {" "}
+          {props.count}{" "}
+          {props.count === 1 ? " search result" : " search results"}{" "}
+        </p>
       </div>
-      <div className="form-group">
-        <button
-          type="submit"
-          style={{ float: "right" }}
-          className="btn btn-primary"
-        >
-          Search
-      </button>
-        {props.previous ? <button
-          type="submit"
-          style={{ float: "right" }}
-          className="btn btn-primary"
-          onClick={() => dispatch(getNextPreviousUsers(props.previous))}
-        >
-          Previous
-      </button> : ''}
-        {props.next  ? <button
-          type="submit"
-          style={{ float: "right" }}
-          className="btn btn-primary"
-          onClick={() => dispatch(getNextPreviousUsers(props.next))}
-        >
-          Next
-      </button> : ''}
-      </div>
-    </form>
-    <div>
-      <p style={{ marginTop: "50px", marginBottom: "20px" }}>
-        {" "}
-        {props.count}{" "}
-        {props.count === 1 ? " search result" : " search results"}{" "}
-      </p>
-
-
     </div>
-  </div>)
-}
+  );
+};
 
 const ListUsersSearch = props => {
-
   return (
     <>
       {props.users.map((user, index) => {
         return (
           <Card key={index} style={{ marginTop: "5px" }}>
-            <Link
-              style={{ textDecoration: "inherit" }}
-              to={`users/${user.id}`}
-            >
+            <Link style={{ textDecoration: "inherit" }} to={`users/${user.id}`}>
               <CardActionArea>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h2">
@@ -317,10 +329,8 @@ const ListUsersSearch = props => {
               </CardActionArea>
             </Link>
           </Card>
-        )
+        );
       })}
     </>
-
-  )
-
-}
+  );
+};

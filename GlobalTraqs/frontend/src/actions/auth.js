@@ -10,7 +10,8 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  GET_FLAG_STATE
+  GET_FLAG_STATE,
+  USER_SELF_DELETE
 } from "./types";
 
 // CHECK TOKEN & LOAD USER
@@ -129,4 +130,21 @@ export const tokenConfig = getState => {
   }
 
   return config;
+};
+
+// self Delete
+export const userSelfDelete = () => (dispatch, getState) => {
+  // User Loading
+
+  axios
+    .delete("/api/auth/user", tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: USER_SELF_DELETE,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
 };

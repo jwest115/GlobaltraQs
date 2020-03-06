@@ -34,6 +34,7 @@ import PinForm from "./components/Map/PinForm";
 import Support from "./components/AboutPage/Support";
 import ResetPassword from "./components/accounts/resetPasswordHook";
 import ContactUs from "./components/contactUs/contactUs";
+import ProfileDeleteTest from "./components/profile/ProfileDeleteTest";
 const divStyle = {
   position: "relative"
 };
@@ -70,6 +71,7 @@ export class App extends Component {
                 <Route path="/resetPassword" component={ResetPassword} />
                 <Route path="/Support" component={Support} />
                 <Route path="/ContactUs" component={ContactUs} />
+                <Route exact path="/userdelete" component={ProfileDeleteTest} />
                 {/* <MapDashboard /> */}
               </Switch>
             </div>

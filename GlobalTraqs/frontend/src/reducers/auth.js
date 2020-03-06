@@ -13,7 +13,8 @@ import {
   EDIT_USER,
   EDIT_USER_ROLE,
   SEARCH_USERS,
-  GET_NEXT_PREVIOUS_USERS
+  GET_NEXT_PREVIOUS_USERS,
+  USER_SELF_DELETE
 } from "../actions/types";
 
 const initialState = {
@@ -105,6 +106,7 @@ export default function(state = initialState, action) {
         registerFail: false,
         loginFail: false
       };
+    case USER_SELF_DELETE:
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
