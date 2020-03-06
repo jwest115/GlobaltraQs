@@ -11,12 +11,7 @@ import {
   Input,
   Label
 } from "reactstrap";
-import {
-  getUsers,
-  editUserRole,
-  getNextPreviousUsers,
-  deleteUser
-} from "../../actions/users";
+import { getUsers, editUserRole, deleteUser } from "../../actions/users";
 
 export default function ManageUsers() {
   const dispatch = useDispatch();
@@ -114,51 +109,45 @@ const ViewUsers = props => {
   return (
     <table className="table table-bordered">
       <tbody>
-        {props.users &&
-          props.users.map((user, index) => {
-            let userRole = "";
-            let selection = 3;
-            if (user.is_administrator) {
-              userRole = <strong>Administrator</strong>;
-              selection = 1;
-            } else if (user.is_moderator) {
-              userRole = <strong>Moderator</strong>;
-              selection = 2;
-            }
-            return (
-              <tr key={index}>
-                <td>{user.username}</td>
-                <td>{userRole}</td>
-                <td>
-                  <button
-                    onClick={() => props.setEdit(user, selection)}
-                    className="btn btn-success"
-                  >
-                    Edit Role
-                  </button>
-                </td>
-                <td>
-                  <button
-                    onClick={() => dispatch(deleteUser(user.id))}
-                    className="btn btn-danger"
-                  >
-                    Delete user
-                  </button>
-                </td>
-                <td>
-                  <EditUserRole
-                    user={user}
-                    onSubmit={props.onSubmit}
-                    index={index}
-                    toggle={props.toggle}
-                    modalState={props.modalState}
-                    userRole={props.userRole}
-                    setuserRole={props.setuserRole}
-                  />
-                </td>
-              </tr>
-            );
-          })}
+        {props.users.map((user, index) => {
+          let userRole = "";
+          let selection = 3;
+          if (user.is_administrator) {
+            userRole = <strong>Administrator</strong>;
+            selection = 1;
+          } else if (user.is_moderator) {
+            userRole = <strong>Moderator</strong>;
+            selection = 2;
+          }
+          return (
+            <tr key={index}>
+              <td>{user.username}</td>
+              <td>{userRole}</td>
+              <td>
+                <button
+                  onClick={() => props.setEdit(user, selection)}
+                  className="btn btn-success"
+                >
+                  Edit Role
+                </button>
+              </td>
+              <td>
+                <EditUserRole
+                  user={user}
+                  onSubmit={props.onSubmit}
+                  index={index}
+                  toggle={props.toggle}
+                  modalState={props.modalState}
+                  userRole={props.userRole}
+                  setuserRole={props.setuserRole}
+                />
+              </td>
+              <td>
+                <button onClick={() => dispatch(deleteUser(user.id))}> Delete diz User</button>
+              </td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
@@ -195,13 +184,13 @@ const EditUserRole = props => {
                 name="Role"
                 value={props.userRole}
                 onChange={e => props.setuserRole(e.target.value)}
-                // value={props.userForm.category}
-                // onChange={e =>
-                //   props.setuserForm({
-                //     ...props.userForm,
-                //     category: e.target.value
-                //   })
-                // }
+              // value={props.userForm.category}
+              // onChange={e =>
+              //   props.setuserForm({
+              //     ...props.userForm,
+              //     category: e.target.value
+              //   })
+              // }
               >
                 <option value="1">Administrator</option>
                 <option value="2">Moderator</option>
