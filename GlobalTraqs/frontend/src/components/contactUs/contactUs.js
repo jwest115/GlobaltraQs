@@ -40,6 +40,7 @@ export default function contactUs() {
         .post("api/contactUs/", { email: email, message: message })
         .then(response => {
           console.log(response);
+          alert("Your message has been sent");
         });
     }
   };
