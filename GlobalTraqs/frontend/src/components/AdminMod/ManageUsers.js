@@ -195,13 +195,13 @@ const EditUserRole = props => {
                 name="Role"
                 value={props.userRole}
                 onChange={e => props.setuserRole(e.target.value)}
-                // value={props.userForm.category}
-                // onChange={e =>
-                //   props.setuserForm({
-                //     ...props.userForm,
-                //     category: e.target.value
-                //   })
-                // }
+              // value={props.userForm.category}
+              // onChange={e =>
+              //   props.setuserForm({
+              //     ...props.userForm,
+              //     category: e.target.value
+              //   })
+              // }
               >
                 <option value="1">Administrator</option>
                 <option value="2">Moderator</option>
