@@ -4,9 +4,26 @@ import {
   EDIT_USER,
   GET_USER,
   GET_USERS,
-  EDIT_USER_ROLE
+  EDIT_USER_ROLE,
+  SEARCH_USERS,
+  GET_NEXT_PREVIOUS_USERS
 } from "./types";
+
 import { DELETE_USER } from "./types";
+
+export const searchUsers = username => dispatch => {
+  axios
+    .get(`/api/profile/users?search=${username}`)
+    .then(res => {
+      dispatch({
+        type: SEARCH_USERS,
+        payload: res.data
+      });
+      console.log("user search");
+      console.log(res.data);
+    })
+    .catch(error => console.log(error.response.data));
+};
 
 export const getUsers = () => dispatch => {
   axios
@@ -45,9 +62,10 @@ export const deleteUser = id => dispatch => {
   axios
     .delete(`/api/auth/users/${id}/`)
     .then(res => {
+      console.log(res.data);
       dispatch({
         type: DELETE_USER,
-        payload: res.data
+        payload: id
       });
     })
     .catch(err => console.log(err));
@@ -62,7 +80,7 @@ export const getUser = id => dispatch => {
         payload: res.data
       });
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error.response);
       dispatch({
         type: GET_USER,
@@ -80,7 +98,19 @@ export const editUserRole = (id, role) => dispatch => {
         payload: res.data
       });
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error.response);
     });
+};
+
+export const getNextPreviousUsers = link => dispatch => {
+  axios
+    .get(`${link}`)
+    .then(res => {
+      dispatch({
+        type: GET_NEXT_PREVIOUS_USERS,
+        payload: res.data
+      });
+    })
+    .catch(error => console.log(error));
 };

@@ -19,7 +19,6 @@ class User(AbstractUser):
     bio = models.CharField(blank=True, max_length=300)
     is_profile_private = models.BooleanField(default=False)
 
-
     def upload_photo_dir(self, filename):
         path = './profile/{}'.format(self.username + filename)
         # datetime.today().strftime(
@@ -31,6 +30,7 @@ class User(AbstractUser):
 
     # This is the most important part to look upon to  define the custom permissions related to User.
     class Meta:
+        ordering = ['id']
         permissions = (("can_add_stories", "Can add stories"),
                        ("can_edit_their_stories", "Can edit their stories"),
                        ("can_delete_their_stories", "Can delete their stories"),

@@ -21,6 +21,7 @@ export class Settings extends Component {
       bio: "",
       userimage: ""
     };
+
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -32,7 +33,9 @@ export class Settings extends Component {
   handleChange(checked) {
     this.setState({ checked });
   }
-
+  handleChangePrivate(checked) {
+    this.setState({ checked });
+  }
   updateAccessibility = () => {
     const userId = this.props.auth.user.id;
     const accessibility_mode_active = this.props.auth.user
@@ -40,6 +43,12 @@ export class Settings extends Component {
       ? false
       : true;
     const userData = { accessibility_mode_active };
+    this.props.editUser(userId, userData);
+  };
+  updateProfileMode = () => {
+    const userId = this.props.auth.user.id;
+    const is_profile_private = this.props.auth.user.is_profile_private ? false : true;
+    const userData = { is_profile_private };
     this.props.editUser(userId, userData);
   };
 

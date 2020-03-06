@@ -13,8 +13,15 @@ from rest_framework import viewsets, permissions
 from .serializers import PinSerializer
 from pins.models import pin, categoryType, upVoteStory, flagStory, commentStory, photo, Faq, aboutUs
 from rest_framework import viewsets, permissions
-from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer, FlagStorySerializer, CommentStorySerializer, AboutUsSerializer, FaqSerializer, PhotoSerializer
+from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer, FlagStorySerializer, CommentStorySerializer, AboutUsSerializer, FaqSerializer, PhotoSerializer, PinFlaggedSerializer
+from rest_framework.pagination import PageNumberPagination
 # catalog viewset
+
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
 
 class DateFilter(FilterSet):
@@ -165,3 +172,31 @@ class PhotoViewSet(viewsets.ModelViewSet):
         # permissions.IsAuthenticated,
     ]
     serializer_class = PhotoSerializer
+
+
+class PinFlaggedViewSet(viewsets.ModelViewSet):
+
+    queryset = pin.objects.annotate(
+        # flagscore=Sum(Case(
+        #     When(flaggerstory__flagged=True, then=1),
+        #     default=Value(0),
+        #     output_field=IntegerField()
+        # )),
+        #updooots=Coalesce(Sum('updotes__upvote'), Value(0))
+        flagscore=Sum(Case(
+            When(flaggerstory__flagged=True, then=1),
+            default=Value(0),
+            output_field=IntegerField()
+        ))
+
+
+    )
+
+    permission_classes = [
+        permissions.AllowAny
+        # permissions.IsAuthenticated,
+    ]
+    serializer_class = PinFlaggedSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = '__all__'
+    pagination_class = StandardResultsSetPagination

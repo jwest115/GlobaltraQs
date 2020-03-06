@@ -1,3 +1,4 @@
+from pins.models import pin
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
@@ -11,6 +12,22 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 # Register Serializer
+
+
+class PinSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = pin
+        fields = ['id', 'title', 'description', 'is_anonymous_pin']
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    userStories = PinSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'userStories', 'date_joined', 'first_name',
+                  'last_name', 'username', 'email', 'is_profile_private', 'image_url']
 
 
 class RegisterSerializer(serializers.ModelSerializer):

@@ -164,8 +164,9 @@ const LeafletMap = props => {
       <Map
         center={[props.placement.userlat, props.placement.userlng]}
         zoom={15}
-        maxZoom={30} //shows map
-        minZoom={5}
+        maxZoom={18} //shows map
+        minZoom={3}
+        worldCopyJump={true}
         id="map"
         zoomControl={false}
         style={props.divStyle}

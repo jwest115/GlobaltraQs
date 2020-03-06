@@ -64,7 +64,7 @@ const AddCommentForm = props => {
   if (props.user) {
     return (
       <div className="card border-primary mb-3 col-md-6">
-        <div className="card-header">{props.user.username}</div>
+        <div className="card-header">{props.user.is_anonymous_active ? "Anonymous " : props.user.username}</div>
         <div className="card-body">
           <h4 className="card-title">Post a Comment</h4>
           <form onSubmit={props.onSubmitComment}>

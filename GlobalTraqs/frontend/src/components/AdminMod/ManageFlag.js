@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPins, deletePins } from "../../actions/pins";
+import {
+  getFlaggedPins,
+  getNextFlaggedPins,
+  deletePins
+} from "../../actions/pins";
 import { Link, Redirect } from "react-router-dom";
 import { Alert } from "reactstrap";
 function ManageFlag() {
-  const pins = useSelector(state => state.pins.pins);
+  const flaggedPins = useSelector(state => state.pins.flaggedPins);
   const dispatch = useDispatch(); // dispatches the action
 
   useEffect(() => {
     //similar to component did mount
-    dispatch(getPins());
+    dispatch(getFlaggedPins());
   }, []);
-  console.log(pins);
+
   const adminDelete = id => {
     dispatch(deletePins(id));
   };
@@ -19,34 +23,65 @@ function ManageFlag() {
 
   const { isAuthenticated, user } = auth;
 
-  if (!isAuthenticated) {
-    return <Redirect to="/" />;
-  }
+  console.log(flaggedPins.results);
   return (
     <div>
       MANAGE THE FLAG
-      <div className="container"></div>
-      {pins && <ListFlags pins={pins} handleDelete={adminDelete} />}
+      <div className="container">
+        <PrevNext next={flaggedPins.next} previous={flaggedPins.previous} />
+        {flaggedPins.results && (
+          <ListFlags pins={flaggedPins.results} handleDelete={adminDelete} />
+        )}
+      </div>
     </div>
   );
 }
 
 export default ManageFlag;
 
-function ListFlags({ pins, handleDelete }) {
+const PrevNext = props => {
+  const dispatch = useDispatch();
+  return (
+    <>
+      {props.previous ? (
+        <button
+          onClick={() => dispatch(getNextFlaggedPins(props.previous))}
+          className="btn btn-outline-primary"
+        >
+          Previous{" "}
+        </button>
+      ) : (
+        ""
+      )}
+      {props.next ? (
+        <button
+          onClick={() => dispatch(getNextFlaggedPins(props.next))}
+          className="btn btn-outline-primary"
+        >
+          Next
+        </button>
+      ) : (
+        ""
+      )}
+    </>
+  );
+};
+
+function ListFlags(props) {
+  const dispatch = useDispatch();
   return (
     <div className="container">
       <table className="table table-bordered">
         <tbody>
-          {pins.map((pin, index) => {
+          {props.pins.map((pin, index) => {
             return (
               <tr key={index}>
                 <td>{pin.title}</td>
                 <td>{pin.username ? pin.username : "Anon"}</td>
-                {/* <td>{pin.flagscore}</td> */}
+                <td>{pin.flagscore} flags</td>
                 <td>
                   <button
-                    onClick={e => handleDelete(pin.id, e)}
+                    onClick={() => dispatch(deletePins(pin.id))}
                     className="btn btn-danger"
                   >
                     Delete
