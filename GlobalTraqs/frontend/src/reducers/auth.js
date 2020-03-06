@@ -27,11 +27,7 @@ const initialState = {
   loginFail: false
 };
 
-const registerState = {
-  registerFail  : false
-}
-
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SEARCH_USERS:
       return {
@@ -64,7 +60,7 @@ export default function(state = initialState, action) {
       };
       return {
         ...state,
-        users: delUsers
+        users: state.users.filter(user => user.id !== action.payload)
       };
     case EDIT_USER_ROLE:
       const usersRole = [

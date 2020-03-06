@@ -7,8 +7,9 @@ import Recaptcha from "react-recaptcha";
 import * as EmailValidator from "email-validator";
 import { REGISTER_FAIL } from "../../actions/types";
 import axios from "axios";
-
-export default function ContactUs() {
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+export default function contactUs() {
   const auth = useSelector(state => state.auth);
 
   let token = localStorage.getItem("token");
@@ -20,31 +21,25 @@ export default function ContactUs() {
   const onSubmit = e => {
     e.preventDefault();
     if (email != "") {
-      axios
-        .post("api/contactUs/", {
-          email: email,
-          message: message
-        })
-        .then(response => {
-          console.log(response);
-        });
+      // var data = JSON.stringify({ "name": name.value, "email": email.value });
+      const config = {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      // Request Body
+      // const body = JSON.stringify({ username, email, password });
+      let data = JSON.stringify({ email: email, message: message });
+      axios.post("api/contactUs/", data, config).then(response => {
+        console.log(response);
+      });
     } else {
       setEmail("Anonymous@anon.com");
-      let data = JSON.stringify({
-        email: email,
-        message: message
-      });
+
       axios
-        .post("api/contactUs/", data, {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
+        .post("api/contactUs/", { email: email, message: message })
         .then(response => {
           console.log(response);
-        })
-        .catch(error => {
-          console.log(error.response);
         });
     }
   };
