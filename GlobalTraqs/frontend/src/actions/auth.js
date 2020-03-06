@@ -92,7 +92,7 @@ export const register = ({ username, password, email }) => dispatch => {
         payload: err.response.data
       });
       console.log(err.response.data);
-      alert("Username/Email already exists");
+      //alert("Username/Email already exists");
     });
 };
 

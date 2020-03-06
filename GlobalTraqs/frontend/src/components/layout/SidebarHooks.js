@@ -64,8 +64,8 @@ function SearchSidebar(props)  {
         e.preventDefault(); //prevents refresh of page
          console.log(startDate);
          console.log(endDate);
-        const start = startDate.getFullYear() + "-" + (startDate.getMonth() + 1)  + "-" + startDate.getDate();
-        const end = endDate.getFullYear() + "-" + (endDate.getMonth() + 1)  + "-" + endDate.getDate();
+        const start = startDate.getFullYear() + "-01-01";
+        const end = endDate.getFullYear() + "-12-31";
         let categorySearchQuery = "";
         if(selectedCategories == null) {
             setSelectedCategories(options);

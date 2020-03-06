@@ -105,15 +105,16 @@ export default function loginHooks() {
     <div className="col-md-6 m-auto">
       {console.log(attempts)}
       {/* if form was submitted and login failed then show an error banner*/}
-      {submitted && loginFail ?
-        <div class="alert alert-danger" role="alert">
-          Login Failed.
-      </div>
-        :
-        ""}
 
       <div className="card card-body mt-5">
         <h2 className="text-center">Login</h2>
+        {submitted && loginFail ?
+          <div className="card card-body mt-5 alert alert-danger" role="alert">
+          Login Failed.
+          </div>
+          :
+          ""
+        }
         <form onSubmit={submitForm}>
           <div className="form-group">
             <label>Username</label>
@@ -147,7 +148,7 @@ export default function loginHooks() {
               <div className="form-group">
                 <label>Password</label>
                 <input
-                onClick={handleTooltipOpen}
+                  onClick={handleTooltipOpen}
                   type="password"
                   className="form-control"
                   name="password"

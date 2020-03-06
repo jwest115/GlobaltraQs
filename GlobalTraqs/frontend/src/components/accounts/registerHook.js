@@ -12,7 +12,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 export default function registerHook() {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
-  const { isAuthenticated, user, registerFail } = auth;
+  const { isAuthenticated, user , isLoading} = auth;
   const [open, setOpen] = useState(false);
   const handleTooltipClose = () => {
     setOpen(false);
@@ -126,10 +126,11 @@ export default function registerHook() {
 
       <div className="card card-body mt-5">
         <h2 className="text-center">Register</h2>
-        {submitted && registerFail ?
+        {submitted && !isAuthenticated ?
+        
           <div className="card card-body mt-5 alert alert-danger" role="alert">
             Username or Email already exists! Please use another.
-      </div>
+          </div>
           :
           ""
         }

@@ -20,6 +20,8 @@ export class PinForm extends Component {
     };
     onChange = e => this.setState({ [e.target.name]: e.target.value });
 
+
+
     onSubmit = e => {
         const ida = 1;
         const a = this.props.userlat;
@@ -45,7 +47,7 @@ export class PinForm extends Component {
 
             <div className="card card-body mt-4 mb-4">
                 <h2>Add a Pin</h2>
-                {console.log(this.props.userlat + 'pinfomr' + this.props.userlng)}
+                {console.log(this.props.userlat + 'pinform' + this.props.userlng)}
                 <form onSubmit={this.onSubmit}>
 
                     <div className="form-group">
@@ -72,7 +74,6 @@ export class PinForm extends Component {
                         <label>Category</label>
 
                         <select name="category" className="form-control" onChange={this.onChange}>
-                            {/* someone put like user must select an option error handling something blah blah */}
                             <option disabled selected value> -- select an option -- </option>
                             <option value="1">Personal</option>
                             <option value="2">Community</option>
@@ -88,6 +89,7 @@ export class PinForm extends Component {
                     <input type="hidden" name="longitude" onChange={this.onChange}
                         // value={this.props.userlat}
                         value={longitude} />
+
                     {/*        <div className="form-group">
 
                         <textarea

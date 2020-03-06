@@ -21,7 +21,10 @@ class pin(models.Model):
     startDate = models.DateField('Date', blank=True, null=True)
     endDate = models.DateField('Date', blank=True, null=True)
     is_anonymous_pin = models.BooleanField(default=False, blank=False)
-
+    lastEditDate = models.DateField('Last Edit Date',blank=True, null=True )
+    #lastEditUser = models.ForeignKey(settings.AUTH_USER_MODEL,
+    #                         null=True, on_delete=models.CASCADE)
+    postDate = models.DateField('Post Date',blank=True, null=True )
     def __str__(self):
         """String for representing the Model object."""
         return self.title
