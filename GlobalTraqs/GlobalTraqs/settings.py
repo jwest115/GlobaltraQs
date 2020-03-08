@@ -127,7 +127,7 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db1',
+        'NAME': 'db420',
     }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',

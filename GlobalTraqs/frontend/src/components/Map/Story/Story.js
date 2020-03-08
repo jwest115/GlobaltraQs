@@ -14,6 +14,7 @@ import Upvote from "./Upvote";
 import Flag from "./Flag";
 import Moment from "react-moment";
 import Markup from "interweave";
+import FlagReportModal from "./FlagReportModal";
 
 const storyBody = {
   paddingTop: "50px",
@@ -97,13 +98,13 @@ function Story(props) {
       {props.pin.is_anonymous_pin ? (
         <p>By: Anonymous</p>
       ) : (
-          <Link
-            style={{ textDecoration: 'inherit'}}
-            to={`/users/${props.pin.owner}`}
-            params={{ testvalue: "hello" }}
+        <Link
+          style={{ textDecoration: "inherit" }}
+          to={`/users/${props.pin.owner}`}
+          params={{ testvalue: "hello" }}
         >
-            <p>By: {props.pin.username}</p>
-          </Link>
+          <p>By: {props.pin.username}</p>
+        </Link>
       )}
       <h6>
         {/* {props.pin.updooots} upvotes */}

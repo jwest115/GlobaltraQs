@@ -133,7 +133,7 @@ export default function MapDashboard() {
       ...pinData,
       title: editPinForm.title,
       description: editPinForm.description,
-      category: editPinForm.category,
+      category: editPinForm.category
       // startDate: editPinForm.startDate,
       // endDate: editPinForm.endDate
     });
@@ -231,7 +231,10 @@ export default function MapDashboard() {
         <Switch>
           <Route exact path="/">
             <div id={"sidebar-style"}>
-              <SearchSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
+              <SearchSidebar
+                sidebarOpen={sidebarOpen}
+                setSidebarOpen={setSidebarOpen}
+              />
               <StorySidebar
                 maplink={"/story"}
                 pinData={pinData}
@@ -394,16 +397,14 @@ function IndividualStory(props) {
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
   const userid = isAuthenticated ? user.id : false;
-  useEffect(() => dispatch(getPin(id, userid)), [id]);
-  useEffect(
-    () =>
-      props.setuserComment({
-        description: "",
-        pin: id
-      }),
+  useEffect(() => {
+    dispatch(getPin(id, userid));
+    props.setuserComment({
+      description: "fff",
+      pin: id
+    });
+  }, [id]);
 
-    [id]
-  );
   useEffect(() => {
     props.seteditPin({
       title: "",
