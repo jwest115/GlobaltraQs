@@ -14,7 +14,9 @@ import {
   EDIT_USER_ROLE,
   SEARCH_USERS,
   GET_NEXT_PREVIOUS_USERS,
-  USER_SELF_DELETE
+  USER_SELF_DELETE,
+  FLAG_COMMENT,
+  REMOVE_FLAG_COMMENT
 } from "../actions/types";
 
 const initialState = {
@@ -120,6 +122,30 @@ export default function(state = initialState, action) {
         isAuthenticated: false,
         isLoading: false,
         loginFail: true
+      };
+    case FLAG_COMMENT:
+      const userFlagComment = {
+        id: action.payload.id,
+        comment: action.payload.comment
+      };
+      const userInfo = {
+        ...state.user,
+        flaggerComment: [...state.user.flaggerComment, userFlagComment]
+      };
+      return {
+        ...state,
+        user: userInfo
+      };
+    case REMOVE_FLAG_COMMENT:
+      const removeFlagComment = {
+        ...state.user,
+        flaggerComment: [
+          state.user.flaggerComment.filter(flag => flag.id !== action.payload)
+        ]
+      };
+      return {
+        ...state,
+        user: removeFlagComment
       };
     default:
       return state;

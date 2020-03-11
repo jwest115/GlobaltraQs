@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from pins.models import pin, categoryType, upVoteStory, flagStory, commentStory, aboutUs, Faq, photo
+from pins.models import pin, categoryType, upVoteStory, flagStory, commentStory, aboutUs, Faq, photo, FlagComment
 from django_restql.mixins import DynamicFieldsMixin
 from django.contrib.auth.models import User
 import datetime
@@ -41,6 +41,12 @@ class CommentStorySerializer(DynamicFieldsMixin, serializers.ModelSerializer):
 
     class Meta:
         model = commentStory
+        fields = '__all__'
+
+
+class FlagCommentSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
+    class Meta:
+        model = FlagComment
         fields = '__all__'
 
 

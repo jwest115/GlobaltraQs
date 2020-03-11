@@ -76,7 +76,7 @@ class flagStory(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     flagged = models.BooleanField(default=False)
     reportType = models.PositiveIntegerField(
-        default=1, validators=[MinValueValidator(1), MaxValueValidator(4)])
+        default=1, validators=[MinValueValidator(0), MaxValueValidator(4)])
     reason = models.TextField(null=True)
 
     class Meta:
@@ -93,6 +93,17 @@ class commentStory(models.Model):
     commenter = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     description = models.TextField()
+
+
+class FlagComment(models.Model):
+    comment = models.ForeignKey(
+        "commentStory", on_delete=models.CASCADE, null=True, related_name='flaggingComment')
+    flagger = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='flaggerComment')
+    flagged = models.BooleanField(default=False)
+    reportType = models.PositiveIntegerField(
+        default=1, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    reason = models.TextField(null=True)
 
 
 class photo(models.Model):

@@ -14,6 +14,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import useAddPinForm from "./CustomHooks/useAddPinForm";
+import useFlagForm from "./CustomHooks/useFlagForm";
 import {
   Switch,
   Route,
@@ -97,6 +98,16 @@ export default function MapDashboard() {
     setmodalstate,
     setAnonRadius
   } = useAddPinForm(userAddedPin);
+  const {
+    flagForm,
+    flagToggle,
+    flagModalState,
+    onFlagSubmit,
+    handleFlagFormChange,
+    flagCommentToggle,
+    flagCommentModalState,
+    onFlagCommentSubmit
+  } = useFlagForm();
   function userAddedPin() {
     // console.log(mapReference);
     // console.log("is the ref");
@@ -359,6 +370,14 @@ export default function MapDashboard() {
               setPinDeleted={setPinDeleted}
               editPin={editPinForm}
               seteditPin={seteditPinForm}
+              flagForm={flagForm}
+              flagToggle={flagToggle}
+              flagModalState={flagModalState}
+              onFlagSubmit={onFlagSubmit}
+              handleFlagFormChange={handleFlagFormChange}
+              flagCommentToggle={flagCommentToggle}
+              flagCommentModalState={flagCommentModalState}
+              onFlagCommentSubmit={onFlagCommentSubmit}
             />
           </Route>
         </Switch>

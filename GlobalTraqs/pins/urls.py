@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework import routers
-from .api import PinViewSet, CategoryViewSet, upVoteStoryViewSet, FlagStoryViewSet, CommentStoryViewSet, PinSearchViewSet, FaqViewSet, PhotoViewSet, PinFlaggedViewSet
+from .api import PinViewSet, CategoryViewSet, upVoteStoryViewSet, FlagStoryViewSet, CommentStoryViewSet, PinSearchViewSet, FaqViewSet, PhotoViewSet, PinFlaggedViewSet, FlagCommentViewSet
 from . import views
 
 router = routers.DefaultRouter()
@@ -13,5 +13,6 @@ router.register('api/commentStory', CommentStoryViewSet, 'commentstory')
 router.register('api/pinSearch', PinSearchViewSet, 'pin')
 router.register('api/pinFlagged', PinFlaggedViewSet, 'pinFlag')
 router.register('api/faq', FaqViewSet, 'faqModel')
+router.register('api/flagcomment', FlagCommentViewSet, 'flagcomment')
 router.register('api/photo', PhotoViewSet, 'photo')
 urlpatterns = router.urls

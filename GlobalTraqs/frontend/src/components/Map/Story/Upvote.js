@@ -4,7 +4,6 @@ import CircularIndeterminate from "./CircularIndeterminate";
 import { userFirstUpvote, userUpovte } from "../../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
 function Upvote(props) {
-  console.log(props.pin);
   const dispatch = useDispatch();
   const upvoteid = props.pin.upvotedBefore
     ? props.pin.updotes.filter(a => a.upVoter === props.user.id)[0].id

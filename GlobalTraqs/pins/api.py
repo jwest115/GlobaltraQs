@@ -11,9 +11,9 @@ from django_filters import FilterSet, Filter
 from django_filters.fields import Lookup
 from rest_framework import viewsets, permissions
 from .serializers import PinSerializer
-from pins.models import pin, categoryType, upVoteStory, flagStory, commentStory, photo, Faq, aboutUs
+from pins.models import pin, categoryType, upVoteStory, flagStory, commentStory, photo, Faq, aboutUs, FlagComment
 from rest_framework import viewsets, permissions
-from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer, FlagStorySerializer, CommentStorySerializer, AboutUsSerializer, FaqSerializer, PhotoSerializer, PinFlaggedSerializer
+from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer, FlagStorySerializer, CommentStorySerializer, AboutUsSerializer, FaqSerializer, PhotoSerializer, PinFlaggedSerializer, FlagCommentSerializer
 from rest_framework.pagination import PageNumberPagination
 # catalog viewset
 
@@ -135,6 +135,17 @@ class FlagStoryViewSet(viewsets.ModelViewSet):
         # permissions.IsAuthenticated,
     ]
     serializer_class = FlagStorySerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = '__all__'
+
+
+class FlagCommentViewSet(viewsets.ModelViewSet):
+    queryset = FlagComment.objects.all()
+    permission_classes = [
+        permissions.AllowAny
+        # permissions.IsAuthenticated,
+    ]
+    serializer_class = FlagCommentSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { deleteComment } from "../../../actions/pins";
+import { delFlagComment } from "../../../actions/auth";
 import { useDispatch, useSelector } from "react-redux";
 
 function CommentStory(props) {
@@ -20,8 +21,17 @@ function CommentStory(props) {
       )}
       {props.toggleComment ? <AddCommentForm {...props} /> : ""}
       {props.comment.map((userComment, index) => {
+        const flagCommentCheck = props.user.flaggerComment.some(
+          userFlagComment => userFlagComment.comment === userComment.id
+        );
+        console.log(
+          "user has flagged this comment" + flagCommentCheck + userComment.id
+        );
         return (
-          <div className="card border-primary mb-3 col-md-6" key={index}>
+          <div
+            className="card border-primary mb-3 col-md-6"
+            key={userComment.id}
+          >
             <div className="card-header">
               {userComment.is_anonymous_comment
                 ? "Anonymous"
@@ -50,6 +60,23 @@ function CommentStory(props) {
               ) : (
                 ""
               )}
+              {props.isAuthenticated && flagCommentCheck ? (
+                <button
+                  onClick={() => dispatch(delFlagComment(userComment.id))}
+                  type="button"
+                  className="btn btn-primary btn-sm"
+                >
+                  Remove Flag
+                </button>
+              ) : (
+                <button
+                  onClick={() => props.toggle(userComment.id)}
+                  type="button"
+                  className="btn btn-primary btn-sm"
+                >
+                  Flag
+                </button>
+              )}
             </div>
           </div>
         );
@@ -64,7 +91,9 @@ const AddCommentForm = props => {
   if (props.user) {
     return (
       <div className="card border-primary mb-3 col-md-6">
-        <div className="card-header">{props.user.is_anonymous_active ? "Anonymous " : props.user.username}</div>
+        <div className="card-header">
+          {props.user.is_anonymous_active ? "Anonymous " : props.user.username}
+        </div>
         <div className="card-body">
           <h4 className="card-title">Post a Comment</h4>
           <form onSubmit={props.onSubmitComment}>

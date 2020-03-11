@@ -27,8 +27,6 @@ function Story(props) {
 
   const { isAuthenticated, user } = auth;
 
-  const [flagState, setflagState] = useState(false);
-
   const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
 
   if (props.pinDeleted) {
@@ -101,7 +99,6 @@ function Story(props) {
         <Link
           style={{ textDecoration: "inherit" }}
           to={`/users/${props.pin.owner}`}
-          params={{ testvalue: "hello" }}
         >
           <p>By: {props.pin.username}</p>
         </Link>
@@ -131,8 +128,23 @@ function Story(props) {
           userComment={props.userComment}
           setuserComment={props.setuserComment}
           onDeleteComment={props.onDeleteComment}
+          toggle={props.flagCommentToggle}
         />
       )}
+      <FlagReportModal
+        flagForm={props.flagForm}
+        toggle={props.flagToggle}
+        modalState={props.flagModalState}
+        onSubmit={props.onFlagSubmit}
+        handleChange={props.handleFlagFormChange}
+      />
+      <FlagReportModal
+        flagForm={props.flagForm}
+        toggle={props.flagCommentToggle}
+        modalState={props.flagCommentModalState}
+        onSubmit={props.onFlagCommentSubmit}
+        handleChange={props.handleFlagFormChange}
+      />
     </div>
   );
 }
