@@ -45,6 +45,7 @@ class CommentStorySerializer(DynamicFieldsMixin, serializers.ModelSerializer):
 
 
 class FlagCommentSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
+
     class Meta:
         model = FlagComment
         fields = '__all__'
@@ -60,9 +61,9 @@ class PinSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
     categoryImage = serializers.ImageField(
         source="category.image_url",
         read_only=True)
-    #pinsUpvote = serializers.StringRelatedField(many=True)
+    # pinsUpvote = serializers.StringRelatedField(many=True)
     # pinsUpvote = upVoteStorySerializer(many=True, read_only=True)
-    #pinsUpvoted = upVoteStorySerializer(many=True, read_only=True)
+    # pinsUpvoted = upVoteStorySerializer(many=True, read_only=True)
     updooots = serializers.IntegerField(read_only=True)
     flagscore = serializers.IntegerField(read_only=True)
     flaggerstory = FlagStorySerializer(many=True, read_only=True)

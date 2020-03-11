@@ -104,6 +104,8 @@ class FlagComment(models.Model):
     reportType = models.PositiveIntegerField(
         default=1, validators=[MinValueValidator(0), MaxValueValidator(4)])
     reason = models.TextField(null=True)
+    created_at = models.DateTimeField(
+        auto_now_add=True, null=True)
 
 
 class photo(models.Model):
