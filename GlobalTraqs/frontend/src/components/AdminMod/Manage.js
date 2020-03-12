@@ -8,9 +8,10 @@ import {
   useRouteMatch,
   useLocation
 } from "react-router-dom";
-import { useSelector, useDispatch, useStore } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ManageFlag from "./ManageFlag";
 import ManageUsers from "./ManageUsers";
+import ManageComments from "./ManageComments";
 export default function Manage() {
   let { path, url } = useRouteMatch();
   console.log("the path is " + path + " and the url is " + url);
@@ -32,6 +33,9 @@ export default function Manage() {
           <li>
             <Link to={`/manage/users`}>Manage user</Link>
           </li>
+          <li>
+            <Link to={`/manage/comments`}>Manage user</Link>
+          </li>
         </ul>
 
         <hr />
@@ -47,6 +51,9 @@ export default function Manage() {
         </Route>
         <Route path={`/manage/users`}>
           <ManageUsers />
+        </Route>
+        <Route path={`/manage/comments`}>
+          <ManageComments />
         </Route>
       </Switch>
     </div>
