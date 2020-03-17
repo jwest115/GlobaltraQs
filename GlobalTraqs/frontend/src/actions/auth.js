@@ -165,8 +165,9 @@ export const userFlagComment = userFlag => dispatch => {
 
 export const delFlagComment = id => dispatch => {
   axios
-    .delete(`/api/flagcomment/${id}`)
+    .delete(`/api/flagcomment/${id}/`)
     .then(res => {
+      console.log(res.data);
       dispatch({
         type: REMOVE_FLAG_COMMENT,
         payload: id

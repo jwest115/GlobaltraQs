@@ -131,20 +131,24 @@ function Story(props) {
           toggle={props.flagCommentToggle}
         />
       )}
-      <FlagReportModal
-        flagForm={props.flagForm}
-        toggle={props.flagToggle}
-        modalState={props.flagModalState}
-        onSubmit={props.onFlagSubmit}
-        handleChange={props.handleFlagFormChange}
-      />
-      <FlagReportModal
-        flagForm={props.flagForm}
-        toggle={props.flagCommentToggle}
-        modalState={props.flagCommentModalState}
-        onSubmit={props.onFlagCommentSubmit}
-        handleChange={props.handleFlagFormChange}
-      />
+      {props.isAuthenticated && (
+        <FlagReportModal
+          flagForm={props.flagForm}
+          toggle={props.flagToggle}
+          modalState={props.flagModalState}
+          onSubmit={props.onFlagSubmit}
+          handleChange={props.handleFlagFormChange}
+        />
+      )}
+      {props.isAuthenticated && (
+        <FlagReportModal
+          flagForm={props.flagForm}
+          toggle={props.flagCommentToggle}
+          modalState={props.flagCommentModalState}
+          onSubmit={props.onFlagCommentSubmit}
+          handleChange={props.handleFlagFormChange}
+        />
+      )}
     </div>
   );
 }

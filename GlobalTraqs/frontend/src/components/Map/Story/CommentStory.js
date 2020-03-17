@@ -21,12 +21,6 @@ function CommentStory(props) {
       )}
       {props.toggleComment ? <AddCommentForm {...props} /> : ""}
       {props.comment.map((userComment, index) => {
-        const flagCommentCheck = props.user.flaggerComment.some(
-          userFlagComment => userFlagComment.comment === userComment.id
-        );
-        console.log(
-          "user has flagged this comment" + flagCommentCheck + userComment.id
-        );
         return (
           <div
             className="card border-primary mb-3 col-md-6"
@@ -60,22 +54,10 @@ function CommentStory(props) {
               ) : (
                 ""
               )}
-              {props.isAuthenticated && flagCommentCheck ? (
-                <button
-                  onClick={() => dispatch(delFlagComment(userComment.id))}
-                  type="button"
-                  className="btn btn-primary btn-sm"
-                >
-                  Remove Flag
-                </button>
+              {props.isAuthenticated ? (
+                <FlagButton id={userComment.id} {...props} />
               ) : (
-                <button
-                  onClick={() => props.toggle(userComment.id)}
-                  type="button"
-                  className="btn btn-primary btn-sm"
-                >
-                  Flag
-                </button>
+                ""
               )}
             </div>
           </div>
@@ -86,6 +68,43 @@ function CommentStory(props) {
 }
 
 export default CommentStory;
+
+const FlagButton = props => {
+  console.log(props.id);
+  const dispatch = useDispatch();
+  const flagCommentCheck = props.user.flaggerComment.some(
+    userFlagComment => userFlagComment.comment === props.id
+  );
+  const flagid = flagCommentCheck
+    ? props.user.flaggerComment.filter(a => a.comment === props.id)
+    : "";
+
+  return (
+    <>
+      {flagCommentCheck ? (
+        <button
+          onClick={() => dispatch(delFlagComment(flagid[0].id))}
+          type="button"
+          className="btn btn-primary btn-sm"
+        >
+          Remove Flag
+        </button>
+      ) : (
+        <button
+          onClick={() => props.toggle(props.id)}
+          type="button"
+          className="btn btn-primary btn-sm"
+        >
+          Flag
+        </button>
+      )}
+      <h2>
+        {" "}
+        {props.id} {props.id}
+      </h2>
+    </>
+  );
+};
 
 const AddCommentForm = props => {
   if (props.user) {
