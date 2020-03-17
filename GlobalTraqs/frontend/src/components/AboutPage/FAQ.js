@@ -35,12 +35,12 @@ export default function FAQ() {
       });
   }, []);
 
-  function handleEdit(e, id) {
-    e.preventDefault();
-    axios.patch(`/api/faq/${id}`).then(response => {
-      console.log(response.data);
-    });
-  }
+  const updateFAQ = id => e => {
+    let newFAQList = [...faqDesc];
+    newFAQList[id].faqQuestionDesc = e.target.value;
+    console.log(e.target.value);
+    setfaqDesc(newFAQList);
+  };
 
   function deletefaqDesc(id) {
     //e.preventDefault() for edit function post for new data patch for editing data
@@ -64,7 +64,16 @@ export default function FAQ() {
   function addFaq(e) {
     e.preventDefault();
     console.log(createNewfaq);
-    axios.post(`/api/faq/`, createNewfaq)
+
+    axios
+      .post(`/api/faq/`, createNewfaq)
+      .then(response => {
+        console.log(response.data);
+        setfaqDesc([...faqDesc, response.data]);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   const classes = useStyles();
@@ -131,6 +140,7 @@ export default function FAQ() {
           data={faqDesc}
           deletefaqDesc={deletefaqDesc}
           editfaqDesc={editfaqDesc}
+          updateFAQ={updateFAQ}
         />
       )}
       <button>Add New Form</button>
@@ -147,25 +157,28 @@ export default function FAQ() {
 function DisplayFaq(props) {
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
-  console.log(props.data);
+
   return (
     <>
-      {props.data.map((x, index) => {
+      {props.data.map((faq, index) => {
         return (
-          <div key={index}>
+          <div key={faq.id}>
             <div style={{ marginBottom: "30px" }}>
               <Paper className={props.classes.root}>
                 <Typography variant="h5" component="h3">
-                  Q: {x.faqQuestionDesc}
+                  Q: {faq.faqQuestionDesc}
                 </Typography>
-                <Typography component="p">A: {x.faqAnswerDesc}</Typography>
+                <Typography component="p">A: {faq.faqAnswerDesc}</Typography>
 
-                <button onClick={e => props.deletefaqDesc(x.id)}>Delete</button>
-                <button onClick={e => props.editfaqDesc(x.id)}>Edit</button>
+                <button onClick={e => props.deletefaqDesc(faq.id)}>
+                  Delete
+                </button>
+                <button onClick={e => props.editfaqDesc(faq.id)}>Edit</button>
                 <EditFAQ
-                  id={x.id}
-                  question={x.faqQuestionDesc}
-                  answer={x.faqAnswerDesc}
+                  id={faq.id}
+                  question={faq.faqQuestionDesc}
+                  answer={faq.faqAnswerDesc}
+                  onChange={props.updateFAQ}
                 ></EditFAQ>
               </Paper>
             </div>
@@ -179,9 +192,12 @@ function DisplayFaq(props) {
 function EditFAQ(props) {
   return (
     <form>
-      <TextField defaultValue={props.faqQuestionDesc}></TextField>
+      <TextField
+        onChange={props.onChange}
+        value={props.faqQuestionDesc}
+      ></TextField>
       <Divider />
-      <TextField defaultValue={props.faqAnswerDesc}></TextField>
+      <TextField value={props.faqAnswerDesc}></TextField>
       <button> Save Edit </button>
     </form>
   );
@@ -202,15 +218,15 @@ function NewFaq(props) {
         ></TextField>
 
         <Divider />
-        <TextField   onChange={e =>
+        <TextField
+          onChange={e =>
             props.setNewfaq({
               ...props.createNewfaq,
               faqAnswerDesc: e.target.value
             })
           }
           value={props.createNewfaq.faqAnswerDesc}
-        >
-        </TextField>
+        ></TextField>
         <button>Submit</button>
       </Paper>
     </form>
