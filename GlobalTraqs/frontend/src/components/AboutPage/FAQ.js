@@ -35,12 +35,13 @@ export default function FAQ() {
       });
   }, []);
 
-  const updateFAQ = id => e => {
-    let newFAQList = [...faqDesc];
-    newFAQList[id].faqQuestionDesc = e.target.value;
-    console.log(e.target.value);
-    setfaqDesc(newFAQList);
-  };
+  function updateFAQ(e, id) {
+    setfaqDesc(
+      faqDesc.map(faq =>
+        faq.id === id ? { ...faq, [e.target.name]: e.target.value } : faq
+      )
+    );
+  }
 
   function deletefaqDesc(id) {
     //e.preventDefault() for edit function post for new data patch for editing data
@@ -193,11 +194,16 @@ function EditFAQ(props) {
   return (
     <form>
       <TextField
-        onChange={props.onChange}
-        value={props.faqQuestionDesc}
+        name="faqQuestionDesc"
+        onChange={e => props.onChange(e, props.id)}
+        value={props.question}
       ></TextField>
       <Divider />
-      <TextField value={props.faqAnswerDesc}></TextField>
+      <TextField
+        name="faqAnswerDesc"
+        value={props.answer}
+        onChange={e => props.onChange(e, props.id)}
+      ></TextField>
       <button> Save Edit </button>
     </form>
   );
