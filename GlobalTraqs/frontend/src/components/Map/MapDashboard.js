@@ -9,7 +9,7 @@ import {
   editPin,
   deletePins,
   addComment,
-  deleteComment
+  deleteComment, getPinsWithBounds
 } from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -82,8 +82,21 @@ export default function MapDashboard() {
   });
 
   useEffect(() => {
-    dispatch(getPins());
-  }, []);
+    console.log("here trying to get pins");
+     if(mapReference != undefined) {
+       mapReference.once("moveend", function() {
+        console.log("bounds");
+        let mapBounds = mapReference.getBounds();
+        console.log(mapBounds);
+        let south = mapBounds.getSouth();
+        let west = mapBounds.getWest();
+        let north = mapBounds.getNorth();
+        let east = mapBounds.getEast();
+        dispatch(getPinsWithBounds(north, south, east, west));
+        });
+      }
+  }, [pins]);
+
   useEffect(() => {
     getLocation();
   }, []);
@@ -186,6 +199,9 @@ export default function MapDashboard() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         succes => {
+          if(mapReference != undefined) {
+            mapReference.panTo([succes.coords.latitude, succes.coords.longitude]);
+          }
           setplacement({
             ...placement,
             userlat: succes.coords.latitude,
@@ -223,6 +239,7 @@ export default function MapDashboard() {
   const onDeleteComment = commentid => {
     dispatch(deleteComment(commentid));
   };
+
 
   return (
     <div id={"map-dashboard"}>

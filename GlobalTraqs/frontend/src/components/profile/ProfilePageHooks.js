@@ -72,14 +72,8 @@ export default function ProfilePage(props) {
           <div className="card">
             <div className="card-body">
               {stories.map((story, index) => {
-                if (
-                  !userProfile.is_profile_private ||
-                  (isAuthenticated && user.id == id)
-                ) {
-                  if (
-                    !story.is_anonymous_pin ||
-                    (isAuthenticated && user.id == id)
-                  ) {
+                if (!userProfile.is_profile_private || (isAuthenticated && user.id == id)) {
+                  if (!story.is_anonymous_pin || (isAuthenticated && user.id == id)) {
                     return (
                       <div style={{ padding: "20px" }} key={index}>
                         <h5 className="card-title">
@@ -100,10 +94,15 @@ export default function ProfilePage(props) {
                           onChange={() => updateStoryAnonymity(story)}
                           checked={story.is_anonymous_pin}
                         />
-                            ) : "" }
+                            ) : ""}
                       </div>
                     );
                   }
+                }
+                else {
+                  return(
+                      <h4>This user's profile is private.</h4>
+                  );
                 }
               })}
             </div>

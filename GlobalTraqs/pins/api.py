@@ -51,6 +51,20 @@ class ListFilter(Filter):
 
 
 # use the list filter above on the category field to match for or cases
+class PinCoordFilter(FilterSet):
+
+    latitude_gte = django_filters.NumberFilter(
+        field_name="latitude", lookup_expr='gte')
+    latitude_lte = django_filters.NumberFilter(
+        field_name="latitude", lookup_expr='lte')
+    longitude_gte = django_filters.NumberFilter(
+        field_name="longitude", lookup_expr='gte')
+    longitude_lte = django_filters.NumberFilter(
+        field_name="longitude", lookup_expr='lte')
+
+
+
+# use the list filter above on the category field to match for or cases
 class PinSearchFilter(FilterSet):
     categories = ListFilter(field_name='category', lookup_expr='in')
 
@@ -63,9 +77,6 @@ class PinSearchFilter(FilterSet):
     endDate_lte = django_filters.DateTimeFilter(
         field_name="endDate", lookup_expr='lte')
 
-    class Meta:
-        model = pin
-        fields = ('categories',)
 
 
 class PinViewSet(viewsets.ModelViewSet):
@@ -107,6 +118,12 @@ class PinSearchViewSet(viewsets.ModelViewSet):
     filter_class = PinSearchFilter
     search_fields = ['title', 'description']
 
+
+class PinCoordViewSet(viewsets.ModelViewSet):
+    queryset = pin.objects.all()
+    serializer_class = PinSerializer
+    filter_backends = [DjangoFilterBackend]
+    filter_class = PinCoordFilter
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = categoryType.objects.all()
