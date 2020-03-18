@@ -23,6 +23,8 @@ const labelStyle = {
 };
 function ModalPinForm(props) {
 
+
+  var today = new Date();
   const validateAddPinForm = (e) => {
       e.preventDefault();
       console.log("validating add pin...");
@@ -117,7 +119,6 @@ function ModalPinForm(props) {
               <Label style={labelStyle} for="startDate">
                 Start Date
               </Label>
-
               <DatePicker
                 isClearable
                 todayButton="Today"
@@ -126,7 +127,22 @@ function ModalPinForm(props) {
                 onChange={date =>
                   props.setaddPinValues({
                     ...props.addPinValues,
-                    startDate: date
+                    startDate: date,
+                  })
+                }
+              />
+              <Label style={labelStyle} for="postDate">
+                Posted Date
+              </Label>
+              <DatePicker
+                isClearable
+                todayButton="Today"
+                name="postDate"
+                selected={props.addPinValues.postDate}
+                onChange={dated =>
+                  props.setaddPinValues({
+                    ...props.addPinValues,
+                    postDate: dated,
                   })
                 }
               />

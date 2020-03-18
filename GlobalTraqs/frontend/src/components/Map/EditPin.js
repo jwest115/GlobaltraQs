@@ -14,6 +14,11 @@ const labelStyle = {
   marginRight: "10px"
 };
 
+var today = new Date();
+var dd = String(today.getDate());
+var mm = today.getMonth() + 1;
+var yyyy = today.getFullYear();
+
 const months = [ "January", "February", "March", "April", "May", "June",
            "July", "August", "September", "October", "November", "December" ];
 
@@ -27,6 +32,9 @@ export class EditPin extends Component {
     user: this.props.userId,
     startDate: this.props.startDate,
     endDate: this.props.endDate,
+    postDate: this.props.postDate,
+    lastEditDate: this.props.lastEditDate,
+    lastPersonEdit: this.props.lastPersonEdit,
     pinDeleted: false
   };
   static propTypes = {
@@ -56,6 +64,8 @@ export class EditPin extends Component {
     });
   };
 
+  
+
   onSubmit = e => {
     const a = this.props.userlat;
     const b = this.props.userlng;
@@ -81,10 +91,15 @@ export class EditPin extends Component {
 
      let selectedEndMonthName = months[endDate.getMonth()];
      let endDateFormatted = selectedEndMonthName + " " + endDate.getDate() + ", " + endDate.getFullYear();
+     
+     let editMonth = months[mm];
+     let editFullDate = editMonth + " " + today.getDate() + ", " + today.getFullYear();
+     
+     console.log("editDate " + editFullDate);
      console.log("formatted start " + startDateFormatted);
      console.log("formatted end " + endDateFormatted);
 
-    this.props.onUpdate(category, title, description, startDate, endDate, startDateFormatted, endDateFormatted);
+    this.props.onUpdate(category, title, description, startDate, endDate, startDateFormatted, endDateFormatted, editFullDate);
     console.log(a + " " + this.state.latitude + "" + c);
   };
 

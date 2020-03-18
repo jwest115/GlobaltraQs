@@ -18,10 +18,13 @@ class pin(models.Model):
         "categoryType", on_delete=models.CASCADE, null=True, related_name='selected_category')
     # 1 is community, 2: historical, 3: personal
     upVotes = models.PositiveSmallIntegerField(default=0)
-    startDate = models.DateField('Date', blank=True, null=True)
-    endDate = models.DateField('Date', blank=True, null=True)
+    startDate = models.DateField('startDate', blank=True, null=True)
+    endDate = models.DateField('endDate', blank=True, null=True)
     is_anonymous_pin = models.BooleanField(default=False, blank=False)
-
+    postDate = models.DateField('postDate', blank=True, null=True)
+    lastEditDate = models.DateField('lastEditDate', blank=True, null=True)
+    lastPersonEdit = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     class Meta:
         ordering = ['id']
 
