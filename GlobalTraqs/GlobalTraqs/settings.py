@@ -127,7 +127,7 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db1',
+        'NAME': 'db420',
     }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -194,5 +194,3 @@ CORS_ORIGIN_WHITELIST = ['https://localhost:3000']
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 OPTIMIZED_IMAGE_METHOD = 'pillow'
-
-CORS_ORIGIN_WHITELIST = ['https://localhost:3000']

@@ -13,18 +13,20 @@ import {
   EDIT_USER,
   EDIT_USER_ROLE,
   SEARCH_USERS,
-  GET_NEXT_PREVIOUS_USERS
+  GET_NEXT_PREVIOUS_USERS,
+  USER_SELF_DELETE,
+  FLAG_COMMENT,
+  REMOVE_FLAG_COMMENT
 } from "../actions/types";
 
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
-  isLoading: false,
+  isLoading: true,
   user: "",
   users: [],
   userProfile: null,
   story_author: null,
-  registerFail: false,
   loginFail: false
 };
 
@@ -95,6 +97,15 @@ export default function (state = initialState, action) {
         user: action.payload
       };
     case LOGIN_SUCCESS:
+      localStorage.setItem("token", action.payload.token);
+      return {
+        ...state,
+        ...action.payload,
+        isAuthenticated: true,
+        isLoading: false,
+        registerFail: false,
+        loginFail: false
+      };
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.payload.token);
       return {
@@ -105,6 +116,7 @@ export default function (state = initialState, action) {
         registerFail: false,
         loginFail: false
       };
+    case USER_SELF_DELETE:
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
@@ -112,12 +124,34 @@ export default function (state = initialState, action) {
       localStorage.removeItem("token");
       return {
         ...state,
-        registerFail: true,
         token: null,
         user: null,
         isAuthenticated: false,
-        isLoading: false,
-        loginFail: true
+        isLoading: true
+      };
+    case FLAG_COMMENT:
+      const userFlagComment = {
+        id: action.payload.id,
+        comment: action.payload.comment
+      };
+      const userInfo = {
+        ...state.user,
+        flaggerComment: [...state.user.flaggerComment, userFlagComment]
+      };
+      return {
+        ...state,
+        user: userInfo
+      };
+    case REMOVE_FLAG_COMMENT:
+      const removeFlagComment = {
+        ...state.user,
+        flaggerComment: [
+          state.user.flaggerComment.filter(flag => flag.id !== action.payload)
+        ]
+      };
+      return {
+        ...state,
+        user: removeFlagComment
       };
     default:
       return state;

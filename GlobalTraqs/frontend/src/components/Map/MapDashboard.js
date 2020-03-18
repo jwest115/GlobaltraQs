@@ -9,11 +9,12 @@ import {
   editPin,
   deletePins,
   addComment,
-  deleteComment
+  deleteComment, getPinsWithBounds
 } from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import useAddPinForm from "./CustomHooks/useAddPinForm";
+import useFlagForm from "./CustomHooks/useFlagForm";
 import {
   Switch,
   Route,
@@ -82,8 +83,21 @@ export default function MapDashboard() {
   });
 
   useEffect(() => {
-    dispatch(getPins());
-  }, []);
+    console.log("here trying to get pins");
+     if(mapReference != undefined) {
+       mapReference.once("moveend", function() {
+        console.log("bounds");
+        let mapBounds = mapReference.getBounds();
+        console.log(mapBounds);
+        let south = mapBounds.getSouth();
+        let west = mapBounds.getWest();
+        let north = mapBounds.getNorth();
+        let east = mapBounds.getEast();
+        dispatch(getPinsWithBounds(north, south, east, west));
+        });
+      }
+  }, [pins]);
+
   useEffect(() => {
     getLocation();
   }, []);
@@ -97,6 +111,16 @@ export default function MapDashboard() {
     setmodalstate,
     setAnonRadius
   } = useAddPinForm(userAddedPin);
+  const {
+    flagForm,
+    flagToggle,
+    flagModalState,
+    onFlagSubmit,
+    handleFlagFormChange,
+    flagCommentToggle,
+    flagCommentModalState,
+    onFlagCommentSubmit
+  } = useFlagForm();
   function userAddedPin() {
     // console.log(mapReference);
     // console.log("is the ref");
@@ -121,7 +145,9 @@ export default function MapDashboard() {
     id: "1",
     title: "",
     description: "",
-    category: "1"
+    category: "1",
+    lastEditDate: new Date(),
+    lastPersonEdit: isAuthenticated ? user.id : null
   });
 
   const onEditSubmit = e => {
@@ -133,9 +159,11 @@ export default function MapDashboard() {
       ...pinData,
       title: editPinForm.title,
       description: editPinForm.description,
-      category: editPinForm.category,
+      category: editPinForm.category
       // startDate: editPinForm.startDate,
       // endDate: editPinForm.endDate
+      lastEditDate: editPinForm.lastEditDate,
+      lastPersonEdit: editPinForm.lastPersonEdit
     });
     editToggle();
   };
@@ -186,6 +214,9 @@ export default function MapDashboard() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         succes => {
+          if(mapReference != undefined) {
+            mapReference.panTo([succes.coords.latitude, succes.coords.longitude]);
+          }
           setplacement({
             ...placement,
             userlat: succes.coords.latitude,
@@ -224,6 +255,7 @@ export default function MapDashboard() {
     dispatch(deleteComment(commentid));
   };
 
+
   return (
     <div id={"map-dashboard"}>
       {/*<div>*/}
@@ -231,7 +263,10 @@ export default function MapDashboard() {
         <Switch>
           <Route exact path="/">
             <div id={"sidebar-style"}>
-              <SearchSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
+              <SearchSidebar
+                sidebarOpen={sidebarOpen}
+                setSidebarOpen={setSidebarOpen}
+              />
               <StorySidebar
                 maplink={"/story"}
                 pinData={pinData}
@@ -356,6 +391,14 @@ export default function MapDashboard() {
               setPinDeleted={setPinDeleted}
               editPin={editPinForm}
               seteditPin={seteditPinForm}
+              flagForm={flagForm}
+              flagToggle={flagToggle}
+              flagModalState={flagModalState}
+              onFlagSubmit={onFlagSubmit}
+              handleFlagFormChange={handleFlagFormChange}
+              flagCommentToggle={flagCommentToggle}
+              flagCommentModalState={flagCommentModalState}
+              onFlagCommentSubmit={onFlagCommentSubmit}
             />
           </Route>
         </Switch>
@@ -394,16 +437,14 @@ function IndividualStory(props) {
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
   const userid = isAuthenticated ? user.id : false;
-  useEffect(() => dispatch(getPin(id, userid)), [id]);
-  useEffect(
-    () =>
-      props.setuserComment({
-        description: "",
-        pin: id
-      }),
+  useEffect(() => {
+    dispatch(getPin(id, userid));
+    props.setuserComment({
+      description: "fff",
+      pin: id
+    });
+  }, [id]);
 
-    [id]
-  );
   useEffect(() => {
     props.seteditPin({
       title: "",

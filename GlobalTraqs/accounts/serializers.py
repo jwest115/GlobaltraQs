@@ -1,17 +1,9 @@
-from pins.models import pin
+from pins.models import pin, FlagComment
 from rest_framework import serializers
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
 User = get_user_model()
 # User Serializer
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'
-
-# Register Serializer
 
 
 class PinSerializer(serializers.ModelSerializer):
@@ -21,8 +13,27 @@ class PinSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'description', 'is_anonymous_pin']
 
 
+class FlagCommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FlagComment
+        fields = ['id', 'comment']
+
+
+class UserSerializer(serializers.ModelSerializer):
+    userStories = PinSerializer(many=True, read_only=True)
+    flaggerComment = FlagCommentSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
+# Register Serializer
+
+
 class UserProfileSerializer(serializers.ModelSerializer):
     userStories = PinSerializer(many=True, read_only=True)
+    flaggerComment = FlagCommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
