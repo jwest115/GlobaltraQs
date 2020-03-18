@@ -1,7 +1,5 @@
 # GlobaltraQs
 
-developmental version: http://globaltraqsdev.com/
-
 first terminal
 
 1. pip install pipenv
@@ -24,7 +22,7 @@ first terminal
 
 2. npm run dev
 
-clear cache in browser
+clear cache 0in browser
 
 
 # *When first running/ starting with fresh db you need to create groups with permission in '/admin' page (I will eventually do this programically, but for now the manual approach)
