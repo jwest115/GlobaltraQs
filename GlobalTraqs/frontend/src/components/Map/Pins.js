@@ -29,6 +29,11 @@ const divStyle = {
   width: "100%"
 };
 
+var today = new Date();
+var dd = String(today.getDate());
+var mm = String(today.getMonth() + 1);
+var yyyy = today.getFullYear();
+
 const months = [ "January", "February", "March", "April", "May", "June",
            "July", "August", "September", "October", "November", "December" ];
 
@@ -386,6 +391,8 @@ export class Pins extends Component {
                         user_id={marker.owner}
                         startDate={start}
                         endDate={end}
+                        lastPersonEdit={user.id}
+                        lastEditDate={yyyy+"-"+mm+"-"+dd}
                       />
                     )}
                     {isAdminOrModerator ? adminModeratorEditStory : ""}

@@ -145,7 +145,9 @@ export default function MapDashboard() {
     id: "1",
     title: "",
     description: "",
-    category: "1"
+    category: "1",
+    lastEditDate: new Date(),
+    lastPersonEdit: isAuthenticated ? user.id : null
   });
 
   const onEditSubmit = e => {
@@ -160,6 +162,8 @@ export default function MapDashboard() {
       category: editPinForm.category
       // startDate: editPinForm.startDate,
       // endDate: editPinForm.endDate
+      lastEditDate: editPinForm.lastEditDate,
+      lastPersonEdit: editPinForm.lastPersonEdit
     });
     editToggle();
   };
