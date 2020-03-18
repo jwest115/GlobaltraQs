@@ -98,10 +98,6 @@ const FlagButton = props => {
           Flag
         </button>
       )}
-      <h2>
-        {" "}
-        {props.id} {props.id}
-      </h2>
     </>
   );
 };

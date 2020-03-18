@@ -1,8 +1,7 @@
+from . import views
 from django.urls import path
 from rest_framework import routers
-from .api import PinViewSet, CategoryViewSet, upVoteStoryViewSet, FlagStoryViewSet, CommentStoryViewSet, \
-    PinSearchViewSet, FaqViewSet, PhotoViewSet, PinFlaggedViewSet, PinCoordViewSet
-from . import views
+from .api import PinViewSet, CategoryViewSet, upVoteStoryViewSet, FlagStoryViewSet, CommentStoryViewSet, FlagCommentViewSet, PinSearchViewSet, FaqViewSet, PhotoViewSet, PinFlaggedViewSet, PinCoordViewSet
 
 router = routers.DefaultRouter()
 router.register('api/pins', PinViewSet, 'pin')
