@@ -1,13 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import paypal from "paypal-checkout";
 import { PayPalButton } from "react-paypal-button-v2";
-import axios from "axios";
-axios.defaults.xsrfCookieName = "csrftoken";
-axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 
 export default function Support() {
-  let token = localStorage.getItem("token");
-  axios.defaults.headers.common["Authorization"] = token;
   const [isEnabled, setIsEnabled] = useState(false);
   const [amount, setAmount] = useState("0.01");
 
@@ -70,25 +65,6 @@ export default function Support() {
           <PayPalButton
             amount={amount}
             onSuccess={(details, data) => {
-              const config = {
-                headers: {
-                  "Content-Type": "application/json"
-                }
-              };
-              const paypalEmail = details.payer.emails.filter(email => {
-                if (email.primary === true) {
-                  return email.value;
-                }
-              });
-              let info = JSON.stringify({
-                email: paypalEmail,
-                name: details.payer.name.given_name
-              });
-              axios
-                .post("api/contactUs/support", info, config)
-                .then(response => {
-                  console.log(response);
-                });
               alert(
                 "Transaction completed by " + details.payer.name.given_name
               );
