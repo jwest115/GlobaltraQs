@@ -25,7 +25,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import { GeoSearchControl } from "leaflet-geosearch";
 import { EsriProvider } from "leaflet-geosearch";
 import { useDispatch } from "react-redux";
-import {getPins} from "../../actions/pins";
+import {getPins, getPinsWithBounds} from "../../actions/pins";
 
 export const defaultPointerIcon = new L.Icon({
   iconUrl: default_marker,
@@ -165,7 +165,7 @@ const LeafletMap = props => {
         center={[props.placement.userlat, props.placement.userlng]}
         zoom={15}
         maxZoom={18} //shows map
-        minZoom={3}
+        minZoom={4}
         worldCopyJump={true}
         id="map"
         zoomControl={false}
@@ -253,10 +253,6 @@ const LeafletMap = props => {
           })}
         </MarkerClusterGroup>
 
-        <Marker
-          position={[props.placement.userlat, props.placement.userlng]}
-          icon={defaultPointerIcon}
-        ></Marker>
       </Map>
       <ModalPinForm
         toggle={props.toggle}

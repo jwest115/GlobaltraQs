@@ -34,6 +34,21 @@ export const getPins = () => dispatch => {
     .catch(err => console.log(err));
 };
 
+export const getPinsWithBounds = (north, south, east, west) => dispatch => {
+    console.log(`/api/pinCoordFilter/?latitude_gte=${south}&latitude_lte=${north}&longitude_gte=${west}&longitude_lte=${east}`);
+    axios
+        .get(`/api/pinCoordFilter/?latitude_gte=${south}&latitude_lte=${north}&longitude_gte=${west}&longitude_lte=${east}`)
+        .then(res => {
+            console.log("pins are");
+            console.log(res.data);
+            dispatch({
+                type: GET_PINS,
+                payload: res.data
+            });
+        })
+        .catch(err => console.log(err));
+};
+
 export const searchPins = (
   searchQuery,
   categories,
@@ -67,6 +82,15 @@ export const deletePins = id => dispatch => {
 };
 
 export const addPin = pin => dispatch => {
+  let latitudeSplit = pin.latitude.toString().split(".");
+  let latitude = latitudeSplit[0] + "." + latitudeSplit[1].substring(0, 6);
+  let longitudeSplit = pin.longitude.toString().split(".");
+  let longitude = longitudeSplit[0] + "." + longitudeSplit[1].substring(0, 6);
+  pin.latitude = latitude;
+  pin.longitude = longitude;
+  console.log("lat" + latitude);
+  console.log("long " + longitude);
+
   axios
     .post("/api/pins/", pin)
     .then(res => {
