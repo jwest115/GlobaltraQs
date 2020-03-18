@@ -244,15 +244,9 @@ export const getPinsByOwner = ownerId => dispatch => {
     .catch(error => console.log(error));
 };
 
-export const userFlagPin = (pin, user, state) => dispatch => {
-  const userflagged = {
-    flagged: true,
-    pinId: pin,
-    flagger: user
-  };
-
+export const userFlagPin = userFlag => dispatch => {
   axios
-    .post(`api/flagStory/`, userflagged)
+    .post(`api/flagStory/`, userFlag)
     .then(res => {
       console.log(res.data);
       dispatch({

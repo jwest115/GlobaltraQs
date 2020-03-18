@@ -8,7 +8,7 @@ import {
   useRouteMatch,
   useLocation
 } from "react-router-dom";
-import { useSelector, useDispatch, useStore } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ManageFlag from "./ManageFlag";
 import ManageUsers from "./ManageUsers";
 import { RoutedTabs, NavTab } from "react-router-tabs";
@@ -37,6 +37,9 @@ export default function Manage() {
         </Route>
         <Route path={`/manage/users`}>
           <ManageUsers />
+        </Route>
+        <Route path={`/manage/comments`}>
+          <ManageComments />
         </Route>
       </Switch>
     </div>

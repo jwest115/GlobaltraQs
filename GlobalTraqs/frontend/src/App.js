@@ -19,21 +19,17 @@ import store from "./store";
 import login from "./components/accounts/loginHooks";
 import PrivateRoute from "./components/common/PrivateRoute";
 import { loadUser } from "./actions/auth";
-import Story from "./components/Map/StoryTest";
-import { DisplayMap } from "./components/Map/DisplayMap";
+
 import Manage from "./components/AdminMod/Manage";
 import ManageUsers from "./components/AdminMod/ManageUsers";
 import ProfilePage from "./components/profile/ProfilePageHooks";
 import Settings from "./components/profile/SettingsHooks";
-import EditStory from "./components/Map/EditStory";
-import ManageFlag from "./components/AdminMod/ManageFlag";
+
 import ForgotPassword from "./components/accounts/ForgotPasswordHook";
-import MainStory from "./components/Map/Story/MainStory";
-import AddComment from "./components/Map/AddComment";
-import PinForm from "./components/Map/PinForm";
 import Support from "./components/AboutPage/Support";
 import ResetPassword from "./components/accounts/resetPasswordHook";
 import ContactUs from "./components/contactUs/contactUs";
+import ProfileDeleteTest from "./components/profile/ProfileDeleteTest";
 const divStyle = {
   position: "relative"
 };
@@ -65,11 +61,17 @@ export class App extends Component {
                 <PrivateRoute exact path="/manage" component={Manage} />
                 <PrivateRoute exact path="/manage/flag" component={Manage} />
                 <PrivateRoute exact path="/manage/users" component={Manage} />
+                <PrivateRoute
+                  exact
+                  path="/manage/comments"
+                  component={Manage}
+                />
                 {/*<Route path="/Story/:id/edit" exact component={EditStory} />*/}
                 <Route path="/forgotPassword" component={ForgotPassword} />
                 <Route path="/resetPassword" component={ResetPassword} />
                 <Route path="/Support" component={Support} />
                 <Route path="/ContactUs" component={ContactUs} />
+                <Route exact path="/userdelete" component={ProfileDeleteTest} />
                 {/* <MapDashboard /> */}
               </Switch>
             </div>

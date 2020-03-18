@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Component, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {editUser, getUser} from "../../actions/users";
-import {editPin, getPinsByOwner} from "../../actions/pins";
+import { editUser, getUser } from "../../actions/users";
+import { editPin, getPinsByOwner } from "../../actions/pins";
 import { Link, Redirect } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
@@ -19,11 +19,11 @@ export default function ProfilePage(props) {
   useEffect(() => {
     dispatch(getUser(id));
     dispatch(getPinsByOwner(id));
-  }, id);
+  }, [id]);
 
   const { isAuthenticated, user } = auth;
 
-  const updateStoryAnonymity = (pin) => {
+  const updateStoryAnonymity = pin => {
     const is_anonymous_pin = !pin.is_anonymous_pin;
 
     const pinData = { is_anonymous_pin };

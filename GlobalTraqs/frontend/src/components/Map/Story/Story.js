@@ -14,6 +14,7 @@ import Upvote from "./Upvote";
 import Flag from "./Flag";
 import Moment from "react-moment";
 import Markup from "interweave";
+import FlagReportModal from "./FlagReportModal";
 
 const storyBody = {
   paddingTop: "50px",
@@ -25,8 +26,6 @@ function Story(props) {
   const dispatch = useDispatch();
 
   const { isAuthenticated, user } = auth;
-
-  const [flagState, setflagState] = useState(false);
 
   const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
 
@@ -97,13 +96,12 @@ function Story(props) {
       {props.pin.is_anonymous_pin ? (
         <p>By: Anonymous</p>
       ) : (
-          <Link
-            style={{ textDecoration: 'inherit'}}
-            to={`/users/${props.pin.owner}`}
-            params={{ testvalue: "hello" }}
+        <Link
+          style={{ textDecoration: "inherit" }}
+          to={`/users/${props.pin.owner}`}
         >
-            <p>By: {props.pin.username}</p>
-          </Link>
+          <p>By: {props.pin.username}</p>
+        </Link>
       )}
       <h6>
         {/* {props.pin.updooots} upvotes */}
@@ -130,6 +128,25 @@ function Story(props) {
           userComment={props.userComment}
           setuserComment={props.setuserComment}
           onDeleteComment={props.onDeleteComment}
+          toggle={props.flagCommentToggle}
+        />
+      )}
+      {props.isAuthenticated && (
+        <FlagReportModal
+          flagForm={props.flagForm}
+          toggle={props.flagToggle}
+          modalState={props.flagModalState}
+          onSubmit={props.onFlagSubmit}
+          handleChange={props.handleFlagFormChange}
+        />
+      )}
+      {props.isAuthenticated && (
+        <FlagReportModal
+          flagForm={props.flagForm}
+          toggle={props.flagCommentToggle}
+          modalState={props.flagCommentModalState}
+          onSubmit={props.onFlagCommentSubmit}
+          handleChange={props.handleFlagFormChange}
         />
       )}
     </div>

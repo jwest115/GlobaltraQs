@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 function Flag(props) {
   const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+  const { isAuthenticated, user } = auth;
 
   const flagid = props.pin.userFlaggedBefore
     ? props.pin.flaggerstory.filter(a => a.flagger === props.user.id)[0].id
@@ -21,11 +23,12 @@ function Flag(props) {
         </button>
       ) : (
         <button
-          onClick={() => {
-            dispatch(
-              userFlagPin(props.pin.id, props.user.id, props.pin.flagstate)
-            );
-          }}
+          // onClick={() => {
+          //   dispatch(
+          //     userFlagPin(props.pin.id, props.user.id, props.pin.flagstate)
+          //   );
+          // }}
+          onClick={() => props.flagToggle(props.pin.id)}
           type="submit"
           className="btn btn-warning"
         >

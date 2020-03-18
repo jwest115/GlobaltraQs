@@ -15,5 +15,6 @@ router.register('api/pinSearch', PinSearchViewSet, 'pin')
 router.register('api/pinCoordFilter', PinCoordViewSet, 'pin')
 router.register('api/pinFlagged', PinFlaggedViewSet, 'pinFlag')
 router.register('api/faq', FaqViewSet, 'faqModel')
+router.register('api/flagcomment', FlagCommentViewSet, 'flagcomment')
 router.register('api/photo', PhotoViewSet, 'photo')
 urlpatterns = router.urls

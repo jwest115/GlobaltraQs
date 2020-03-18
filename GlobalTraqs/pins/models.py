@@ -5,6 +5,7 @@ from PIL import Image
 from datetime import datetime
 from io import BytesIO
 from django.core.files import File
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class pin(models.Model):
@@ -17,7 +18,6 @@ class pin(models.Model):
     category = models.ForeignKey(
         "categoryType", on_delete=models.CASCADE, null=True, related_name='selected_category')
     # 1 is community, 2: historical, 3: personal
-    upVotes = models.PositiveSmallIntegerField(default=0)
     startDate = models.DateField('Date', blank=True, null=True)
     endDate = models.DateField('Date', blank=True, null=True)
     is_anonymous_pin = models.BooleanField(default=False, blank=False)
@@ -75,6 +75,15 @@ class flagStory(models.Model):
     flagger = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     flagged = models.BooleanField(default=False)
+    reportType = models.PositiveIntegerField(
+        default=1, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    reason = models.TextField(null=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['pinId', 'flagger'], name="flagger-pin")
+        ]
 
 
 class commentStory(models.Model):
@@ -84,6 +93,19 @@ class commentStory(models.Model):
     commenter = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     description = models.TextField()
+
+
+class FlagComment(models.Model):
+    comment = models.ForeignKey(
+        "commentStory", on_delete=models.CASCADE, null=True, related_name='flaggingComment')
+    flagger = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='flaggerComment')
+    flagged = models.BooleanField(default=False)
+    reportType = models.PositiveIntegerField(
+        default=1, validators=[MinValueValidator(0), MaxValueValidator(4)])
+    reason = models.TextField(null=True)
+    created_at = models.DateTimeField(
+        auto_now_add=True, null=True)
 
 
 class photo(models.Model):

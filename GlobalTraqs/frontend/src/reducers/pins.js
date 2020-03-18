@@ -114,7 +114,7 @@ export default function(state = initialState, action) {
         ...state.pin,
         flaggerstory: [...state.pin.flaggerstory, action.payload],
         userFlaggedBefore: true,
-        flagstate: action.payload.flagged
+        flagState: action.payload.flagged
       };
       console.log(action.payload);
       return {
