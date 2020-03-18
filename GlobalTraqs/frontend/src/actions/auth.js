@@ -130,3 +130,19 @@ export const tokenConfig = getState => {
 
   return config;
 };
+
+export const userSelfDelete = () => (dispatch, getState) => {
+  // User Loading
+
+  axios
+    .delete("/api/auth/user", tokenConfig(getState))
+    .then(res => {
+      dispatch({
+        type: USER_SELF_DELETE,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+    });
+};
