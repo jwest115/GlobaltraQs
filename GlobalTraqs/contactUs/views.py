@@ -59,10 +59,60 @@ def email(config):
         return HttpResponse('Make sure all fields are entered and valid.')
 
     
+@api_view(('POST',))
+def supportEmail(config):
+    data = config.data
+    print (data)
+    email = data['email']
+    name = data['name']    
+    context = {
+        'name': name,
+        'email': email
+    }
+    email_html_message = render_to_string('email/supportEmail_plaintext_message.html', context)
+    email_plaintext_message = render_to_string('email/supportEmail_plaintext_message.txt', context)
+    try:
+        msg = EmailMultiAlternatives(
+            # title:
+            "Support us",
+            # message:
+            email_plaintext_message,
+            # from:
+            "globaltraqsNoReply@gmail.com",
+            #   to:
+            [email]
+        )
+        msg.attach_alternative(email_html_message, "text/html")
+        msg.send()
+    except BadHeaderError:
+        return HttpResponse('Invalid header found.') 
+    return HttpResponse('email should\'ve send')
 
-
-
-
-    # return Response({'status': 'OK'})
-
-# Create your views here.
+@api_view(('POST',))
+def FAQEmail(config):
+    data = config.data
+    print (data)
+    email = data['email']
+    question = data['question']
+    context = {
+        'email': email,
+        'question': question
+    }
+    email_html_message = render_to_string('email/FAQplaintext_message.html', context)
+    email_plaintext_message = render_to_string('email/FAQEmail_plaintext_message.txt', context)
+    try:
+        msg = EmailMultiAlternatives(
+            # title:
+            "FAQ",
+            # message:
+            email_plaintext_message,
+            # from:
+            email,
+            #   to:
+            ["globaltraqsNoReply@gmail.com"]
+        )
+        msg.attach_alternative(email_html_message, "text/html")
+        msg.send()
+    except BadHeaderError:
+        return HttpResponse('Invalid header found.') 
+    return HttpResponse('email should\'ve send')
