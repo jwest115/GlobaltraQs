@@ -102,7 +102,7 @@ const LeafletMap = props => {
         startDate: marker.startDate,
         endDate: marker.endDate,
         lastEditDate: marker.lastEditDate,
-        lastPersonEdit: marker.lastPersonEdit
+        lastPersonEdit: props.isAuthenticated ? props.user.id : null
       });
       console.log("should change url params");
       props.setPinData(marker);
@@ -117,7 +117,7 @@ const LeafletMap = props => {
         startDate: marker.startDate,
         endDate: marker.endDate,
         lastEditDate: marker.lastEditDate,
-        lastPersonEdit: marker.lastPersonEdit
+        lastPersonEdit: props.isAuthenticated ? props.user.id : null
       });
       props.setPinData(marker);
       props.setPinCluster(false);
