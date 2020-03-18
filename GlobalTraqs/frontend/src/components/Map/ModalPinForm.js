@@ -131,21 +131,6 @@ function ModalPinForm(props) {
                   })
                 }
               />
-              <Label style={labelStyle} for="postDate">
-                Posted Date
-              </Label>
-              <DatePicker
-                isClearable
-                todayButton="Today"
-                name="postDate"
-                selected={props.addPinValues.postDate}
-                onChange={dated =>
-                  props.setaddPinValues({
-                    ...props.addPinValues,
-                    postDate: dated,
-                  })
-                }
-              />
               <Label style={labelStyle} for="endDate">
                 &nbsp;&nbsp;&nbsp;End Date
               </Label>
