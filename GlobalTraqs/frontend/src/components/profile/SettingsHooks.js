@@ -6,6 +6,7 @@ import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import {logout} from "../../actions/auth";
 import Switch from "react-switch";
 import axios from "axios";
+import { userSelfDelete } from "../../actions/auth";
 
 
 export default function Settings(props) {
