@@ -13,6 +13,15 @@ const useStyles = makeStyles(theme => ({
 }));
 export default function FAQ() {
   const [faqDesc, setfaqDesc] = useState();
+  const [shownComments, setShownComments] = useState({});
+  const toggleComment = id => {
+    // toggles to show
+    setShownComments(prevShownComments => ({
+      ...prevShownComments,
+      [id]: !prevShownComments[id]
+    }));
+  };
+  const [backUpFaq, setbackUpFaq] = useState();
   const [createNewfaq, setNewfaq] = useState({
     faqQuestionDesc: "",
     faqAnswerDesc: ""
@@ -20,13 +29,14 @@ export default function FAQ() {
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
   const [isLoading, setisLoading] = useState(true);
-
+  const [showEditForm, setshowEditForm] = useState("");
   useEffect(() => {
     axios
       .get("/api/faq/")
       .then(response => {
-        // handle success
+        console.log("lalal" + response.data);
         setfaqDesc(response.data);
+        setbackUpFaq(response.data);
         setisLoading(false);
       })
       .catch(error => {
@@ -44,12 +54,14 @@ export default function FAQ() {
   }
 
   function deletefaqDesc(id) {
+    console.log(faqDesc);
     //e.preventDefault() for edit function post for new data patch for editing data
     axios
       .delete(`/api/faq/${id}/`)
       .then(response => {
         console.log(response.data);
         setfaqDesc(faqDesc.filter(desc => desc.id !== id));
+        setbackUpFaq(backUpFaq.filter(desc => desc.id !== id));
       })
       .catch(error => {
         console.log(error);
@@ -57,10 +69,44 @@ export default function FAQ() {
   }
 
   function editfaqDesc(id) {
-    axios.patch(`/api/faq/${id}/`).then(response => {
-      console.log(response.data);
-    });
+    const submit = faqDesc.filter(edit => edit.id === id)[0];
+
+    axios
+      .patch(`/api/faq/${id}/`, submit)
+      .then(response => {
+        console.log(response.data);
+        setbackUpFaq(
+          backUpFaq.map(faq =>
+            faq.id === id
+              ? {
+                  ...faq,
+                  faqQuestionDesc: response.data.faqQuestionDesc,
+                  faqAnswerDesc: response.data.faqAnswerDesc
+                }
+              : faq
+          )
+        );
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    console.log(submit);
   }
+  const revertChange = id => {
+    const revert = backUpFaq.filter(edit => edit.id === id)[0];
+    console.log(revert);
+    setfaqDesc(
+      faqDesc.map(faq =>
+        faq.id === id
+          ? {
+              ...faq,
+              faqQuestionDesc: revert.faqQuestionDesc,
+              faqAnswerDesc: revert.faqAnswerDesc
+            }
+          : faq
+      )
+    );
+  };
 
   function addFaq(e) {
     e.preventDefault();
@@ -69,8 +115,9 @@ export default function FAQ() {
     axios
       .post(`/api/faq/`, createNewfaq)
       .then(response => {
-        console.log(response.data);
-        setfaqDesc([...faqDesc, response.data]);
+        const newFaq = { ...response.data, editForm: false };
+        setfaqDesc([...faqDesc, newFaq]);
+        setbackUpFaq([...backUpFaq, newFaq]);
       })
       .catch(error => {
         console.log(error);
@@ -78,6 +125,7 @@ export default function FAQ() {
   }
 
   const classes = useStyles();
+  console.log(faqDesc);
   return (
     <div className="card card-body mt-4 mb-4">
       <div style={{ marginBottom: "30px" }}>
@@ -142,6 +190,13 @@ export default function FAQ() {
           deletefaqDesc={deletefaqDesc}
           editfaqDesc={editfaqDesc}
           updateFAQ={updateFAQ}
+          showEditForm={showEditForm}
+          setshowEditForm={setshowEditForm}
+          backUpFaq={backUpFaq}
+          setbackUpFaq={setbackUpFaq}
+          toggle={toggleComment}
+          shownComments={shownComments}
+          revertChange={revertChange}
         />
       )}
       <button>Add New Form</button>
@@ -158,10 +213,10 @@ export default function FAQ() {
 function DisplayFaq(props) {
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
-
+  console.log(props.data);
   return (
     <>
-      {props.data.map((faq, index) => {
+      {props.data.map(faq => {
         return (
           <div key={faq.id}>
             <div style={{ marginBottom: "30px" }}>
@@ -171,16 +226,33 @@ function DisplayFaq(props) {
                 </Typography>
                 <Typography component="p">A: {faq.faqAnswerDesc}</Typography>
 
-                <button onClick={e => props.deletefaqDesc(faq.id)}>
+                <button onClick={() => props.deletefaqDesc(faq.id)}>
                   Delete
                 </button>
-                <button onClick={e => props.editfaqDesc(faq.id)}>Edit</button>
-                <EditFAQ
-                  id={faq.id}
-                  question={faq.faqQuestionDesc}
-                  answer={faq.faqAnswerDesc}
-                  onChange={props.updateFAQ}
-                ></EditFAQ>
+
+                <button onClick={() => props.toggle(faq.id)}>
+                  Toggle Edit Form
+                </button>
+
+                {props.shownComments[faq.id] ? (
+                  <>
+                    {" "}
+                    <EditFAQ
+                      id={faq.id}
+                      question={faq.faqQuestionDesc}
+                      answer={faq.faqAnswerDesc}
+                      onChange={props.updateFAQ}
+                    ></EditFAQ>
+                    <p>
+                      <button onClick={() => props.editfaqDesc(faq.id)}>
+                        Save
+                      </button>
+                      <button onClick={() => props.revertChange(faq.id)}>
+                        Revert
+                      </button>
+                    </p>
+                  </>
+                ) : null}
               </Paper>
             </div>
           </div>
@@ -192,7 +264,7 @@ function DisplayFaq(props) {
 
 function EditFAQ(props) {
   return (
-    <form>
+    <p>
       <TextField
         name="faqQuestionDesc"
         onChange={e => props.onChange(e, props.id)}
@@ -204,8 +276,7 @@ function EditFAQ(props) {
         value={props.answer}
         onChange={e => props.onChange(e, props.id)}
       ></TextField>
-      <button> Save Edit </button>
-    </form>
+    </p>
   );
 }
 
