@@ -7,7 +7,7 @@
 
 # About
 
-Senior Design Project of redesigning of the website : (GlobalTraQs)[http://globaltraqs.com/]
+Senior Design Project of redesigning of the website : [GlobalTraQs](http://globaltraqs.com/)
 Still In Development
 
 # GlobaltraQs
