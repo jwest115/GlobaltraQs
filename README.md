@@ -1,37 +1,56 @@
+1. [About](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#about)
+1. [Instructions](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#globaltraqs) 
+1. [Running](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#running)
+1. [Screenshots](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#screenshots)
+
+
+
+# About
+
+Senior Design Project of redesigning of the website : (GlobalTraQs)[http://globaltraqs.com/]
+Still In Development
+
 # GlobaltraQs
 
 developmental version: http://globaltraqsdev.com/
 
 first terminal
 
+1. install Python 3.7, pip 
+
 1. pip install pipenv
 
-2. pipenv install
+1. pipenv install
 
-3. pipenv shell
+1. pipenv shell
 
-4. cd GlobalTraqs
+1. cd GlobalTraqs
 
-5. python manage.py makemigrations
+1. python manage.py makemigrations
 
-6. python manage.py migrate
+1. python manage.py migrate
 
-7. python manage.py runserver
+1. python manage.py runserver
 
 # second terminal
 
+1. install latest version of node
+
 1. npm install
 
-2. npm run dev
+1. npm run dev
 
 clear cache in browser
 
-# \*When first running/ starting with fresh db you need to create groups with permission in '/admin' page (I will eventually do this programically, but for now the manual approach)
+# Running
 
 1. Go to http://127.0.0.1:8000/admin/ and log into superuser account
-2. Click Groups
-3. Create groups (Administrators, Moderators, and Anonymous)
-4. Assign appropriate permissions (will add more permissions later)
+1. Click Groups
+1. Create groups (Administrators, Moderators, and Anonymous)
+1. Assign appropriate permissions (will add more permissions later)
+1. http://127.0.0.1:8000/api/category 
+    1. add Personal, Historical, Community 
+    1. Adds the categories
 
 # ScreenShots
 
