@@ -33,4 +33,6 @@ clear cache in browser
 3. Create groups (Administrators, Moderators, and Anonymous)
 4. Assign appropriate permissions (will add more permissions later)
 
-![HomePage](https://github.com/jwest115/GlobaltraQs/GlobalTraqs/media/Home.png)
+# ScreenShots
+
+![HomePage](GlobalTraqs/media/media/Home.png)
