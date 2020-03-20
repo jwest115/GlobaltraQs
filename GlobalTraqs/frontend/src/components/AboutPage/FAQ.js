@@ -16,6 +16,7 @@ export default function FAQ() {
   const [shownComments, setShownComments] = useState({});
   const toggleComment = id => {
     // toggles to show
+
     setShownComments(prevShownComments => ({
       ...prevShownComments,
       [id]: !prevShownComments[id]
@@ -35,7 +36,6 @@ export default function FAQ() {
     axios
       .get("/api/faq/")
       .then(response => {
-        console.log("lalal" + response.data);
         setfaqDesc(response.data);
         setbackUpFaq(response.data);
         setisLoading(false);
@@ -55,12 +55,10 @@ export default function FAQ() {
   }
 
   function deletefaqDesc(id) {
-    console.log(faqDesc);
     //e.preventDefault() for edit function post for new data patch for editing data
     axios
       .delete(`/api/faq/${id}/`)
       .then(response => {
-        console.log(response.data);
         setfaqDesc(faqDesc.filter(desc => desc.id !== id));
         setbackUpFaq(backUpFaq.filter(desc => desc.id !== id));
       })
@@ -75,7 +73,6 @@ export default function FAQ() {
     axios
       .patch(`/api/faq/${id}/`, submit)
       .then(response => {
-        console.log(response.data);
         setbackUpFaq(
           backUpFaq.map(faq =>
             faq.id === id
@@ -91,11 +88,10 @@ export default function FAQ() {
       .catch(error => {
         console.log(error);
       });
-    console.log(submit);
   }
   const revertChange = id => {
     const revert = backUpFaq.filter(edit => edit.id === id)[0];
-    console.log(revert);
+
     setfaqDesc(
       faqDesc.map(faq =>
         faq.id === id
@@ -111,7 +107,6 @@ export default function FAQ() {
 
   function addFaq(e) {
     e.preventDefault();
-    console.log(createNewfaq);
 
     axios
       .post(`/api/faq/`, createNewfaq)
@@ -126,7 +121,7 @@ export default function FAQ() {
   }
 
   const classes = useStyles();
-  console.log(faqDesc);
+
   return (
     <div className="card card-body mt-4 mb-4">
       <div style={{ marginBottom: "30px" }}>
@@ -214,7 +209,7 @@ export default function FAQ() {
 function DisplayFaq(props) {
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
-  console.log(props.data);
+
   return (
     <>
       {props.data.map(faq => {
