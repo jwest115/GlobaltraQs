@@ -20,6 +20,7 @@ export default function FAQ() {
       ...prevShownComments,
       [id]: !prevShownComments[id]
     }));
+    revertChange(id);
   };
   const [backUpFaq, setbackUpFaq] = useState();
   const [createNewfaq, setNewfaq] = useState({
