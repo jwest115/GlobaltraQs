@@ -9,7 +9,8 @@ import {
   editPin,
   deletePins,
   addComment,
-  deleteComment, getPinsWithBounds
+  deleteComment,
+  getPinsWithBounds
 } from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -84,8 +85,8 @@ export default function MapDashboard() {
 
   useEffect(() => {
     console.log("here trying to get pins");
-     if(mapReference != undefined) {
-       mapReference.once("moveend", function() {
+    if (mapReference != undefined) {
+      mapReference.once("moveend", function() {
         console.log("bounds");
         let mapBounds = mapReference.getBounds();
         console.log(mapBounds);
@@ -94,8 +95,8 @@ export default function MapDashboard() {
         let north = mapBounds.getNorth();
         let east = mapBounds.getEast();
         dispatch(getPinsWithBounds(north, south, east, west));
-        });
-      }
+      });
+    }
   }, [pins]);
 
   useEffect(() => {
@@ -159,7 +160,7 @@ export default function MapDashboard() {
       ...pinData,
       title: editPinForm.title,
       description: editPinForm.description,
-      category: editPinForm.category
+      category: editPinForm.category,
       // startDate: editPinForm.startDate,
       // endDate: editPinForm.endDate
       lastEditDate: editPinForm.lastEditDate,
@@ -214,8 +215,11 @@ export default function MapDashboard() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         succes => {
-          if(mapReference != undefined) {
-            mapReference.panTo([succes.coords.latitude, succes.coords.longitude]);
+          if (mapReference != undefined) {
+            mapReference.panTo([
+              succes.coords.latitude,
+              succes.coords.longitude
+            ]);
           }
           setplacement({
             ...placement,
@@ -254,7 +258,6 @@ export default function MapDashboard() {
   const onDeleteComment = commentid => {
     dispatch(deleteComment(commentid));
   };
-
 
   return (
     <div id={"map-dashboard"}>

@@ -11,6 +11,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import ManageFlag from "./ManageFlag";
 import ManageUsers from "./ManageUsers";
+import ManageComments from "./ManageComments";
 import { RoutedTabs, NavTab } from "react-router-tabs";
 import "./styles/react-router-tabs.css";
 export default function Manage() {
