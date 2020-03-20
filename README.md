@@ -36,3 +36,9 @@ clear cache in browser
 # ScreenShots
 
 ![HomePage](GlobalTraqs/media/media/Home.png)
+
+![SearchSideBar](GlobalTraqs/media/media/Home_SideBar_Search.png)
+
+![ViewStory](GlobalTraqs/media/media/ViewStory.png)
+
+![StorySideBarSearch](GlobalTraqs/media/media/home_sidebar.png)
