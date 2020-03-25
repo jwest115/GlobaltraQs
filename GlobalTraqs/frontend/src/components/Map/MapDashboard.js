@@ -9,7 +9,7 @@ import {
   editPin,
   deletePins,
   addComment,
-  deleteComment, getPinsWithBounds
+  deleteComment, getPinsWithBounds, getMinPinYear, getMaxPinYear
 } from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -47,7 +47,7 @@ export default function MapDashboard() {
   let { path, url } = useRouteMatch();
 
   const [divStyle, setdivStyle] = useState({
-    height: "90%",
+    height: "100%",
     width: "100%"
   });
   const [divStyle1, setdivStyle1] = useState({
@@ -81,6 +81,10 @@ export default function MapDashboard() {
       setUserRoleVerified(false);
     }
   });
+  useEffect(() => {
+     dispatch(getMaxPinYear());
+     dispatch(getMinPinYear());
+  }, []);
 
   useEffect(() => {
     console.log("here trying to get pins");
@@ -139,6 +143,8 @@ export default function MapDashboard() {
   const [mapReference, setMapReference] = useState();
   const [map, setMap] = useState();
   const [pinData, setPinData] = useState();
+  const minPinYear = useSelector(state => state.pins.pinMinYear);
+  const maxPinYear = useSelector(state => state.pins.pinMaxYear);
   const [pinCluster, setPinCluster] = useState(false);
   const [editPinForm, seteditPinForm] = useState({
     //fields for editng
@@ -161,6 +167,8 @@ export default function MapDashboard() {
       // startDate: editPinForm.startDate,
       // endDate: editPinForm.endDate
     });
+    dispatch(getMaxPinYear());
+    dispatch(getMinPinYear());
     editToggle();
   };
 
@@ -204,6 +212,8 @@ export default function MapDashboard() {
     dispatch(deletePins(editPinForm.id));
     toggleDelete();
     setPinDeleted(true);
+    dispatch(getMinPinYear());
+    dispatch(getMaxPinYear());
   };
 
   function getLocation() {
@@ -261,6 +271,8 @@ export default function MapDashboard() {
             <div id={"sidebar-style"}>
               <SearchSidebar
                 sidebarOpen={sidebarOpen}
+                maxPinYear={maxPinYear}
+                minPinYear={minPinYear}
                 setSidebarOpen={setSidebarOpen}
               />
               <StorySidebar

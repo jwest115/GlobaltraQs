@@ -83,6 +83,7 @@
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
+    "rsuite": "^4.3.2",
     "sequelize": "^5.21.2",
     "style-loader": "^1.0.0",
     "styled-components": "^4.4.0",

@@ -1,4 +1,5 @@
-from rest_framework import filters
+from requests import Response
+from rest_framework import filters, status
 from django.db.models import IntegerField
 from django.db.models import Case, CharField, Value
 from django.db.models import F, Q, When
@@ -10,11 +11,18 @@ import django_filters
 from django_filters import FilterSet, Filter
 from django_filters.fields import Lookup
 from rest_framework import viewsets, permissions
+from rest_framework.views import APIView
+
 from .serializers import PinSerializer
 from pins.models import pin, categoryType, upVoteStory, flagStory, commentStory, photo, Faq, aboutUs, FlagComment
 from rest_framework import viewsets, permissions
-from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer, FlagStorySerializer, CommentStorySerializer, AboutUsSerializer, FaqSerializer, PhotoSerializer, PinFlaggedSerializer, FlagCommentSerializer
+from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer, FlagStorySerializer, \
+    CommentStorySerializer, AboutUsSerializer, FaqSerializer, PhotoSerializer, PinFlaggedSerializer, \
+    FlagCommentSerializer
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.generics import RetrieveAPIView
+
+
 # catalog viewset
 
 
@@ -52,7 +60,6 @@ class ListFilter(Filter):
 
 # use the list filter above on the category field to match for or cases
 class PinCoordFilter(FilterSet):
-
     latitude_gte = django_filters.NumberFilter(
         field_name="latitude", lookup_expr='gte')
     latitude_lte = django_filters.NumberFilter(
@@ -61,7 +68,6 @@ class PinCoordFilter(FilterSet):
         field_name="longitude", lookup_expr='gte')
     longitude_lte = django_filters.NumberFilter(
         field_name="longitude", lookup_expr='lte')
-
 
 
 # use the list filter above on the category field to match for or cases
@@ -78,7 +84,6 @@ class PinSearchFilter(FilterSet):
         field_name="endDate", lookup_expr='lte')
 
 
-
 class PinViewSet(viewsets.ModelViewSet):
     # queryset = pin.objects.all()
     #   queryset = pin.objects.annotate(
@@ -90,13 +95,12 @@ class PinViewSet(viewsets.ModelViewSet):
         #     default=Value(0),
         #     output_field=IntegerField()
         # )),
-        #updooots=Coalesce(Sum('updotes__upvote'), Value(0))
+        # updooots=Coalesce(Sum('updotes__upvote'), Value(0))
         updooots=Sum(Case(
             When(updotes__upvote=True, then=1),
             default=Value(0),
             output_field=IntegerField()
         ))
-
 
     )
 
@@ -119,11 +123,22 @@ class PinSearchViewSet(viewsets.ModelViewSet):
     search_fields = ['title', 'description']
 
 
+class MinPinDate(viewsets.ModelViewSet):
+    queryset = pin.objects.all().order_by("startDate")[:1]
+    serializer_class = PinSerializer
+
+
+class MaxPinDate(viewsets.ModelViewSet):
+    queryset = pin.objects.all().order_by("startDate").reverse()[:1]
+    serializer_class = PinSerializer
+
+
 class PinCoordViewSet(viewsets.ModelViewSet):
     queryset = pin.objects.all()
     serializer_class = PinSerializer
     filter_backends = [DjangoFilterBackend]
     filter_class = PinCoordFilter
+
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = categoryType.objects.all()
@@ -203,20 +218,18 @@ class PhotoViewSet(viewsets.ModelViewSet):
 
 
 class PinFlaggedViewSet(viewsets.ModelViewSet):
-
     queryset = pin.objects.annotate(
         # flagscore=Sum(Case(
         #     When(flaggerstory__flagged=True, then=1),
         #     default=Value(0),
         #     output_field=IntegerField()
         # )),
-        #updooots=Coalesce(Sum('updotes__upvote'), Value(0))
+        # updooots=Coalesce(Sum('updotes__upvote'), Value(0))
         flagscore=Sum(Case(
             When(flaggerstory__flagged=True, then=1),
             default=Value(0),
             output_field=IntegerField()
         ))
-
 
     )
 

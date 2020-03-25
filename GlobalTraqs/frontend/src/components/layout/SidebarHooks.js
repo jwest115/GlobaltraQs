@@ -29,7 +29,7 @@ import DatePicker from "react-datepicker";
 import { Markup } from "interweave";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
-
+import Slider from "@material-ui/core/Slider"
 import { Label } from "reactstrap";
 
 import { Marker, Popup } from "react-leaflet";
@@ -61,6 +61,9 @@ function SearchSidebar(props) {
   const pinData = useSelector(state => state.pins.pins);
   const users = useSelector(state => state.auth.users);
   const [userSearchText, setUserSearchText] = useState("");
+
+  const [dateRange, setDateRange] = useState([props.minPinYear, props.maxPinYear]);
+
 
   useEffect(() => {
     dispatch(getPins());
@@ -115,12 +118,16 @@ function SearchSidebar(props) {
     e.preventDefault(); //prevents refresh of page
     dispatch(searchUsers(userSearchText));
   };
+  function valuetext(value) {
+    console.log("slider val is " + value);
+    return value;
+  }
 
   const storySearch = (
     <div style={{ marginTop: "10px" }}>
       <form onSubmit={submitSearch}>
         <div className={"form-group"}>
-          <label>Search: </label>
+          <label>Search:</label>
           <input
             className="form-control"
             id="searchForm"
@@ -141,19 +148,39 @@ function SearchSidebar(props) {
         />
         <InputGroup style={{ marginTop: "20px" }}>
           <Label style={labelStyle} for="startDate">
-            Stories from
+            Search date range
           </Label>
-          <DatePicker
-            selected={startDate}
-            onChange={date => setStartDate(date)}
-          />
-          <Label
-            style={{ marginLeft: "20px", marginRight: "20px" }}
-            for="startDate"
-          >
-            to
-          </Label>
-          <DatePicker selected={endDate} onChange={date => setEndDate(date)} />
+           <Slider
+              min={Number(props.minPinYear)}
+              max={Number(props.maxPinYear)}
+              value={dateRange}
+              valueLabelDisplay="auto"
+              onChange={(event, newValue) => { setDateRange(newValue); }}
+              aria-labelledby="range-slider"
+              getAriaValueText={valuetext}
+            />
+          {/*<Slider*/}
+          {/*  min={props.minPinYear}*/}
+          {/*  max={props.maxPinYear}*/}
+          {/*  onChange={(event, newValue) => { setDateRange(newValue);*/}
+          {/*    console.log(event);*/}
+          {/*    console.log(newValue);}*/}
+          {/*  }*/}
+          {/*  valueLabelDisplay="auto"*/}
+          {/*  aria-labelledby="range-slider"*/}
+          {/*  getAriaValueText={valuetext}*/}
+          {/*/>*/}
+          {/*<DatePicker*/}
+          {/*  selected={startDate}*/}
+          {/*  onChange={date => setStartDate(date)}*/}
+          {/*/>*/}
+          {/*<Label*/}
+          {/*  style={{ marginLeft: "20px", marginRight: "20px" }}*/}
+          {/*  for="startDate"*/}
+          {/*>*/}
+          {/*  to*/}
+          {/*</Label>*/}
+          {/*<DatePicker selected={endDate} onChange={date => setEndDate(date)} />*/}
         </InputGroup>
         <div className="form-group">
           <button

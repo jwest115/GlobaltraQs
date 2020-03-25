@@ -1,24 +1,24 @@
 import axios from "axios";
 
 import {
-  GET_PINS,
-  DELETE_PINS,
-  ADD_PIN,
-  EDIT_PIN,
-  GET_PIN,
-  GET_USER,
-  SEARCH_PINS,
-  GET_UPVOTE,
-  ADD_COMMENT,
-  DELETE_COMMENT,
-  GET_PINS_BY_OWNER,
-  GET_PIN_BY_ID,
-  USER_FLAG_PIN,
-  USER_FIRST_UPVOTE,
-  USER_UPVOTE,
-  USER_UNFLAG,
-  GET_FLAGGED_PINS,
-  GET_NEXT_FLAGGED_PINS
+    GET_PINS,
+    DELETE_PINS,
+    ADD_PIN,
+    EDIT_PIN,
+    GET_PIN,
+    GET_USER,
+    SEARCH_PINS,
+    GET_UPVOTE,
+    ADD_COMMENT,
+    DELETE_COMMENT,
+    GET_PINS_BY_OWNER,
+    GET_PIN_BY_ID,
+    USER_FLAG_PIN,
+    USER_FIRST_UPVOTE,
+    USER_UPVOTE,
+    USER_UNFLAG,
+    GET_FLAGGED_PINS,
+    GET_NEXT_FLAGGED_PINS, GET_MAX_PIN, GET_MIN_PIN
 } from "./types";
 
 //GET PINS
@@ -44,6 +44,34 @@ export const getPinsWithBounds = (north, south, east, west) => dispatch => {
             dispatch({
                 type: GET_PINS,
                 payload: res.data
+            });
+        })
+        .catch(err => console.log(err));
+};
+
+export const getMinPinYear = () => dispatch => {
+    axios
+        .get(`/api/minPinDate`)
+        .then(res => {
+            console.log("min pin is");
+            console.log(res.data[0].startDate.split('-')[0]);
+            dispatch({
+                type: GET_MIN_PIN,
+                payload: res.data[0].startDate.split('-')[0]
+            });
+        })
+        .catch(err => console.log(err));
+};
+
+export const getMaxPinYear = () => dispatch => {
+    axios
+        .get(`/api/maxPinDate`)
+        .then(res => {
+            console.log("max pin is");
+            console.log(res.data[0].startDate.split('-')[0]);
+            dispatch({
+                type: GET_MAX_PIN,
+                payload: res.data[0].startDate.split('-')[0]
             });
         })
         .catch(err => console.log(err));
