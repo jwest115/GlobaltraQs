@@ -9,7 +9,7 @@ import {
   editPin,
   deletePins,
   addComment,
-  deleteComment, getPinsWithBounds, getMinPinYear, getMaxPinYear
+  deleteComment, getPinsWithBounds, getMinPinDate, getMaxPinDate
 } from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -82,8 +82,8 @@ export default function MapDashboard() {
     }
   });
   useEffect(() => {
-     dispatch(getMaxPinYear());
-     dispatch(getMinPinYear());
+     dispatch(getMaxPinDate());
+     dispatch(getMinPinDate());
   }, []);
 
   useEffect(() => {
@@ -143,8 +143,9 @@ export default function MapDashboard() {
   const [mapReference, setMapReference] = useState();
   const [map, setMap] = useState();
   const [pinData, setPinData] = useState();
-  const minPinYear = useSelector(state => state.pins.pinMinYear);
-  const maxPinYear = useSelector(state => state.pins.pinMaxYear);
+  const minPinDate = useSelector(state => state.pins.pinMinDate);
+  const maxPinDate = useSelector(state => state.pins.pinMaxDate);
+
   const [pinCluster, setPinCluster] = useState(false);
   const [editPinForm, seteditPinForm] = useState({
     //fields for editng
@@ -167,8 +168,8 @@ export default function MapDashboard() {
       // startDate: editPinForm.startDate,
       // endDate: editPinForm.endDate
     });
-    dispatch(getMaxPinYear());
-    dispatch(getMinPinYear());
+    dispatch(getMaxPinDate());
+    dispatch(getMinPinDate());
     editToggle();
   };
 
@@ -212,8 +213,8 @@ export default function MapDashboard() {
     dispatch(deletePins(editPinForm.id));
     toggleDelete();
     setPinDeleted(true);
-    dispatch(getMinPinYear());
-    dispatch(getMaxPinYear());
+    dispatch(getMinPinDate());
+    dispatch(getMaxPinDate());
   };
 
   function getLocation() {
@@ -271,8 +272,8 @@ export default function MapDashboard() {
             <div id={"sidebar-style"}>
               <SearchSidebar
                 sidebarOpen={sidebarOpen}
-                maxPinYear={maxPinYear}
-                minPinYear={minPinYear}
+                maxPinDate={maxPinDate}
+                minPinDate={minPinDate}
                 setSidebarOpen={setSidebarOpen}
               />
               <StorySidebar

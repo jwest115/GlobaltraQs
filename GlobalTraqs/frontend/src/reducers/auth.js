@@ -16,8 +16,9 @@ import {
   GET_NEXT_PREVIOUS_USERS,
   USER_SELF_DELETE,
   FLAG_COMMENT,
-  REMOVE_FLAG_COMMENT
+  REMOVE_FLAG_COMMENT, GET_USER_FAVORITE_STORIES
 } from "../actions/types";
+import {getPinsById} from "../actions/pins";
 
 const initialState = {
   token: localStorage.getItem("token"),
@@ -28,7 +29,8 @@ const initialState = {
   userProfile: null,
   story_author: null,
   registerFail: false,
-  loginFail: false
+  loginFail: false,
+  favoriteStories: []
 };
 
 export default function (state = initialState, action) {
@@ -146,6 +148,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: removeFlagComment
+      };
+    case GET_USER_FAVORITE_STORIES:
+      return {
+        ...state,
+        favoriteStories: action.payload
       };
     default:
       return state;

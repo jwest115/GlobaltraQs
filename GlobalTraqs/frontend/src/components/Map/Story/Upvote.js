@@ -19,7 +19,7 @@ function Upvote(props) {
           }
           className="btn btn-primary"
         >
-          {props.pin.userCurrentUpvote ? "Downvote" : "Upvote"}
+          {props.pin.userCurrentUpvote ? "Favorited" : "Favorite"}
         </button>
       ) : (
         <button
@@ -29,7 +29,7 @@ function Upvote(props) {
             dispatch(userFirstUpvote(props.pin.id, props.user.id));
           }}
         >
-          Upvote
+          Favorite
         </button>
       )}
     </>

@@ -25,7 +25,8 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import SearchIcon from "@material-ui/icons/Search";
 import Select from "react-select";
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
+import DatePicker from "react-date-picker";
 import { Markup } from "interweave";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
@@ -56,14 +57,21 @@ function SearchSidebar(props) {
   const [searchText, setSearchText] = useState("");
   const [selectedCategories, setSelectedCategories] = useState(options);
   const dispatch = useDispatch();
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(props.minPinDate);
+  const [endDate, setEndDate] = useState(props.maxPinDate);
   const pinData = useSelector(state => state.pins.pins);
   const users = useSelector(state => state.auth.users);
   const [userSearchText, setUserSearchText] = useState("");
 
-  const [dateRange, setDateRange] = useState([props.minPinYear, props.maxPinYear]);
+  const [dateRange, setDateRange] = useState([props.minPinDate.getFullYear(), props.maxPinDate.getFullYear()]);
 
+  useEffect(() =>{
+    setDateRange([props.minPinDate.getFullYear(), props.maxPinDate.getFullYear()]);
+  }, [props.minPinDate]);
+
+  useEffect(() =>{
+    setDateRange([props.minPinDate.getFullYear(), props.maxPinDate.getFullYear()]);
+  }, [props.maxPinDate]);
 
   useEffect(() => {
     dispatch(getPins());
@@ -119,13 +127,14 @@ function SearchSidebar(props) {
     dispatch(searchUsers(userSearchText));
   };
   function valuetext(value) {
+    console.log(dateRange);
     console.log("slider val is " + value);
     return value;
   }
 
   const storySearch = (
     <div style={{ marginTop: "10px" }}>
-      <form onSubmit={submitSearch}>
+      <form onSubmit={submitSearch} noValidate={true}>
         <div className={"form-group"}>
           <label>Search:</label>
           <input
@@ -150,12 +159,35 @@ function SearchSidebar(props) {
           <Label style={labelStyle} for="startDate">
             Search date range
           </Label>
+           <DatePicker
+              value={startDate}
+              minDate={new Date(props.minPinDate.getFullYear(), props.minPinDate.getMonth(), props.minPinDate.getDate() - 1, 0, 0, 0, 0)}
+              maxDate={new Date(props.maxPinDate.getFullYear(), props.maxPinDate.getMonth(), props.maxPinDate.getDate() + 1, 0, 0, 0, 0)}
+              onChange={date => {
+                setStartDate(date);
+                setDateRange([date.getFullYear(), endDate.getFullYear()]);
+              }}
+              format={"MM/dd/yyyy"}
+            />
+             <DatePicker
+              value={endDate}
+              onChange={date => {
+                setEndDate(date);
+                setDateRange([startDate.getFullYear(), date.getFullYear()]);
+              }}
+              format={"MM/dd/yyyy"}
+            />
            <Slider
-              min={Number(props.minPinYear)}
-              max={Number(props.maxPinYear)}
+              min={Number(props.minPinDate.getFullYear())}
+              max={Number(props.maxPinDate.getFullYear())}
               value={dateRange}
               valueLabelDisplay="auto"
-              onChange={(event, newValue) => { setDateRange(newValue); }}
+              onChange={(event, newValue) => {
+                console.log("new value " + newValue);
+                setDateRange(newValue);
+                startDate.setFullYear(newValue[0]);
+                endDate.setFullYear(newValue[1]);
+              }}
               aria-labelledby="range-slider"
               getAriaValueText={valuetext}
             />
@@ -226,6 +258,8 @@ function SearchSidebar(props) {
   );
 
   let resultCount = pinData.length;
+  console.log(props.minPinDate + " is MIN PIN DATE");
+  console.log(dateRange + " is the date range");
 
   return (
     <Sidebar

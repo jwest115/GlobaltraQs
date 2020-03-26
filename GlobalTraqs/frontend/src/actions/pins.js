@@ -49,29 +49,38 @@ export const getPinsWithBounds = (north, south, east, west) => dispatch => {
         .catch(err => console.log(err));
 };
 
-export const getMinPinYear = () => dispatch => {
+export const getMinPinDate = () => dispatch => {
     axios
         .get(`/api/minPinDate`)
         .then(res => {
+            console.log(res);
+            let date = res.data[0].startDate.split('-');
+            console.log(date[0] + " " + date[1] + " " + date[2]);
+            let minDate = new Date(date[0], date[1], date[2], 0,  0, 0, 0);
             console.log("min pin is");
-            console.log(res.data[0].startDate.split('-')[0]);
+            console.log(minDate);
             dispatch({
                 type: GET_MIN_PIN,
-                payload: res.data[0].startDate.split('-')[0]
+                payload: minDate
             });
         })
         .catch(err => console.log(err));
 };
 
-export const getMaxPinYear = () => dispatch => {
+export const getMaxPinDate = () => dispatch => {
     axios
         .get(`/api/maxPinDate`)
         .then(res => {
+            console.log(res);
+            let date = res.data[0].startDate.split('-');
+            console.log(date[0] + " " + date[1] + " " + date[2]);
+            let maxDate = new Date(date[0], date[1], date[2], 0, 0, 0, 0);
+
             console.log("max pin is");
-            console.log(res.data[0].startDate.split('-')[0]);
+            console.log(maxDate);
             dispatch({
                 type: GET_MAX_PIN,
-                payload: res.data[0].startDate.split('-')[0]
+                payload: maxDate
             });
         })
         .catch(err => console.log(err));
@@ -85,7 +94,7 @@ export const searchPins = (
 ) => dispatch => {
   axios
     .get(
-      `api/pinSearch?search=${searchQuery}&categories=${categories}&startDate_gte=${startDate}&endDate_lte=${endDate}`
+      `api/pinSearch?search=${searchQuery}&categories=${categories}&startDate_gte=${startDate}&startDate_lte=${endDate}`
     )
     .then(res => {
       console.log(res.data);
@@ -357,4 +366,18 @@ export const getNextFlaggedPins = link => dispatch => {
       });
     })
     .catch(error => console.log(error));
+};
+
+export const getPinsById = pinIdArray => dispatch => {
+     axios
+    .get("/api/pins/")
+    .then(res => {
+       let favoritedPins = res.data.pins.filter(pin => pinIdArray.includes(pin.id));
+       console.log(favoritedPins);
+      dispatch({
+        type: GET_PINS,
+        payload: favoritedPins
+      });
+    })
+    .catch(err => console.log(err));
 };

@@ -27,8 +27,8 @@ const initialState = {
   validUser: false,
   pinId: 0,
   flaggedPins: [],
-  pinMinYear: 1000,
-  pinMaxYear: new Date().getFullYear()
+  pinMinDate: new Date(1000, 1, 1, 0, 0, 0, 0),
+  pinMaxDate: new Date()
 };
 
 export default function(state = initialState, action) {
@@ -57,14 +57,18 @@ export default function(state = initialState, action) {
         pins: action.payload
       };
     case GET_MAX_PIN:
+      console.log("action payload max");
+      console.log(action.payload.getFullYear());
       return {
         ...state,
-        pinMaxYear: action.payload
+        pinMaxDate: action.payload
       };
     case GET_MIN_PIN:
+      console.log("action payload min");
+      console.log(action.payload.getFullYear());
         return {
           ...state,
-          pinMinYear: action.payload
+          pinMinDate: action.payload
         };
     case DELETE_PINS:
       const flaggedpins = state.flaggedPins.results.filter(

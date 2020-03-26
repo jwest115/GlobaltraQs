@@ -105,7 +105,7 @@ function Story(props) {
       )}
       <h6>
         {/* {props.pin.updooots} upvotes */}
-        {props.pin.updooots} upvotes
+        {props.pin.updooots} favorites
         {/* need to figure out a way to update upvotes maybe websockets  */}
         {props.isAuthenticated
           ? props.pin && props.pin.updotes && <Upvote {...props} />
