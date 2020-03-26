@@ -79,11 +79,12 @@ export default function FAQ() {
 
   const classes = useStyles();
   return (
+  <div className={"main-content-div"}>
     <div className="card card-body mt-4 mb-4">
       <div style={{ marginBottom: "30px" }}>
         <Paper className={classes.root}>
           <Typography variant="h5" component="h3">
-            Q: What if I don't want to givde an exact location?
+            Q: What if I don't want to give an exact location?
           </Typography>
           <Typography component="p">
             A: Not a problem! Give as much, or as little location information as
@@ -152,6 +153,7 @@ export default function FAQ() {
         setNewfaq={setNewfaq}
       ></NewFaq>
     </div>
+  </div>
   );
 }
 

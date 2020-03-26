@@ -11,7 +11,6 @@ import {
 } from "react-router-dom";
 import register from "./components/accounts/registerHook";
 // if deployed to apache, mess with congig htt file
-import Alerts from "./components/layout/Alerts";
 import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import { Provider } from "react-redux";

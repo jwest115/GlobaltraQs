@@ -90,7 +90,7 @@ function About() {
   );
 
   return (
-    <div>
+    <div className={"main-content-div"}>
       <div className="card card-body mt-4 mb-4">
         {authorized ? canEdit : ""}
         {editMode ? showEditor(aboutUsData) : ""}

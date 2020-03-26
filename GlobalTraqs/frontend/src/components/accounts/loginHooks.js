@@ -92,6 +92,7 @@ export default function loginHooks() {
     return <Redirect to="/" />;
   }
   return (
+   <div className={"main-content-div"}>
     <div className="col-md-6 m-auto">
       {console.log(attempts)}
       {/* if form was submitted and login failed then show an error banner*/}
@@ -159,5 +160,6 @@ export default function loginHooks() {
         </form>
       </div>
     </div>
+   </div>
   );
 }

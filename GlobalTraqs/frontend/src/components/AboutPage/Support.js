@@ -49,7 +49,7 @@ export default function Support() {
     /*</div>*/
   }
   return (
-    <div className="container">
+    <div className="container main-content-div">
       <div className="col-md-6 m-auto">
         <div className="card card-body mt-5">
           <h2 className="text-center">Support Us</h2>

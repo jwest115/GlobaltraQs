@@ -80,7 +80,7 @@ export default function ProfilePage(props) {
   }
 
   return (
-    <div>
+    <div className={"main-content-div"}>
       {userProfile ? (
         <div style={{padding: "50px"}}>
           <Row>

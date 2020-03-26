@@ -89,6 +89,7 @@ export default function resetPasswordHook() {
     return formIsValid;
   };
   return (
+  <div className={"main-content-div"}>
     <div className="col-md-6 m-auto">
       <div className="card card-body mt-5">
         <h2 className="text-center">Reset Password</h2>
@@ -133,5 +134,6 @@ export default function resetPasswordHook() {
         </form>
       </div>
     </div>
+  </div>
   );
 }

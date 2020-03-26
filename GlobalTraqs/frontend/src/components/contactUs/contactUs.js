@@ -46,6 +46,7 @@ export default function contactUs() {
   };
 
   return (
+  <div className={"main-content-div"}>
     <div className="col-md-6 m-auto">
       <div className="card card-body mt-5">
         <h2 className="text-center">Contact Us</h2>
@@ -91,5 +92,6 @@ export default function contactUs() {
         </form>
       </div>
     </div>
+  </div>
   );
 }

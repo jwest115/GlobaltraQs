@@ -365,6 +365,7 @@ export default function MapDashboard() {
               pinDeleted={pinDeleted}
               setPinDeleted={setPinDeleted}
               showSidebarButton={true}
+              setStorySidebarOpen={setStorySidebarOpen}
               addPinValues={addPinValues}
               handleAddPinChange={handleAddPinChange}
               handleAddPinSubmit={handleAddPinSubmit}

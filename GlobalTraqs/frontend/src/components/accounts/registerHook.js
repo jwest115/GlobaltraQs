@@ -111,6 +111,7 @@ export default function registerHook() {
     return <Redirect to="/" />;
   }
   return (
+  <div className={"main-content-div"}>
     <div className="col-md-6 m-auto">
       {/* if the form was submitted and register failed, show banner*/}
       {submitted && registerFail ? "failed to register" : ""}
@@ -203,5 +204,6 @@ export default function registerHook() {
         </form>
       </div>
     </div>
+  </div>
   );
 }

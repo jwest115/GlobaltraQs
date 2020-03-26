@@ -130,7 +130,7 @@ function Header() {
   );
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav className="fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
       <a className="navbar-brand" href="#">
         GlobaltraQs
       </a>
