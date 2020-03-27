@@ -7,7 +7,7 @@ import { useSelector, useDispatch, useStore } from "react-redux";
 import { editUser } from "../../actions/users";
 import IdleTimer from "react-idle-timer";
 import Image from 'react-bootstrap/Image';
-import logo from "./images/thearqive_color_logo.png";
+import logo from "./images/thearqive_white_color_logos.png";
 
 function Header() {
   const dispatch = useDispatch();
