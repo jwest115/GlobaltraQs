@@ -63,7 +63,6 @@ class PinCoordFilter(FilterSet):
         field_name="longitude", lookup_expr='lte')
 
 
-
 # use the list filter above on the category field to match for or cases
 class PinSearchFilter(FilterSet):
     categories = ListFilter(field_name='category', lookup_expr='in')
@@ -76,7 +75,6 @@ class PinSearchFilter(FilterSet):
         field_name="endDate", lookup_expr='gte')
     endDate_lte = django_filters.DateTimeFilter(
         field_name="endDate", lookup_expr='lte')
-
 
 
 class PinViewSet(viewsets.ModelViewSet):
@@ -125,6 +123,7 @@ class PinCoordViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filter_class = PinCoordFilter
 
+
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = categoryType.objects.all()
     permission_classes = [
@@ -168,7 +167,23 @@ class FlagCommentViewSet(viewsets.ModelViewSet):
 
 
 class CommentStoryViewSet(viewsets.ModelViewSet):
-    queryset = commentStory.objects.all()
+
+    queryset = commentStory.objects.annotate(
+        # flagscore=Sum(Case(
+        #     When(flaggerstory__flagged=True, then=1),
+        #     default=Value(0),
+        #     output_field=IntegerField()
+        # )),
+        #updooots=Coalesce(Sum('updotes__upvote'), Value(0))
+        flagscore=Sum(Case(
+            When(flaggingComment__flagged=True, then=1),
+            default=Value(0),
+            output_field=IntegerField()
+        ))
+
+
+    )
+
     permission_classes = [
         permissions.AllowAny
         # permissions.IsAuthenticated,

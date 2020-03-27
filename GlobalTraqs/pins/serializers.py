@@ -35,19 +35,21 @@ class FlagStorySerializer(DynamicFieldsMixin, serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CommentStorySerializer(DynamicFieldsMixin, serializers.ModelSerializer):
-    username = serializers.CharField(
-        source="commenter.username", read_only=True)
-
-    class Meta:
-        model = commentStory
-        fields = '__all__'
-
-
 class FlagCommentSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
 
     class Meta:
         model = FlagComment
+        fields = '__all__'
+
+
+class CommentStorySerializer(DynamicFieldsMixin, serializers.ModelSerializer):
+    username = serializers.CharField(
+        source="commenter.username", read_only=True)
+    flaggingComment = FlagCommentSerializer(many=True, read_only=True)
+    flagscore = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = commentStory
         fields = '__all__'
 
 
