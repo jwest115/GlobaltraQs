@@ -22,12 +22,11 @@ import {
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
-  isLoading: false,
+  isLoading: true,
   user: "",
   users: [],
   userProfile: null,
   story_author: null,
-  registerFail: false,
   loginFail: false
 };
 
@@ -98,6 +97,15 @@ export default function (state = initialState, action) {
         user: action.payload
       };
     case LOGIN_SUCCESS:
+      localStorage.setItem("token", action.payload.token);
+      return {
+        ...state,
+        ...action.payload,
+        isAuthenticated: true,
+        isLoading: false,
+        registerFail: false,
+        loginFail: false
+      };
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.payload.token);
       return {
@@ -116,12 +124,10 @@ export default function (state = initialState, action) {
       localStorage.removeItem("token");
       return {
         ...state,
-        registerFail: true,
         token: null,
         user: null,
         isAuthenticated: false,
-        isLoading: false,
-        loginFail: true
+        isLoading: true
       };
     case FLAG_COMMENT:
       const userFlagComment = {
