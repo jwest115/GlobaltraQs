@@ -6,6 +6,8 @@ import { logout } from "../../actions/auth";
 import { useSelector, useDispatch, useStore } from "react-redux";
 import { editUser } from "../../actions/users";
 import IdleTimer from "react-idle-timer";
+import Image from 'react-bootstrap/Image';
+import logo from "./images/thearqive_color_logo.png";
 
 function Header() {
   const dispatch = useDispatch();
@@ -130,9 +132,9 @@ function Header() {
   );
 
   return (
-    <nav className="fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav className="fixed-top navbar navbar-expand-lg navbar-dark bg-primary header-nav">
       <a className="navbar-brand" href="#">
-        GlobaltraQs
+      <Image src={logo} height={"108px"} />
       </a>
       <button
         className="navbar-toggler"

@@ -339,6 +339,7 @@ export default function MapDashboard() {
             />
           </Route>
           <Route path="/story">
+            <div id={"story-container"}>
             {pinDeleted ? <Redirect to={"/"} /> : null}
             <LeafletMap
               maplink={"/story"}
@@ -410,6 +411,7 @@ export default function MapDashboard() {
               flagCommentModalState={flagCommentModalState}
               onFlagCommentSubmit={onFlagCommentSubmit}
             />
+            </div>
           </Route>
         </Switch>
         {/* <Pins /> */}

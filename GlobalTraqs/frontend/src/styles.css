@@ -127,13 +127,16 @@
 /*}*/
 
 #map-dashboard {
-    position: absolute;
-    height: 100%;
+    /*height: 100%;*/
     width: 100%;
-    margin-top: 85px;
+    position: fixed;
+    margin-top: 118px;
+    height: calc(100% - 118px); /* only compatible in certain browsers - I believe it's okay for our browser reqs*/
+    height: -webkit-calc(100% - 118px); /* google, safari */
+    height: -moz-calc(100% - 118px); /* firefox */
 }
 .main-content-div {
-    margin-top: 85px;
+    margin-top: 118px;
     padding: 20px;
 }
 
@@ -161,6 +164,11 @@ b, strong {
     visibility: hidden;
 }
 
+.header-nav {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
 /*.userway-hide {*/
 /*    visibility: hidden !important;*/
 /*}*/
@@ -168,3 +176,4 @@ b, strong {
 /*.userway-show {*/
 /*    visibility: visible !important;*/
 /*}*/
+c
