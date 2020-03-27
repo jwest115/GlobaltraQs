@@ -26,6 +26,7 @@ export default function Manage() {
     <div>
       <NavTab to="/manage/flag">Check Flags</NavTab>
       <NavTab to="/manage/users">Manage User</NavTab>
+      <NavTab to="/manage/comments">Manage Comments</NavTab>
 
       <Switch>
         <Route exact path={`/manage`}>

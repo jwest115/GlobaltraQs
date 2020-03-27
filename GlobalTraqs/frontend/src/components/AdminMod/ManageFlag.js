@@ -8,6 +8,7 @@ import {
 import { Link, Redirect } from "react-router-dom";
 import { Alert } from "reactstrap";
 function ManageFlag() {
+  const [showReport, setshowReport] = useState("");
   const flaggedPins = useSelector(state => state.pins.flaggedPins);
   const dispatch = useDispatch(); // dispatches the action
 
@@ -15,7 +16,12 @@ function ManageFlag() {
     //similar to component did mount
     dispatch(getFlaggedPins());
   }, []);
-
+  const toggleReports = id => {
+    setshowReport(prevshowReport => ({
+      ...showReport,
+      [id]: !prevshowReport[id]
+    }));
+  };
   const adminDelete = id => {
     dispatch(deletePins(id));
   };
@@ -30,7 +36,12 @@ function ManageFlag() {
       <div className="container">
         <PrevNext next={flaggedPins.next} previous={flaggedPins.previous} />
         {flaggedPins.results && (
-          <ListFlags pins={flaggedPins.results} handleDelete={adminDelete} />
+          <ListFlags
+            pins={flaggedPins.results}
+            handleDelete={adminDelete}
+            toggleReports={toggleReports}
+            showReport={showReport}
+          />
         )}
       </div>
     </div>
@@ -87,7 +98,19 @@ function ListFlags(props) {
                     Delete
                   </button>
                 </td>
-
+                <td>
+                  <button
+                    onClick={() => props.toggleReports(pin.id)}
+                    className="btn btn-danger"
+                  >
+                    Show Reports
+                  </button>
+                  {props.showReport[pin.id]
+                    ? pin.flaggerstory && (
+                        <StoryReports reports={pin.flaggerstory} />
+                      )
+                    : null}
+                </td>
                 <td>
                   <Link to={`/Story/${pin.id}`}>View Story</Link>
                 </td>
@@ -99,3 +122,16 @@ function ListFlags(props) {
     </div>
   );
 }
+
+const StoryReports = props => {
+  console.log(props);
+  return (
+    <ul>
+      {props.reports.length > 0
+        ? props.reports.map(report => {
+            return <li key={report.id}>{report.reason}</li>;
+          })
+        : "none"}
+    </ul>
+  );
+};
