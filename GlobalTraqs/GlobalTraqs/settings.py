@@ -123,7 +123,7 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db8',
+        'NAME': 'db1',
     }
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
