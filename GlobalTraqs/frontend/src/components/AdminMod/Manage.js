@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   useParams,
   useRouteMatch,
   useLocation
@@ -11,8 +9,9 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import ManageFlag from "./ManageFlag";
 import ManageUsers from "./ManageUsers";
-import { RoutedTabs, NavTab } from "react-router-tabs";
+import { NavTab } from "react-router-tabs";
 import "./styles/react-router-tabs.css";
+import ManageComments from "./ManageComments";
 export default function Manage() {
   let { path, url } = useRouteMatch();
   console.log("the path is " + path + " and the url is " + url);

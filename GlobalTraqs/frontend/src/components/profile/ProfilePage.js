@@ -1,159 +1,151 @@
-import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getFavoritePosts, getUser} from "../../actions/users";
+import { editPin, getPinsByOwner } from "../../actions/pins";
+import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
-import { login } from "../../actions/auth";
-import { getPins } from "../../actions/pins";
-import axios from "axios";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { Avatar } from "antd";
-import { getUser } from "../../actions/users";
-import { getPinsByOwner } from "../../actions/pins";
 import { Markup } from "interweave";
+import Switch from "react-switch";
+import { Row, Col } from 'react-bootstrap';
 
-export class ProfilePage extends Component {
-  static propTypes = {
-    auth: PropTypes.object.isRequired,
-    pins: PropTypes.array.isRequired,
-    getUser: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired,
-    getPinsByOwner: PropTypes.func.isRequired
-    //  getPins: PropTypes.func.isRequired
-    //deletePins: PropTypes.func.isRequired
+export default function ProfilePage(props) {
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth);
+  const stories = useSelector(state => state.pins.pins);
+  const userProfile = useSelector(state => state.auth.userProfile);
+  const { id } = props.match.params;
+
+  const favoriteStories = useSelector(state => state.auth.favoriteStories);
+
+  useEffect(() => {
+    dispatch(getUser(id));
+    dispatch(getPinsByOwner(id));
+    dispatch(getFavoritePosts(id));
+  }, [id]);
+
+  const { isAuthenticated, user } = auth;
+
+  const updateStoryAnonymity = pin => {
+    const is_anonymous_pin = !pin.is_anonymous_pin;
+
+    const pinData = { is_anonymous_pin };
+
+    dispatch(editPin(pinData, pin.id, id));
   };
-  constructor(props) {
-    super(props);
-    this.state = {
-      stories: ""
-    };
-  }
 
-  updateProfileId = id => {
-    this.props.getUser(id);
-  };
+  const authLinks = (
+    <Link to={`/users/${id}/settings`}>
+      <button type="button" className="btn btn-primary btn-sm">
+        Settings
+      </button>
+    </Link>
+  );
 
-  componentDidUpdate(prevProps) {
-    if (this.props.match.params !== prevProps.match.params) {
-      // call the fetch function again
-      console.log("url changes" + this.props.match.params.id);
-      this.updateProfileId(this.props.match.params.id);
-    }
-  }
-
-  componentDidMount() {
-    const { id } = this.props.match.params;
-    this.props.getUser(id);
-    this.props.getPinsByOwner(id);
-    // const { userProfile } = this.props.user;
-    // console.log(userProfile);
-
-    // console.log(this.props.pins);
-    console.log(this.state.userStories);
-    const { isAuthenticated, user } = this.props.auth;
-    const userid = user ? user.id : "";
-
-    console.log(userid);
-
-    /*   axios
-      .get(`api/pins`)
-      .then(response => {
-        const profileStories = response.data.filter(b => b.owner == userid);
-        console.log(profileStories);
-        this.setState({
-          stories: profileStories
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      }); */
-  }
-
-  render() {
-    const { id } = this.props.match.params;
-    console.log("user profile is: ");
-    console.log(this.props.userProfile);
-    console.log(this.state.userStories);
-
-    const { isAuthenticated, login, user } = this.props.auth;
-
-    const authLinks = (
-      <Link to={`/users/${id}/settings`} params={{ testvalue: "hello" }}>
-        <button type="button" className="btn btn-primary btn-sm">
-          Settings
-        </button>
-      </Link>
-    );
-
-    let isOwner = false;
-
-    if (user != null && user.id == id) {
-      isOwner = true;
-    }
-
-    // const guestLinks = <div><Redirect to="/" /></div>;
-    const guestLinks = <div></div>;
-
-    return (
+  const favoritedPosts = (
       <div>
-        {this.props.userProfile ? (
-          <div>
+        <h2>Favorite Posts</h2>
+          {favoriteStories.map((story, index) => {
+            return (
+                <div style={{ padding: "20px" }} key={index}>
+                  <h3 className="card-title">
+                    {story.title} <br />
+                  </h3>
+                  <h4>By: {story.username ? story.username : "Anonymous"} </h4>
+                  <Markup content={story.description} />
+                  <Link to={`/story/${story.id}`}>
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm"
+                    >
+                      View Story
+                    </button>
+                  </Link>
+                </div>
+            );
+          })}
+      </div>
+  );
+
+  let canEdit = false;
+  if (isAuthenticated) {
+    if (
+      (user != null && user.id == id) ||
+      user.is_administrator ||
+      user.is_moderator
+    ) {
+      canEdit = true;
+    }
+  }
+
+  return (
+    <div className={"main-content-div"}>
+      {userProfile ? (
+        <div style={{padding: "50px"}}>
+          <Row>
+            <Col md={8}>
             <div>
               <Typography variant="h5" component="h3" align="center">
-                {this.props.userProfile.image_url ? (
-                  <img src={this.props.userProfile.image_url} />
+                {userProfile.image_url ? (
+                  <img src={userProfile.image_url} />
                 ) : (
                   <Avatar size={64} icon="user" />
                 )}
-                {this.props.userProfile
-                  ? ` ${this.props.userProfile.username}'s Profile Page`
-                  : ""}
+                <h1>{userProfile ? `${userProfile.username}` : ""}</h1>
                 <p>
-                  <strong>Bio: </strong>
-                  {this.props.userProfile.bio}
+                  {userProfile.bio}
                 </p>
               </Typography>
-              {isOwner ? authLinks : guestLinks}
+              {canEdit ? authLinks : ""}
             </div>
-            <div class="card">
-              <div class="card-body">
-                {this.props.pins.map((story, index) => {
-                  return (
-                    <div style={{ padding: "20px" }} key={index}>
-                      <h5 class="card-title">
-                        {story.title} <br />
-                      </h5>
-                      <Markup content={story.description} />
-                      <Link to={`/Story/${story.id}`}>
-                        <button
-                          type="button"
-                          className="btn btn-primary btn-sm"
-                        >
-                          View Story
-                        </button>
-                      </Link>
-                    </div>
-                  );
+            <div className="card">
+              <div className="card-body">
+                {stories.map((story, index) => {
+                  if (!userProfile.is_profile_private || (isAuthenticated && user.id == id)) {
+                    if (!story.is_anonymous_pin || (isAuthenticated && user.id == id)) {
+                      return (
+                        <div style={{ padding: "20px" }} key={index}>
+                          <h5 className="card-title">
+                            {story.title} <br />
+                          </h5>
+                          <Markup content={story.description} />
+                          <Link to={`/story/${story.id}`}>
+                            <button
+                              type="button"
+                              className="btn btn-primary btn-sm"
+                            >
+                              View Story
+                            </button>
+                          </Link>
+                          {isAuthenticated && user.id == id || canEdit ? (
+                          <Switch
+                            className="react-switch"
+                            onChange={() => updateStoryAnonymity(story)}
+                            checked={story.is_anonymous_pin}
+                          />
+                              ) : ""}
+                        </div>
+                      );
+                    }
+                  }
+                  else {
+                    return(
+                        <h4>This user's profile is private.</h4>
+                    );
+                  }
                 })}
               </div>
             </div>
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
-    );
-  }
+            </Col>
+            <Col md={4}>
+              {favoritedPosts}
+            </Col>
+          </Row>
+        </div>
+      ) : (
+        ""
+      )}
+    </div>
+  );
 }
-
-const mapStateToProps = state => ({
-  auth: state.auth,
-  pins: state.pins.pins,
-  userProfile: state.auth.userProfile
-});
-
-ProfilePage.propTypes = {};
-
-export default connect(mapStateToProps, { login, getUser, getPinsByOwner })(
-  ProfilePage
-);

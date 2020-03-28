@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {addPin, getMaxPinDate, getMinPinDate} from "../../../actions/pins";
-import moment from "moment";
 
 const useAddPinForm = callback => {
   const auth = useSelector(state => state.auth);

@@ -1,32 +1,26 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { withLeaflet } from "react-leaflet";
-import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 
 import {
-  getPins,
   getPin,
-  addPin,
   editPin,
   deletePins,
   addComment,
   deleteComment, getPinsWithBounds, getMinPinDate, getMaxPinDate
 } from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import useAddPinForm from "./CustomHooks/useAddPinForm";
 import useFlagForm from "./CustomHooks/useFlagForm";
 import {
   Switch,
   Route,
-  Link,
   useParams,
   Redirect,
   useRouteMatch
 } from "react-router-dom";
 import LeafletMap from "./LeafletMap";
-import SearchSidebar from "../layout/SidebarHooks";
+import SearchSidebar from "../layout/SearchSidebar";
 import Story from "./Story/Story";
-import StorySidebar from "../layout/StorySidebarHooks";
+import StorySidebar from "../layout/StorySidebar";
 
 const sidebarStyle = {
   position: "absolute",

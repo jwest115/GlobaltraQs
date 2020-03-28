@@ -16,16 +16,15 @@ import {
   useHistory
 } from "react-router-dom";
 import Control from "react-leaflet-control";
-import ModalEditPinForm from "./ModalEditPinForm";
-import ModalDeleteConfirm from "./ModalDeleteConfirm";
+import ModalEditPinForm from "./PinForms/ModalEditPinForm";
+import ModalDeleteConfirm from "./PinForms/ModalDeleteConfirm";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
-import ModalPinForm from "./ModalPinForm";
+import ModalAddPinForm from "./PinForms/ModalAddPinForm";
 import SearchIcon from "@material-ui/icons/Search";
 import { GeoSearchControl } from "leaflet-geosearch";
 import { EsriProvider } from "leaflet-geosearch";
 import { useDispatch } from "react-redux";
-import {getPins, getPinsWithBounds} from "../../actions/pins";
 
 export const defaultPointerIcon = new L.Icon({
   iconUrl: default_marker,
@@ -254,7 +253,7 @@ const LeafletMap = props => {
         </MarkerClusterGroup>
 
       </Map>
-      <ModalPinForm
+      <ModalAddPinForm
         toggle={props.toggle}
         modalState={props.modalState}
         setAnonRadius={props.setAnonRadius}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userFlagPin, userUnFlagPin } from "../../../actions/pins";
+import { userFlagPin } from "../../../actions/pins";
 import { userFlagComment } from "../../../actions/auth";
 const useFlagForm = () => {
   const [flagModalState, setflagModalState] = useState(false);
