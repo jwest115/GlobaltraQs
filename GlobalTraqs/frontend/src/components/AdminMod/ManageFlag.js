@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getFlaggedPins,
   getNextFlaggedPins,
   deletePins
 } from "../../actions/pins";
-import { Link } from "react-router-dom";
-
+import { Link, Redirect } from "react-router-dom";
+import { Alert } from "reactstrap";
 function ManageFlag() {
   const [showReport, setshowReport] = useState("");
   const flaggedPins = useSelector(state => state.pins.flaggedPins);
