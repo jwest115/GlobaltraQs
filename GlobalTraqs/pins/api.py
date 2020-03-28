@@ -183,7 +183,23 @@ class FlagCommentViewSet(viewsets.ModelViewSet):
 
 
 class CommentStoryViewSet(viewsets.ModelViewSet):
-    queryset = commentStory.objects.all()
+
+    queryset = commentStory.objects.annotate(
+        # flagscore=Sum(Case(
+        #     When(flaggerstory__flagged=True, then=1),
+        #     default=Value(0),
+        #     output_field=IntegerField()
+        # )),
+        #updooots=Coalesce(Sum('updotes__upvote'), Value(0))
+        flagscore=Sum(Case(
+            When(flaggingComment__flagged=True, then=1),
+            default=Value(0),
+            output_field=IntegerField()
+        ))
+
+
+    )
+
     permission_classes = [
         permissions.AllowAny
         # permissions.IsAuthenticated,

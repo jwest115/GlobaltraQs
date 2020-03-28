@@ -18,7 +18,10 @@ const useAddPinForm = callback => {
     endDate: new Date(),
     anonradius: 1,
     title: "",
-    description: ""
+    description: "",
+    postDate: new Date(),
+    lastEditDate: new Date(),
+    lastPersonEdit: isAuthenticated ? user.id : null
   });
 
   const handleAddPinSubmit = e => {
@@ -52,7 +55,10 @@ const useAddPinForm = callback => {
       endDate: new Date(),
       anonradius: 1,
       title: "",
-      description: ""
+      description: "",
+      postDate: new Date(),
+      lastEditDate: new Date(),
+      lastPersonEdit: isAuthenticated ? user.id : null
     });
   };
 
