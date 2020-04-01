@@ -22,7 +22,6 @@ import { loadUser } from "./actions/auth";
 import Manage from "./components/AdminMod/Manage";
 import ProfilePage from "./components/profile/ProfilePage";
 import Settings from "./components/profile/ProfileSettings";
-
 import ForgotPassword from "./components/accounts/ForgotPassword";
 import Support from "./components/Pages/Support";
 import ResetPassword from "./components/accounts/ResetPassword";
@@ -68,6 +67,7 @@ export class App extends Component {
                 <Route path="/resetPassword" component={ResetPassword} />
                 <Route path="/Support" component={Support} />
                 <Route path="/ContactUs" component={ContactUs} />
+
                 {/* <MapDashboard /> */}
               </Switch>
             </div>

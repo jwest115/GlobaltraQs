@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getFavoritePosts, getUser} from "../../actions/users";
+import { getFavoritePosts, getUser } from "../../actions/users";
 import { editPin, getPinsByOwner } from "../../actions/pins";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -8,7 +8,9 @@ import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { Avatar } from "antd";
 import { Markup } from "interweave";
 import Switch from "react-switch";
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col } from "react-bootstrap";
+import ProfileImageModal from "./ProfileImageModal";
+import useProfileImage from "./CustomHooks/useProfileImage";
 
 export default function ProfilePage(props) {
   const dispatch = useDispatch();
@@ -44,28 +46,25 @@ export default function ProfilePage(props) {
   );
 
   const favoritedPosts = (
-      <div>
-        <h2>Favorite Posts</h2>
-          {favoriteStories.map((story, index) => {
-            return (
-                <div style={{ padding: "20px" }} key={index}>
-                  <h3 className="card-title">
-                    {story.title} <br />
-                  </h3>
-                  <h4>By: {story.username ? story.username : "Anonymous"} </h4>
-                  <Markup content={story.description} />
-                  <Link to={`/story/${story.id}`}>
-                    <button
-                      type="button"
-                      className="btn btn-primary btn-sm"
-                    >
-                      View Story
-                    </button>
-                  </Link>
-                </div>
-            );
-          })}
-      </div>
+    <div>
+      <h2>Favorite Posts</h2>
+      {favoriteStories.map((story, index) => {
+        return (
+          <div style={{ padding: "20px" }} key={index}>
+            <h3 className="card-title">
+              {story.title} <br />
+            </h3>
+            <h4>By: {story.username ? story.username : "Anonymous"} </h4>
+            <Markup content={story.description} />
+            <Link to={`/story/${story.id}`}>
+              <button type="button" className="btn btn-primary btn-sm">
+                View Story
+              </button>
+            </Link>
+          </div>
+        );
+      })}
+    </div>
   );
 
   let canEdit = false;
@@ -78,69 +77,124 @@ export default function ProfilePage(props) {
       canEdit = true;
     }
   }
-
+  const {
+    modalState,
+    onSelectFile,
+    toggle,
+    image,
+    crop,
+    zoom,
+    setcrop,
+    setZoom,
+    onCropComplete,
+    onSubmit,
+    showCroppedImage
+  } = useProfileImage();
+  // const {
+  //   upImg,
+  //   onLoad,
+  //   crop,
+  //   setCrop,
+  //   makeClientCrop,
+  //   previewUrl,
+  //   onSelectFile
+  // } = useCrop;
   return (
     <div className={"main-content-div"}>
       {userProfile ? (
-        <div style={{padding: "50px"}}>
+        <div style={{ padding: "50px" }}>
           <Row>
+            <input
+              type="file"
+              name="file"
+              id="exampleFile"
+              onChange={onSelectFile}
+              accept="image/*"
+            />
+
+            <button onClick={() => toggle()}>TEST</button>
+            <ProfileImageModal
+              toggle={toggle}
+              modalState={modalState}
+              onSelectFile={onSelectFile}
+              crop={crop}
+              zoom={zoom}
+              setcrop={setcrop}
+              setZoom={setZoom}
+              image={image}
+              onCropComplete={onCropComplete}
+              onSubmit={onSubmit}
+              showCroppedImage={showCroppedImage}
+            />
+
+            {/* <ProfileImageCrop
+              upImg={upImg}
+              onLoad={onLoad}
+              crop={crop}
+              setCrop={setCrop}
+              makeClientCrop={makeClientCrop}
+              previewUrl={previewUrl}
+              onSelectFile={onSelectFile}
+            /> */}
             <Col md={8}>
-            <div>
-              <Typography variant="h5" component="h3" align="center">
-                {userProfile.image_url ? (
-                  <img src={userProfile.image_url} />
-                ) : (
-                  <Avatar size={64} icon="user" />
-                )}
-                <h1>{userProfile ? `${userProfile.username}` : ""}</h1>
-                <p>
-                  {userProfile.bio}
-                </p>
-              </Typography>
-              {canEdit ? authLinks : ""}
-            </div>
-            <div className="card">
-              <div className="card-body">
-                {stories.map((story, index) => {
-                  if (!userProfile.is_profile_private || (isAuthenticated && user.id == id)) {
-                    if (!story.is_anonymous_pin || (isAuthenticated && user.id == id)) {
-                      return (
-                        <div style={{ padding: "20px" }} key={index}>
-                          <h5 className="card-title">
-                            {story.title} <br />
-                          </h5>
-                          <Markup content={story.description} />
-                          <Link to={`/story/${story.id}`}>
-                            <button
-                              type="button"
-                              className="btn btn-primary btn-sm"
-                            >
-                              View Story
-                            </button>
-                          </Link>
-                          {isAuthenticated && user.id == id || canEdit ? (
-                          <Switch
-                            className="react-switch"
-                            onChange={() => updateStoryAnonymity(story)}
-                            checked={story.is_anonymous_pin}
-                          />
-                              ) : ""}
-                        </div>
-                      );
-                    }
-                  }
-                  else {
-                    return(
-                        <h4>This user's profile is private.</h4>
-                    );
-                  }
-                })}
+              <div>
+                <Typography variant="h5" component="h3" align="center">
+                  {userProfile.image_url ? (
+                    <img src={userProfile.image_url} />
+                  ) : (
+                    <Avatar size={64} icon="user" />
+                  )}
+                  <h1>{userProfile ? `${userProfile.username}` : ""}</h1>
+                  <p>{userProfile.bio}</p>
+                </Typography>
+                {canEdit ? authLinks : ""}
               </div>
-            </div>
+
+              <div className="card">
+                <div className="card-body">
+                  {stories.map((story, index) => {
+                    if (
+                      !userProfile.is_profile_private ||
+                      (isAuthenticated && user.id == id)
+                    ) {
+                      if (
+                        !story.is_anonymous_pin ||
+                        (isAuthenticated && user.id == id)
+                      ) {
+                        return (
+                          <div style={{ padding: "20px" }} key={index}>
+                            <h5 className="card-title">
+                              {story.title} <br />
+                            </h5>
+                            <Markup content={story.description} />
+                            <Link to={`/story/${story.id}`}>
+                              <button
+                                type="button"
+                                className="btn btn-primary btn-sm"
+                              >
+                                View Story
+                              </button>
+                            </Link>
+                            {(isAuthenticated && user.id == id) || canEdit ? (
+                              <Switch
+                                className="react-switch"
+                                onChange={() => updateStoryAnonymity(story)}
+                                checked={story.is_anonymous_pin}
+                              />
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                        );
+                      }
+                    } else {
+                      return <h4>This user's profile is private.</h4>;
+                    }
+                  })}
+                </div>
+              </div>
             </Col>
-            <Col md={4}>
-              {favoritedPosts}
-            </Col>
+            <Col md={4}>{favoritedPosts}</Col>
           </Row>
         </div>
       ) : (
