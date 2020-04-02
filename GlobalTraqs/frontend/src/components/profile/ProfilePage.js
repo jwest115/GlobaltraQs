@@ -139,8 +139,11 @@ export default function ProfilePage(props) {
             <Col md={8}>
               <div>
                 <Typography variant="h5" component="h3" align="center">
-                  {userProfile.image_url ? (
-                    <img src={userProfile.image_url} />
+                  {userProfile.profileurl ? (
+                    <img
+                      src={userProfile.profileurl}
+                      style={{ borderRadius: "50%" }}
+                    />
                   ) : (
                     <Avatar size={64} icon="user" />
                   )}

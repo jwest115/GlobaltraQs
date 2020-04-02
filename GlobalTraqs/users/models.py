@@ -18,6 +18,7 @@ class User(AbstractUser):
     accessibility_mode_active = models.BooleanField(default=False)
     bio = models.CharField(blank=True, max_length=300)
     is_profile_private = models.BooleanField(default=False)
+    profileurl = models.URLField(null=True)
 
     def upload_photo_dir(self, filename):
         path = './profile/{}'.format(self.username + filename)

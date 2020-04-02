@@ -48,6 +48,7 @@ export default function ProfileImageModal(props) {
                   onCropChange={props.setcrop}
                   onZoomChange={props.setZoom}
                   onCropComplete={props.onCropComplete}
+                  cropShape="round"
                 />
               )}
             </FormGroup>
