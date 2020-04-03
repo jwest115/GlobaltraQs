@@ -1,18 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CloseIcon from "@material-ui/icons/Close";
+import connect from "react-redux/es/connect/connect";
 import Sidebar from "react-sidebar";
+import Button from "@material-ui/core/Button";
+import PropTypes from "prop-types";
 import {
+  TextField,
+  FormControl,
+  MenuItem,
   IconButton,
+  responsiveFontSizes
 } from "@material-ui/core";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import { searchPins } from "../../actions/pins";
 import { getPins } from "../../actions/pins";
+import pins from "../../reducers/pins";
 import { Link } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import SearchIcon from "@material-ui/icons/Search";
 import Select from "react-select";
+// import DatePicker from "react-datepicker";
 import DatePicker from "react-date-picker";
 import { Markup } from "interweave";
 import Tabs from "react-bootstrap/Tabs";
@@ -20,6 +33,7 @@ import Tab from "react-bootstrap/Tab";
 import Slider from "@material-ui/core/Slider"
 import { Label } from "reactstrap";
 
+import { Marker, Popup } from "react-leaflet";
 import InputGroup from "react-bootstrap/InputGroup";
 import {
   getUsers,
