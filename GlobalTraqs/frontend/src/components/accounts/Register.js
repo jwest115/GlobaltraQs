@@ -121,121 +121,123 @@ export default function registerHook() {
     return <Redirect to="/" />;
   }
   return (
-    <div className="col-md-6 m-auto">
-      {/* if the form was submitted and register failed, show banner*/}
+      <div className="main-content-div">
+        <div className="col-md-6 m-auto">
+          {/* if the form was submitted and register failed, show banner*/}
 
-      <div className="card card-body mt-5">
-        <h2 className="text-center">Register</h2>
-        {submitted && !isAuthenticated ?
-        
-          <div className="card card-body mt-5 alert alert-danger" role="alert">
-            Username or Email already exists! Please use another.
-          </div>
-          :
-          ""
-        }
-        <form onSubmit={onSubmit}>
-          <div className="form-group">
-            <label>Username</label>
-            <input
-              type="text"
-              className="form-control"
-              name="username"
-              onChange={e =>
-                setuserForm({
-                  ...userForm,
-                  username: e.target.value
-                })
-              }
-              value={userForm.username}
-            />
-            <div name="userStatus" />
-            <p className="text-danger">{userForm.errors["username"]}</p>
-            <p className="text-danger"></p>
-          </div>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              className="form-control"
-              name="email"
-              onChange={e =>
-                setuserForm({
-                  ...userForm,
-                  email: e.target.value
-                })
-              }
-              value={userForm.email}
-            />
-            <div id="emailStatus" />
-            <p className="text-danger">{userForm.errors["email"]}</p>
-          </div>
-          <ClickAwayListener onClickAway={handleTooltipClose}>
-            <Tooltip
-              PopperProps={{
-                disablePortal: true,
-              }}
-              onClose={handleTooltipClose}
-              open={open}
-              placement="bottom-start"
-              disableFocusListener
-              disableHoverListener
-              disableTouchListener
-              title="Must be at least eight characters with one Uppercase, Lowercase, Number, and Special Character."
-            >
+          <div className="card card-body mt-5">
+            <h2 className="text-center">Register</h2>
+            {submitted && !isAuthenticated ?
+
+              <div className="card card-body mt-5 alert alert-danger" role="alert">
+                Username or Email already exists! Please use another.
+              </div>
+              :
+              ""
+            }
+            <form onSubmit={onSubmit}>
               <div className="form-group">
-                <label>Password</label>
+                <label>Username</label>
                 <input
-                  onClick={handleTooltipOpen}
-                  type="password"
+                  type="text"
                   className="form-control"
-                  name="password"
+                  name="username"
                   onChange={e =>
                     setuserForm({
                       ...userForm,
-                      password: e.target.value
+                      username: e.target.value
                     })
                   }
-                  value={userForm.password}
+                  value={userForm.username}
                 />
-                <p className="text-danger">{userForm.errors["password"]}</p>
+                <div name="userStatus" />
+                <p className="text-danger">{userForm.errors["username"]}</p>
+                <p className="text-danger"></p>
               </div>
-            </Tooltip>
-          </ClickAwayListener>
-          <div className="form-group">
-            <label>Confirm Password</label>
-            <input
-              type="password"
-              className="form-control"
-              name="password2"
-              onChange={e =>
-                setuserForm({
-                  ...userForm,
-                  password2: e.target.value
-                })
-              }
-              value={userForm.password2}
-            />
-            <p className="text-danger">{userForm.errors["password2"]}</p>
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  name="email"
+                  onChange={e =>
+                    setuserForm({
+                      ...userForm,
+                      email: e.target.value
+                    })
+                  }
+                  value={userForm.email}
+                />
+                <div id="emailStatus" />
+                <p className="text-danger">{userForm.errors["email"]}</p>
+              </div>
+              <ClickAwayListener onClickAway={handleTooltipClose}>
+                <Tooltip
+                  PopperProps={{
+                    disablePortal: true,
+                  }}
+                  onClose={handleTooltipClose}
+                  open={open}
+                  placement="bottom-start"
+                  disableFocusListener
+                  disableHoverListener
+                  disableTouchListener
+                  title="Must be at least eight characters with one Uppercase, Lowercase, Number, and Special Character."
+                >
+                  <div className="form-group">
+                    <label>Password</label>
+                    <input
+                      onClick={handleTooltipOpen}
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      onChange={e =>
+                        setuserForm({
+                          ...userForm,
+                          password: e.target.value
+                        })
+                      }
+                      value={userForm.password}
+                    />
+                    <p className="text-danger">{userForm.errors["password"]}</p>
+                  </div>
+                </Tooltip>
+              </ClickAwayListener>
+              <div className="form-group">
+                <label>Confirm Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password2"
+                  onChange={e =>
+                    setuserForm({
+                      ...userForm,
+                      password2: e.target.value
+                    })
+                  }
+                  value={userForm.password2}
+                />
+                <p className="text-danger">{userForm.errors["password2"]}</p>
+              </div>
+              <div className="form-group row justify-content-between justify-content-around">
+                {/*This is the ReCaptcha*/}
+                <Recaptcha
+                  className="float-left"
+                  sitekey="6LcAL78UAAAAAPOluo3jzUzXt5XLWKuUujc-_7QX"
+                  render="explicit"
+                  verifyCallback={verifyCallback}
+                  onloadCallback={reCaptchaLoaded}
+                />
+                 <button type="submit" className="btn btn-primary float-right">
+                  Register
+                </button>
+              </div>
+              <p>
+                Already have an account? <Link to="/login">Login</Link>
+              </p>
+            </form>
           </div>
-          <div className="form-group row justify-content-between justify-content-around">
-            <button type="submit" className="btn btn-primary float-left">
-              Register
-            </button>
-            {/*This is the ReCaptcha*/}
-            <Recaptcha
-              className="float-right"
-              sitekey="6LcAL78UAAAAAPOluo3jzUzXt5XLWKuUujc-_7QX"
-              render="explicit"
-              verifyCallback={verifyCallback}
-              onloadCallback={reCaptchaLoaded}
-            />
-          </div>
-          <p>
-            Already have an account? <Link to="/login">Login</Link>
-          </p>
-        </form>
+        </div>
       </div>
-    </div>
   );
 }

@@ -54,7 +54,7 @@ export default function ProfilePage(props) {
             <h3 className="card-title">
               {story.title} <br />
             </h3>
-            <h4>By: {story.username ? story.username : "Anonymous"} </h4>
+            <h4>By: {!story.is_anonymous_pin ? story.username : "Anonymous"} </h4>
             <Markup content={story.description} />
             <Link to={`/story/${story.id}`}>
               <button type="button" className="btn btn-primary btn-sm">

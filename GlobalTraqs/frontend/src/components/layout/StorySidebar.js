@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import CloseIcon from '@material-ui/icons/Close';
 
 import Sidebar from "react-sidebar";
@@ -10,6 +10,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import { Markup } from 'interweave';
 import Moment from "react-moment";
 import { IconButton } from "@material-ui/core";
+import {getPinsWithBounds} from "../../actions/pins";
 
 function StorySidebar(props)  {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -27,6 +28,11 @@ function StorySidebar(props)  {
 
    console.log("SIDE BAR IS " + props.storySidebarOpen);
    if(props.storySidebarOpen) {
+         if(props.pins.length == 0) {
+             props.setStorySidebarOpen(false);
+             props.setSidebarOpen(true);
+         }
+
        return (
            <Sidebar
                sidebar={
@@ -37,6 +43,7 @@ function StorySidebar(props)  {
                        {/* pin cluster - loop through markers and show them in the sidebar*/}
                        {props.pinData.length > 1 ? (
                             <div>
+                                <h3> Cluster of { props.pinData.length } stories </h3>
                                 {props.pinData.map((story, index) => {
                                     return (
                                     <Card>
@@ -119,6 +126,7 @@ function StorySidebar(props)  {
                    </div>
                }
                open={props.storySidebarOpen}
+               onSetOpen={onSetSidebarOpen}
                pullRight={true}
                styles=
                    {{

@@ -11,7 +11,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class pin(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               null=True, on_delete=models.CASCADE, related_name='userStories')
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=150)
     description = models.TextField()
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)

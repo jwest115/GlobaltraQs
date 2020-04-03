@@ -172,5 +172,11 @@ export default function Settings(props) {
       </div>
     );
   }
-  return <div style={{ padding: "20px" }}>{userCanEdit}</div>;
+  return (
+      <div className={"main-content-div"}>
+        <div style={{ padding: "20px" }}>
+          {userCanEdit}
+        </div>;
+      </div>
+  );
 }

@@ -166,13 +166,11 @@ export default function Login() {
             </Tooltip>
           </ClickAwayListener>
           <div className="form-group row justify-content-between justify-content-around">
-            <button type="submit" className="btn btn-primary float-left">
-              Login
-            </button>
+
             <recaptcha loginAttempts={attempts} />
             {attempts ? (
               <Recaptcha
-                className="float-right"
+                className="float-left"
                 sitekey="6LcAL78UAAAAAPOluo3jzUzXt5XLWKuUujc-_7QX"
                 render="explicit"
                 verifyCallback={verifyCallback}
@@ -181,6 +179,9 @@ export default function Login() {
             ) : (
                 ""
               )}
+            <button type="submit" className="btn btn-primary float-right">
+              Login
+            </button>
           </div>
           <p>
             Don't have an account? <Link to="/register">Register</Link>

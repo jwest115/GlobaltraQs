@@ -149,6 +149,15 @@
     top: 0;
 }
 
+#sidebar2-style {
+    /*z-index: 1000;*/
+    position: absolute;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    top: 0;
+}
+
 #open-sidebar-button {
     z-index:998;
     position: absolute;
@@ -176,3 +185,29 @@ b, strong {
 /*.userway-show {*/
 /*    visibility: visible !important;*/
 /*}*/
+
+#story-page {
+  position: absolute;
+  transition: all .75s ease-out;
+  background: white;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  margin-top: 65px;
+}
+/*#story-container:hover > #story-page {*/
+/*  top: 0;*/
+/*}*/
+
+#story-container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.map-container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transition: all .75s ease-out;
+}

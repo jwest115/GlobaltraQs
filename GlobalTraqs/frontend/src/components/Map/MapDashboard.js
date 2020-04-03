@@ -45,7 +45,12 @@ export default function MapDashboard() {
     width: "100%"
   });
   const [divStyle1, setdivStyle1] = useState({
-    height: "40vh",
+    height: "100%",
+    width: "100%",
+    left: "0"
+  });
+  const [mapContainerStyle, setMapContainerStyle] = useState({
+    height: "100%",
     width: "100%",
     left: "0"
   });
@@ -60,6 +65,7 @@ export default function MapDashboard() {
 
   const dispatch = useDispatch();
   const [userRoleVerified, setUserRoleVerified] = useState(false);
+
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -258,11 +264,10 @@ export default function MapDashboard() {
 
 
   return (
-    <div id={"map-dashboard"}>
-      {/*<div>*/}
       <Fragment>
         <Switch>
           <Route exact path="/">
+            <div id={"map-dashboard"}>
             <div id={"sidebar-style"}>
               <SearchSidebar
                 sidebarOpen={sidebarOpen}
@@ -274,6 +279,7 @@ export default function MapDashboard() {
                 maplink={"/story"}
                 pinData={pinData}
                 setPinData={setPinData}
+                pins={pins}
                 storySidebarOpen={storySidebarOpen}
                 setStorySidebarOpen={setStorySidebarOpen}
                 isAuthenticated={isAuthenticated}
@@ -285,6 +291,7 @@ export default function MapDashboard() {
                 setDeleteConfirmation={setDeleteConfirmation}
                 pinCluster={pinCluster}
                 setPinCluster={setPinCluster}
+                setSidebarOpen={setSidebarOpen}
               />
             </div>
             <LeafletMap
@@ -330,11 +337,15 @@ export default function MapDashboard() {
               setPinData={setPinData}
               pinCluster={pinCluster}
               setPinCluster={setPinCluster}
+              mapContainerStyle={divStyle1}
+              setMapContainerStyle={setMapContainerStyle}
             />
+            </div>
           </Route>
           <Route path="/story">
             <div id={"story-container"}>
             {pinDeleted ? <Redirect to={"/"} /> : null}
+            <div id={"map-dashboard"}>
             <LeafletMap
               maplink={"/story"}
               pins={pins}
@@ -375,7 +386,10 @@ export default function MapDashboard() {
               isAuthenticated={isAuthenticated}
               setPinData={setPinData}
               isIndividualStoryPage={true}
+              mapContainerStyle={mapContainerStyle}
+              setMapContainerStyle={setMapContainerStyle}
             />
+            </div>
             <StoryDisplay
               placement={placement}
               setplacement={setplacement}
@@ -404,6 +418,9 @@ export default function MapDashboard() {
               flagCommentToggle={flagCommentToggle}
               flagCommentModalState={flagCommentModalState}
               onFlagCommentSubmit={onFlagCommentSubmit}
+              setMapDivStyle={setdivStyle1}
+              setMapContainerStyle={setMapContainerStyle}
+              mapContainerStyle={mapContainerStyle}
             />
             </div>
           </Route>
@@ -416,14 +433,26 @@ export default function MapDashboard() {
           {/* <MapDisplay /> */}
         </div>
       </Fragment>
-    </div>
   );
 }
 function StoryDisplay(props) {
   let match = useRouteMatch();
+  let [storyStyle, setStoryStyle] = useState({  top: '100%' });
+
+  // change the map & story page styling for story slide up effect
+  useEffect(() => {
+    console.log("here trying to set the style");
+    console.log(props.mapContainerStyle);
+    setStoryStyle({
+      top: "45%"
+    });
+    props.setMapContainerStyle({
+      height: "45%"
+    })
+  }, []);
 
   return (
-    <div>
+    <div id={"story-page"} style={storyStyle}>
       <Switch>
         <Route path={`${match.path}/:id`}>
           <IndividualStory {...props} />
@@ -443,6 +472,7 @@ function IndividualStory(props) {
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
   const userid = isAuthenticated ? user.id : false;
+
   useEffect(() => {
     dispatch(getPin(id, userid));
     props.setuserComment({
