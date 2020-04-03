@@ -190,7 +190,8 @@ b, strong {
   position: absolute;
   transition: all .75s ease-out;
   background: white;
-  height: 100%;
+  height: auto;
+  min-height: 100%;
   width: 100%;
   z-index: 2;
   margin-top: 65px;
