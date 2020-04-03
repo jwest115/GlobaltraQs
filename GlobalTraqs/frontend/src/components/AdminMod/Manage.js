@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
   Link,
+  Redirect,
   useParams,
   useRouteMatch,
   useLocation
@@ -22,10 +23,10 @@ export default function Manage() {
   const { isAuthenticated, user } = auth;
 
   return (
-    <div>
-      <NavTab to="/manage">Manages</NavTab>
+    <div className="main-content-div">
       <NavTab to="/manage/flag">Check Flags</NavTab>
       <NavTab to="/manage/users">Manage User</NavTab>
+      <NavTab to="/manage/comments">Manage Comments</NavTab>
 
       <Switch>
         <Route exact path={`/manage`}>
@@ -53,7 +54,7 @@ function MainManage() {
   return (
     <div>
       {setting}
-      <h2>this is admin mod manage</h2>
+      <Redirect to="/manage/flag" />;
     </div>
   );
 }

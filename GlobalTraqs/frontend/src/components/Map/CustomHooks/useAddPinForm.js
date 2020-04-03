@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addPin } from "../../../actions/pins";
-import moment from "moment";
+import {addPin, getMaxPinDate, getMinPinDate} from "../../../actions/pins";
 
 const useAddPinForm = callback => {
   const auth = useSelector(state => state.auth);
@@ -45,6 +44,8 @@ const useAddPinForm = callback => {
 
     dispatch(addPin(submit));
     callback();
+    dispatch(getMaxPinDate());
+    dispatch(getMinPinDate());
     setmodalstate(!modalState);
     setaddPinValues({
       category: 1,

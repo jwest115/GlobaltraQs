@@ -16,21 +16,26 @@ import {
   GET_NEXT_PREVIOUS_USERS,
   USER_SELF_DELETE,
   FLAG_COMMENT,
-  REMOVE_FLAG_COMMENT
+  REMOVE_FLAG_COMMENT,
+  GET_USER_FAVORITE_STORIES,
+  UPDATE_PROFILE_PIC
 } from "../actions/types";
+import { getPinsById } from "../actions/pins";
 
 const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
-  isLoading: true,
+  isLoading: false,
   user: "",
   users: [],
   userProfile: null,
   story_author: null,
-  loginFail: false
+  registerFail: false,
+  loginFail: false,
+  favoriteStories: []
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case SEARCH_USERS:
       return {
@@ -97,15 +102,6 @@ export default function (state = initialState, action) {
         user: action.payload
       };
     case LOGIN_SUCCESS:
-      localStorage.setItem("token", action.payload.token);
-      return {
-        ...state,
-        ...action.payload,
-        isAuthenticated: true,
-        isLoading: false,
-        registerFail: false,
-        loginFail: false
-      };
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.payload.token);
       return {
@@ -124,10 +120,12 @@ export default function (state = initialState, action) {
       localStorage.removeItem("token");
       return {
         ...state,
+        registerFail: true,
         token: null,
         user: null,
         isAuthenticated: false,
-        isLoading: true
+        isLoading: false,
+        loginFail: true
       };
     case FLAG_COMMENT:
       const userFlagComment = {
@@ -152,6 +150,22 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: removeFlagComment
+      };
+    case GET_USER_FAVORITE_STORIES:
+      return {
+        ...state,
+        favoriteStories: action.payload
+      };
+    case UPDATE_PROFILE_PIC:
+      const profilepic = {
+        ...state.user,
+        profileurl: action.payload.profileurl
+      };
+
+      return {
+        ...state,
+        user: profilepic,
+        userProfile: profilepic
       };
     default:
       return state;

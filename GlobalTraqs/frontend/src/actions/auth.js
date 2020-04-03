@@ -13,7 +13,8 @@ import {
   GET_FLAG_STATE,
   USER_SELF_DELETE,
   FLAG_COMMENT,
-  REMOVE_FLAG_COMMENT
+  REMOVE_FLAG_COMMENT,
+  UPDATE_PROFILE_PIC
 } from "./types";
 
 // CHECK TOKEN & LOAD USER
@@ -171,6 +172,22 @@ export const delFlagComment = id => dispatch => {
       dispatch({
         type: REMOVE_FLAG_COMMENT,
         payload: id
+      });
+    })
+    .catch(error => console.log(error));
+};
+
+export const updateProfilePic = url => (dispatch, getState) => {
+  const profilepic = {
+    profileurl: url
+  };
+  axios
+    .patch("/api/auth/user", profilepic, tokenConfig(getState))
+    .then(res => {
+      console.log(res.data);
+      dispatch({
+        type: UPDATE_PROFILE_PIC,
+        payload: res.data
       });
     })
     .catch(error => console.log(error));

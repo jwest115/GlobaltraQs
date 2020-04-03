@@ -14,7 +14,9 @@ import {
   USER_UPVOTE,
   USER_UNFLAG,
   GET_FLAGGED_PINS,
-  GET_NEXT_FLAGGED_PINS
+  GET_NEXT_FLAGGED_PINS,
+  GET_MAX_PIN,
+  GET_MIN_PIN
 } from "../actions/types.js";
 
 const initialState = {
@@ -24,7 +26,9 @@ const initialState = {
   flagState: false,
   validUser: false,
   pinId: 0,
-  flaggedPins: []
+  flaggedPins: [],
+  pinMinDate: new Date(1000, 1, 1, 0, 0, 0, 0),
+  pinMaxDate: new Date()
 };
 
 export default function(state = initialState, action) {
@@ -52,6 +56,20 @@ export default function(state = initialState, action) {
         ...state,
         pins: action.payload
       };
+    case GET_MAX_PIN:
+      console.log("action payload max");
+      console.log(action.payload.getFullYear());
+      return {
+        ...state,
+        pinMaxDate: action.payload
+      };
+    case GET_MIN_PIN:
+      console.log("action payload min");
+      console.log(action.payload.getFullYear());
+        return {
+          ...state,
+          pinMinDate: action.payload
+        };
     case DELETE_PINS:
       const flaggedpins = state.flaggedPins.results.filter(
         p => p.id !== action.payload

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch, useStore } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
   Modal,
@@ -8,7 +8,6 @@ import {
   ModalFooter,
   Form,
   FormGroup,
-  Input,
   Label
 } from "reactstrap";
 import {

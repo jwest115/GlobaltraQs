@@ -1,33 +1,26 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { withLeaflet } from "react-leaflet";
-import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 
 import {
-  getPins,
   getPin,
-  addPin,
   editPin,
   deletePins,
   addComment,
-  deleteComment,
-  getPinsWithBounds
+  deleteComment, getPinsWithBounds, getMinPinDate, getMaxPinDate
 } from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import useAddPinForm from "./CustomHooks/useAddPinForm";
 import useFlagForm from "./CustomHooks/useFlagForm";
 import {
   Switch,
   Route,
-  Link,
   useParams,
   Redirect,
   useRouteMatch
 } from "react-router-dom";
 import LeafletMap from "./LeafletMap";
-import SearchSidebar from "../layout/SidebarHooks";
+import SearchSidebar from "../layout/SearchSidebar";
 import Story from "./Story/Story";
-import StorySidebar from "../layout/StorySidebarHooks";
+import StorySidebar from "../layout/StorySidebar";
 
 const sidebarStyle = {
   position: "absolute",
@@ -48,11 +41,16 @@ export default function MapDashboard() {
   let { path, url } = useRouteMatch();
 
   const [divStyle, setdivStyle] = useState({
-    height: "90%",
+    height: "100%",
     width: "100%"
   });
   const [divStyle1, setdivStyle1] = useState({
-    height: "40vh",
+    height: "100%",
+    width: "100%",
+    left: "0"
+  });
+  const [mapContainerStyle, setMapContainerStyle] = useState({
+    height: "100%",
     width: "100%",
     left: "0"
   });
@@ -68,6 +66,7 @@ export default function MapDashboard() {
   const dispatch = useDispatch();
   const [userRoleVerified, setUserRoleVerified] = useState(false);
 
+
   useEffect(() => {
     if (isAuthenticated) {
       // console.log("user is authenticated!");
@@ -82,11 +81,15 @@ export default function MapDashboard() {
       setUserRoleVerified(false);
     }
   });
+  useEffect(() => {
+     dispatch(getMaxPinDate());
+     dispatch(getMinPinDate());
+  }, []);
 
   useEffect(() => {
     console.log("here trying to get pins");
-    if (mapReference != undefined) {
-      mapReference.once("moveend", function() {
+     if(mapReference != undefined) {
+       mapReference.once("moveend", function() {
         console.log("bounds");
         let mapBounds = mapReference.getBounds();
         console.log(mapBounds);
@@ -95,8 +98,8 @@ export default function MapDashboard() {
         let north = mapBounds.getNorth();
         let east = mapBounds.getEast();
         dispatch(getPinsWithBounds(north, south, east, west));
-      });
-    }
+        });
+      }
   }, [pins]);
 
   useEffect(() => {
@@ -140,15 +143,16 @@ export default function MapDashboard() {
   const [mapReference, setMapReference] = useState();
   const [map, setMap] = useState();
   const [pinData, setPinData] = useState();
+  const minPinDate = useSelector(state => state.pins.pinMinDate);
+  const maxPinDate = useSelector(state => state.pins.pinMaxDate);
+
   const [pinCluster, setPinCluster] = useState(false);
   const [editPinForm, seteditPinForm] = useState({
     //fields for editng
     id: "1",
     title: "",
     description: "",
-    category: "1",
-    lastEditDate: new Date(),
-    lastPersonEdit: isAuthenticated ? user.id : null
+    category: "1"
   });
 
   const onEditSubmit = e => {
@@ -160,12 +164,12 @@ export default function MapDashboard() {
       ...pinData,
       title: editPinForm.title,
       description: editPinForm.description,
-      category: editPinForm.category,
+      category: editPinForm.category
       // startDate: editPinForm.startDate,
       // endDate: editPinForm.endDate
-      lastEditDate: editPinForm.lastEditDate,
-      lastPersonEdit: editPinForm.lastPersonEdit
     });
+    dispatch(getMaxPinDate());
+    dispatch(getMinPinDate());
     editToggle();
   };
 
@@ -209,17 +213,16 @@ export default function MapDashboard() {
     dispatch(deletePins(editPinForm.id));
     toggleDelete();
     setPinDeleted(true);
+    dispatch(getMinPinDate());
+    dispatch(getMaxPinDate());
   };
 
   function getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         succes => {
-          if (mapReference != undefined) {
-            mapReference.panTo([
-              succes.coords.latitude,
-              succes.coords.longitude
-            ]);
+          if(mapReference != undefined) {
+            mapReference.panTo([succes.coords.latitude, succes.coords.longitude]);
           }
           setplacement({
             ...placement,
@@ -259,21 +262,24 @@ export default function MapDashboard() {
     dispatch(deleteComment(commentid));
   };
 
+
   return (
-    <div id={"map-dashboard"}>
-      {/*<div>*/}
       <Fragment>
         <Switch>
           <Route exact path="/">
+            <div id={"map-dashboard"}>
             <div id={"sidebar-style"}>
               <SearchSidebar
                 sidebarOpen={sidebarOpen}
+                maxPinDate={maxPinDate}
+                minPinDate={minPinDate}
                 setSidebarOpen={setSidebarOpen}
               />
               <StorySidebar
                 maplink={"/story"}
                 pinData={pinData}
                 setPinData={setPinData}
+                pins={pins}
                 storySidebarOpen={storySidebarOpen}
                 setStorySidebarOpen={setStorySidebarOpen}
                 isAuthenticated={isAuthenticated}
@@ -285,6 +291,7 @@ export default function MapDashboard() {
                 setDeleteConfirmation={setDeleteConfirmation}
                 pinCluster={pinCluster}
                 setPinCluster={setPinCluster}
+                setSidebarOpen={setSidebarOpen}
               />
             </div>
             <LeafletMap
@@ -330,10 +337,15 @@ export default function MapDashboard() {
               setPinData={setPinData}
               pinCluster={pinCluster}
               setPinCluster={setPinCluster}
+              mapContainerStyle={divStyle1}
+              setMapContainerStyle={setMapContainerStyle}
             />
+            </div>
           </Route>
           <Route path="/story">
+            <div id={"story-container"}>
             {pinDeleted ? <Redirect to={"/"} /> : null}
+            <div id={"map-dashboard"}>
             <LeafletMap
               maplink={"/story"}
               pins={pins}
@@ -359,6 +371,7 @@ export default function MapDashboard() {
               pinDeleted={pinDeleted}
               setPinDeleted={setPinDeleted}
               showSidebarButton={true}
+              setStorySidebarOpen={setStorySidebarOpen}
               addPinValues={addPinValues}
               handleAddPinChange={handleAddPinChange}
               handleAddPinSubmit={handleAddPinSubmit}
@@ -373,7 +386,10 @@ export default function MapDashboard() {
               isAuthenticated={isAuthenticated}
               setPinData={setPinData}
               isIndividualStoryPage={true}
+              mapContainerStyle={mapContainerStyle}
+              setMapContainerStyle={setMapContainerStyle}
             />
+            </div>
             <StoryDisplay
               placement={placement}
               setplacement={setplacement}
@@ -402,7 +418,11 @@ export default function MapDashboard() {
               flagCommentToggle={flagCommentToggle}
               flagCommentModalState={flagCommentModalState}
               onFlagCommentSubmit={onFlagCommentSubmit}
+              setMapDivStyle={setdivStyle1}
+              setMapContainerStyle={setMapContainerStyle}
+              mapContainerStyle={mapContainerStyle}
             />
+            </div>
           </Route>
         </Switch>
         {/* <Pins /> */}
@@ -413,14 +433,26 @@ export default function MapDashboard() {
           {/* <MapDisplay /> */}
         </div>
       </Fragment>
-    </div>
   );
 }
 function StoryDisplay(props) {
   let match = useRouteMatch();
+  let [storyStyle, setStoryStyle] = useState({  top: '100%' });
+
+  // change the map & story page styling for story slide up effect
+  useEffect(() => {
+    console.log("here trying to set the style");
+    console.log(props.mapContainerStyle);
+    setStoryStyle({
+      top: "45%"
+    });
+    props.setMapContainerStyle({
+      height: "45%"
+    })
+  }, []);
 
   return (
-    <div>
+    <div id={"story-page"} style={storyStyle}>
       <Switch>
         <Route path={`${match.path}/:id`}>
           <IndividualStory {...props} />
@@ -440,6 +472,7 @@ function IndividualStory(props) {
   const auth = useSelector(state => state.auth);
   const { isAuthenticated, user } = auth;
   const userid = isAuthenticated ? user.id : false;
+
   useEffect(() => {
     dispatch(getPin(id, userid));
     props.setuserComment({

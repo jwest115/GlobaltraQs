@@ -1,12 +1,12 @@
 import axios from "axios";
 import {
-  EDIT_PIN,
-  EDIT_USER,
-  GET_USER,
-  GET_USERS,
-  EDIT_USER_ROLE,
-  SEARCH_USERS,
-  GET_NEXT_PREVIOUS_USERS
+    EDIT_PIN,
+    EDIT_USER,
+    GET_USER,
+    GET_USERS,
+    EDIT_USER_ROLE,
+    SEARCH_USERS,
+    GET_NEXT_PREVIOUS_USERS, GET_USER_FAVORITE_STORIES, GET_PINS
 } from "./types";
 
 import { DELETE_USER } from "./types";
@@ -114,3 +114,30 @@ export const getNextPreviousUsers = link => dispatch => {
     })
     .catch(error => console.log(error));
 };
+
+export const getFavoritePosts =  id => dispatch => {
+    axios
+        .get(`/api/upVoteStory/?upVoter=${id}&upvote=true`)
+        .then(res => {
+            console.log(res.data)
+            let arrayOfIDs = []
+            for (let i = 0; i < res.data.length; i++) {
+                arrayOfIDs.push(res.data[i].pinId);
+            }
+            console.log(arrayOfIDs);
+              axios
+                .get("/api/pins/")
+                .then(res2 => {
+                    console.log(res2.data);
+                    console.log("is res 2");
+                   let favoritedPins = res2.data.filter(pin => arrayOfIDs.includes(pin.id));
+                   console.log(favoritedPins);
+                    dispatch({
+                        type: GET_USER_FAVORITE_STORIES,
+                        payload: favoritedPins
+                    });
+                })
+                .catch(err => console.log(err));
+        })
+        .catch(error => console.log(error));
+}
