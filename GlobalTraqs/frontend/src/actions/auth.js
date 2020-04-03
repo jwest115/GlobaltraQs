@@ -178,13 +178,16 @@ export const delFlagComment = id => dispatch => {
 };
 
 export const updateProfilePic = url => (dispatch, getState) => {
+  const profilepic = {
+    profileurl: url
+  };
   axios
-    .patch("/api/auth/user", tokenConfig(getState))
+    .patch("/api/auth/user", profilepic, tokenConfig(getState))
     .then(res => {
       console.log(res.data);
       dispatch({
-        type: REMOVE_FLAG_COMMENT,
-        payload: id
+        type: UPDATE_PROFILE_PIC,
+        payload: res.data
       });
     })
     .catch(error => console.log(error));

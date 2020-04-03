@@ -1,8 +1,13 @@
 import React, { useState, useCallback } from "react";
+import { updateProfilePic } from "../../../actions/auth";
+import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
 import getCroppedImg from "./cropImage";
 const useProfileImage = () => {
+  const auth = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+  const { isAuthenticated, user } = auth;
   const [modalState, setmodalState] = useState(false);
   const [image, setimage] = useState("");
   const [zoom, setZoom] = useState(1);
@@ -48,14 +53,13 @@ const useProfileImage = () => {
         rotation,
         setnewimage
       );
-      console.log("donee", { croppedImage });
+
       setCroppedImage(croppedImage);
     } catch (e) {
       console.error(e);
     }
   }, [croppedAreaPixels, rotation]);
   const onSubmit = () => {
-    console.log(newimage);
     let formData = new FormData();
 
     formData.append("upload_preset", "XzetaDev");
@@ -66,7 +70,7 @@ const useProfileImage = () => {
     axios
       .post("https://api.cloudinary.com/v1_1/dauntlessx/image/upload", formData)
       .then(response => {
-        console.log(response.data.secure_url);
+        dispatch(updateProfilePic(response.data.secure_url));
       })
 
       .catch(error => {

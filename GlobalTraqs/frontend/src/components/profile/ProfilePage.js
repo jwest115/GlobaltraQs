@@ -90,29 +90,21 @@ export default function ProfilePage(props) {
     onSubmit,
     showCroppedImage
   } = useProfileImage();
-  // const {
-  //   upImg,
-  //   onLoad,
-  //   crop,
-  //   setCrop,
-  //   makeClientCrop,
-  //   previewUrl,
-  //   onSelectFile
-  // } = useCrop;
+  console.log(userProfile);
   return (
     <div className={"main-content-div"}>
+      <input
+        type="file"
+        name="file"
+        id="exampleFile"
+        onChange={onSelectFile}
+        accept="image/*"
+      />
+
+      <button onClick={() => toggle()}>Upload</button>
       {userProfile ? (
         <div style={{ padding: "50px" }}>
           <Row>
-            <input
-              type="file"
-              name="file"
-              id="exampleFile"
-              onChange={onSelectFile}
-              accept="image/*"
-            />
-
-            <button onClick={() => toggle()}>TEST</button>
             <ProfileImageModal
               toggle={toggle}
               modalState={modalState}
@@ -126,16 +118,6 @@ export default function ProfilePage(props) {
               onSubmit={onSubmit}
               showCroppedImage={showCroppedImage}
             />
-
-            {/* <ProfileImageCrop
-              upImg={upImg}
-              onLoad={onLoad}
-              crop={crop}
-              setCrop={setCrop}
-              makeClientCrop={makeClientCrop}
-              previewUrl={previewUrl}
-              onSelectFile={onSelectFile}
-            /> */}
             <Col md={8}>
               <div>
                 <Typography variant="h5" component="h3" align="center">

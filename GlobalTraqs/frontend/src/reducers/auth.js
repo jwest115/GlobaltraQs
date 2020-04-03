@@ -16,9 +16,11 @@ import {
   GET_NEXT_PREVIOUS_USERS,
   USER_SELF_DELETE,
   FLAG_COMMENT,
-  REMOVE_FLAG_COMMENT, GET_USER_FAVORITE_STORIES
+  REMOVE_FLAG_COMMENT,
+  GET_USER_FAVORITE_STORIES,
+  UPDATE_PROFILE_PIC
 } from "../actions/types";
-import {getPinsById} from "../actions/pins";
+import { getPinsById } from "../actions/pins";
 
 const initialState = {
   token: localStorage.getItem("token"),
@@ -33,7 +35,7 @@ const initialState = {
   favoriteStories: []
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case SEARCH_USERS:
       return {
@@ -153,6 +155,17 @@ export default function (state = initialState, action) {
       return {
         ...state,
         favoriteStories: action.payload
+      };
+    case UPDATE_PROFILE_PIC:
+      const profilepic = {
+        ...state.user,
+        profileurl: action.payload.profileurl
+      };
+
+      return {
+        ...state,
+        user: profilepic,
+        userProfile: profilepic
       };
     default:
       return state;
