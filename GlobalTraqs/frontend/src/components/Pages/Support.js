@@ -64,32 +64,32 @@ export default function Support() {
   const sie = { width: 300, height: 300 };
   return (
     <div className="container main-content-div">
-      <h2>Test</h2>
-      <input type="file" name="file" onChange={onSelectFile} />
+      {/*<h2>Test</h2>*/}
+      {/*<input type="file" name="file" onChange={onSelectFile} />*/}
 
-      {image && (
-        <Cropper
-          image={image}
-          crop={crop}
-          zoom={zoom}
-          cropSize={sie}
-          aspect={1}
-          onCropChange={setcrop}
-          onZoomChange={setZoom}
-          cropShape="round"
-          onCropComplete={onCropComplete}
-        />
-      )}
-      <Slider
-        value={zoom}
-        min={0.5}
-        max={5}
-        step={0.1}
-        aria-labelledby="Zoom"
-        onChange={(e, zoom) => setZoom(zoom)}
-      />
-      <button onClick={setnewimage}> Submit</button>
-      {/* <div className="col-md-6 m-auto">
+      {/*{image && (*/}
+      {/*  <Cropper*/}
+      {/*    image={image}*/}
+      {/*    crop={crop}*/}
+      {/*    zoom={zoom}*/}
+      {/*    cropSize={sie}*/}
+      {/*    aspect={1}*/}
+      {/*    onCropChange={setcrop}*/}
+      {/*    onZoomChange={setZoom}*/}
+      {/*    cropShape="round"*/}
+      {/*    onCropComplete={onCropComplete}*/}
+      {/*  />*/}
+      {/*)}*/}
+      {/*<Slider*/}
+      {/*  value={zoom}*/}
+      {/*  min={0.5}*/}
+      {/*  max={5}*/}
+      {/*  step={0.1}*/}
+      {/*  aria-labelledby="Zoom"*/}
+      {/*  onChange={(e, zoom) => setZoom(zoom)}*/}
+      {/*/>*/}
+      {/*<button onClick={setnewimage}> Submit</button>*/}
+      <div className="col-md-6 m-auto">
         <div className="card card-body mt-5">
           <h2 className="text-center">Support Us</h2>
           <label>Donation Amount: </label>
@@ -117,7 +117,7 @@ export default function Support() {
             }}
           />
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
