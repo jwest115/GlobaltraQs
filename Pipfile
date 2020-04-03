@@ -19,6 +19,7 @@ django-rest-passwordreset = "*"
 django-rest-knox = "*"
 pillow = "*"
 django-cleanup = "*"
+django-extensions = "*"
 
 [requires]
 python_version = "3.7"
