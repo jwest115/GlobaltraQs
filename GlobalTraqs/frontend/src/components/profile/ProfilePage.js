@@ -14,12 +14,12 @@ import useProfileImage from "./CustomHooks/useProfileImage";
 
 export default function ProfilePage(props) {
   const dispatch = useDispatch();
-  const auth = useSelector(state => state.auth);
-  const stories = useSelector(state => state.pins.pins);
-  const userProfile = useSelector(state => state.auth.userProfile);
+  const auth = useSelector((state) => state.auth);
+  const stories = useSelector((state) => state.pins.pins);
+  const userProfile = useSelector((state) => state.auth.userProfile);
   const { id } = props.match.params;
 
-  const favoriteStories = useSelector(state => state.auth.favoriteStories);
+  const favoriteStories = useSelector((state) => state.auth.favoriteStories);
 
   useEffect(() => {
     dispatch(getUser(id));
@@ -29,7 +29,7 @@ export default function ProfilePage(props) {
 
   const { isAuthenticated, user } = auth;
 
-  const updateStoryAnonymity = pin => {
+  const updateStoryAnonymity = (pin) => {
     const is_anonymous_pin = !pin.is_anonymous_pin;
 
     const pinData = { is_anonymous_pin };
@@ -54,7 +54,9 @@ export default function ProfilePage(props) {
             <h3 className="card-title">
               {story.title} <br />
             </h3>
-            <h4>By: {!story.is_anonymous_pin ? story.username : "Anonymous"} </h4>
+            <h4>
+              By: {!story.is_anonymous_pin ? story.username : "Anonymous"}{" "}
+            </h4>
             <Markup content={story.description} />
             <Link to={`/story/${story.id}`}>
               <button type="button" className="btn btn-primary btn-sm">
@@ -88,36 +90,14 @@ export default function ProfilePage(props) {
     setZoom,
     onCropComplete,
     onSubmit,
-    showCroppedImage
+    showCroppedImage,
   } = useProfileImage();
   console.log(userProfile);
   return (
     <div className={"main-content-div"}>
-      <input
-        type="file"
-        name="file"
-        id="exampleFile"
-        onChange={onSelectFile}
-        accept="image/*"
-      />
-
-      <button onClick={() => toggle()}>Upload</button>
       {userProfile ? (
         <div style={{ padding: "50px" }}>
           <Row>
-            <ProfileImageModal
-              toggle={toggle}
-              modalState={modalState}
-              onSelectFile={onSelectFile}
-              crop={crop}
-              zoom={zoom}
-              setcrop={setcrop}
-              setZoom={setZoom}
-              image={image}
-              onCropComplete={onCropComplete}
-              onSubmit={onSubmit}
-              showCroppedImage={showCroppedImage}
-            />
             <Col md={8}>
               <div>
                 <Typography variant="h5" component="h3" align="center">

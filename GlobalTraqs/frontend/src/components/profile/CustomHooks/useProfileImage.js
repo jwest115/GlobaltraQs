@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import getCroppedImg from "./cropImage";
 const useProfileImage = () => {
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { isAuthenticated, user } = auth;
   const [modalState, setmodalState] = useState(false);
@@ -13,14 +13,14 @@ const useProfileImage = () => {
   const [zoom, setZoom] = useState(1);
   const [crop, setcrop] = useState({
     x: 10,
-    y: 10
+    y: 10,
   });
   const [rotation, setRotation] = useState(0);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState({
     x: 47,
     y: 94,
     width: 206,
-    height: 206
+    height: 206,
   });
   const [croppedImage, setCroppedImage] = useState(null);
   const [newimage, setnewimage] = useState(null);
@@ -32,12 +32,12 @@ const useProfileImage = () => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
 
-  const makeClientCrop = async crop => {
+  const makeClientCrop = async (crop) => {
     if (imgRef && crop.width && crop.height) {
       createCropPreview(imgRef, crop, "newFile.jpeg");
     }
   };
-  const onSelectFile = e => {
+  const onSelectFile = (e) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
       reader.addEventListener("load", () => setimage(reader.result), false);
@@ -59,7 +59,7 @@ const useProfileImage = () => {
       console.error(e);
     }
   }, [croppedAreaPixels, rotation]);
-  const onSubmit = () => {
+  const onSubmitPic = () => {
     let formData = new FormData();
 
     formData.append("upload_preset", "XzetaDev");
@@ -69,11 +69,11 @@ const useProfileImage = () => {
 
     axios
       .post("https://api.cloudinary.com/v1_1/dauntlessx/image/upload", formData)
-      .then(response => {
+      .then((response) => {
         dispatch(updateProfilePic(response.data.secure_url));
       })
 
-      .catch(error => {
+      .catch((error) => {
         // handle error
         console.log(error);
       });
@@ -90,8 +90,8 @@ const useProfileImage = () => {
     setcrop,
     setZoom,
     onCropComplete,
-    onSubmit,
-    showCroppedImage
+    onSubmitPic,
+    showCroppedImage,
   };
 };
 export default useProfileImage;
