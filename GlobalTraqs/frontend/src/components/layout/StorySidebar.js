@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import CloseIcon from '@material-ui/icons/Close';
-
 import Sidebar from "react-sidebar";
 import { Link } from "react-router-dom";
 import Card from '@material-ui/core/Card';

@@ -92,14 +92,20 @@ const LeafletMap = props => {
   });
 
   const updatePin = marker => {
+
+    let start = marker.startDate.split('-');
+    start = new Date(start[0], start[1] - 1, start[2], 0, 0, 0, 0);
+    let end = marker.endDate.split('-');
+    end = new Date(end[0], end[1] - 1, end[2], 0, 0, 0, 0);
+
      if(props.isIndividualStoryPage) {
       props.seteditPin({
         id: marker.id,
         title: marker.title,
         description: marker.description,
         category: marker.category,
-        startDate: marker.startDate,
-        endDate: marker.endDate,
+        startDate: start,
+        endDate: end,
         lastEditDate: marker.lastEditDate,
         lastPersonEdit: props.isAuthenticated ? props.user.id : null
       });
@@ -113,8 +119,8 @@ const LeafletMap = props => {
         title: marker.title,
         description: marker.description,
         category: marker.category,
-        startDate: marker.startDate,
-        endDate: marker.endDate,
+        startDate: start,
+        endDate: end,
         lastEditDate: marker.lastEditDate,
         lastPersonEdit: props.isAuthenticated ? props.user.id : null
       });

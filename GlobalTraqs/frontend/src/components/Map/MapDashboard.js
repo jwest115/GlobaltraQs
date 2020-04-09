@@ -152,7 +152,9 @@ export default function MapDashboard() {
     id: "1",
     title: "",
     description: "",
-    category: "1"
+    category: "1",
+    startDate: new Date(),
+    endDate: new Date()
   });
 
   const onEditSubmit = e => {
@@ -164,9 +166,9 @@ export default function MapDashboard() {
       ...pinData,
       title: editPinForm.title,
       description: editPinForm.description,
-      category: editPinForm.category
-      // startDate: editPinForm.startDate,
-      // endDate: editPinForm.endDate
+      category: editPinForm.category,
+      startDate: editPinForm.startDate,
+      endDate: editPinForm.endDate
     });
     dispatch(getMaxPinDate());
     dispatch(getMinPinDate());
@@ -421,6 +423,7 @@ export default function MapDashboard() {
               setMapDivStyle={setdivStyle1}
               setMapContainerStyle={setMapContainerStyle}
               mapContainerStyle={mapContainerStyle}
+              mapReference={mapReference}
             />
             </div>
           </Route>

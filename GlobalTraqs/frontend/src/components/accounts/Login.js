@@ -10,7 +10,7 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 export default function Login() {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
-  const { isAuthenticated, user, loginFail } = auth;
+  const { isAuthenticated, loginFail } = auth;
   const [open, setOpen] = useState(false);
   const handleTooltipClose = () => {
     setOpen(false);
@@ -111,7 +111,7 @@ export default function Login() {
         <h2 className="text-center">Login</h2>
         {submitted && loginFail ?
           <div className="card card-body mt-5 alert alert-danger" role="alert">
-          Login Failed.
+          Invalid username and/or password, please try again
           </div>
           :
           ""

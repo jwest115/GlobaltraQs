@@ -2,19 +2,6 @@ import csv
 from pins.models import pin
 import sys
 
-# class StoryCSVModel(CsvModel):
-#     title = CharField()
-#     description = CharField()
-#     start_date = DateField()
-#     end_date = DateField()
-#     latitude = DecimalField()
-#     longitude = DecimalField()
-#     date_created = DateField()
-#     date_modified = DateField()
-#
-#     class Meta:
-#         delimiter = ";"
-from rest_framework.fields import empty
 # run the below command in the Django Console while connected to the AWS db
 # exec(open('old_story_upload.py').read())
 
