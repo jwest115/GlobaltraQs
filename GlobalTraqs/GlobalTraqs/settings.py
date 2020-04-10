@@ -135,7 +135,7 @@ DATABASES = {
         'USER': config('USER'),
         'PASSWORD': config('PASSWORD'),
         'HOST': config('HOST'),
-        'PORT': '5432',
+        'PORT': config('PORT'),
     }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
