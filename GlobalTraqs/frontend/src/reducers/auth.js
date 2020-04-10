@@ -123,7 +123,8 @@ export default function(state = initialState, action) {
         user: null,
         isAuthenticated: false,
         isLoading: false,
-        loginFail: true
+        loginFail: true,
+        registerFail: false
       };
       case LOGOUT_SUCCESS:
       localStorage.removeItem("token");
