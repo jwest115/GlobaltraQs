@@ -24,7 +24,7 @@ SECRET_KEY = config('SECRET_KEY')
 #DEBUG = True
 DEBUG = config('DEBUG', cast=bool)
 #DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', '.netlify.com']
+ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', '.netlify.com', 'localhost']
 
 
 # Application definition
