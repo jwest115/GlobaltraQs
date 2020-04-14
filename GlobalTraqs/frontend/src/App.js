@@ -7,7 +7,7 @@ import {
   HashRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 import register from "./components/accounts/Register";
 // if deployed to apache, mess with congig htt file
@@ -27,8 +27,9 @@ import ForgotPassword from "./components/accounts/ForgotPassword";
 import Support from "./components/Pages/Support";
 import ResetPassword from "./components/accounts/ResetPassword";
 import ContactUs from "./components/Pages/ContactUs";
+import ProfileDashboard from "./components/profile/ProfileDashboard";
 const divStyle = {
-  position: "relative"
+  position: "relative",
 };
 
 export class App extends Component {
@@ -63,6 +64,15 @@ export class App extends Component {
                   path="/manage/comments"
                   component={Manage}
                 />
+                <Route
+                  exact
+                  path="/profile/:name"
+                  component={ProfileDashboard}
+                />
+                <Route exact path="/profile" component={ProfileDashboard} />
+
+                <Route exact path="/test" component={ProfileDashboard} />
+                <Route exact path="/test/:lit" component={ProfileDashboard} />
                 {/*<Route path="/Story/:id/edit" exact component={EditStory} />*/}
                 <Route path="/forgotPassword" component={ForgotPassword} />
                 <Route path="/resetPassword" component={ResetPassword} />

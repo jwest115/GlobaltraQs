@@ -45,12 +45,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     userStories = PinSerializer(many=True, read_only=True)
-    flaggerComment = FlagCommentSerializer(many=True, read_only=True)
+    # flaggerComment = FlagCommentSerializer(many=True, read_only=True)
+    user_upvoted_stories = upVoteStorySerializer(many=True, read_only=True)
 
     class Meta:
         model = User
         fields = ['id', 'userStories', 'date_joined', 'first_name',
-                  'last_name', 'username', 'email', 'is_profile_private', 'image_url']
+                  'last_name', 'username', 'email', 'is_profile_private', 'image_url', 'user_upvoted_stories', 'bio', 'is_profile_private', 'profileurl', 'is_profile_private']
 
 
 class RegisterSerializer(serializers.ModelSerializer):
