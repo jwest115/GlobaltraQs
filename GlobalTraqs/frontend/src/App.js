@@ -16,6 +16,7 @@ import AlertTemplate from "react-alert-template-basic";
 import { Provider } from "react-redux";
 import store from "./store";
 import login from "./components/accounts/Login";
+import PrivateUserRoute from "./components/common/PrivateUserRoute";
 import PrivateRoute from "./components/common/PrivateRoute";
 import { loadUser } from "./actions/auth";
 
@@ -63,6 +64,11 @@ export class App extends Component {
                   exact
                   path="/manage/comments"
                   component={Manage}
+                />
+                <PrivateUserRoute
+                  exact
+                  path="/setting"
+                  component={ProfileDashboard}
                 />
                 <Route
                   exact

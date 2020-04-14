@@ -9,6 +9,8 @@ import {
   GET_NEXT_PREVIOUS_USERS,
   GET_USER_FAVORITE_STORIES,
   GET_PINS,
+  USER_PROFILE_LOADING,
+  USER_PROFILE_NOT_FOUND,
 } from "./types";
 
 import { DELETE_USER } from "./types";
@@ -92,19 +94,27 @@ export const getUser = (id) => (dispatch) => {
 };
 
 export const getUserProfile = (username) => (dispatch) => {
+  dispatch({ type: USER_PROFILE_LOADING });
+
   axios
     .get(`/api/profile/users?username=${username}`)
     .then((res) => {
-      dispatch({
-        type: GET_USER,
-        payload: res.data.results[0],
-      });
+      res.data.count === 0
+        ? dispatch({
+            type: USER_PROFILE_NOT_FOUND,
+            payload: true,
+          })
+        : dispatch({
+            type: GET_USER,
+            payload: res.data.results[0],
+          });
+      console.log(test);
     })
     .catch(function (error) {
       console.log(error.response);
       dispatch({
-        type: GET_USER,
-        payload: null,
+        type: USER_PROFILE_NOT_FOUND,
+        payload: true,
       });
     });
 };

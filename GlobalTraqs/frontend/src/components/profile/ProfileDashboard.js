@@ -4,19 +4,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { Switch, Route, Link, useParams } from "react-router-dom";
 import ProfilePage from "./ProfilePage";
 import { getUserProfile, getUser } from "../../actions/users";
-
+import CircularIndeterminate from "./CircularIndeterminate";
+import ProfileSetting from "./ProfileSettings";
 export default function ProfileDashboard() {
   const auth = useSelector((state) => state.auth);
-  const [pape, setpape] = useState("initial");
-  const { isAuthenticated, user } = auth;
+
   return (
     <div className="main-content-div">
       <Switch>
-        <Route path="/setting"></Route>
+        <Route path="/setting">
+          <ProfileSetting />
+        </Route>
         <Route path="/test/:lit">
           <GetUserProfile />
         </Route>
-        <Route path="/test"></Route>
 
         <Route path="/profile/:name">
           <GetUserProfile />{" "}
@@ -33,16 +34,22 @@ settings in settings page
 loggedin user and viewother user  */
 const GetUserProfile = () => {
   const dispatch = useDispatch();
-  const userProfile = useSelector((state) => state.auth.userProfile);
-  const woosh = false;
+  const auth = useSelector((state) => state.auth);
+  const { userProfile, isProfileLoading, profileStatus } = auth;
+
   let { name } = useParams();
-  console.log(name);
+
   useEffect(() => {
     dispatch(getUserProfile(name));
   }, [name]);
+  console.log("status of profile: " + profileStatus);
   return (
     <>
-      <ProfilePage userProfile={userProfile} />
+      {isProfileLoading ? (
+        <CircularIndeterminate />
+      ) : (
+        <ProfilePage userProfile={userProfile} />
+      )}
     </>
   );
 };

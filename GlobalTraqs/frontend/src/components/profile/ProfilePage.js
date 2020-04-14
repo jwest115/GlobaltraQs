@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getFavoritePosts, getUser } from "../../actions/users";
 import { editPin, getPinsByOwner } from "../../actions/pins";
+import { userEditValidate } from "../../actions/auth";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
@@ -21,7 +22,7 @@ const FavoritePostField = ({
   ...rest
 }) => {
   return (
-    <div style={{ padding: "20px" }} key={index} {...rest}>
+    <div style={{ padding: "20px" }} key={id} {...rest}>
       <h3 className="card-title">
         {title} <br />
       </h3>
@@ -39,38 +40,18 @@ const FavoritePostField = ({
 export default function ProfilePage(props) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const stories = useSelector((state) => state.pins.pins);
-  const userProfile = useSelector((state) => state.auth.userProfile);
 
-  const { isAuthenticated, user } = auth;
+  const { profileStatus, isAuthenticated, user } = auth;
 
   const updateStoryAnonymity = (pin) => {
     const is_anonymous_pin = !pin.is_anonymous_pin;
 
     const pinData = { is_anonymous_pin };
 
-    dispatch(editPin(pinData, pin.id, id));
+    dispatch(userEditValidate(pinData, pin.id));
   };
 
-  const authLinks = (
-    // <Link to={`/users/${id}/settings`}>
-    //   <button type="button" className="btn btn-primary btn-sm">
-    //     Settings
-    //   </button>
-    // </Link>
-    <button>Test</button>
-  );
-
-  // let canEdit = false;
-  // if (isAuthenticated) {
-  //   if (
-  //     (user != null && user.id == id) ||
-  //     user.is_administrator ||
-  //     user.is_moderator
-  //   ) {
-  //     canEdit = true;
-  //   }
-  // }
+  const authLinks = <button>Test</button>;
 
   return (
     <>
@@ -80,8 +61,23 @@ export default function ProfilePage(props) {
             <Col md={8}>
               <UserProfileBio userProfile={props.userProfile} />
 
+              {isAuthenticated && user.id === props.userProfile.id && (
+                <Link to={`/users/${user.id}/settings`}>
+                  <button type="button" className="btn btn-primary btn-sm">
+                    Settings
+                  </button>
+                </Link>
+              )}
               <div className="card">
-                <div className="card-body"></div>
+                <div className="card-body">
+                  {props.userProfile.userStories && (
+                    <ListUserStories
+                      updateStoryAnonymity={updateStoryAnonymity}
+                      stories={props.userProfile.userStories}
+                      ownerid={props.id}
+                    />
+                  )}
+                </div>
               </div>
             </Col>
             <ShowfavoritedPosts
@@ -90,7 +86,7 @@ export default function ProfilePage(props) {
           </Row>
         </div>
       ) : (
-        ""
+        <ProfileNotFound />
       )}
     </>
   );
@@ -102,14 +98,16 @@ const ShowfavoritedPosts = (props) => {
       <h2>Favorite Posts</h2>
       {props.favoriteStories.map((story, index) => {
         return (
-          <FavoritePostField
-            index={index}
-            title={story.title}
-            isAnon={story.is_anonymous_pin}
-            username={story.username}
-            description={story.description}
-            id={story.id}
-          />
+          <div key={index}>
+            <FavoritePostField
+              index={index}
+              title={story.title}
+              isAnon={story.is_anonymous_pin}
+              username={story.pinAuthor}
+              description={story.description}
+              id={story.id}
+            />
+          </div>
         );
       })}
     </Col>
@@ -128,11 +126,60 @@ const UserProfileBio = (props) => {
         ) : (
           <Avatar size={64} icon="user" />
         )}
-        <h1>{props.userProfile ? `${props.userProfile.username}` : ""}</h1>
+        {props.userProfile ? `${props.userProfile.username}` : ""}
         <p>{props.userProfile.bio}</p>
       </Typography>
     </div>
   );
 };
 
-const ListFavoriteStories = (props) => {};
+const ProfileNotFound = () => {
+  return (
+    <Typography variant="h5" component="h3" align="center">
+      <Avatar size={64} icon="user" />
+      <p>Profile Not Found</p>
+    </Typography>
+  );
+};
+
+const ListUserStories = (props) => {
+  console.log(props.stories);
+  return (
+    <>
+      {props.stories.map((story) => {
+        return (
+          <div style={{ padding: "20px" }} key={story.id}>
+            <StoryField story={story} {...props} />
+          </div>
+        );
+      })}
+    </>
+  );
+};
+
+const StoryField = (props) => {
+  const { id, title, description, is_anonymous_pin } = props.story;
+  const auth = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = auth;
+  return (
+    <>
+      <h5 className="card-title">
+        {title} <br />
+      </h5>
+      <Markup content={description} />
+      <Link to={`/story/${id}`}>
+        <button type="button" className="btn btn-primary btn-sm">
+          View Story
+        </button>
+      </Link>
+      {isAuthenticated &&
+        (user.is_administrator || user.id === props.ownerid) && (
+          <Switch
+            className="react-switch"
+            onChange={() => props.updateStoryAnonymity(props.story)}
+            checked={is_anonymous_pin}
+          />
+        )}
+    </>
+  );
+};

@@ -18,7 +18,10 @@ import {
   FLAG_COMMENT,
   REMOVE_FLAG_COMMENT,
   GET_USER_FAVORITE_STORIES,
-  UPDATE_PROFILE_PIC
+  UPDATE_PROFILE_PIC,
+  EDIT_PIN_PRO,
+  USER_PROFILE_LOADING,
+  USER_PROFILE_NOT_FOUND,
 } from "../actions/types";
 import { getPinsById } from "../actions/pins";
 
@@ -26,80 +29,113 @@ const initialState = {
   token: localStorage.getItem("token"),
   isAuthenticated: null,
   isLoading: false,
+  isProfileLoading: false,
   user: "",
   users: [],
   userProfile: null,
   story_author: null,
   registerFail: false,
   loginFail: false,
-  favoriteStories: []
+  favoriteStories: [],
+  profileStatus: false,
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SEARCH_USERS:
       return {
         ...state,
-        users: action.payload
+        users: action.payload,
       };
     case GET_USER:
       return {
         ...state,
-        userProfile: action.payload
+        userProfile: action.payload,
+        isProfileLoading: false,
+      };
+    case USER_PROFILE_NOT_FOUND:
+      return {
+        ...state,
+        isProfileLoading: false,
+        profileStatus: action.payload,
+      };
+    case USER_PROFILE_LOADING:
+      return {
+        ...state,
+        isProfileLoading: true,
+        profileStatus: false,
+      };
+    case EDIT_PIN_PRO:
+      const updated = state.userProfile.userStories.map((s) =>
+        s.id === action.payload.id
+          ? {
+              ...s,
+              is_anonymous_pin: action.payload.is_anonymous_pin,
+            }
+          : s
+      );
+      const userPro = {
+        ...state.userProfile,
+        userStories: updated,
+      };
+
+      return {
+        ...state,
+        userProfile: userPro,
       };
     case EDIT_USER:
       if (action.payload == null) {
         return {
-          ...state
+          ...state,
         };
       } else {
         return {
           ...state,
-          user: action.payload
+          user: action.payload,
         };
       }
     case DELETE_USER:
       const filterUsersdel = state.users.results.filter(
-        a => a.id !== action.payload
+        (a) => a.id !== action.payload
       );
       const delUsers = {
         ...state.users,
-        results: filterUsersdel
+        results: filterUsersdel,
       };
       return {
         ...state,
-        users: delUsers
+        users: delUsers,
       };
     case EDIT_USER_ROLE:
       const usersRole = [
-        ...state.users.results.filter(p => p.id !== action.payload),
-        action.payload
+        ...state.users.results.filter((p) => p.id !== action.payload),
+        action.payload,
       ];
       const listUsers = {
         ...state.users,
-        results: usersRole
+        results: usersRole,
       };
       return {
         ...state,
-        users: listUsers
+        users: listUsers,
       };
     case GET_NEXT_PREVIOUS_USERS:
     case GET_USERS:
       return {
         ...state,
-        users: action.payload
+        users: action.payload,
       };
     case USER_LOADING:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
       };
     case USER_LOADED:
       return {
         ...state,
         isAuthenticated: true,
         isLoading: false,
-        user: action.payload
+        user: action.payload,
       };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
@@ -110,7 +146,7 @@ export default function(state = initialState, action) {
         isAuthenticated: true,
         isLoading: false,
         registerFail: false,
-        loginFail: false
+        loginFail: false,
       };
     case USER_SELF_DELETE:
     case AUTH_ERROR:
@@ -125,47 +161,54 @@ export default function(state = initialState, action) {
         user: null,
         isAuthenticated: false,
         isLoading: false,
-        loginFail: true
+        loginFail: true,
       };
     case FLAG_COMMENT:
       const userFlagComment = {
         id: action.payload.id,
-        comment: action.payload.comment
+        comment: action.payload.comment,
       };
       const userInfo = {
         ...state.user,
-        flaggerComment: [...state.user.flaggerComment, userFlagComment]
+        flaggerComment: [...state.user.flaggerComment, userFlagComment],
       };
       return {
         ...state,
-        user: userInfo
+        user: userInfo,
       };
     case REMOVE_FLAG_COMMENT:
       const removeFlagComment = {
         ...state.user,
         flaggerComment: [
-          state.user.flaggerComment.filter(flag => flag.id !== action.payload)
-        ]
+          state.user.flaggerComment.filter(
+            (flag) => flag.id !== action.payload
+          ),
+        ],
       };
       return {
         ...state,
-        user: removeFlagComment
+        user: removeFlagComment,
       };
     case GET_USER_FAVORITE_STORIES:
       return {
         ...state,
-        favoriteStories: action.payload
+        favoriteStories: action.payload,
       };
+    // case USER_PROFILE_LOADING:
+    //   return {
+    //     ...state,
+    //     isProfileLoading: true,
+    //   };
     case UPDATE_PROFILE_PIC:
       const profilepic = {
         ...state.user,
-        profileurl: action.payload.profileurl
+        profileurl: action.payload.profileurl,
       };
 
       return {
         ...state,
         user: profilepic,
-        userProfile: profilepic
+        userProfile: profilepic,
       };
     default:
       return state;
