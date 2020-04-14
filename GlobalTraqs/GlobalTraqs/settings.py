@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'management',
     'django_cleanup.apps.CleanupConfig',
+    'django_cron',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
@@ -137,14 +138,6 @@ DATABASES = {
         'HOST': config('HOST'),
         'PORT': config('PORT'),
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'arqivedb',
-    #     'USER': 'arqivemaster',
-    #     'PASSWORD': 'secretarqive',
-    #     'HOST': 'database-1.cake6tjozc5q.us-east-1.rds.amazonaws.com',
-    #     'PORT': '5432',
-    # }
 }
 
 
