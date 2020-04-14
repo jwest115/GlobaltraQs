@@ -3,6 +3,7 @@ import Header from "./components/layout/Header";
 import MapDashboard from "./components/Map/MapDashboard";
 import About from "./components/Pages/About";
 import FAQ from "./components/Pages/FAQ";
+import Resources from "./components/Pages/Resources";
 import {
   HashRouter as Router,
   Switch,
@@ -49,6 +50,7 @@ export class App extends Component {
                 <Route exact path="/story" component={MapDashboard} />
                 <Route exact path="/story/:id" component={MapDashboard} />
                 <Route exact path="/About" component={About} />
+                <Route exact path="/resources" component={Resources} />
                 {/*<Route path="/Story/:id" exact component={Story} />*/}
                 <Route exact path="/faq" component={FAQ} />
                 <Route exact path="/login" component={login} />

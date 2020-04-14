@@ -5,7 +5,7 @@ import {
   editPin,
   deletePins,
   addComment,
-  deleteComment, getPinsWithBounds, getMinPinDate, getMaxPinDate
+  deleteComment, getPinsWithBounds, getMinPinDate, getMaxPinDate, getPins
 } from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
 import useAddPinForm from "./CustomHooks/useAddPinForm";
@@ -89,6 +89,7 @@ export default function MapDashboard() {
   useEffect(() => {
     console.log("here trying to get pins");
      if(mapReference != undefined) {
+       // dispatch(getPins());
        mapReference.once("moveend", function() {
         console.log("bounds");
         let mapBounds = mapReference.getBounds();
@@ -100,7 +101,7 @@ export default function MapDashboard() {
         dispatch(getPinsWithBounds(north, south, east, west));
         });
       }
-  }, [pins]);
+  }, []);
 
   useEffect(() => {
     getLocation();

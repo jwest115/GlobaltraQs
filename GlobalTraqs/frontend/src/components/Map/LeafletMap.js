@@ -92,11 +92,16 @@ const LeafletMap = props => {
   });
 
   const updatePin = marker => {
-
-    let start = marker.startDate.split('-');
-    start = new Date(start[0], start[1] - 1, start[2], 0, 0, 0, 0);
-    let end = marker.endDate.split('-');
-    end = new Date(end[0], end[1] - 1, end[2], 0, 0, 0, 0);
+    let start = null;
+    let end = null;
+    if(marker.startDate) {
+      start = marker.startDate.split('-');
+      start = new Date(start[0], start[1] - 1, start[2], 0, 0, 0, 0);
+    }
+    if(marker.endDate) {
+      end = marker.endDate.split('-');
+      end = new Date(end[0], end[1] - 1, end[2], 0, 0, 0, 0);
+    }
 
      if(props.isIndividualStoryPage) {
       props.seteditPin({
