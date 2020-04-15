@@ -62,6 +62,7 @@ export default function (state = initialState, action) {
     case USER_PROFILE_LOADING:
       return {
         ...state,
+        userProfile: null,
         isProfileLoading: true,
         profileStatus: false,
       };
@@ -150,7 +151,6 @@ export default function (state = initialState, action) {
       };
     case USER_SELF_DELETE:
     case AUTH_ERROR:
-      return;
     case LOGIN_FAIL:
       localStorage.removeItem("token");
       return {
@@ -160,9 +160,9 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
         isLoading: false,
         loginFail: true,
-        registerFail: false
+        registerFail: false,
       };
-      case LOGOUT_SUCCESS:
+    case LOGOUT_SUCCESS:
       localStorage.removeItem("token");
       return {
         ...state,

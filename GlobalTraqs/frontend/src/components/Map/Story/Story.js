@@ -28,12 +28,12 @@ function Story(props) {
   const { isAuthenticated, user } = auth;
 
   const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
-
-  useEffect(() => {
-      if(props.mapReference && props.pin.latitude != undefined) {
-          props.mapReference.panTo([props.pin.latitude, props.pin.longitude]);
-      }
-  }, [props.pin]);
+  //TODO: useEffect making errors
+  // useEffect(() => {
+  //     if(props.mapReference && props.pin.latitude != undefined) {
+  //         props.mapReference.panTo([props.pin.latitude, props.pin.longitude]);
+  //     }
+  // }, [props.pin]);
 
   if (props.pinDeleted) {
     props.setPinDeleted(false);
@@ -52,18 +52,18 @@ function Story(props) {
 
   return (
     <div className="container-fluid" style={storyBody}>
-        {console.log(props.pin.startDate +" is the start date")}
-        {console.log(new Date())}
+      {console.log(props.pin.startDate + " is the start date")}
+      {console.log(new Date())}
       {canManagePin ? (
         <div>
           <div className="admin-moderator-edit">
             <button
               type="button"
               className="btn btn-primary btn-sm"
-              onClick={e => {
-                let start = props.pin.startDate.split('-');
+              onClick={(e) => {
+                let start = props.pin.startDate.split("-");
                 start = new Date(start[0], start[1] - 1, start[2], 0, 0, 0, 0);
-                let end = props.pin.endDate.split('-');
+                let end = props.pin.endDate.split("-");
                 end = new Date(end[0], end[1] - 1, end[2], 0, 0, 0, 0);
                 props.seteditPin({
                   id: props.pin.id,
@@ -71,7 +71,7 @@ function Story(props) {
                   description: props.pin.description,
                   category: props.pin.category,
                   startDate: start,
-                  endDate: end
+                  endDate: end,
                 });
                 props.seteditpinmodalState(!props.editpinmodalState);
               }}

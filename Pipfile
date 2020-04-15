@@ -20,6 +20,7 @@ django-rest-knox = "*"
 pillow = "*"
 django-cleanup = "*"
 python-decouple = "*"
+django-cron = "*"
 
 [requires]
 python_version = "3.7"
