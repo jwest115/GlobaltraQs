@@ -74,6 +74,16 @@ function SearchSidebar(props) {
     dispatch(getUsers());
   }, []);
 
+  const centerMarker = marker => {
+    props.mapReference.panTo([marker.latitude, marker.longitude]);
+
+    props.setPlacement({
+      id: marker.id,
+      userlat: marker.latitude,
+      userlng: marker.longitude
+    });
+  };
+
   const onSetSidebarOpen = (open) => {
     setSidebarOpen({ sidebarOpen: open });
   };
@@ -254,6 +264,7 @@ function SearchSidebar(props) {
               <Link
                 style={{ textDecoration: "inherit" }}
                 to={`story/${story.id}`}
+                onClick={() => centerMarker(story)}
               >
                 <CardActionArea>
                   <CardContent>

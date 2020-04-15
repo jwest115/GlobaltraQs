@@ -277,6 +277,8 @@ export default function MapDashboard() {
                 maxPinDate={maxPinDate}
                 minPinDate={minPinDate}
                 setSidebarOpen={setSidebarOpen}
+                mapReference={mapReference}
+                setPlacement={setplacement}
               />
               <StorySidebar
                 maplink={"/story"}
