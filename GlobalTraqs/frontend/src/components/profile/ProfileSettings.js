@@ -6,20 +6,34 @@ import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { logout } from "../../actions/auth";
 import Switch from "react-switch";
 import axios from "axios";
+import useProfileImage from "./CustomHooks/useProfileImage";
+import ProfileImageModal from "./ProfileImageModal";
 
 export default function Settings(props) {
   const [accountDeleted, setAccountDeleted] = useState(false);
   const [userImage, setUserImage] = useState("");
   const dispatch = useDispatch();
-  const auth = useSelector(state => state.auth);
-  const userProfile = useSelector(state => state.auth.userProfile);
+  const auth = useSelector((state) => state.auth);
+  const userProfile = useSelector((state) => state.auth.userProfile);
   const [bio, setBio] = useState("");
   const { id } = props.match.params;
   const [checked, setChecked] = useState(false);
   const [profileVisibilityChecked, setProfileVisibilityChecked] = useState(
     false
   );
-
+  const {
+    modalState,
+    onSelectFile,
+    toggle,
+    image,
+    crop,
+    zoom,
+    setcrop,
+    setZoom,
+    onCropComplete,
+    onSubmitPic,
+    showCroppedImage,
+  } = useProfileImage();
   const updateAccessibility = () => {
     setChecked(!checked);
     const accessibility_mode_active = !checked;
@@ -44,22 +58,22 @@ export default function Settings(props) {
     setAccountDeleted(true);
   };
 
-  const uploadImage = e => {
+  const uploadImage = (e) => {
     e.preventDefault();
     const userId = id;
     let data = new FormData();
     data.append("image_url", userImage);
     axios
       .patch(`api/auth/users/${userId}/`, data)
-      .then(function(response) {
+      .then(function (response) {
         console.log(response);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault(); //prevents refresh of page
     const userData = { bio };
     dispatch(editUser(id, user.id, userData));
@@ -135,7 +149,7 @@ export default function Settings(props) {
                 className="form-control"
                 type="text"
                 name="bio"
-                onChange={e => setBio(e.target.value)}
+                onChange={(e) => setBio(e.target.value)}
                 value={bio}
               />
             </div>
@@ -145,17 +159,29 @@ export default function Settings(props) {
               </button>
             </div>
           </form>
-          <form onSubmit={uploadImage}>
-            <input
-              type="file"
-              id="image"
-              name="userimage"
-              accept="image/png, image/jpeg"
-              onChange={e => setUserImage(e.target.files[0])}
-              required
-            />
-            <button>PUSH</button>
-          </form>
+
+          <input
+            type="file"
+            name="file"
+            id="exampleFile"
+            onChange={onSelectFile}
+            accept="image/*"
+          />
+
+          <button onClick={() => toggle()}>Upload</button>
+          <ProfileImageModal
+            toggle={toggle}
+            modalState={modalState}
+            onSelectFile={onSelectFile}
+            crop={crop}
+            zoom={zoom}
+            setcrop={setcrop}
+            setZoom={setZoom}
+            image={image}
+            onCropComplete={onCropComplete}
+            onSubmit={onSubmitPic}
+            showCroppedImage={showCroppedImage}
+          />
         </div>
       );
     } else {
@@ -173,10 +199,8 @@ export default function Settings(props) {
     );
   }
   return (
-      <div className={"main-content-div"}>
-        <div style={{ padding: "20px" }}>
-          {userCanEdit}
-        </div>;
-      </div>
+    <div className={"main-content-div"}>
+      <div style={{ padding: "20px" }}>{userCanEdit}</div>;
+    </div>
   );
 }

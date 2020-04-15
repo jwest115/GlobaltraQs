@@ -8,7 +8,7 @@ import {
   Link,
   Redirect,
   useParams,
-  useRouteMatch
+  useRouteMatch,
 } from "react-router-dom";
 import Upvote from "./Upvote";
 import Flag from "./Flag";
@@ -19,16 +19,15 @@ import FlagReportModal from "./FlagReportModal";
 const storyBody = {
   paddingTop: "50px",
   paddingLeft: "50px",
-  paddingRight: "50px"
+  paddingRight: "50px",
 };
 function Story(props) {
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const { isAuthenticated, user } = auth;
 
   const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
-
 
   if (props.pinDeleted) {
     props.setPinDeleted(false);
@@ -47,18 +46,18 @@ function Story(props) {
 
   return (
     <div className="container-fluid" style={storyBody}>
-        {console.log(props.pin.startDate +" is the start date")}
-        {console.log(new Date())}
+      {console.log(props.pin.startDate + " is the start date")}
+      {console.log(new Date())}
       {canManagePin ? (
         <div>
           <div className="admin-moderator-edit">
             <button
               type="button"
               className="btn btn-primary btn-sm"
-              onClick={e => {
-                let start = props.pin.startDate.split('-');
+              onClick={(e) => {
+                let start = props.pin.startDate.split("-");
                 start = new Date(start[0], start[1] - 1, start[2], 0, 0, 0, 0);
-                let end = props.pin.endDate.split('-');
+                let end = props.pin.endDate.split("-");
                 end = new Date(end[0], end[1] - 1, end[2], 0, 0, 0, 0);
                 props.seteditPin({
                   id: props.pin.id,
@@ -66,7 +65,7 @@ function Story(props) {
                   description: props.pin.description,
                   category: props.pin.category,
                   startDate: start,
-                  endDate: end
+                  endDate: end,
                 });
                 props.seteditpinmodalState(!props.editpinmodalState);
               }}
@@ -77,7 +76,7 @@ function Story(props) {
           <button
             type="button"
             className="btn btn-primary btn-sm"
-            onClick={e =>
+            onClick={(e) =>
               props.setDeleteConfirmation(!props.deleteConfirmation)
             }
           >
@@ -108,7 +107,7 @@ function Story(props) {
       ) : (
         <Link
           style={{ textDecoration: "inherit" }}
-          to={`/users/${props.pin.owner}`}
+          to={`/users/${props.pin.username}`}
         >
           <p>By: {props.pin.username}</p>
         </Link>

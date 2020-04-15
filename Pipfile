@@ -19,7 +19,8 @@ django-rest-passwordreset = "*"
 django-rest-knox = "*"
 pillow = "*"
 django-cleanup = "*"
-django-extensions = "*"
+python-decouple = "*"
+django-cron = "*"
 
 [requires]
 python_version = "3.7"
