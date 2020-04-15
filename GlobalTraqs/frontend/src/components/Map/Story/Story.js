@@ -29,7 +29,6 @@ function Story(props) {
 
   const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
 
-
   if (props.pinDeleted) {
     props.setPinDeleted(false);
     return <Redirect to="/test" />;
