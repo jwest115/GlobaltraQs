@@ -24,7 +24,7 @@ SECRET_KEY = config('SECRET_KEY')
 #DEBUG = True
 DEBUG = config('DEBUG', cast=bool)
 #DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
-ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', '.netlify.com']
+ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1', '.netlify.com', 'localhost']
 
 
 # Application definition
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'management',
     'django_cleanup.apps.CleanupConfig',
+    'django_cron',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
@@ -135,16 +136,8 @@ DATABASES = {
         'USER': config('USER'),
         'PASSWORD': config('PASSWORD'),
         'HOST': config('HOST'),
-        'PORT': '5432',
+        'PORT': config('PORT'),
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'arqivedb',
-    #     'USER': 'arqivemaster',
-    #     'PASSWORD': 'secretarqive',
-    #     'HOST': 'database-1.cake6tjozc5q.us-east-1.rds.amazonaws.com',
-    #     'PORT': '5432',
-    # }
 }
 
 
