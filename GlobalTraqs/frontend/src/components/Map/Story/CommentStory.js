@@ -45,7 +45,7 @@ function CommentStory(props) {
                 <button
                   type="button"
                   className="btn btn-primary btn-sm"
-                  onClick={e => {
+                  onClick={(e) => {
                     dispatch(deleteComment(userComment.id));
                   }}
                 >
@@ -69,14 +69,14 @@ function CommentStory(props) {
 
 export default CommentStory;
 
-const FlagButton = props => {
+const FlagButton = (props) => {
   console.log(props.id);
   const dispatch = useDispatch();
   const flagCommentCheck = props.user.flaggerComment.some(
-    userFlagComment => userFlagComment.comment === props.id
+    (userFlagComment) => userFlagComment.comment === props.id
   );
   const flagid = flagCommentCheck
-    ? props.user.flaggerComment.filter(a => a.comment === props.id)
+    ? props.user.flaggerComment.filter((a) => a.comment === props.id)
     : "";
 
   return (
@@ -102,7 +102,7 @@ const FlagButton = props => {
   );
 };
 
-const AddCommentForm = props => {
+const AddCommentForm = (props) => {
   if (props.user) {
     return (
       <div className="card border-primary mb-3 col-md-6">
@@ -117,11 +117,11 @@ const AddCommentForm = props => {
                 className="form-control"
                 id="exampleTextarea"
                 rows="3"
-                onChange={e =>
+                onChange={(e) =>
                   props.setuserComment({
                     ...props.userComment,
                     is_anonymous_comment: props.user.is_anonymous_active,
-                    description: e.target.value
+                    description: e.target.value,
                   })
                 }
               ></textarea>

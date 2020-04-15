@@ -8,7 +8,7 @@ import {
   Link,
   Redirect,
   useParams,
-  useRouteMatch
+  useRouteMatch,
 } from "react-router-dom";
 import Upvote from "./Upvote";
 import Flag from "./Flag";
@@ -19,10 +19,10 @@ import FlagReportModal from "./FlagReportModal";
 const storyBody = {
   paddingTop: "50px",
   paddingLeft: "50px",
-  paddingRight: "50px"
+  paddingRight: "50px",
 };
 function Story(props) {
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const { isAuthenticated, user } = auth;
@@ -82,7 +82,7 @@ function Story(props) {
           <button
             type="button"
             className="btn btn-primary btn-sm"
-            onClick={e =>
+            onClick={(e) =>
               props.setDeleteConfirmation(!props.deleteConfirmation)
             }
           >
@@ -113,7 +113,7 @@ function Story(props) {
       ) : (
         <Link
           style={{ textDecoration: "inherit" }}
-          to={`/users/${props.pin.owner}`}
+          to={`/users/${props.pin.username}`}
         >
           <p>By: {props.pin.username}</p>
         </Link>

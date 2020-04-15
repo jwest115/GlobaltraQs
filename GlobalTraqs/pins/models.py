@@ -26,6 +26,7 @@ class pin(models.Model):
     lastEditDate = models.DateField('lastEditDate', blank=True, null=True)
     lastPersonEdit = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+
     class Meta:
         ordering = ['id']
 
@@ -52,7 +53,7 @@ class upVoteStory(models.Model):
     pinId = models.ForeignKey(
         "pin", on_delete=models.CASCADE, null=True, related_name='updotes')
     upVoter = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='user_upvoted_stories')
     upvote = models.BooleanField(default=False)
 
     class Meta:
