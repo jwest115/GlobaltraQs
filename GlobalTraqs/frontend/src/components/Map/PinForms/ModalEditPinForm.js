@@ -7,11 +7,13 @@ import {
   ModalFooter,
   Form,
   FormGroup,
+  InputGroup,
   Input,
   Label
 } from "reactstrap";
 import TinyMCE from 'react-tinymce';
 
+import DatePicker from "react-date-picker";
 import "react-datepicker/dist/react-datepicker.css";
 const buttonStyle = {
   float: "right"
@@ -39,7 +41,7 @@ function ModalEditPinForm(props) {
       >
         <ModalHeader toggle={props.toggle}> Add a story </ModalHeader>
         <ModalBody>
-          <Form onSubmit={validateEditForm}>
+          <Form onSubmit={validateEditForm} noValidate={true}>
             <FormGroup>
               <Label style={labelStyle} for="category">
                 Category
@@ -107,24 +109,34 @@ function ModalEditPinForm(props) {
               {/*  }*/}
               {/*/>*/}
             </FormGroup>
-          {/*    <InputGroup>*/}
-          {/*    <label style={labelStyle} for="startDate">*/}
-          {/*      Start Date*/}
-          {/*    </label>*/}
-          {/*     <DatePicker*/}
-          {/*        selected={startDate}*/}
-          {/*        onChange={this.handleStartDateChange}*/}
-          {/*        value={startDate}*/}
-          {/*      />*/}
-          {/*    <label style={labelStyle} for="endDate">*/}
-          {/*      &nbsp;&nbsp;&nbsp;End Date*/}
-          {/*    </label>*/}
-          {/*     <DatePicker*/}
-          {/*        selected={endDate}*/}
-          {/*        onChange={this.handleEndDateChange}*/}
-          {/*        value={endDate}*/}
-          {/*      />*/}
-          {/*</InputGroup>*/}
+              <InputGroup>
+              <label style={labelStyle} for="startDate">
+                Start Date
+              </label>
+               <DatePicker
+                format={"MM/dd/yyyy"}
+                name="startDate"
+                value={props.userForm.startDate}
+                onChange={date =>
+                  props.setuserForm({
+                    ...props.userForm,
+                    startDate: date
+                  })}
+                />
+              <label style={labelStyle} for="endDate">
+                &nbsp;&nbsp;&nbsp;End Date
+              </label>
+               <DatePicker
+                   format={"MM/dd/yyyy"}
+                    name="endDate"
+                    value={props.userForm.endDate}
+                    onChange={date =>
+                      props.setuserForm({
+                        ...props.userForm,
+                        endDate: date
+                      })}
+                />
+          </InputGroup>
 
             <Button style={buttonStyle} color="success">
               Save

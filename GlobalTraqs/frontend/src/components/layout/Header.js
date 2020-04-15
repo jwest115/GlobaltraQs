@@ -171,6 +171,11 @@ function Header() {
               Support Us{" "}
             </Link>
           </li>
+           <li className="nav-item">
+            <Link to="/resources" className="nav-link">
+              Resources{" "}
+            </Link>
+          </li>
           <li className="nav-item">
             <Link to="/ContactUs" className="nav-link">
               Contact Us{" "}

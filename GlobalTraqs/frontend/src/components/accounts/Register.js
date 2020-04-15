@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../actions/auth";
@@ -12,8 +12,10 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 export default function registerHook() {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
-  const { isAuthenticated, user , isLoading} = auth;
+  const { isAuthenticated, registerFail} = auth;
   const [open, setOpen] = useState(false);
+  const [failed, setFailed] = useState(false);
+
   const handleTooltipClose = () => {
     setOpen(false);
   };
@@ -35,6 +37,17 @@ export default function registerHook() {
   const reCaptchaLoaded = () => {
     console.log("captcha successfully loaded");
   };
+
+  useEffect(() => {
+    if(submitted) {
+      setFailed(registerFail);
+      console.log("register fail" + registerFail);
+    }
+    else {
+      setFailed(false);
+    }
+  }, [registerFail]);
+
   const verifyCallback = response => {
     if (response) {
       setcaptcha(true);
@@ -124,11 +137,11 @@ export default function registerHook() {
       <div className="main-content-div">
         <div className="col-md-6 m-auto">
           {/* if the form was submitted and register failed, show banner*/}
-
+          {console.log("submitted " + submitted + " register fail " + failed)}
           <div className="card card-body mt-5">
             <h2 className="text-center">Register</h2>
-            {submitted && !isAuthenticated ?
-
+            {console.log("submitted " + submitted + " " + " register fail " + failed)}
+            {submitted && failed ?
               <div className="card card-body mt-5 alert alert-danger" role="alert">
                 Username or Email already exists! Please use another.
               </div>

@@ -45,6 +45,8 @@ function SearchSidebar(props) {
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState(props.minPinDate);
   const [endDate, setEndDate] = useState(props.maxPinDate);
+  const [minDate, setMinDate] = useState(0);
+  const [maxDate, setMaxDate] = useState(new Date());
   const pinData = useSelector(state => state.pins.pins);
   const users = useSelector(state => state.auth.users);
   const [userSearchText, setUserSearchText] = useState("");
@@ -53,10 +55,14 @@ function SearchSidebar(props) {
 
   useEffect(() =>{
     setDateRange([props.minPinDate.getFullYear(), props.maxPinDate.getFullYear()]);
+    setMinDate(props.minPinDate.getFullYear());
+    setMaxDate(props.maxPinDate.getFullYear());
   }, [props.minPinDate]);
 
   useEffect(() =>{
     setDateRange([props.minPinDate.getFullYear(), props.maxPinDate.getFullYear()]);
+    setMinDate(props.minPinDate.getFullYear());
+    setMaxDate(props.maxPinDate.getFullYear());
   }, [props.maxPinDate]);
 
   useEffect(() => {
@@ -118,6 +124,17 @@ function SearchSidebar(props) {
     return value;
   }
 
+  const clearFilters = () => {
+    setSelectedCategories(options);
+    setMinDate(props.minPinDate.getFullYear());
+    setMaxDate(props.maxPinDate.getFullYear());
+    setStartDate(props.minPinDate);
+    setEndDate(props.maxPinDate);
+    setDateRange([props.minPinDate.getFullYear(), props.maxPinDate.getFullYear()]);
+    setSearchText("");
+    dispatch(getPins())
+  };
+
   const storySearch = (
     <div style={{ marginTop: "10px" }}>
       <form onSubmit={submitSearch} noValidate={true}>
@@ -147,8 +164,8 @@ function SearchSidebar(props) {
           </Label>
            <DatePicker
               value={startDate}
-              minDate={new Date(props.minPinDate.getFullYear(), props.minPinDate.getMonth(), props.minPinDate.getDate() - 1, 0, 0, 0, 0)}
-              maxDate={new Date(props.maxPinDate.getFullYear(), props.maxPinDate.getMonth(), props.maxPinDate.getDate() + 1, 0, 0, 0, 0)}
+              minDate={new Date(props.minPinDate.getFullYear(), props.minPinDate.getMonth() - 1, props.minPinDate.getDate() - 2, 0, 0, 0, 0)}
+              maxDate={new Date(props.maxPinDate.getFullYear(), props.maxPinDate.getMonth() - 1, props.maxPinDate.getDate() + 1, 0, 0, 0, 0)}
               onChange={date => {
                 setStartDate(date);
                 setDateRange([date.getFullYear(), endDate.getFullYear()]);
@@ -156,6 +173,8 @@ function SearchSidebar(props) {
               format={"MM/dd/yyyy"}
             />
              <DatePicker
+              minDate={new Date(props.minPinDate.getFullYear(), props.minPinDate.getMonth() - 1, props.minPinDate.getDate() - 2, 0, 0, 0, 0)}
+              maxDate={new Date(props.maxPinDate.getFullYear(), props.maxPinDate.getMonth() - 1, props.maxPinDate.getDate() + 1, 0, 0, 0, 0)}
               value={endDate}
               onChange={date => {
                 setEndDate(date);
@@ -164,11 +183,14 @@ function SearchSidebar(props) {
               format={"MM/dd/yyyy"}
             />
            <Slider
-              min={Number(props.minPinDate.getFullYear())}
-              max={Number(props.maxPinDate.getFullYear())}
+              min={Number(minDate)}
+              max={Number(maxDate)}
+              // min={1000}
+              // max={Number(new Date().getFullYear())}
               value={dateRange}
               valueLabelDisplay="auto"
               onChange={(event, newValue) => {
+                console.log("props.minPinDate "+ props.minPinDate.getFullYear());
                 console.log("new value " + newValue);
                 setDateRange(newValue);
                 startDate.setFullYear(newValue[0]);
@@ -200,13 +222,21 @@ function SearchSidebar(props) {
           {/*</Label>*/}
           {/*<DatePicker selected={endDate} onChange={date => setEndDate(date)} />*/}
         </InputGroup>
-        <div className="form-group">
+        <div className="form-group" style={{padding: "20px 20px 20px 20px"}}>
           <button
             type="submit"
             style={{ float: "right" }}
             className="btn btn-primary"
           >
             Search
+          </button>
+            <button
+            type="submit"
+            style={{ float: "right", paddingRight: "20px" }}
+            className="btn btn-primary"
+            onClick={() => clearFilters()}
+          >
+            Clear filters
           </button>
         </div>
       </form>

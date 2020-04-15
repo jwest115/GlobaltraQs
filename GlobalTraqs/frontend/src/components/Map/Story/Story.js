@@ -29,6 +29,12 @@ function Story(props) {
 
   const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
 
+  useEffect(() => {
+      if(props.mapReference && props.pin.latitude != undefined) {
+          props.mapReference.panTo([props.pin.latitude, props.pin.longitude]);
+      }
+  }, [props.pin]);
+
   if (props.pinDeleted) {
     props.setPinDeleted(false);
     return <Redirect to="/test" />;
@@ -43,8 +49,11 @@ function Story(props) {
   }
 
   //console.log(pin.flaggerstory);
+
   return (
     <div className="container-fluid" style={storyBody}>
+        {console.log(props.pin.startDate +" is the start date")}
+        {console.log(new Date())}
       {canManagePin ? (
         <div>
           <div className="admin-moderator-edit">
@@ -52,11 +61,17 @@ function Story(props) {
               type="button"
               className="btn btn-primary btn-sm"
               onClick={e => {
+                let start = props.pin.startDate.split('-');
+                start = new Date(start[0], start[1] - 1, start[2], 0, 0, 0, 0);
+                let end = props.pin.endDate.split('-');
+                end = new Date(end[0], end[1] - 1, end[2], 0, 0, 0, 0);
                 props.seteditPin({
                   id: props.pin.id,
                   title: props.pin.title,
                   description: props.pin.description,
-                  category: props.pin.category
+                  category: props.pin.category,
+                  startDate: start,
+                  endDate: end
                 });
                 props.seteditpinmodalState(!props.editpinmodalState);
               }}

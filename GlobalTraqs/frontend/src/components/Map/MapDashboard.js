@@ -5,7 +5,7 @@ import {
   editPin,
   deletePins,
   addComment,
-  deleteComment, getPinsWithBounds, getMinPinDate, getMaxPinDate
+  deleteComment, getPinsWithBounds, getMinPinDate, getMaxPinDate, getPins
 } from "../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
 import useAddPinForm from "./CustomHooks/useAddPinForm";
@@ -89,6 +89,7 @@ export default function MapDashboard() {
   useEffect(() => {
     console.log("here trying to get pins");
      if(mapReference != undefined) {
+       // dispatch(getPins());
        mapReference.once("moveend", function() {
         console.log("bounds");
         let mapBounds = mapReference.getBounds();
@@ -100,7 +101,7 @@ export default function MapDashboard() {
         dispatch(getPinsWithBounds(north, south, east, west));
         });
       }
-  }, [pins]);
+  }, []);
 
   useEffect(() => {
     getLocation();
@@ -152,7 +153,9 @@ export default function MapDashboard() {
     id: "1",
     title: "",
     description: "",
-    category: "1"
+    category: "1",
+    startDate: new Date(),
+    endDate: new Date()
   });
 
   const onEditSubmit = e => {
@@ -164,9 +167,9 @@ export default function MapDashboard() {
       ...pinData,
       title: editPinForm.title,
       description: editPinForm.description,
-      category: editPinForm.category
-      // startDate: editPinForm.startDate,
-      // endDate: editPinForm.endDate
+      category: editPinForm.category,
+      startDate: editPinForm.startDate,
+      endDate: editPinForm.endDate
     });
     dispatch(getMaxPinDate());
     dispatch(getMinPinDate());
@@ -421,6 +424,7 @@ export default function MapDashboard() {
               setMapDivStyle={setdivStyle1}
               setMapContainerStyle={setMapContainerStyle}
               mapContainerStyle={mapContainerStyle}
+              mapReference={mapReference}
             />
             </div>
           </Route>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { login } from "../../actions/auth";
 import Recaptcha from "react-recaptcha";
@@ -10,8 +10,10 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 export default function Login() {
   const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
-  const { isAuthenticated, user, loginFail } = auth;
+  const { isAuthenticated, loginFail } = auth;
   const [open, setOpen] = useState(false);
+  const [failed, setFailed] = useState(false);
+
   const handleTooltipClose = () => {
     setOpen(false);
   };
@@ -27,6 +29,16 @@ export default function Login() {
     errors: {}
   });
   const [attempts, setattempts] = useState(false);
+
+  useEffect(() => {
+    if(submitted) {
+      setFailed(loginFail);
+      console.log("login fail" + loginFail);
+    }
+    else {
+      setFailed(false);
+    }
+  }, [loginFail]);
 
   const reCaptchaLoaded = () => {
     console.log("captcha successfully loaded");
@@ -106,12 +118,12 @@ export default function Login() {
     <div className="col-md-6 m-auto">
       {console.log(attempts)}
       {/* if form was submitted and login failed then show an error banner*/}
-
+      {console.log("submitted " + submitted + " login fail " + failed)}
       <div className="card card-body mt-5">
         <h2 className="text-center">Login</h2>
-        {submitted && loginFail ?
+        {submitted && failed ?
           <div className="card card-body mt-5 alert alert-danger" role="alert">
-          Login Failed.
+          Invalid username and/or password, please try again
           </div>
           :
           ""

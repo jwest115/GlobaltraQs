@@ -114,10 +114,30 @@ export default function(state = initialState, action) {
       };
     case USER_SELF_DELETE:
     case AUTH_ERROR:
+      return;
     case LOGIN_FAIL:
-    case LOGOUT_SUCCESS:
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        token: null,
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+        loginFail: true,
+        registerFail: false
+      };
+      case LOGOUT_SUCCESS:
+      localStorage.removeItem("token");
+      return {
+        ...state,
+        token: null,
+        user: null,
+        isAuthenticated: false,
+        isLoading: false,
+      };
     case REGISTER_FAIL:
       localStorage.removeItem("token");
+      console.log("setting register fail to true");
       return {
         ...state,
         registerFail: true,

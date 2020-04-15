@@ -46,7 +46,7 @@ export default function contactUs() {
         <h2 className="text-center">Contact Us</h2>
         <form onSubmit={onSubmit}>
           <div className="form-group">
-            <label>Email</label>
+            <label>Email (Optional)</label>
             <input
               type="email"
               className="form-control"
