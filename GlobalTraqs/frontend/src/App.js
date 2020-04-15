@@ -55,8 +55,9 @@ export class App extends Component {
                 <Route exact path="/faq" component={FAQ} />
                 <Route exact path="/login" component={login} />
                 <Route exact path="/register" component={register} />
-                <Route exact path="/users/:id" component={ProfilePage} />
+                <Route exact path="/users/:name" component={ProfileDashboard} />
                 <Route exact path="/users/:id/settings" component={Settings} />
+                <Route exact path="/users" component={ProfileDashboard} />
                 <PrivateRoute exact path="/manage" component={Manage} />
                 <PrivateRoute exact path="/manage/flag" component={Manage} />
                 <PrivateRoute exact path="/manage/users" component={Manage} />
@@ -65,11 +66,7 @@ export class App extends Component {
                   path="/manage/comments"
                   component={Manage}
                 />
-                <PrivateUserRoute
-                  exact
-                  path="/setting"
-                  component={ProfileDashboard}
-                />
+
                 <Route
                   exact
                   path="/profile/:name"

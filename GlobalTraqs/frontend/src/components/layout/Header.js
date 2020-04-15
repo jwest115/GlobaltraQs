@@ -4,12 +4,12 @@ import { logout } from "../../actions/auth";
 import { useSelector, useDispatch, useStore } from "react-redux";
 import { editUser } from "../../actions/users";
 import IdleTimer from "react-idle-timer";
-import Image from 'react-bootstrap/Image';
+import Image from "react-bootstrap/Image";
 import logo from "./images/thearqive_white_color_logos.png";
 
 function Header() {
   const dispatch = useDispatch();
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user } = auth;
   const [anonymousMode, setAnoynmousMode] = useState(false);
 
@@ -19,7 +19,7 @@ function Header() {
     }
   });
   const idleTimer = useRef(null);
-  const onIdle = e => {
+  const onIdle = (e) => {
     dispatch(logout());
     window.location.replace("http://www.google.com");
   };
@@ -42,7 +42,7 @@ function Header() {
   let adminManager = null;
 
   if (user != null) {
-    if(user.is_anonymous_active) {
+    if (user.is_anonymous_active) {
       user.username = "Anonymous";
     }
     if (user.accessibility_mode_active) {
@@ -107,7 +107,7 @@ function Header() {
         </button>
       </li>
       <li className="nav-item">
-        <Link to={user ? `/users/${user.id}` : " "} className="nav-link">
+        <Link to={user ? `/users/${user.username}` : " "} className="nav-link">
           Profile
         </Link>
       </li>
@@ -132,7 +132,7 @@ function Header() {
   return (
     <nav className="fixed-top navbar navbar-expand-lg navbar-dark bg-primary header-nav">
       <a className="navbar-brand" href="#">
-      <Image src={logo} height={"108px"} />
+        <Image src={logo} height={"108px"} />
       </a>
       <button
         className="navbar-toggler"
@@ -146,7 +146,7 @@ function Header() {
         <span className="navbar-toggler-icon"></span>
       </button>
       <IdleTimer
-        ref={ref => (idleTimer.current = ref)}
+        ref={(ref) => (idleTimer.current = ref)}
         element={document}
         onIdle={onIdle}
         debounce={250}

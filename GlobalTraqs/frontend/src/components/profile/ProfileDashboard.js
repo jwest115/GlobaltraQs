@@ -12,17 +12,12 @@ export default function ProfileDashboard() {
   return (
     <div className="main-content-div">
       <Switch>
-        <Route path="/setting">
-          <ProfileSetting />
-        </Route>
-        <Route path="/test/:lit">
-          <GetUserProfile />
-        </Route>
-
-        <Route path="/profile/:name">
+        <Route path="/users/:name">
           <GetUserProfile />{" "}
         </Route>
-        <Route path="/profile/"></Route>
+        <Route path="/users">
+          <h2>Profile Page</h2>
+        </Route>
       </Switch>
     </div>
   );

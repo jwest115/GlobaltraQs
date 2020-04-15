@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CloseIcon from "@material-ui/icons/Close";
 import Sidebar from "react-sidebar";
-import {
-  IconButton,
-} from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import { searchPins } from "../../actions/pins";
 import { getPins } from "../../actions/pins";
 import { Link } from "react-router-dom";
@@ -17,24 +15,24 @@ import DatePicker from "react-date-picker";
 import { Markup } from "interweave";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
-import Slider from "@material-ui/core/Slider"
+import Slider from "@material-ui/core/Slider";
 import { Label } from "reactstrap";
 
 import InputGroup from "react-bootstrap/InputGroup";
 import {
   getUsers,
   searchUsers,
-  getNextPreviousUsers
+  getNextPreviousUsers,
 } from "../../actions/users";
 
 const options = [
   { value: "1", label: "Personal" },
   { value: "2", label: "Community" },
-  { value: "3", label: "Historical" }
+  { value: "3", label: "Historical" },
 ];
 
 const labelStyle = {
-  marginRight: "10px"
+  marginRight: "10px",
 };
 
 function SearchSidebar(props) {
@@ -45,18 +43,27 @@ function SearchSidebar(props) {
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState(props.minPinDate);
   const [endDate, setEndDate] = useState(props.maxPinDate);
-  const pinData = useSelector(state => state.pins.pins);
-  const users = useSelector(state => state.auth.users);
+  const pinData = useSelector((state) => state.pins.pins);
+  const users = useSelector((state) => state.auth.users);
   const [userSearchText, setUserSearchText] = useState("");
 
-  const [dateRange, setDateRange] = useState([props.minPinDate.getFullYear(), props.maxPinDate.getFullYear()]);
+  const [dateRange, setDateRange] = useState([
+    props.minPinDate.getFullYear(),
+    props.maxPinDate.getFullYear(),
+  ]);
 
-  useEffect(() =>{
-    setDateRange([props.minPinDate.getFullYear(), props.maxPinDate.getFullYear()]);
+  useEffect(() => {
+    setDateRange([
+      props.minPinDate.getFullYear(),
+      props.maxPinDate.getFullYear(),
+    ]);
   }, [props.minPinDate]);
 
-  useEffect(() =>{
-    setDateRange([props.minPinDate.getFullYear(), props.maxPinDate.getFullYear()]);
+  useEffect(() => {
+    setDateRange([
+      props.minPinDate.getFullYear(),
+      props.maxPinDate.getFullYear(),
+    ]);
   }, [props.maxPinDate]);
 
   useEffect(() => {
@@ -67,11 +74,11 @@ function SearchSidebar(props) {
     dispatch(getUsers());
   }, []);
 
-  const onSetSidebarOpen = open => {
+  const onSetSidebarOpen = (open) => {
     setSidebarOpen({ sidebarOpen: open });
   };
 
-  const submitSearch = e => {
+  const submitSearch = (e) => {
     console.log("pin type " + pinType);
     e.preventDefault(); //prevents refresh of page
     console.log(startDate);
@@ -108,7 +115,7 @@ function SearchSidebar(props) {
     console.log("is the query");
     dispatch(searchPins(searchText, categorySearchQuery, start, end));
   };
-  const submitUserSearch = e => {
+  const submitUserSearch = (e) => {
     e.preventDefault(); //prevents refresh of page
     dispatch(searchUsers(userSearchText));
   };
@@ -129,7 +136,7 @@ function SearchSidebar(props) {
             label="Search"
             placeholder={"Search for stories"}
             name={"searchText"}
-            onChange={e => setSearchText(e.target.value)}
+            onChange={(e) => setSearchText(e.target.value)}
             value={searchText}
           />
         </div>
@@ -138,45 +145,65 @@ function SearchSidebar(props) {
           isMulti
           defaultValue={options}
           value={selectedCategories}
-          onChange={categories => setSelectedCategories(categories)}
+          onChange={(categories) => setSelectedCategories(categories)}
           options={options}
         />
         <InputGroup style={{ marginTop: "20px" }}>
           <Label style={labelStyle} for="startDate">
             Search date range
           </Label>
-           <DatePicker
-              value={startDate}
-              minDate={new Date(props.minPinDate.getFullYear(), props.minPinDate.getMonth(), props.minPinDate.getDate() - 1, 0, 0, 0, 0)}
-              maxDate={new Date(props.maxPinDate.getFullYear(), props.maxPinDate.getMonth(), props.maxPinDate.getDate() + 1, 0, 0, 0, 0)}
-              onChange={date => {
-                setStartDate(date);
-                setDateRange([date.getFullYear(), endDate.getFullYear()]);
-              }}
-              format={"MM/dd/yyyy"}
-            />
-             <DatePicker
-              value={endDate}
-              onChange={date => {
-                setEndDate(date);
-                setDateRange([startDate.getFullYear(), date.getFullYear()]);
-              }}
-              format={"MM/dd/yyyy"}
-            />
-           <Slider
-              min={Number(props.minPinDate.getFullYear())}
-              max={Number(props.maxPinDate.getFullYear())}
-              value={dateRange}
-              valueLabelDisplay="auto"
-              onChange={(event, newValue) => {
-                console.log("new value " + newValue);
-                setDateRange(newValue);
-                startDate.setFullYear(newValue[0]);
-                endDate.setFullYear(newValue[1]);
-              }}
-              aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
-            />
+          <DatePicker
+            value={startDate}
+            minDate={
+              new Date(
+                props.minPinDate.getFullYear(),
+                props.minPinDate.getMonth(),
+                props.minPinDate.getDate() - 1,
+                0,
+                0,
+                0,
+                0
+              )
+            }
+            maxDate={
+              new Date(
+                props.maxPinDate.getFullYear(),
+                props.maxPinDate.getMonth(),
+                props.maxPinDate.getDate() + 1,
+                0,
+                0,
+                0,
+                0
+              )
+            }
+            onChange={(date) => {
+              setStartDate(date);
+              setDateRange([date.getFullYear(), endDate.getFullYear()]);
+            }}
+            format={"MM/dd/yyyy"}
+          />
+          <DatePicker
+            value={endDate}
+            onChange={(date) => {
+              setEndDate(date);
+              setDateRange([startDate.getFullYear(), date.getFullYear()]);
+            }}
+            format={"MM/dd/yyyy"}
+          />
+          <Slider
+            min={Number(props.minPinDate.getFullYear())}
+            max={Number(props.maxPinDate.getFullYear())}
+            value={dateRange}
+            valueLabelDisplay="auto"
+            onChange={(event, newValue) => {
+              console.log("new value " + newValue);
+              setDateRange(newValue);
+              startDate.setFullYear(newValue[0]);
+              endDate.setFullYear(newValue[1]);
+            }}
+            aria-labelledby="range-slider"
+            getAriaValueText={valuetext}
+          />
           {/*<Slider*/}
           {/*  min={props.minPinYear}*/}
           {/*  max={props.maxPinYear}*/}
@@ -223,7 +250,6 @@ function SearchSidebar(props) {
               <Link
                 style={{ textDecoration: "inherit" }}
                 to={`story/${story.id}`}
-                params={{ testvalue: "hello" }}
               >
                 <CardActionArea>
                   <CardContent>
@@ -287,8 +313,8 @@ function SearchSidebar(props) {
           position: "absolute",
           visibility: "hidden",
           transition: "none",
-          backgroundColor: "transparent"
-        }
+          backgroundColor: "transparent",
+        },
       }}
     >
       {console.log(pinData.length + " is the length")}
@@ -298,7 +324,7 @@ function SearchSidebar(props) {
 
 export default SearchSidebar;
 
-const UserSearchForm = props => {
+const UserSearchForm = (props) => {
   const dispatch = useDispatch();
   return (
     <div style={{ marginTop: "10px" }}>
@@ -311,7 +337,7 @@ const UserSearchForm = props => {
             label="Search"
             placeholder={"Search for users"}
             name={"userSearchText"}
-            onChange={e => props.setUserSearchText(e.target.value)}
+            onChange={(e) => props.setUserSearchText(e.target.value)}
             value={props.userSearchText}
           />
         </div>
@@ -360,13 +386,16 @@ const UserSearchForm = props => {
   );
 };
 
-const ListUsersSearch = props => {
+const ListUsersSearch = (props) => {
   return (
     <>
       {props.users.map((user, index) => {
         return (
           <Card key={index} style={{ marginTop: "5px" }}>
-            <Link style={{ textDecoration: "inherit" }} to={`users/${user.id}`}>
+            <Link
+              style={{ textDecoration: "inherit" }}
+              to={`users/${user.username}`}
+            >
               <CardActionArea>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h2">

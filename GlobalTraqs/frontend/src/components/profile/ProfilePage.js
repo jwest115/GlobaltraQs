@@ -51,8 +51,6 @@ export default function ProfilePage(props) {
     dispatch(userEditValidate(pinData, pin.id));
   };
 
-  const authLinks = <button>Test</button>;
-
   return (
     <>
       {props.userProfile ? (
