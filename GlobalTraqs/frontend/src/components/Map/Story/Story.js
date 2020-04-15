@@ -29,11 +29,6 @@ function Story(props) {
 
   const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
 
-  useEffect(() => {
-      if(props.mapReference && props.pin.latitude != ucondefined && props.pin.longitude != undefined) {
-          props.mapReference.panTo([props.pin.latitude, props.pin.longitude]);
-      }
-  }, [props.pin]);
 
   if (props.pinDeleted) {
     props.setPinDeleted(false);
