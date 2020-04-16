@@ -486,21 +486,21 @@ function StoryDisplay(props) {
     });
   }, []);
 
-  useEffect(() => {
-    return () => {
-      console.log("====in unmount");
-      setStoryStyle({
-        top: "100%"
-      });
-      props.setMapContainerStyle({
-        height: "100%"
-      });
-      setTimeout(function() { //Start the timer
-            props.setIsLeavingStoryPage(false);
-            props.history.push("/#");
-      }.bind(this), 700);
-    }
-  }, [props.isLeavingStoryPage]);
+  // useEffect(() => {
+  //   return () => {
+  //     console.log("====in unmount");
+  //     setStoryStyle({
+  //       top: "100%"
+  //     });
+  //     props.setMapContainerStyle({
+  //       height: "100%"
+  //     });
+  //     setTimeout(function() { //Start the timer
+  //           props.setIsLeavingStoryPage(false);
+  //           props.history.push("/#");
+  //     }.bind(this), 700);
+  //   }
+  // }, [props.isLeavingStoryPage]);
 
   return (
     <div id={"story-page"} style={storyStyle}>

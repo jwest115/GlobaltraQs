@@ -10,7 +10,7 @@ export default function ProfileDashboard() {
   const auth = useSelector((state) => state.auth);
 
   return (
-    <div className="main-content-div">
+    <div className="main-content-div" style={{padding: "0px"}}>
       <Switch>
         <Route path="/users/:name">
           <GetUserProfile />{" "}

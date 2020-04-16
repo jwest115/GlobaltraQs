@@ -213,3 +213,22 @@ b, strong {
     width: 100%;
     transition: all .75s ease-out;
 }
+
+
+.favorite-stories {
+    min-height: 100%;
+    height: auto;
+    background: rgb(77, 65, 133);
+    padding-top: 60px !important;
+    color: white !important;
+}
+
+.user-profile-name {
+    color: rgb(77, 65, 133);
+}
+
+.default-btn-purple {
+    border-radius: 8px !important;
+    background: rgb(77, 65, 133) !important;
+    color: white;
+}

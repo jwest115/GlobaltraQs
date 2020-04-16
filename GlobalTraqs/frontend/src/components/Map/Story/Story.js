@@ -49,7 +49,8 @@ function Story(props) {
     <div className="container-fluid" style={storyBody}>
         <div style={{left: '10', position: 'absolute', top: '10'}}>
             <Link
-                onClick={() => props.setIsLeavingStoryPage(true)}
+                onClick={() => props.history.goBack()}
+                // onClick={() => props.setIsLeavingStoryPage(true)}
             >
                 <KeyboardBackspaceIcon></KeyboardBackspaceIcon>
             </Link>
