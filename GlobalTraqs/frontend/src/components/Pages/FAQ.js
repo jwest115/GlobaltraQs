@@ -236,7 +236,7 @@ function DisplayFaq(props) {
                 <Typography variant="h5" component="h3">
                   Q: {faq.faqQuestionDesc}
                 </Typography>
-                1<Typography component="p">A: {faq.faqAnswerDesc}</Typography>
+                <Typography component="p">A: {faq.faqAnswerDesc}</Typography>
                 <button onClick={() => props.deletefaqDesc(faq.id)}>
                   Delete
                 </button>
