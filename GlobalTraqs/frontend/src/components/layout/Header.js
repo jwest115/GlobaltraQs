@@ -40,11 +40,15 @@ function Header() {
   }
   let userRole = "";
   let adminManager = null;
-
+  let actual_username = "";
   if (user != null) {
-    if (user.is_anonymous_active) {
-      user.username = "Anonymous";
+    if(actual_username == "") {
+      actual_username = user.username;
     }
+    //console.log("actual username" + actual_username);
+    // if (user.is_anonymous_active) {
+    //   user.username = "Anonymous";
+    // }
     if (user.accessibility_mode_active) {
       if (accessibilityWidget != undefined) {
         accessibilityWidget.style.visibility = "visible";
@@ -107,7 +111,7 @@ function Header() {
         </button>
       </li>
       <li className="nav-item">
-        <Link to={user ? `/users/${user.username}` : " "} className="nav-link">
+        <Link to={user ? `/users/${actual_username}` : " "} className="nav-link">
           Profile
         </Link>
       </li>

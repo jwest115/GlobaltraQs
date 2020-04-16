@@ -162,6 +162,7 @@
     z-index:998;
     position: absolute;
     margin-top: 10px;
+    right: 0px;
 }
 
 /* fix for bold Tiny MCE text not showing up in some pages */

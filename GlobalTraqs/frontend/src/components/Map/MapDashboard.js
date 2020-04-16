@@ -15,7 +15,8 @@ import {
   Route,
   useParams,
   Redirect,
-  useRouteMatch
+  useRouteMatch,
+  useHistory
 } from "react-router-dom";
 import LeafletMap from "./LeafletMap";
 import SearchSidebar from "../layout/SearchSidebar";
@@ -58,13 +59,15 @@ export default function MapDashboard() {
   const [placement, setplacement] = useState({
     id: "",
     userlat: 34.0522,
-    userlng: -118.2437
+    userlng: -118.2437,
+    zoom: 12
   });
 
   const pins = useSelector(state => state.pins.pins);
 
   const dispatch = useDispatch();
   const [userRoleVerified, setUserRoleVerified] = useState(false);
+  const history = useHistory();
 
 
   useEffect(() => {
@@ -107,6 +110,21 @@ export default function MapDashboard() {
     getLocation();
   }, []);
 
+   const centerMarker = marker => {
+       if(mapReference) {
+           console.log("zoom level " + mapReference.getZoom());
+            mapReference.panTo([marker.latitude, marker.longitude]);
+            console.log("zoom level " + mapReference.getZoom());
+        setplacement({
+              id: marker.id,
+              userlat: marker.latitude,
+              userlng: marker.longitude,
+              zoom: mapReference.getZoom()
+            });
+       }
+  };
+
+
   const {
     addPinValues,
     setaddPinValues,
@@ -148,6 +166,7 @@ export default function MapDashboard() {
   const maxPinDate = useSelector(state => state.pins.pinMaxDate);
 
   const [pinCluster, setPinCluster] = useState(false);
+  const [isLeavingStoryPage, setIsLeavingStoryPage] = useState(false);
   const [editPinForm, seteditPinForm] = useState({
     //fields for editng
     id: "1",
@@ -279,6 +298,7 @@ export default function MapDashboard() {
                 setSidebarOpen={setSidebarOpen}
                 mapReference={mapReference}
                 setPlacement={setplacement}
+                centerMarker={centerMarker}
               />
               <StorySidebar
                 maplink={"/story"}
@@ -297,6 +317,7 @@ export default function MapDashboard() {
                 pinCluster={pinCluster}
                 setPinCluster={setPinCluster}
                 setSidebarOpen={setSidebarOpen}
+                centerMarker={centerMarker}
               />
             </div>
             <LeafletMap
@@ -344,6 +365,7 @@ export default function MapDashboard() {
               setPinCluster={setPinCluster}
               mapContainerStyle={divStyle1}
               setMapContainerStyle={setMapContainerStyle}
+              centerMarker={centerMarker}
             />
             </div>
           </Route>
@@ -393,6 +415,7 @@ export default function MapDashboard() {
               isIndividualStoryPage={true}
               mapContainerStyle={mapContainerStyle}
               setMapContainerStyle={setMapContainerStyle}
+              centerMarker={centerMarker}
             />
             </div>
             <StoryDisplay
@@ -427,6 +450,10 @@ export default function MapDashboard() {
               setMapContainerStyle={setMapContainerStyle}
               mapContainerStyle={mapContainerStyle}
               mapReference={mapReference}
+              centerMarker={centerMarker}
+              isLeavingStoryPage={isLeavingStoryPage}
+              setIsLeavingStoryPage={setIsLeavingStoryPage}
+              history={history}
             />
             </div>
           </Route>
@@ -444,9 +471,11 @@ export default function MapDashboard() {
 function StoryDisplay(props) {
   let match = useRouteMatch();
   let [storyStyle, setStoryStyle] = useState({  top: '100%' });
-
+  let [redirectHome, setRedirectHome] = useState(false);
   // change the map & story page styling for story slide up effect
   useEffect(() => {
+    console.log("====in use effect");
+
     console.log("here trying to set the style");
     console.log(props.mapContainerStyle);
     setStoryStyle({
@@ -454,8 +483,24 @@ function StoryDisplay(props) {
     });
     props.setMapContainerStyle({
       height: "45%"
-    })
+    });
   }, []);
+
+  useEffect(() => {
+    return () => {
+      console.log("====in unmount");
+      setStoryStyle({
+        top: "100%"
+      });
+      props.setMapContainerStyle({
+        height: "100%"
+      });
+      setTimeout(function() { //Start the timer
+            props.setIsLeavingStoryPage(false);
+            props.history.push("/#");
+      }.bind(this), 700);
+    }
+  }, [props.isLeavingStoryPage]);
 
   return (
     <div id={"story-page"} style={storyStyle}>

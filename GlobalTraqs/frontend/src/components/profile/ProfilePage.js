@@ -40,7 +40,8 @@ const FavoritePostField = ({
 export default function ProfilePage(props) {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-
+ console.log("user profile ")
+          console.log(props.userProfile)
   const { profileStatus, isAuthenticated, user } = auth;
 
   const updateStoryAnonymity = (pin) => {

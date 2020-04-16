@@ -15,6 +15,7 @@ import Flag from "./Flag";
 import Moment from "react-moment";
 import Markup from "interweave";
 import FlagReportModal from "./FlagReportModal";
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 const storyBody = {
   paddingTop: "50px",
@@ -46,6 +47,13 @@ function Story(props) {
 
   return (
     <div className="container-fluid" style={storyBody}>
+        <div style={{left: '10', position: 'absolute', top: '10'}}>
+            <Link
+                onClick={() => props.setIsLeavingStoryPage(true)}
+            >
+                <KeyboardBackspaceIcon></KeyboardBackspaceIcon>
+            </Link>
+        </div>
       {console.log(props.pin.startDate + " is the start date")}
       {console.log(new Date())}
       {canManagePin ? (
