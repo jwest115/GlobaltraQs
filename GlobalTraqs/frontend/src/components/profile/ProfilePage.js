@@ -82,6 +82,7 @@ export default function ProfilePage(props) {
                       updateStoryAnonymity={updateStoryAnonymity}
                       stories={props.userProfile.userStories}
                       ownerid={props.userProfile.id}
+                      {...props}
                     />
                   )}
                 </div>
@@ -178,9 +179,17 @@ const ListUserStories = (props) => {
 };
 
 const StoryField = (props) => {
-  const { id, title, description, is_anonymous_pin } = props.story;
+  const {
+    id,
+    title,
+    description,
+    is_anonymous_pin,
+    startDate,
+    endDate,
+  } = props.story;
   const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user } = auth;
+  console.log(props);
   return (
     <>
       <Card style={{ marginTop: "5px" }}>
@@ -201,10 +210,20 @@ const StoryField = (props) => {
                     checked={is_anonymous_pin}
                   />
                 )}
+                   {isAuthenticated && (user.is_administrator || user.id === props.ownerid) && (
+        <button
+          onClick={() => props.setEditPinState(startDate, endDate, props.story)}
+          type="button"
+          className="btn btn-primary btn-sm"
+        >
+          Edit
+        </button>
+      )}
           </CardContent>
         </CardActionArea>
         </Link>
       </Card>
+   
     </>
   );
 };

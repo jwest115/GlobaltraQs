@@ -10,7 +10,8 @@ class PinSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = pin
-        fields = ['id', 'title', 'description', 'is_anonymous_pin']
+        fields = ['id', 'title', 'description',
+                  'is_anonymous_pin', 'category', 'startDate', 'endDate']
 
 
 class FlagCommentSerializer(serializers.ModelSerializer):
