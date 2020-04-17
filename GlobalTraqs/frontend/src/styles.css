@@ -2,6 +2,11 @@
 @import url("~react-datepicker/dist/react-datepicker.css");
 @import url("https://unpkg.com/leaflet-geosearch@2.6.0/assets/css/leaflet.css");
 
+#root {
+    height: 100%;
+    width: 100%;
+}
+
 .top-bar {
     padding: 18px 0px 10px 30px;
     background-color: black;
@@ -162,6 +167,7 @@
     z-index:998;
     position: absolute;
     margin-top: 10px;
+    right: 0px;
 }
 
 /* fix for bold Tiny MCE text not showing up in some pages */
@@ -206,9 +212,146 @@ b, strong {
   overflow: hidden;
 }
 
+.moveimage
+{
+    padding-top: 50px;
+    width: 80%;
+    float: right;
+}
+
+.copyright
+{
+    padding-right: 10px;
+    padding-top: 30px;
+    width: 80%;
+    float: right;
+    font-size: 12px;
+    color: #98999b;
+
+}
+
+.aboutHeader   
+{
+    padding-left: 100px;
+    padding-top: 100px;
+    padding-bottom: 10px;
+    padding-right: 300px;
+    float: left;
+    font-size: 64px; /* should use rem or em for responsiveness */
+    color: #ffffff;
+    /*font: Eina;*/
+    font-family: eina, arial !important;
+    text-transform: lowercase;
+}
+
+.aboutDesc
+{
+    padding: 40px;
+    padding-left: 100px;
+    float: right;
+    font-size: 20px;
+    color: #ffffff;
+
+}
+
+.columnleft {
+    width: 60%;
+    position: relative;
+    float: left;
+    width: 50%;
+    top: 120px;
+
+    background: rgb(77, 65, 133);
+
+}
+  
+.columnright {
+    width: 40%;
+    position: relative;
+    float: right;
+    width: 50%;
+    top: 120px;
+    background: rgb(77, 65, 133);
+
+}
+
 .map-container {
     position: absolute;
     height: 100%;
     width: 100%;
     transition: all .75s ease-out;
+}
+
+.column {
+    position: relative;
+    float: left;
+    width: 50%;
+    top: 120px;
+    margin-left: -10px;
+    margin-right: -10px;
+    background: rgb(77, 65, 133);
+}
+  
+  /* Clear floats after the columns */
+.aboutUs-row {
+    background: rgb(77, 65, 133);
+    height: auto;
+    min-height: 100%;
+    width: 100%;
+}
+
+.favorite-stories {
+    min-height: 100%;
+    height: auto;
+    background: rgb(77, 65, 133);
+    padding-top: 60px !important;
+    color: white !important;
+}
+
+.user-profile-name {
+    color: rgb(77, 65, 133);
+}
+
+.default-btn-purple {
+    border-radius: 8px !important;
+    background: rgb(77, 65, 133) !important;
+    color: white;
+}
+
+.site-header {
+    background-color: black !important;
+}
+
+.header-nav-link {
+    color: white !important;
+}
+
+.header-nav-username {
+    color: #e01783;
+    padding: .715rem 0.5rem;
+    font-weight: 600;
+}
+
+.header-nav-anonymous {
+    color: #98999b !important;
+}
+
+.faq-page-background {
+    background: rgb(77, 65, 133) !important;;
+    min-height: 100%;
+    height: auto;
+    width: 100%
+}
+
+.faq-question {
+    font-family: Eina, Arial !important;
+}
+
+.faq-answer {
+    font-size: 1.2rem;
+}
+
+.add-faq-button {
+    float: right;
+    border-radius: 8px !important;
 }

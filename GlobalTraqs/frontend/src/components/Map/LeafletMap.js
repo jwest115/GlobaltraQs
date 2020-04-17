@@ -21,7 +21,8 @@ import ModalDeleteConfirm from "./PinForms/ModalDeleteConfirm";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
 import ModalAddPinForm from "./PinForms/ModalAddPinForm";
-import SearchIcon from "@material-ui/icons/Search";
+import FilterListIcon from '@material-ui/icons/FilterList';
+import AddCommentIcon from '@material-ui/icons/AddComment';
 import { GeoSearchControl } from "leaflet-geosearch";
 import { EsriProvider } from "leaflet-geosearch";
 import { useDispatch } from "react-redux";
@@ -84,12 +85,17 @@ const LeafletMap = props => {
     style: "bar",
     animateZoom: true,
     retainZoomLevel: true,
-    searchLabel: "Add story by address",
+    searchLabel: "Search by location",
     showMarker: false,
     showPopup: false,
     autoClose: true,
     keepResult: true
   });
+
+  useEffect(() => {
+    props.setSidebarOpen(false);
+    props.setStorySidebarOpen(false);
+  }, []);
 
   const updatePin = marker => {
     let start = null;
@@ -138,30 +144,21 @@ const LeafletMap = props => {
     }
   };
 
-  const centerMarker = marker => {
-    mapInstance.leafletElement.panTo([marker.latitude, marker.longitude]);
-
-    props.setPlacement({
-      id: marker.id,
-      userlat: marker.latitude,
-      userlng: marker.longitude
-    });
-  };
-
   const addressSearch = e => {
     const longitude = e.location.x;
     const latitude = e.location.y;
     props.setPlacement({
       id: "",
       userlat: latitude,
-      userlng: longitude
+      userlng: longitude,
+      zoom: mapInstance.leafletElement.getZoom()
     });
-    props.setaddPinValues({
-      ...props.addPinValues,
-      latitude: latitude,
-      longitude: longitude
-    });
-    props.toggle();
+    // props.setaddPinValues({
+    //   ...props.addPinValues,
+    //   latitude: latitude,
+    //   longitude: longitude
+    // });
+    // props.toggle();
   };
 
   // used for adding the map reference for fly to and address search
@@ -187,7 +184,7 @@ const LeafletMap = props => {
       {props.setPinDeleted ? props.setPinDeleted(false) : ""}{" "}
       <Map
         center={[props.placement.userlat, props.placement.userlng]}
-        zoom={15}
+        zoom={mapInstance ? mapInstance.leafletElement.getZoom() : props.placement.zoom}
         maxZoom={18} //shows map
         minZoom={3}
         worldCopyJump={true}
@@ -211,8 +208,15 @@ const LeafletMap = props => {
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           />
         )}
+         <Control position={"topleft"} style={{left: "0px"}}>
+            <button
+              className={"btn btn-primary"}
+            >
+              <AddCommentIcon></AddCommentIcon>
+            </button>
+          </Control>
         {props.showSidebarButton ? (
-          <Control position={"topleft"}>
+          <Control position={"topright"}>
             <button
               className={"btn btn-primary"}
               id="open-sidebar-button"
@@ -221,7 +225,7 @@ const LeafletMap = props => {
                 props.setSidebarOpen(!props.sidebarOpen);
               }}
             >
-              <SearchIcon></SearchIcon>
+              <FilterListIcon></FilterListIcon>
             </button>
           </Control>
         ) : null}
@@ -270,7 +274,7 @@ const LeafletMap = props => {
                 position={post}
                 icon={categoryIcon}
                 data={marker}
-                onClick={() => { centerMarker(marker); updatePin(marker); }}
+                onClick={() => { props.centerMarker(marker); updatePin(marker); }}
                 onMouseOver={(e) => { e.target.openPopup(); }}
                 onMouseOut={(e) => { e.target.closePopup(); }}
               >

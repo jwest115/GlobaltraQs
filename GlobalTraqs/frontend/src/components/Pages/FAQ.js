@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import { TextField, Divider } from "@material-ui/core";
 import { useSelector, useDispatch, useStore } from "react-redux";
@@ -128,52 +127,72 @@ export default function FAQ() {
 
   const classes = useStyles();
 
+  let canEdit = false;
+  if(isAuthenticated) {
+      if(user.is_administrator) {
+        canEdit = true;
+      }
+  }
+
   return (
-    <div className={"main-content-div"}>
-      <div className="card card-body mt-4 mb-4">
+    <div className="main-content-div faq-page-background">
+        {/*<div className="faq-title">*/}
+        {/*    Frequently Asked Questions*/}
+        {/*</div>*/}
+        {canEdit ? (
+            <div style={{height: "30px"}}>
+              <button
+                className="add-faq-button btn btn-primary btn-sm"
+                onClick={() => setshowAddForm(!showAddForm)}
+              >
+                Add New FAQ
+              </button>
+            </div>
+            ) : ""}
+    <div className="mt-4 mb-4">
         <div style={{ marginBottom: "30px" }}>
           <Paper className={classes.root}>
-            <Typography variant="h5" component="h3">
+            <h3 className="faq-question">
               Q: What if I don't want to give an exact location?
-            </Typography>
-            <Typography component="p">
+            </h3>
+            <p className="faq-answer">
               A: Not a problem! Give as much, or as little location information
               as you'd like. We just ask that you give us at least a city/region
               and country, since the purpose of this site is to see stories
               located around the world.
-            </Typography>
+            </p>
           </Paper>
         </div>
         <div style={{ marginBottom: "30px" }}>
           <Paper className={classes.root}>
-            <Typography variant="h5" component="h3">
+            <h3 className="faq-question">
               Q: I'm straight, but have a lot of LGBTQ friends. Can I post
               stories too?
-            </Typography>
-            <Typography component="p">
+            </h3>
+            <p className="faq-answer">
               A: Of course, as long as it has something to do with your
               connection to LGBTQ communities or individuals.
-            </Typography>
+            </p>
           </Paper>
         </div>
 
         <div style={{ marginBottom: "30px" }}>
           <Paper className={classes.root}>
-            <Typography variant="h5" component="h3">
+            <h3 className="faq-question">
               Q: How long or short do stories have to be?
-            </Typography>
-            <Typography component="p">
+            </h3>
+            <p className="faq-answer">
               A: As long or as short as you want them to be.
-            </Typography>
+            </p>
           </Paper>
         </div>
 
         <div style={{ marginBottom: "30px" }}>
           <Paper className={classes.root}>
-            <Typography variant="h5" component="h3">
+            <h3 className="faq-question">
               Q: What do the different color pins mean?
-            </Typography>
-            <Typography component="p">
+            </h3>
+            <p className="faq-answer">
               A: Lavender/purple pins are personal stories. Green pins are
               community histories, or stories that have significance to LGBTQ
               communities on a scale larger than the individual. For example,
@@ -182,7 +201,7 @@ export default function FAQ() {
               lesbian couple to get married (quite publically) in Taiwan. Red
               pins are current locations of active organizations and resources
               for LGBTQ individuals.
-            </Typography>
+            </p>
           </Paper>
         </div>
         {faqDesc && (
@@ -212,12 +231,6 @@ export default function FAQ() {
           ></NewFaq>
         )}
       </div>
-      <button
-        className="btn btn-primary btn-sm"
-        onClick={() => setshowAddForm(!showAddForm)}
-      >
-        Add New FAQ
-      </button>
     </div>
   );
 }
@@ -233,10 +246,10 @@ function DisplayFaq(props) {
           <div key={faq.id}>
             <div style={{ marginBottom: "30px" }}>
               <Paper className={props.classes.root}>
-                <Typography variant="h5" component="h3">
+                <h3 className="faq-question">
                   Q: {faq.faqQuestionDesc}
-                </Typography>
-                <Typography component="p">A: {faq.faqAnswerDesc}</Typography>
+                </h3>
+                <p className="faq-answer">A: {faq.faqAnswerDesc}</p>
                 <button onClick={() => props.deletefaqDesc(faq.id)}>
                   Delete
                 </button>

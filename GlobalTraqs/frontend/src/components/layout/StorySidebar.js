@@ -57,6 +57,7 @@ function StorySidebar(props) {
                         style={{ textDecoration: "inherit" }}
                         to={`story/${story.options.data.id}`}
                         params={{ testvalue: "hello" }}
+                        onClick={() => props.centerMarker(story)}
                       >
                         <CardActionArea>
                           <CardContent>
@@ -109,7 +110,10 @@ function StorySidebar(props) {
                 <br />
                 <br />
                 <Markup content={props.pinData.description} />
-                <Link to={`${props.maplink}/${props.pinData.id}`}>
+                <Link
+                    to={`${props.maplink}/${props.pinData.id}`}
+                    onClick={() => props.centerMarker(props.pinData)}
+                >
                   <button type="button" className="btn btn-primary btn-sm">
                     View Story
                   </button>
