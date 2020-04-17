@@ -6,45 +6,42 @@ const useFlagForm = () => {
   const [flagModalState, setflagModalState] = useState(false);
   const [flagCommentModalState, setflagCommentModalState] = useState(false);
   const [flagForm, setflagForm] = useState("");
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user } = auth;
   const dispatch = useDispatch();
-  const flagToggle = id => {
+  const flagToggle = (id) => {
     setflagModalState(!flagModalState);
     setflagForm({
       pinId: id,
       flagger: user.id,
-      flagged: true
+      flagged: true,
     });
   };
-  const flagCommentToggle = id => {
+  const flagCommentToggle = (id) => {
     setflagCommentModalState(!flagCommentModalState);
     setflagForm({
       comment: id,
       flagger: user.id,
-      flagged: true
+      flagged: true,
     });
   };
-  const handleFlagFormChange = e => {
+  const handleFlagFormChange = (e) => {
     e.persist();
-    setflagForm(flagForm => ({
+    setflagForm((flagForm) => ({
       ...flagForm,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
-  const onFlagSubmit = e => {
+  const onFlagSubmit = (e) => {
     e.preventDefault();
     dispatch(userFlagPin(flagForm));
     setflagModalState(!flagModalState);
   };
-  const onFlagCommentSubmit = e => {
+  const onFlagCommentSubmit = (e) => {
     e.preventDefault();
-    console.log(flagForm);
     dispatch(userFlagComment(flagForm));
-    console.log(user);
     setflagCommentModalState(!flagCommentModalState);
   };
-  console.log(flagForm);
   return {
     flagForm,
     flagToggle,
@@ -53,7 +50,7 @@ const useFlagForm = () => {
     flagModalState,
     onFlagSubmit,
     onFlagCommentSubmit,
-    handleFlagFormChange
+    handleFlagFormChange,
   };
 };
 

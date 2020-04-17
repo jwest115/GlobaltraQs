@@ -26,15 +26,13 @@ function Header() {
 
   const toggleAnonymous = () => {
     const is_anonymous_active = !anonymousMode;
-    console.log("anonymous =....");
-    console.log(user.is_anonymous_active);
+
     const userData = { is_anonymous_active };
     dispatch(editUser(user.id, user.id, userData));
   };
 
   let accessibilityWidget = document.body.getElementsByClassName("userway")[0];
-  console.log("accessibility is");
-  console.log(accessibilityWidget);
+
   if (accessibilityWidget) {
     accessibilityWidget.style.visibility = "hidden";
   }
@@ -42,7 +40,7 @@ function Header() {
   let adminManager = null;
   let actual_username = "";
   if (user != null) {
-    if(actual_username == "") {
+    if (actual_username == "") {
       actual_username = user.username;
     }
 
@@ -90,12 +88,10 @@ function Header() {
         </button>
       </li>
       <li className="nav-item header-nav-username">
-          {user
-            ? `Welcome ${
-                user.is_anonymous_active ? "Anonymous" : user.username
-              }`
-            : ""}{" "}
-          {userRole}{" "}
+        {user
+          ? `Welcome ${user.is_anonymous_active ? "Anonymous" : user.username}`
+          : ""}{" "}
+        {userRole}{" "}
       </li>
       <li className="nav-item">
         <button
@@ -106,7 +102,10 @@ function Header() {
         </button>
       </li>
       <li className="nav-item">
-        <Link to={user ? `/users/${actual_username}` : " "} className="nav-link header-nav-link">
+        <Link
+          to={user ? `/users/${actual_username}` : " "}
+          className="nav-link header-nav-link"
+        >
           Profile
         </Link>
       </li>
@@ -127,7 +126,6 @@ function Header() {
       </li>
     </ul>
   );
-
 
   return (
     <nav className="site-header fixed-top navbar navbar-expand-lg navbar-dark header-nav">
@@ -171,7 +169,7 @@ function Header() {
               Support Us{" "}
             </Link>
           </li>
-           <li className="nav-item">
+          <li className="nav-item">
             <Link to="/resources" className="nav-link header-nav-link">
               Resources{" "}
             </Link>

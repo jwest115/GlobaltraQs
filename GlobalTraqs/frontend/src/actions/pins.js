@@ -37,16 +37,11 @@ export const getPins = () => (dispatch) => {
 };
 
 export const getPinsWithBounds = (north, south, east, west) => (dispatch) => {
-  console.log(
-    `/api/pinCoordFilter/?latitude_gte=${south}&latitude_lte=${north}&longitude_gte=${west}&longitude_lte=${east}`
-  );
   axios
     .get(
       `/api/pinCoordFilter/?latitude_gte=${south}&latitude_lte=${north}&longitude_gte=${west}&longitude_lte=${east}`
     )
     .then((res) => {
-      console.log("pins are");
-      console.log(res.data);
       dispatch({
         type: GET_PINS,
         payload: res.data,
@@ -59,12 +54,10 @@ export const getMinPinDate = () => (dispatch) => {
   axios
     .get(`/api/minPinDate`)
     .then((res) => {
-      console.log(res);
       let date = res.data[0].startDate.split("-");
-      console.log(date[0] + " " + date[1] + " " + date[2]);
+
       let minDate = new Date(date[0], date[1], date[2], 0, 0, 0, 0);
-      console.log("min pin is");
-      console.log(minDate);
+
       dispatch({
         type: GET_MIN_PIN,
         payload: minDate,
@@ -77,13 +70,10 @@ export const getMaxPinDate = () => (dispatch) => {
   axios
     .get(`/api/maxPinDate`)
     .then((res) => {
-      console.log(res);
       let date = res.data[0].startDate.split("-");
-      console.log(date[0] + " " + date[1] + " " + date[2]);
+
       let maxDate = new Date(date[0], date[1], date[2], 0, 0, 0, 0);
 
-      console.log("max pin is");
-      console.log(maxDate);
       dispatch({
         type: GET_MAX_PIN,
         payload: maxDate,
@@ -100,7 +90,6 @@ export const searchPins = (searchQuery, categories, startDate, endDate) => (
       `api/pinSearch?search=${searchQuery}&categories=${categories}&startDate_gte=${startDate}&startDate_lte=${endDate}`
     )
     .then((res) => {
-      console.log(res.data);
       dispatch({
         type: SEARCH_PINS,
         payload: res.data,
@@ -128,8 +117,6 @@ export const addPin = (pin) => (dispatch) => {
   let longitude = longitudeSplit[0] + "." + longitudeSplit[1].substring(0, 6);
   pin.latitude = latitude;
   pin.longitude = longitude;
-  console.log("lat" + latitude);
-  console.log("long " + longitude);
 
   axios
     .post("/api/pins/", pin)
@@ -138,18 +125,14 @@ export const addPin = (pin) => (dispatch) => {
         type: ADD_PIN,
         payload: res.data,
       });
-      console.log("In add pin");
-      console.log(res.data);
     })
     .catch((err) => console.log(err));
 };
 
 export const editPin = (pin, id, userid) => (dispatch) => {
-  console.log(id + " " + pin.title);
   axios
     .patch(`/api/pins/${id}/`, pin)
     .then((res) => {
-      console.log(res.data);
       let validUser = false;
       let flagstateofuser = false;
       let userFlaggedBefore = false;
@@ -169,7 +152,6 @@ export const editPin = (pin, id, userid) => (dispatch) => {
             (a) => a.flagger === userid
           )[0].flagged;
         validUser = true;
-        console.log("has this user upvoted before" + upvotedBefore);
       }
       const payload = {
         ...res.data,
@@ -185,14 +167,11 @@ export const editPin = (pin, id, userid) => (dispatch) => {
         payload: res.data,
         // payload: payload
       });
-      console.log("In edit pin");
-      console.log(res.data);
     })
     .catch((err) => console.log(err));
 };
 
 export const getPin = (id, userid) => (dispatch) => {
-  console.log("the user id in redux" + userid);
   axios
     .get(`api/pins/${id}/`)
     .then((res) => {
@@ -215,7 +194,6 @@ export const getPin = (id, userid) => (dispatch) => {
             (a) => a.flagger === userid
           )[0].flagged;
         validUser = true;
-        console.log("has this user upvoted before" + upvotedBefore);
       }
       const payload = {
         ...res.data,
@@ -252,8 +230,6 @@ export const addComment = (comment) => (dispatch) => {
         type: ADD_COMMENT,
         payload: res.data,
       });
-
-      console.log(res.data);
     })
     .catch((err) => console.log(err));
 };
@@ -278,8 +254,6 @@ export const getPinsByOwner = (ownerId) => (dispatch) => {
         type: GET_PINS_BY_OWNER,
         payload: res.data,
       });
-      console.log(res.data);
-      console.log("is owner's pin!");
     })
     .catch((error) => console.log(error));
 };
@@ -288,7 +262,6 @@ export const userFlagPin = (userFlag) => (dispatch) => {
   axios
     .post(`api/flagStory/`, userFlag)
     .then((res) => {
-      console.log(res.data);
       dispatch({
         type: USER_FLAG_PIN,
         payload: res.data,
@@ -305,7 +278,6 @@ export const userUnFlagPin = (id, state) => (dispatch) => {
   axios
     .patch(`api/flagStory/${id}/`, userflagged)
     .then((res) => {
-      console.log(res.data);
       dispatch({
         type: USER_UNFLAG,
         payload: res.data,
@@ -315,7 +287,6 @@ export const userUnFlagPin = (id, state) => (dispatch) => {
 };
 
 export const userFirstUpvote = (pin, user) => (dispatch) => {
-  console.log("over here");
   const submit = {
     upvote: true,
     pinId: pin,
@@ -336,7 +307,7 @@ export const userUpovte = (id, state) => (dispatch) => {
   const submit = {
     upvote: !state,
   };
-  console.log(submit);
+
   axios
     .patch(`api/upVoteStory/${id}/`, submit)
     .then((res) => {
@@ -378,7 +349,7 @@ export const getPinsById = (pinIdArray) => (dispatch) => {
       let favoritedPins = res.data.pins.filter((pin) =>
         pinIdArray.includes(pin.id)
       );
-      console.log(favoritedPins);
+
       dispatch({
         type: GET_PINS,
         payload: favoritedPins,

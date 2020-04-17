@@ -76,15 +76,12 @@ export default function MapDashboard() {
   const history = useHistory();
   useEffect(() => {
     if (isAuthenticated) {
-      // console.log("user is authenticated!");
       if (user.is_administrator || user.is_moderator) {
-        // console.log("user is an admin or moderator or owner!");
         setUserRoleVerified(true);
       } else {
         setUserRoleVerified(false);
       }
     } else {
-      // console.log("user is not authenticated");
       setUserRoleVerified(false);
     }
   });
@@ -94,13 +91,10 @@ export default function MapDashboard() {
   }, []);
 
   useEffect(() => {
-    console.log("here trying to get pins");
     if (mapReference != undefined) {
       // dispatch(getPins());
       mapReference.once("moveend", function () {
-        console.log("bounds");
         let mapBounds = mapReference.getBounds();
-        console.log(mapBounds);
         let south = mapBounds.getSouth();
         let west = mapBounds.getWest();
         let north = mapBounds.getNorth();
@@ -116,9 +110,7 @@ export default function MapDashboard() {
 
   const centerMarker = (marker) => {
     if (mapReference) {
-      console.log("zoom level " + mapReference.getZoom());
       mapReference.panTo([marker.latitude, marker.longitude]);
-      console.log("zoom level " + mapReference.getZoom());
       setplacement({
         id: marker.id,
         userlat: marker.latitude,
@@ -157,10 +149,7 @@ export default function MapDashboard() {
     updateEditForm,
   } = useEditPinForm(pinData, setPinData);
   function userAddedPin() {
-    // console.log(mapReference);
-    // console.log("is the ref");
     mapReference.flyTo([addPinValues.latitude, addPinValues.longitude], 15);
-    // console.log(addPinValues);
   }
 
   const auth = useSelector((state) => state.auth);
@@ -181,9 +170,6 @@ export default function MapDashboard() {
   const [isLeavingStoryPage, setIsLeavingStoryPage] = useState(false);
 
   const addMarker = (e) => {
-    // console.log("here in add marker");
-    // console.log("lat and lng");
-    // console.log(e.latlng);
     setplacement({
       ...placement,
       userlat: e.latlng.lat,
@@ -215,7 +201,6 @@ export default function MapDashboard() {
 
   const onDelete = (e) => {
     e.preventDefault();
-    console.log("setting sidebar " + !storySidebarOpen);
     setStorySidebarOpen(!storySidebarOpen);
     dispatch(deletePins(editPinForm.id));
     toggleDelete();
@@ -241,7 +226,6 @@ export default function MapDashboard() {
           });
         },
         (error) => {
-          console.log("error in getting user location");
           console.log(error);
         },
         {
@@ -464,10 +448,6 @@ function StoryDisplay(props) {
   let [redirectHome, setRedirectHome] = useState(false);
   // change the map & story page styling for story slide up effect
   useEffect(() => {
-    console.log("====in use effect");
-
-    console.log("here trying to set the style");
-    console.log(props.mapContainerStyle);
     setStoryStyle({
       top: "45%",
     });
@@ -478,7 +458,7 @@ function StoryDisplay(props) {
 
   // useEffect(() => {
   //   return () => {
-  //     console.log("====in unmount");
+
   //     setStoryStyle({
   //       top: "100%"
   //     });

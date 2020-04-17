@@ -28,7 +28,6 @@ function StorySidebar(props) {
     }
   }
 
-  console.log("SIDE BAR IS " + props.storySidebarOpen);
   if (props.storySidebarOpen) {
     if (props.pins.length == 0) {
       props.setStorySidebarOpen(false);
@@ -111,8 +110,8 @@ function StorySidebar(props) {
                 <br />
                 <Markup content={props.pinData.description} />
                 <Link
-                    to={`${props.maplink}/${props.pinData.id}`}
-                    onClick={() => props.centerMarker(props.pinData)}
+                  to={`${props.maplink}/${props.pinData.id}`}
+                  onClick={() => props.centerMarker(props.pinData)}
                 >
                   <button type="button" className="btn btn-primary btn-sm">
                     View Story
