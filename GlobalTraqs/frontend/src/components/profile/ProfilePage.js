@@ -94,20 +94,24 @@ const ShowfavoritedPosts = (props) => {
   return (
     <Col md={4}>
       <h2>Favorite Posts</h2>
-      {props.favoriteStories.map((story, index) => {
-        return (
-          <div key={index}>
-            <FavoritePostField
-              index={index}
-              title={story.title}
-              isAnon={story.is_anonymous_pin}
-              username={story.pinAuthor}
-              description={story.description}
-              id={story.id}
-            />
-          </div>
-        );
-      })}
+      {props.favoriteStories.length !== 0 ? (
+        props.favoriteStories.map((story, index) => {
+          return (
+            <div key={index}>
+              <FavoritePostField
+                index={index}
+                title={story.title}
+                isAnon={story.is_anonymous_pin}
+                username={story.pinAuthor ? story.pinAuthor : "Anonymous"}
+                description={story.description}
+                id={story.id}
+              />
+            </div>
+          );
+        })
+      ) : (
+        <NoStories type="Favorite Stories" />
+      )}
     </Col>
   );
 };
@@ -140,17 +144,24 @@ const ProfileNotFound = () => {
   );
 };
 
+const NoStories = ({ type }) => {
+  return <div style={{ padding: "20px" }}>No {type} found</div>;
+};
+
 const ListUserStories = (props) => {
-  console.log(props.stories);
   return (
     <>
-      {props.stories.map((story) => {
-        return (
-          <div style={{ padding: "20px" }} key={story.id}>
-            <StoryField story={story} {...props} />
-          </div>
-        );
-      })}
+      {props.stories.length !== 0 ? (
+        props.stories.map((story) => {
+          return (
+            <div style={{ padding: "20px" }} key={story.id}>
+              <StoryField story={story} {...props} />
+            </div>
+          );
+        })
+      ) : (
+        <NoStories type="User Stories" />
+      )}
     </>
   );
 };
