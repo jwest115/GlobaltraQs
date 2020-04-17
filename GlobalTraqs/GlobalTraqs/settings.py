@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'management',
     'django_cleanup.apps.CleanupConfig',
     'django_cron',
+    'django_extensions',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],

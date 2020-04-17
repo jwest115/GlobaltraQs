@@ -22,6 +22,7 @@ import {
   EDIT_PIN_PRO,
   USER_PROFILE_LOADING,
   USER_PROFILE_NOT_FOUND,
+  EDIT_PIN,
 } from "../actions/types";
 import { getPinsById } from "../actions/pins";
 
@@ -52,6 +53,27 @@ export default function (state = initialState, action) {
         ...state,
         userProfile: action.payload,
         isProfileLoading: false,
+      };
+    case EDIT_PIN:
+      const updatedPin = state.userProfile.userStories.map((s) =>
+        s.id === action.payload.id
+          ? {
+              ...s,
+              title: action.payload.title,
+              description: action.payload.description,
+              category: action.payload.category,
+              startDate: action.payload.startDate,
+              endDate: action.payload.endDate,
+            }
+          : s
+      );
+      const userStoriesUpdatedProfile = {
+        ...state.userProfile,
+        userStories: updatedPin,
+      };
+      return {
+        ...state,
+        userProfile: userStoriesUpdatedProfile,
       };
     case USER_PROFILE_NOT_FOUND:
       return {
