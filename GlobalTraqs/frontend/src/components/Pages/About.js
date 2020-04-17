@@ -91,7 +91,7 @@ function About() {
 
   return (
 
-    <div className="row">
+    <div className="aboutUs-row">
       <div className="columnleft"  style={{width: "60%"}}>
         <h2 className="aboutHeader">
         About Us

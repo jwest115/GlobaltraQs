@@ -2,6 +2,11 @@
 @import url("~react-datepicker/dist/react-datepicker.css");
 @import url("https://unpkg.com/leaflet-geosearch@2.6.0/assets/css/leaflet.css");
 
+#root {
+    height: 100%;
+    width: 100%;
+}
+
 .top-bar {
     padding: 18px 0px 10px 30px;
     background-color: black;
@@ -209,7 +214,6 @@ b, strong {
 
 .moveimage
 {
-    padding-right: 10px;
     padding-top: 50px;
     width: 80%;
     float: right;
@@ -218,11 +222,11 @@ b, strong {
 .copyright
 {
     padding-right: 10px;
-    padding-top: 30 px;
+    padding-top: 30px;
     width: 80%;
     float: right;
-    font-size: 12;
-    color: #ffffff;
+    font-size: 12px;
+    color: #98999b;
 
 }
 
@@ -233,9 +237,11 @@ b, strong {
     padding-bottom: 10px;
     padding-right: 300px;
     float: left;
-    font-size: 64;
+    font-size: 64px; /* should use rem or em for responsiveness */
     color: #ffffff;
-    font: Eina;
+    /*font: Eina;*/
+    font-family: eina, arial !important;
+    text-transform: lowercase;
 }
 
 .aboutDesc
@@ -243,7 +249,7 @@ b, strong {
     padding: 40px;
     padding-left: 100px;
     float: right;
-    font-size: 20;
+    font-size: 20px;
     color: #ffffff;
 
 }
@@ -287,8 +293,11 @@ b, strong {
 }
   
   /* Clear floats after the columns */
-.row{
+.aboutUs-row {
     background: rgb(77, 65, 133);
+    height: auto;
+    min-height: 100%;
+    width: 100%;
 }
 
 .favorite-stories {
@@ -307,4 +316,37 @@ b, strong {
     border-radius: 8px !important;
     background: rgb(77, 65, 133) !important;
     color: white;
+}
+
+.site-header {
+    background-color: black !important;
+}
+
+.header-nav-link {
+    color: white !important;
+}
+
+.header-nav-username {
+    color: #e01783;
+    padding: .715rem 0.5rem;
+    font-weight: 600;
+}
+
+.header-nav-anonymous {
+    color: #98999b !important;
+}
+
+.faq-page-background {
+    background: rgb(77, 65, 133) !important;;
+    min-height: 100%;
+    height: auto;
+    width: 100%
+}
+
+.faq-question {
+    font-family: Eina, Arial !important;
+}
+
+.faq-answer {
+    font-size: 1.2rem;
 }
