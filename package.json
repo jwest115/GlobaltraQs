@@ -46,7 +46,6 @@
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
     "decouple": "^1.0.1",
-    "django": "^1.0.0",
     "email-validator": "^2.0.4",
     "interweave": "^12.2.0",
     "leaflet": "^1.5.1",
