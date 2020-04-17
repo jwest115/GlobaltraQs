@@ -72,7 +72,7 @@ export default function ProfilePage(props) {
                     <ListUserStories
                       updateStoryAnonymity={updateStoryAnonymity}
                       stories={props.userProfile.userStories}
-                      ownerid={props.id}
+                      ownerid={props.userProfile.id}
                     />
                   )}
                 </div>
