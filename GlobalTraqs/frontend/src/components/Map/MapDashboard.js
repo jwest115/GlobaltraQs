@@ -20,7 +20,8 @@ import {
   Route,
   useParams,
   Redirect,
-  useRouteMatch
+  useRouteMatch,
+  useHistory,
 } from "react-router-dom";
 import LeafletMap from "./LeafletMap";
 import SearchSidebar from "../layout/SearchSidebar";
@@ -64,7 +65,7 @@ export default function MapDashboard() {
     id: "",
     userlat: 34.0522,
     userlng: -118.2437,
-    zoom: 12
+    zoom: 12,
   });
 
   const pins = useSelector((state) => state.pins.pins);
@@ -113,20 +114,19 @@ export default function MapDashboard() {
     getLocation();
   }, []);
 
-   const centerMarker = marker => {
-       if(mapReference) {
-           console.log("zoom level " + mapReference.getZoom());
-            mapReference.panTo([marker.latitude, marker.longitude]);
-            console.log("zoom level " + mapReference.getZoom());
-        setplacement({
-              id: marker.id,
-              userlat: marker.latitude,
-              userlng: marker.longitude,
-              zoom: mapReference.getZoom()
-            });
-       }
+  const centerMarker = (marker) => {
+    if (mapReference) {
+      console.log("zoom level " + mapReference.getZoom());
+      mapReference.panTo([marker.latitude, marker.longitude]);
+      console.log("zoom level " + mapReference.getZoom());
+      setplacement({
+        id: marker.id,
+        userlat: marker.latitude,
+        userlng: marker.longitude,
+        zoom: mapReference.getZoom(),
+      });
+    }
   };
-
 
   const {
     addPinValues,
@@ -179,8 +179,6 @@ export default function MapDashboard() {
 
   const [pinCluster, setPinCluster] = useState(false);
   const [isLeavingStoryPage, setIsLeavingStoryPage] = useState(false);
-
-
 
   const addMarker = (e) => {
     // console.log("here in add marker");
@@ -364,53 +362,51 @@ export default function MapDashboard() {
             {pinDeleted ? <Redirect to={"/"} /> : null}
             <div id={"map-dashboard"}>
               centerMarker={centerMarker}
-              
-            <LeafletMap
-              maplink={"/story"}
-              pins={pins}
-              divStyle={divStyle1}
-              addMarker={addMarker}
-              placement={placement}
-              setPlacement={setplacement}
-              modalState={modalState}
-              toggle={toggle}
-              editPin={editPinForm}
-              seteditPin={seteditPinForm}
-              editToggle={editToggle}
-              editpinmodalState={editpinmodalState}
-              seteditpinmodalState={seteditpinmodalState}
-              onEditSubmit={onEditSubmit}
-              deleteConfirmation={deleteConfirmation}
-              setDeleteConfirmation={setDeleteConfirmation}
-              onDelete={onDelete}
-              toggleDelete={toggleDelete}
-              getLocation={getLocation}
-              sidebarOpen={sidebarOpen}
-              setSidebarOpen={setSidebarOpen}
-              pinDeleted={pinDeleted}
-              setPinDeleted={setPinDeleted}
-              showSidebarButton={true}
-              setStorySidebarOpen={setStorySidebarOpen}
-              addPinValues={addPinValues}
-              handleAddPinChange={handleAddPinChange}
-              handleAddPinSubmit={handleAddPinSubmit}
-              setaddPinValues={setaddPinValues}
-              setAnonRadius={setAnonRadius}
-              darkMode={darkMode}
-              setdarkMode={setdarkMode}
-              mapReference={mapReference}
-              setMapReference={setMapReference}
-              userRoleVerified={userRoleVerified}
-              user={user}
-              isAuthenticated={isAuthenticated}
-              setPinData={setPinData}
-              isIndividualStoryPage={true}
-              mapContainerStyle={mapContainerStyle}
-              setMapContainerStyle={setMapContainerStyle}
-              centerMarker={centerMarker}
-              updateEditForm={updateEditForm}
-            />
-              
+              <LeafletMap
+                maplink={"/story"}
+                pins={pins}
+                divStyle={divStyle1}
+                addMarker={addMarker}
+                placement={placement}
+                setPlacement={setplacement}
+                modalState={modalState}
+                toggle={toggle}
+                editPin={editPinForm}
+                seteditPin={seteditPinForm}
+                editToggle={editToggle}
+                editpinmodalState={editpinmodalState}
+                seteditpinmodalState={seteditpinmodalState}
+                onEditSubmit={onEditSubmit}
+                deleteConfirmation={deleteConfirmation}
+                setDeleteConfirmation={setDeleteConfirmation}
+                onDelete={onDelete}
+                toggleDelete={toggleDelete}
+                getLocation={getLocation}
+                sidebarOpen={sidebarOpen}
+                setSidebarOpen={setSidebarOpen}
+                pinDeleted={pinDeleted}
+                setPinDeleted={setPinDeleted}
+                showSidebarButton={true}
+                setStorySidebarOpen={setStorySidebarOpen}
+                addPinValues={addPinValues}
+                handleAddPinChange={handleAddPinChange}
+                handleAddPinSubmit={handleAddPinSubmit}
+                setaddPinValues={setaddPinValues}
+                setAnonRadius={setAnonRadius}
+                darkMode={darkMode}
+                setdarkMode={setdarkMode}
+                mapReference={mapReference}
+                setMapReference={setMapReference}
+                userRoleVerified={userRoleVerified}
+                user={user}
+                isAuthenticated={isAuthenticated}
+                setPinData={setPinData}
+                isIndividualStoryPage={true}
+                mapContainerStyle={mapContainerStyle}
+                setMapContainerStyle={setMapContainerStyle}
+                centerMarker={centerMarker}
+                updateEditForm={updateEditForm}
+              />
             </div>
             <StoryDisplay
               placement={placement}
@@ -464,7 +460,7 @@ export default function MapDashboard() {
 }
 function StoryDisplay(props) {
   let match = useRouteMatch();
-  let [storyStyle, setStoryStyle] = useState({  top: '100%' });
+  let [storyStyle, setStoryStyle] = useState({ top: "100%" });
   let [redirectHome, setRedirectHome] = useState(false);
   // change the map & story page styling for story slide up effect
   useEffect(() => {
@@ -476,7 +472,7 @@ function StoryDisplay(props) {
       top: "45%",
     });
     props.setMapContainerStyle({
-      height: "45%"
+      height: "45%",
     });
   }, []);
 

@@ -21,7 +21,7 @@ export default function ProfileDashboard() {
     setEditPinState,
   } = useEditPinForm(pinData, setPinData);
   return (
-    <div className="main-content-div" style={{padding: "0px"}}>
+    <div className="main-content-div" style={{ padding: "0px" }}>
       <Switch>
         <Route path="/users/:name">
           <GetUserProfile setEditPinState={setEditPinState} />

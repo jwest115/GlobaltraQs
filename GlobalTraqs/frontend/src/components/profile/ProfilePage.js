@@ -25,25 +25,25 @@ const FavoritePostField = ({
   ...rest
 }) => {
   return (
-   <div style={{ paddingTop: "20px" }} key={id} {...rest}>
-          <Card style={{ marginTop: "5px", color: "rgb(77, 65, 133)" }}>
-            <Link to={`/story/${id}`}>
-            <CardActionArea>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {title}
-                </Typography>
-                <Typography gutterBottom variant="h5" component="h2">
-                      <h4>By: {!isAnon ? username : "Anonymous"} </h4>
-                  </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  <Markup content={description} />
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-            </Link>
-          </Card>
-      </div>
+    <div style={{ paddingTop: "20px" }} key={id} {...rest}>
+      <Card style={{ marginTop: "5px", color: "rgb(77, 65, 133)" }}>
+        <Link to={`/story/${id}`}>
+          <CardActionArea>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                {title}
+              </Typography>
+              <Typography gutterBottom variant="h5" component="h2">
+                <h4>By: {!isAnon ? username : "Anonymous"} </h4>
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                <Markup content={description} />
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Link>
+      </Card>
+    </div>
   );
 };
 
@@ -65,11 +65,16 @@ export default function ProfilePage(props) {
     <>
       {props.userProfile ? (
         <div style={{ height: "100%" }}>
-          <Row style={{ height: "100%", marginRight: "0px", marginLeft: "0px"}}>
-            <Col md={8} style={{padding: "20px"}}>
-             {isAuthenticated && user.id === props.userProfile.id && (
+          <Row
+            style={{ height: "100%", marginRight: "0px", marginLeft: "0px" }}
+          >
+            <Col md={8} style={{ padding: "20px" }}>
+              {isAuthenticated && user.id === props.userProfile.id && (
                 <Link to={`/users/${user.id}/settings`}>
-                  <button type="button" className="btn btn-primary btn-sm default-btn-purple">
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm default-btn-purple"
+                  >
                     Settings
                   </button>
                 </Link>
@@ -103,7 +108,7 @@ export default function ProfilePage(props) {
 const ShowfavoritedPosts = (props) => {
   return (
     <Col md={4} className="favorite-stories">
-      <h2 style={{color: "white"}}>Favorite Posts</h2>
+      <h2 style={{ color: "white" }}>Favorite Posts</h2>
       {props.favoriteStories.length !== 0 ? (
         props.favoriteStories.map((story, index) => {
           return (
@@ -138,10 +143,17 @@ const UserProfileBio = (props) => {
         ) : (
           <Avatar size={250} icon="user" />
         )}
-       </Typography>
-      <Typography variant="h5" component="h3" align="center" style={{marginTop: "20px"}}>
-            <h1 className="user-profile-name">{props.userProfile ? `${props.userProfile.username}` : ""}</h1>
-            <p>{props.userProfile.bio}</p>
+      </Typography>
+      <Typography
+        variant="h5"
+        component="h3"
+        align="center"
+        style={{ marginTop: "20px" }}
+      >
+        <h1 className="user-profile-name">
+          {props.userProfile ? `${props.userProfile.username}` : ""}
+        </h1>
+        <p>{props.userProfile.bio}</p>
       </Typography>
     </div>
   );
@@ -189,19 +201,18 @@ const StoryField = (props) => {
   } = props.story;
   const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user } = auth;
-  console.log(props);
   return (
     <>
       <Card style={{ marginTop: "5px" }}>
         <Link to={`/story/${id}`}>
-        <CardActionArea>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {title}
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
-              <Markup content={description} />
-            </Typography>
+          <CardActionArea>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                {title}
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                <Markup content={description} />
+              </Typography>
               {isAuthenticated &&
                 (user.is_administrator || user.id === props.ownerid) && (
                   <Switch
@@ -210,20 +221,23 @@ const StoryField = (props) => {
                     checked={is_anonymous_pin}
                   />
                 )}
-                   {isAuthenticated && (user.is_administrator || user.id === props.ownerid) && (
-        <button
-          onClick={() => props.setEditPinState(startDate, endDate, props.story)}
-          type="button"
-          className="btn btn-primary btn-sm"
-        >
-          Edit
-        </button>
-      )}
-          </CardContent>
-        </CardActionArea>
+            </CardContent>
+          </CardActionArea>
         </Link>
+        {isAuthenticated &&
+          (user.is_administrator || user.id === props.ownerid) && (
+            <button
+              className="default-btn-purple btn btn-primary btn-sm"
+              onClick={() =>
+                props.setEditPinState(startDate, endDate, props.story)
+              }
+              type="button"
+              className="btn btn-primary btn-sm"
+            >
+              Edit
+            </button>
+          )}
       </Card>
-   
     </>
   );
 };
