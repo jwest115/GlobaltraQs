@@ -26,25 +26,24 @@ function Header() {
 
   const toggleAnonymous = () => {
     const is_anonymous_active = !anonymousMode;
-    console.log("anonymous =....");
-    console.log(user.is_anonymous_active);
+
     const userData = { is_anonymous_active };
     dispatch(editUser(user.id, user.id, userData));
   };
 
   let accessibilityWidget = document.body.getElementsByClassName("userway")[0];
-  console.log("accessibility is");
-  console.log(accessibilityWidget);
+
   if (accessibilityWidget) {
     accessibilityWidget.style.visibility = "hidden";
   }
   let userRole = "";
   let adminManager = null;
-
+  let actual_username = "";
   if (user != null) {
-    if (user.is_anonymous_active) {
-      user.username = "Anonymous";
+    if (actual_username == "") {
+      actual_username = user.username;
     }
+
     if (user.accessibility_mode_active) {
       if (accessibilityWidget != undefined) {
         accessibilityWidget.style.visibility = "visible";
@@ -83,21 +82,17 @@ function Header() {
       <li className="nav-item">
         <button
           onClick={toggleAnonymous}
-          className="nav-link btn btn-link btn-lg"
+          className="header-nav-anonymous nav-link btn btn-link btn-lg"
         >
           {anonymousMode ? "Leave Anonymous Mode" : "Go Anonymous"}
         </button>
       </li>
-      <span className="navbar-text text-warning mr-5">
-        <strong>
-          {user
-            ? `Welcome ${
-                user.is_anonymous_active ? "Anonymous" : user.username
-              }`
-            : ""}{" "}
-          {userRole}{" "}
-        </strong>
-      </span>
+      <li className="nav-item header-nav-username">
+        {user
+          ? `Welcome ${user.is_anonymous_active ? "Anonymous" : user.username}`
+          : ""}{" "}
+        {userRole}{" "}
+      </li>
       <li className="nav-item">
         <button
           onClick={() => dispatch(logout())}
@@ -107,7 +102,10 @@ function Header() {
         </button>
       </li>
       <li className="nav-item">
-        <Link to={user ? `/users/${user.username}` : " "} className="nav-link">
+        <Link
+          to={user ? `/users/${actual_username}` : " "}
+          className="nav-link header-nav-link"
+        >
           Profile
         </Link>
       </li>
@@ -117,12 +115,12 @@ function Header() {
   const guestLinks = (
     <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
       <li className="nav-item">
-        <Link to="/register" className="nav-link">
+        <Link to="/register" className="nav-link header-nav-link">
           Register
         </Link>
       </li>
       <li className="nav-item">
-        <Link to="/login" className="nav-link">
+        <Link to="/login" className="nav-link header-nav-link">
           Login
         </Link>
       </li>
@@ -130,7 +128,7 @@ function Header() {
   );
 
   return (
-    <nav className="fixed-top navbar navbar-expand-lg navbar-dark bg-primary header-nav">
+    <nav className="site-header fixed-top navbar navbar-expand-lg navbar-dark header-nav">
       <a className="navbar-brand" href="#">
         <Image src={logo} height={"108px"} />
       </a>
@@ -157,27 +155,27 @@ function Header() {
       <div className="collapse navbar-collapse" id="navbarColor01">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to="/faq" className="nav-link">
+            <Link to="/faq" className="nav-link header-nav-link">
               Faq{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/About" className="nav-link">
+            <Link to="/About" className="nav-link header-nav-link">
               About Us{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/support" className="nav-link">
+            <Link to="/support" className="nav-link header-nav-link">
               Support Us{" "}
             </Link>
           </li>
-           <li className="nav-item">
-            <Link to="/resources" className="nav-link">
+          <li className="nav-item">
+            <Link to="/resources" className="nav-link header-nav-link">
               Resources{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/ContactUs" className="nav-link">
+            <Link to="/ContactUs" className="nav-link header-nav-link">
               Contact Us{" "}
             </Link>
           </li>

@@ -21,6 +21,7 @@ pillow = "*"
 django-cleanup = "*"
 python-decouple = "*"
 django-cron = "*"
+django-extensions = "*"
 
 [requires]
 python_version = "3.7"

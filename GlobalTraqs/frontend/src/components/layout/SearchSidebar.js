@@ -45,8 +45,8 @@ function SearchSidebar(props) {
   const [endDate, setEndDate] = useState(props.maxPinDate);
   const [minDate, setMinDate] = useState(0);
   const [maxDate, setMaxDate] = useState(new Date());
-  const pinData = useSelector(state => state.pins.pins);
-  const users = useSelector(state => state.auth.users);
+  const pinData = useSelector((state) => state.pins.pins);
+  const users = useSelector((state) => state.auth.users);
   const [userSearchText, setUserSearchText] = useState("");
 
   const [dateRange, setDateRange] = useState([
@@ -54,14 +54,20 @@ function SearchSidebar(props) {
     props.maxPinDate.getFullYear(),
   ]);
 
-  useEffect(() =>{
-    setDateRange([props.minPinDate.getFullYear(), props.maxPinDate.getFullYear()]);
+  useEffect(() => {
+    setDateRange([
+      props.minPinDate.getFullYear(),
+      props.maxPinDate.getFullYear(),
+    ]);
     setMinDate(props.minPinDate.getFullYear());
     setMaxDate(props.maxPinDate.getFullYear());
   }, [props.minPinDate]);
 
-  useEffect(() =>{
-    setDateRange([props.minPinDate.getFullYear(), props.maxPinDate.getFullYear()]);
+  useEffect(() => {
+    setDateRange([
+      props.minPinDate.getFullYear(),
+      props.maxPinDate.getFullYear(),
+    ]);
     setMinDate(props.minPinDate.getFullYear());
     setMaxDate(props.maxPinDate.getFullYear());
   }, [props.maxPinDate]);
@@ -74,25 +80,15 @@ function SearchSidebar(props) {
     dispatch(getUsers());
   }, []);
 
-  const centerMarker = marker => {
-    props.mapReference.panTo([marker.latitude, marker.longitude]);
-
-    props.setPlacement({
-      id: marker.id,
-      userlat: marker.latitude,
-      userlng: marker.longitude
-    });
-  };
-
   const onSetSidebarOpen = (open) => {
     setSidebarOpen({ sidebarOpen: open });
   };
 
   const submitSearch = (e) => {
-    console.log("pin type " + pinType);
+    // console.log("pin type " + pinType);
     e.preventDefault(); //prevents refresh of page
-    console.log(startDate);
-    console.log(endDate);
+    // console.log(startDate);
+    // console.log(endDate);
     const start =
       startDate.getFullYear() +
       "-" +
@@ -111,18 +107,18 @@ function SearchSidebar(props) {
     } else {
       for (const [index, value] of selectedCategories.entries()) {
         if (index < selectedCategories.length - 1) {
-          console.log(value.value);
+          // console.log(value.value);
           categorySearchQuery += value.value + ",";
-          console.log("is the num");
+          // console.log("is the num");
         } else {
-          console.log(value.value);
+          // console.log(value.value);
           categorySearchQuery += value.value;
-          console.log("is the num");
+          // console.log("is the num");
         }
       }
     }
-    console.log(categorySearchQuery);
-    console.log("is the query");
+    // console.log(categorySearchQuery);
+    // console.log("is the query");
     dispatch(searchPins(searchText, categorySearchQuery, start, end));
   };
   const submitUserSearch = (e) => {
@@ -130,8 +126,8 @@ function SearchSidebar(props) {
     dispatch(searchUsers(userSearchText));
   };
   function valuetext(value) {
-    console.log(dateRange);
-    console.log("slider val is " + value);
+    // console.log(dateRange);
+    // console.log("slider val is " + value);
     return value;
   }
 
@@ -141,9 +137,12 @@ function SearchSidebar(props) {
     setMaxDate(props.maxPinDate.getFullYear());
     setStartDate(props.minPinDate);
     setEndDate(props.maxPinDate);
-    setDateRange([props.minPinDate.getFullYear(), props.maxPinDate.getFullYear()]);
+    setDateRange([
+      props.minPinDate.getFullYear(),
+      props.maxPinDate.getFullYear(),
+    ]);
     setSearchText("");
-    dispatch(getPins())
+    dispatch(getPins());
   };
 
   const storySearch = (
@@ -173,48 +172,88 @@ function SearchSidebar(props) {
           <Label style={labelStyle} for="startDate">
             Search date range
           </Label>
-           <DatePicker
-              value={startDate}
-              minDate={new Date(props.minPinDate.getFullYear(), props.minPinDate.getMonth() - 1, props.minPinDate.getDate() - 2, 0, 0, 0, 0)}
-              maxDate={new Date(props.maxPinDate.getFullYear(), props.maxPinDate.getMonth() - 1, props.maxPinDate.getDate() + 1, 0, 0, 0, 0)}
-              onChange={date => {
-                setStartDate(date);
-                setDateRange([date.getFullYear(), endDate.getFullYear()]);
-              }}
-              format={"MM/dd/yyyy"}
-            />
-             <DatePicker
-              minDate={new Date(props.minPinDate.getFullYear(), props.minPinDate.getMonth() - 1, props.minPinDate.getDate() - 2, 0, 0, 0, 0)}
-              maxDate={new Date(props.maxPinDate.getFullYear(), props.maxPinDate.getMonth() - 1, props.maxPinDate.getDate() + 1, 0, 0, 0, 0)}
-              value={endDate}
-              onChange={date => {
-                setEndDate(date);
-                setDateRange([startDate.getFullYear(), date.getFullYear()]);
-              }}
-              format={"MM/dd/yyyy"}
-            />
-           <Slider
-              min={Number(minDate)}
-              max={Number(maxDate)}
-              // min={1000}
-              // max={Number(new Date().getFullYear())}
-              value={dateRange}
-              valueLabelDisplay="auto"
-              onChange={(event, newValue) => {
-                console.log("props.minPinDate "+ props.minPinDate.getFullYear());
-                console.log("new value " + newValue);
-                setDateRange(newValue);
-                startDate.setFullYear(newValue[0]);
-                endDate.setFullYear(newValue[1]);
-              }}
-              aria-labelledby="range-slider"
-              getAriaValueText={valuetext}
-            />
+          <DatePicker
+            value={startDate}
+            minDate={
+              new Date(
+                props.minPinDate.getFullYear(),
+                props.minPinDate.getMonth() - 1,
+                props.minPinDate.getDate() - 2,
+                0,
+                0,
+                0,
+                0
+              )
+            }
+            maxDate={
+              new Date(
+                props.maxPinDate.getFullYear(),
+                props.maxPinDate.getMonth() - 1,
+                props.maxPinDate.getDate() + 1,
+                0,
+                0,
+                0,
+                0
+              )
+            }
+            onChange={(date) => {
+              setStartDate(date);
+              setDateRange([date.getFullYear(), endDate.getFullYear()]);
+            }}
+            format={"MM/dd/yyyy"}
+          />
+          <DatePicker
+            minDate={
+              new Date(
+                props.minPinDate.getFullYear(),
+                props.minPinDate.getMonth() - 1,
+                props.minPinDate.getDate() - 2,
+                0,
+                0,
+                0,
+                0
+              )
+            }
+            maxDate={
+              new Date(
+                props.maxPinDate.getFullYear(),
+                props.maxPinDate.getMonth() - 1,
+                props.maxPinDate.getDate() + 1,
+                0,
+                0,
+                0,
+                0
+              )
+            }
+            value={endDate}
+            onChange={(date) => {
+              setEndDate(date);
+              setDateRange([startDate.getFullYear(), date.getFullYear()]);
+            }}
+            format={"MM/dd/yyyy"}
+          />
+          <Slider
+            min={Number(minDate)}
+            max={Number(maxDate)}
+            // min={1000}
+            // max={Number(new Date().getFullYear())}
+            value={dateRange}
+            valueLabelDisplay="auto"
+            onChange={(event, newValue) => {
+              // console.log("props.minPinDate "+ props.minPinDate.getFullYear());
+              // console.log("new value " + newValue);
+              setDateRange(newValue);
+              startDate.setFullYear(newValue[0]);
+              endDate.setFullYear(newValue[1]);
+            }}
+            aria-labelledby="range-slider"
+            getAriaValueText={valuetext}
+          />
           {/*<Slider*/}
           {/*  min={props.minPinYear}*/}
           {/*  max={props.maxPinYear}*/}
           {/*  onChange={(event, newValue) => { setDateRange(newValue);*/}
-          {/*    console.log(event);*/}
+          {/* console.log(event); */}
           {/*    console.log(newValue);}*/}
           {/*  }*/}
           {/*  valueLabelDisplay="auto"*/}
@@ -233,7 +272,7 @@ function SearchSidebar(props) {
           {/*</Label>*/}
           {/*<DatePicker selected={endDate} onChange={date => setEndDate(date)} />*/}
         </InputGroup>
-        <div className="form-group" style={{padding: "20px 20px 20px 20px"}}>
+        <div className="form-group" style={{ padding: "20px 20px 20px 20px" }}>
           <button
             type="submit"
             style={{ float: "right" }}
@@ -241,7 +280,7 @@ function SearchSidebar(props) {
           >
             Search
           </button>
-            <button
+          <button
             type="submit"
             style={{ float: "right", paddingRight: "20px" }}
             className="btn btn-primary"
@@ -264,7 +303,7 @@ function SearchSidebar(props) {
               <Link
                 style={{ textDecoration: "inherit" }}
                 to={`story/${story.id}`}
-                onClick={() => centerMarker(story)}
+                onClick={() => props.centerMarker(story)}
               >
                 <CardActionArea>
                   <CardContent>
@@ -285,8 +324,8 @@ function SearchSidebar(props) {
   );
 
   let resultCount = pinData.length;
-  console.log(props.minPinDate + " is MIN PIN DATE");
-  console.log(dateRange + " is the date range");
+  // console.log(props.minPinDate + " is MIN PIN DATE");
+  // console.log(dateRange + " is the date range");
 
   return (
     <Sidebar
@@ -332,7 +371,7 @@ function SearchSidebar(props) {
         },
       }}
     >
-      {console.log(pinData.length + " is the length")}
+      {/* {console.log(pinData.length + " is the length")} */}
     </Sidebar>
   );
 }

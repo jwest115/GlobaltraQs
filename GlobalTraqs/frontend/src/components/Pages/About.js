@@ -17,6 +17,8 @@ function About() {
   const { isAuthenticated, user } = auth;
   const [editorContent, setEditorContent] = useState("");
 
+
+
   let authorized = false;
 
   if (user) {
@@ -85,20 +87,56 @@ function About() {
     </div>
   );
 
-  return (
-    <div className={"main-content-div"}>
-      <div className="card card-body mt-4 mb-4">
-        {authorized ? canEdit : ""}
-        {editMode ? showEditor(aboutUsData) : ""}
-        <Markup content={aboutUsData} />
-        {/*
-                <div className="col-lg-1">
-                    <img src="https://picsum.photos/200/300" className="rounded" position="center" ></img>
 
-                </div>
-              */}
+
+  return (
+
+    <div className="aboutUs-row">
+      <div className="columnleft"  style={{width: "60%"}}>
+        <h2 className="aboutHeader">
+        About Us
+        </h2>
+      <p className = "aboutDesc">
+      The arqive is an online map of queer stories (histories, herstories, theirstories) and resources created and collected by and for queer people all around the world to serve as a resource and a reminder that we are here, we've always been here, and we always will be.<br />
+      <br/>
+      Originally founded by Dr. Cynthia Wang in 2-14, then revamped in 2019 with new Co-Founder Zachary Vernon. The arqive seeks to provide the full range of queer stories from historical/archival to personal by geolocating them and digitally preserving them. This is an attempt to counter the queer erasure that happens through the changing physical locations of queer stories. It also seeks to make visible historically marginalized voices and stories and connect queer people globally.
+      </p>
+      </div>
+      <div className="columnright" style={{width: "40%"}}>
+        <img className="moveimage" src="./static/frontend/images/aboutUs_01.png" alt="About Us"/>
+        <p>
+        </p>
+        <p className="copyright">
+          ©COPYRIGHT Manuscripts and Archives Division, The New York Public Library. Barbara Gittings
+          Photographer: thought to be, Gordon Rainsford. Simon Tseko Nkoli
+          ©University of California. Harvy Milk
+          ©Jonathan Silin, courtesy of The New York Public Library. Harry Hay
+          PHOTO: COURTESY OF NETFLIX. Marsha P. JOhnson
+          ©Liz Mangelsdorf/San Francisco Chronicle/Corbis. Phyllis Lyon and Del Martin
+          ©William Lucas Walker.Peter Staley
+      </p>
       </div>
     </div>
+
+
+
+
+    // <div className={"main-content-div"}>
+    // <h2>
+    // about us
+    // </h2>
+    //   <div className="card card-body mt-4 mb-4">
+    //     {authorized ? canEdit : ""}
+    //     {editMode ? showEditor(aboutUsData) : ""}
+    //     <Markup content={aboutUsData} />
+    //     {/*
+    //             <div className="col-lg-1">
+    //                 <img src="https://picsum.photos/200/300" className="rounded" position="center" ></img>
+
+    //             </div>
+    //           */}
+    //   </div>
+    // </div>
   );
 }
 
