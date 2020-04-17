@@ -104,7 +104,7 @@ const ShowfavoritedPosts = (props) => {
                 isAnon={story.is_anonymous_pin}
                 username={story.pinAuthor ? story.pinAuthor : "Anonymous"}
                 description={story.description}
-                id={story.id}
+                id={story.pinId}
               />
             </div>
           );
