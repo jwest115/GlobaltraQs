@@ -180,8 +180,9 @@ b, strong {
 }
 
 .header-nav {
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    text-transform: lowercase !important;
 }
 
 /*.userway-hide {*/
@@ -320,20 +321,43 @@ b, strong {
 
 .site-header {
     background-color: black !important;
+    padding-right: 0 !important;
 }
 
 .header-nav-link {
     color: white !important;
+    font-family: Eina, Arial;
+    font-size: .8rem;
+}
+.header-nav-link:hover {
+    color: #98999b !important;
 }
 
 .header-nav-username {
-    color: #e01783;
-    padding: .715rem 0.5rem;
+    color: #e01783 !important;
     font-weight: 600;
+    font-size: .8rem !important;
+    text-transform: lowercase !important;
+}
+
+.anonymous-nav-item {
+    margin: auto;
 }
 
 .header-nav-anonymous {
     color: #98999b !important;
+    text-transform: lowercase !important;
+    font-family: Eina, Arial;
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+.header-nav-anonymous-active {
+    color: #e63f52 !important;
+    font-family: Eina, Arial;
+    font-size: .8rem;
+    text-transform: uppercase !important;
+    font-weight: 600;
 }
 
 .faq-page-background {
@@ -354,4 +378,51 @@ b, strong {
 .add-faq-button {
     float: right;
     border-radius: 8px !important;
+}
+
+.header-user-dropdown-menu {
+    background-color: black !important;
+    width: 100%;
+    transform: translate3d(1px, 48px, 0px) !important;
+}
+
+.header-user-dropdown-button {
+    background-color: black !important;
+    width: 100%;
+    margin-right: 0;
+    border-color: black !important;
+    padding-right: 100px !important;
+}
+
+.dropdown-nav {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+}
+
+.dropdown-item:hover {
+  background-color: black !important;
+}
+
+.header-dropdown-nav-item {
+    color: white !important;
+    text-transform: lowercase !important;
+    font-family: Eina, Arial;
+    font-size: .8rem !important;
+    font-weight: 600 !important;
+}
+
+.header-dropdown-nav-item:hover {
+    color: #98999b !important;
+}
+
+.header-dropdown {
+    margin-right: 0 !important;
+}
+
+button {
+    outline: 0 !important;
+}
+
+*:focus {
+    outline: 0 !important;
 }
