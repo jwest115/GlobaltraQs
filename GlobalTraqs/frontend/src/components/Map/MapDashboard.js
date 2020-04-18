@@ -345,8 +345,8 @@ export default function MapDashboard() {
           <div id={"story-container"}>
             {pinDeleted ? <Redirect to={"/"} /> : null}
             <div id={"map-dashboard"}>
-              centerMarker={centerMarker}
               <LeafletMap
+                centerMarker={centerMarker}
                 maplink={"/story"}
                 pins={pins}
                 divStyle={divStyle1}
