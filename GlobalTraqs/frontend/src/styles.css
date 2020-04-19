@@ -577,3 +577,79 @@ button {
     margin-top: 40px;
     margin-right: 40px;
 }
+
+.resources-nav-link:hover, .resources-nav-link:focus {
+    color: #00ce7d !important;
+}
+
+.resources-main-div {
+    background-color: #00ce7d !important;
+    height: auto;
+    min-height: 100%;
+    width: 100%;
+    padding: 15px !important;
+}
+
+.resources-main-content-div {
+    margin-top: 5% !important;
+    width: 100%;
+    height: 60%;
+    margin-left: 20%;
+}
+
+.resource-title {
+    text-transform: none !important;
+    font-family: Eina, Arial;
+    color: black !important;
+    font-weight: 600;
+    font-size: 1.7rem;
+    letter-spacing: -.5px;
+    margin: 0 !important;
+}
+
+.resource-text {
+    font-family: "Courier New", "Courier" !important;
+    font-weight: 600 !important;
+    color: black !important;
+    font-size: 1rem;
+    margin: 0 !important;
+}
+
+.resource-contact-text {
+    font-family: "Courier New", "Courier" !important;
+    font-weight: 600 !important;
+    color: black !important;
+    font-size: 1rem;
+    margin: 0 !important;
+}
+
+.resources-card {
+    border-radius: 25px !important;
+    box-shadow: -5px 5px rgba(0, 0, 0, 0.1) !important;
+    margin-top: 1rem !important;
+}
+
+.resources-sub-content-div {
+    width: 100%;
+    height: 100%;
+}
+
+.text-underline {
+    text-decoration: underline !important;
+}
+
+.resources-title {
+    text-transform: lowercase !important;
+    color: white !important;
+    font-family: "Eina", "Arial" !important;
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.resources-sub-text {
+    color: white;
+    font-family: "Courier New", "Courier" !important;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
