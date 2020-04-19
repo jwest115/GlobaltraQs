@@ -319,6 +319,8 @@ b, strong {
     border-radius: 8px !important;
     background: rgb(77, 65, 133) !important;
     color: white;
+    font-family: "Eina", "Arial" !important;
+    text-transform: lowercase !important;
 }
 
 .site-header {
@@ -362,8 +364,12 @@ b, strong {
     font-weight: 600;
 }
 
+.MuiSlider-colorPrimary {
+    color: rgb(77, 65, 133) !important;
+}
+
 .faq-page-background {
-    background: rgb(77, 65, 133) !important;;
+    background: rgb(77, 65, 133) !important;
     min-height: 100%;
     height: auto;
     width: 100%
@@ -652,4 +658,62 @@ button {
     font-family: "Courier New", "Courier" !important;
     font-size: 1.2rem;
     font-weight: 500;
+}
+
+.search-bar-story-card-trim-personal {
+    height: 15px;
+    background-color: #e01783 !important;
+    width: 100%;
+}
+
+.search-bar-story-card-trim-community {
+    height: 15px;
+    background-color: #00ce7d !important;
+    width: 100%;
+}
+
+.search-bar-story-card-trim-historical {
+    height: 15px;
+    background-color: #248dc1 !important;
+    width: 100%;
+}
+
+.sidebar-story-title {
+    font-family: "Eina", "Arial" !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: black !important;
+    text-transform: none !important;
+    text-transform: none !important;
+}
+
+.sidebar-story-description {
+    font-family: "Courier New", "Courier" !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    color: black !important;
+    text-transform: none !important;
+}
+
+.sidebar-story-read-more {
+    font-family: "Courier New", "Courier" !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: rgb(77, 65, 133) !important;
+}
+
+.sidebar-story-author {
+    font-family: "Courier New", "Courier" !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: black !important;
+    text-transform: none !important;
+}
+
+.sidebar-story-username {
+    font-family: "Courier New", "Courier" !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: rgb(77, 65, 133) !important;
+    text-transform: none !important;
 }

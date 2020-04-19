@@ -17,7 +17,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import Slider from "@material-ui/core/Slider";
 import { Label } from "reactstrap";
-
+import chroma from 'chroma-js';
 import InputGroup from "react-bootstrap/InputGroup";
 import {
   getUsers,
@@ -26,14 +26,16 @@ import {
 } from "../../actions/users";
 
 const options = [
-  { value: "1", label: "Personal" },
-  { value: "2", label: "Community" },
-  { value: "3", label: "Historical" },
+  { value: "1", label: "Personal"},
+  { value: "2", label: "Community"},
+  { value: "3", label: "Historical"},
 ];
 
 const labelStyle = {
   marginRight: "10px",
 };
+
+
 
 function SearchSidebar(props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -145,6 +147,39 @@ function SearchSidebar(props) {
     dispatch(getPins());
   };
 
+const colorStyles = {
+  control: styles => ({ ...styles, backgroundColor: 'white' }),
+  multiValue: (styles, { data }) => {
+    const category = data.value;
+    let color = "white";
+    if(category == 1) {
+      color = "#e01783";
+    }
+    else if(category == 2) {
+      color = "#00ce7d"
+    }
+    else {
+      color = "#248dc1";
+    }
+    return {
+      ...styles,
+      backgroundColor: color,
+      color: "white",
+      fontFamily: "Eina, Arial",
+      textTransform: "lowercase",
+      borderRadius: "8px",
+    };
+  },
+  multiValueLabel: (styles, { data }) => ({
+    ...styles,
+    color: "white",
+    fontFamily: "Eina, Arial",
+    textTransform: "lowercase",
+    borderRadius: "8px",
+  }),
+};
+
+
   const storySearch = (
     <div style={{ marginTop: "10px" }}>
       <form onSubmit={submitSearch} noValidate={true}>
@@ -167,6 +202,7 @@ function SearchSidebar(props) {
           value={selectedCategories}
           onChange={(categories) => setSelectedCategories(categories)}
           options={options}
+          styles={colorStyles}
         />
         <InputGroup style={{ marginTop: "20px" }}>
           <Label style={labelStyle} for="startDate">
@@ -276,14 +312,14 @@ function SearchSidebar(props) {
           <button
             type="submit"
             style={{ float: "right" }}
-            className="btn btn-primary"
+            className="btn btn-primary default-btn-purple"
           >
             Search
           </button>
           <button
             type="submit"
-            style={{ float: "right", paddingRight: "20px" }}
-            className="btn btn-primary"
+            style={{ float: "left", paddingRight: "20px" }}
+            className="btn btn-primary default-btn-purple"
             onClick={() => clearFilters()}
           >
             Clear filters
@@ -299,19 +335,24 @@ function SearchSidebar(props) {
 
         {pinData.map((story, index) => {
           return (
-            <Card style={{ marginTop: "5px" }}>
+            <Card style={{ marginTop: "10px", borderRadius: "20px" }}>
               <Link
                 style={{ textDecoration: "inherit" }}
                 to={`story/${story.id}`}
                 onClick={() => props.centerMarker(story)}
               >
+               <div className={story.category == 1 ? "search-bar-story-card-trim-personal" : (story.category == 2 ? "search-bar-story-card-trim-community" : "search-bar-story-card-trim-historical")}>
+               </div>
                 <CardActionArea>
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom variant="h5" component="h2" className={"sidebar-story-title"}>
                       {story.title}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
+                    <Typography variant="body2" color="textSecondary" className={"sidebar-story-description"}>
                       <Markup content={story.description} />
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" className={"sidebar-story-read-more"}>
+                      read more
                     </Typography>
                   </CardContent>
                 </CardActionArea>
