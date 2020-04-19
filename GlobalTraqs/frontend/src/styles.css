@@ -143,6 +143,8 @@
 .main-content-div {
     margin-top: 118px;
     padding: 20px;
+    height: 100%;
+    width: 100%;
 }
 
 #sidebar-style {
@@ -325,9 +327,9 @@ b, strong {
 }
 
 .header-nav-link {
-    color: white !important;
+    color: #98999b !important;
     font-family: Eina, Arial;
-    font-size: .8rem;
+    font-size: 1rem;
 }
 .header-nav-link:hover {
     color: #98999b !important;
@@ -336,7 +338,7 @@ b, strong {
 .header-nav-username {
     color: #e01783 !important;
     font-weight: 600;
-    font-size: .8rem !important;
+    font-size: 1rem !important;
     text-transform: lowercase !important;
 }
 
@@ -348,14 +350,14 @@ b, strong {
     color: #98999b !important;
     text-transform: lowercase !important;
     font-family: Eina, Arial;
-    font-size: .8rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
 .header-nav-anonymous-active {
     color: #e63f52 !important;
     font-family: Eina, Arial;
-    font-size: .8rem;
+    font-size: 1rem;
     text-transform: uppercase !important;
     font-weight: 600;
 }
@@ -404,10 +406,10 @@ b, strong {
 }
 
 .header-dropdown-nav-item {
-    color: white !important;
+    color: #98999b !important;
     text-transform: lowercase !important;
     font-family: Eina, Arial;
-    font-size: .8rem !important;
+    font-size: 1rem !important;
     font-weight: 600 !important;
 }
 
@@ -425,4 +427,153 @@ button {
 
 *:focus {
     outline: 0 !important;
+}
+
+.contact-us-nav-link:hover {
+    color: #248dc1 !important;
+}
+
+.contact-us-nav-link:focus {
+    color: #248dc1 !important;
+}
+
+.contact-us-div {
+    background-color: #248dc1 !important;
+    padding-top: 3% !important;
+}
+
+.contact-us-card {
+    border-radius: 25px !important;
+    box-shadow: -5px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.contact-us-title {
+    font-family: Eina, Arial;
+    color: #98999b !important;
+    text-transform: lowercase !important;
+    font-weight: 600;
+    font-size: 1.7rem;
+    letter-spacing: -.5px;
+}
+
+.contact-us-text {
+    font-family: "Courier New", "Courier" !important;
+    text-transform: lowercase !important;
+    font-weight: 600 !important;
+    color: #98999b !important;
+    font-size: 1rem;
+}
+
+.contact-us-btn {
+    background-color: black !important;
+    border-radius: 15px !important;
+    text-transform: lowercase !important;
+    color: white !important;
+    font-size: 1rem !important;
+    width: 120px !important;
+}
+
+.contact-us-btn-div {
+    text-align: center;
+}
+
+.support-us-nav-link:hover {
+    color: #e01783 !important;
+}
+
+.support-us-nav-link:focus {
+    color: #e01783 !important;
+}
+
+.support-us-div {
+    padding: 0 !important;
+}
+
+.support-us-main-content-col {
+    background-color: #e01783 !important;
+    width: 100%;
+    min-height: 100%;
+    height: auto;
+}
+
+.support-us-main-content-div {
+    margin-top: 10% !important;
+    width: 60%;
+    height: 60%;
+    margin-right: 20%;
+    margin-left: 20%;
+}
+
+.support-us-title {
+    text-transform: lowercase !important;
+    color: white !important;
+    font-family: "Eina", "Arial" !important;
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.support-us-image-div {
+    position: relative;
+    height: auto;
+    width: 100%;
+}
+
+.text-block-1 {
+    position: absolute;
+    top: 42%;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    color: white;
+}
+
+.support-us-images {
+    width: 100%;
+    height: auto;
+}
+
+.support-us-image-main-text {
+    color: white;
+    font-family: "Eina", "Arial";
+    text-transform: lowercase;
+    font-weight: 600;
+}
+
+.support-us-image-sub-text {
+    font-size: 1.05rem;
+    margin-top: -10px;
+    font-weight: 500;
+    margin-bottom: 1em;
+}
+
+.support-us-main-content-text {
+    color: white;
+    font-size: 1.1rem;
+}
+
+.support-us-side-content-col {
+    margin-top: 7.2% !important;
+    height: 60%;
+    padding-bottom: 50px;
+}
+
+.support-us-side-title {
+    color: #e01783 !important;
+    font-size: 2.5rem;
+    font-family: "Eina", "Arial";
+    font-weight: 700;
+    text-transform: lowercase;
+}
+
+.support-us-side-content-div {
+    text-align: center;
+}
+
+.social-media-images {
+    width: 40px;
+    height: 40px;
+    margin-top: 40px;
+    margin-right: 40px;
 }
