@@ -86,7 +86,7 @@ function StorySidebar(props) {
                 <h1 className="sidebar-story-title">{props.pinData.title}</h1>
                 <h5>
                   {props.pinData.is_anonymous_pin ? (
-                    "Posted by: Anonymous"
+                      <p className="sidebar-story-author">Posted by: <span className="sidebar-story-username">Anonymous</span></p>
                   ) : (
                     <p className="sidebar-story-author">Posted by:
                       <Link

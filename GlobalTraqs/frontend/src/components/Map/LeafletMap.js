@@ -202,7 +202,22 @@ const LeafletMap = (props) => {
           />
         )}
         <Control position={"topleft"} style={{ left: "0px" }}>
-          <button className={"btn btn-primary"}>
+          <button className={"btn btn-primary"}
+                  onClick={() => {
+                    console.log("add address");
+                    props.setAddAddress(true);
+
+                    if(mapInstance) {
+                      let center = mapInstance.leafletElement.getCenter();
+                         props.setaddPinValues({
+                          ...props.addPinValues,
+                          latitude: center.lat,
+                          longitude: center.lng,
+                        });
+                    }
+                    props.toggle();
+                  }}
+          >
             <AddCommentIcon></AddCommentIcon>
           </button>
         </Control>
@@ -287,6 +302,7 @@ const LeafletMap = (props) => {
         toggle={props.toggle}
         modalState={props.modalState}
         setAnonRadius={props.setAnonRadius}
+        addAddress={props.addAddress}
         {...props}
       />
       <ModalEditPinForm

@@ -12,11 +12,11 @@
         <property name="enable_load_extension" value="true" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="db3" uuid="3c531267-ebf8-4a2d-af4d-980c855c4e7b">
+    <data-source source="LOCAL" name="db1" uuid="f0356fc2-e4c1-4122-ab89-98f35f09fd41">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\justi.JUSTINE-SURFACE\Desktop\GlobaltraQs\GlobalTraqs\db3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\justi.JUSTINE-SURFACE\Desktop\GlobaltraQs\GlobalTraqs\db1</jdbc-url>
       <driver-properties>
         <property name="enable_load_extension" value="true" />
       </driver-properties>

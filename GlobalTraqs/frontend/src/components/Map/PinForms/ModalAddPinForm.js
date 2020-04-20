@@ -14,6 +14,12 @@ import InputGroup from "react-bootstrap/InputGroup";
 import "react-datepicker/dist/react-datepicker.css";
 import TinyMCE from "react-tinymce";
 import DatePicker from "react-date-picker";
+import {addPin} from "../../../actions/pins";
+// import
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+
+// setup
+const provider = new OpenStreetMapProvider();
 
 const buttonStyle = {
   float: "right"
@@ -25,13 +31,36 @@ function ModalAddPinForm(props) {
 
 
   var today = new Date();
-  const validateAddPinForm = (e) => {
+  const validateAddPinForm = async (e) => {
       e.preventDefault();
-      console.log("validating add pin...");
-      if(props.addPinValues.title && props.addPinValues.description) {
+
+      let results = "";
+
+      if (props.addAddress) {
+          let address = props.addPinValues.address;
+          let locality = props.addPinValues.locality;
+          let region = props.addPinValues.region;
+          let country = props.addPinValues.country;
+          let postCode = props.addPinValues.postCode;
+
+          let addressQuery = address + " " + locality + " " + region + " " + postCode + " " + country;
+          // search
+          results = await provider.search({query: addressQuery});
+      }
+
+      if (props.addPinValues.title && props.addPinValues.description) {
+          console.log("Results");
+          console.log(results);
+          if(results.length > 0) {
+              console.log("settings values");
+              props.addPinValues.latitude = Number(results[0].y);
+              props.addPinValues.longitude = Number(results[0].x);
+          }
+          console.log("validating add pin...");
           props.handleAddPinSubmit();
       }
   };
+
   return (
     <>
       <Modal
@@ -44,6 +73,92 @@ function ModalAddPinForm(props) {
         <ModalHeader toggle={props.toggle}> Add a story </ModalHeader>
         <ModalBody>
           <Form onSubmit={validateAddPinForm}>
+              {props.addAddress ? (
+               <FormGroup>
+                <Label for="address">Address</Label>
+                  <Input
+                    className="form-control"
+                    type="text"
+                    name="address"
+                    value={props.addPinValues.address}
+                    onChange={e =>
+                      props.setaddPinValues({
+                        ...props.addPinValues,
+                        address: e.target.value
+                      })
+                    }
+                  />
+                  <Label for="address">Locality</Label>
+                  <Input
+                    className="form-control"
+                    type="text"
+                    name="locality"
+                    value={props.addPinValues.locality}
+                    onChange={e =>
+                      props.setaddPinValues({
+                        ...props.addPinValues,
+                        locality: e.target.value
+                      })
+                    }
+                  />
+                  <Label for="address">Region</Label>
+                  <Input
+                    className="form-control"
+                    type="text"
+                    name="region"
+                    value={props.addPinValues.region}
+                    onChange={e =>
+                      props.setaddPinValues({
+                        ...props.addPinValues,
+                        region: e.target.value
+                      })
+                    }
+                  />
+                  <Label for="address">Country</Label>
+                  <Input
+                    className="form-control"
+                    type="text"
+                    name="country"
+                    value={props.addPinValues.country}
+                    onChange={e =>
+                      props.setaddPinValues({
+                        ...props.addPinValues,
+                        country: e.target.value
+                      })
+                    }
+                  />
+                  <Label for="address">Postcode</Label>
+                  <Input
+                    className="form-control"
+                    type="text"
+                    name="postcode"
+                    value={props.addPinValues.postCode}
+                    onChange={e =>
+                      props.setaddPinValues({
+                        ...props.addPinValues,
+                        postCode: e.target.value
+                      })
+                    }
+                  />
+                  </FormGroup>
+
+                  ) : ""}
+            <FormGroup>
+              <Label for="title">Title</Label>
+              {!props.addPinValues.title ? ( <p className="text-danger">*Please enter a story title</p> ) : null }
+              <Input
+                className="form-control"
+                type="text"
+                name="title"
+                value={props.addPinValues.title}
+                onChange={e =>
+                  props.setaddPinValues({
+                    ...props.addPinValues,
+                    title: e.target.value
+                  })
+                }
+              />
+            </FormGroup>
             <FormGroup>
               <Label style={labelStyle} for="category">
                 Category
@@ -63,22 +178,6 @@ function ModalAddPinForm(props) {
                 <option value="2">Community</option>
                 <option value="3">Historical</option>
               </select>
-            </FormGroup>
-            <FormGroup>
-              <Label for="title">Title</Label>
-              {!props.addPinValues.title ? ( <p className="text-danger">*Please enter a story title</p> ) : null }
-              <Input
-                className="form-control"
-                type="text"
-                name="title"
-                value={props.addPinValues.title}
-                onChange={e =>
-                  props.setaddPinValues({
-                    ...props.addPinValues,
-                    title: e.target.value
-                  })
-                }
-              />
             </FormGroup>
             <FormGroup>
               <Label for="description">Description
@@ -107,7 +206,12 @@ function ModalAddPinForm(props) {
               <select
                 name="anonradius"
                 value={props.addPinValues.userRadius}
-                onChange={e => props.setAnonRadius(e.target.value)}
+                onChange={e => props.setaddPinValues({
+                            ...props.addPinValues,
+                            anonradius: e.target.value
+                        })
+                }
+                // onChange={e => props.setAnonRadius(e.target.value)}
               >
                 <option value="1">None</option>
                 <option value="2">Minimum</option>
