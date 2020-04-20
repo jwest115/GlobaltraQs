@@ -17,17 +17,19 @@ function Upvote(props) {
           onClick={() =>
             dispatch(userUpovte(upvoteid, props.pin.userCurrentUpvote))
           }
-          className="btn btn-primary"
+          className="btn btn-primary default-btn-purple"
+          style={{ marginLeft: "15px" }}
         >
           {props.pin.userCurrentUpvote ? "Favorited" : "Favorite"}
         </button>
       ) : (
         <button
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-primary default-btn-purple"
           onClick={e => {
             dispatch(userFirstUpvote(props.pin.id, props.user.id));
           }}
+          style={{ marginLeft: "15px" }}
         >
           Favorite
         </button>

@@ -19,8 +19,10 @@ import Slider from "@material-ui/core/Slider";
 import { Label } from "reactstrap";
 import chroma from 'chroma-js';
 import InputGroup from "react-bootstrap/InputGroup";
+import { Avatar } from "antd";
+import { Row, Col } from "react-bootstrap";
+
 import {
-  getUsers,
   searchUsers,
   getNextPreviousUsers,
 } from "../../actions/users";
@@ -79,7 +81,7 @@ function SearchSidebar(props) {
   }, []);
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(searchUsers(""));
   }, []);
 
   const onSetSidebarOpen = (open) => {
@@ -493,9 +495,26 @@ const ListUsersSearch = (props) => {
             >
               <CardActionArea>
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2" className="sidebar-story-title">
-                    {user.username}
-                  </Typography>
+                  <Row>
+                    <Col md={3}>
+                   {user.profileurl ? (
+                      <img
+                        src={user.profileurl}
+                        style={{ borderRadius: "50%", height: "100px", width: "100px" }}
+                      />
+                    ) : (
+                      <Avatar size={100} icon="user" />
+                    )}
+                    </Col>
+                    <Col md={9} style={{ marginTop: "auto", marginBottom: "auto" }}>
+                    <Typography gutterBottom variant="h5" component="h2" className="sidebar-story-title">
+                        {user.username}
+                      </Typography>
+                      <Typography gutterBottom variant="h5" component="h2" className="sidebar-story-description">
+                        {user.bio ? user.bio.substring(0, 50) + "..." : ""}
+                      </Typography>
+                    </Col>
+                  </Row>
                 </CardContent>
               </CardActionArea>
             </Link>

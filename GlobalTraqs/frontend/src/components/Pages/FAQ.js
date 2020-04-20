@@ -151,7 +151,7 @@ export default function FAQ() {
             ) : ""}
     <div className="mt-4 mb-4">
         <div style={{ marginBottom: "30px" }}>
-          <Paper className={classes.root}>
+          <Paper className={`faq-card ${classes.root}`}>
             <h3 className="faq-question">
               Q: What if I don't want to give an exact location?
             </h3>
@@ -164,7 +164,7 @@ export default function FAQ() {
           </Paper>
         </div>
         <div style={{ marginBottom: "30px" }}>
-          <Paper className={classes.root}>
+          <Paper className={`faq-card ${classes.root}`}>
             <h3 className="faq-question">
               Q: I'm straight, but have a lot of LGBTQ friends. Can I post
               stories too?
@@ -177,7 +177,7 @@ export default function FAQ() {
         </div>
 
         <div style={{ marginBottom: "30px" }}>
-          <Paper className={classes.root}>
+          <Paper className={`faq-card ${classes.root}`}>
             <h3 className="faq-question">
               Q: How long or short do stories have to be?
             </h3>
@@ -188,7 +188,7 @@ export default function FAQ() {
         </div>
 
         <div style={{ marginBottom: "30px" }}>
-          <Paper className={classes.root}>
+          <Paper className={`faq-card ${classes.root}`}>
             <h3 className="faq-question">
               Q: What do the different color pins mean?
             </h3>
@@ -239,41 +239,53 @@ function DisplayFaq(props) {
   const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user } = auth;
 
+  let canEdit = false;
+
+  if(isAuthenticated) {
+      if(user.is_administrator) {
+          canEdit = true;
+      }
+  }
+
   return (
     <>
       {props.data.map((faq) => {
         return (
           <div key={faq.id}>
             <div style={{ marginBottom: "30px" }}>
-              <Paper className={props.classes.root}>
+            <Paper className={`faq-card ${props.classes.root}`}>
                 <h3 className="faq-question">
                   Q: {faq.faqQuestionDesc}
                 </h3>
                 <p className="faq-answer">A: {faq.faqAnswerDesc}</p>
-                <button onClick={() => props.deletefaqDesc(faq.id)}>
-                  Delete
-                </button>
-                <button onClick={() => props.toggle(faq.id)}>
-                  Toggle Edit Form
-                </button>
-                {props.shownComments[faq.id] ? (
-                  <>
-                    {" "}
-                    <EditFAQ
-                      id={faq.id}
-                      question={faq.faqQuestionDesc}
-                      answer={faq.faqAnswerDesc}
-                      onChange={props.updateFAQ}
-                    ></EditFAQ>
-                    <p>
-                      <button onClick={() => props.editfaqDesc(faq.id)}>
-                        Save
-                      </button>
-                      <button onClick={() => props.revertChange(faq.id)}>
-                        Revert
-                      </button>
-                    </p>
-                  </>
+                {canEdit ? (
+                    <>
+                     <button onClick={() => props.deletefaqDesc(faq.id)}>
+                      Delete
+                    </button>
+                    <button onClick={() => props.toggle(faq.id)}>
+                      Toggle Edit Form
+                    </button>
+                    {props.shownComments[faq.id] ? (
+                      <>
+                        {" "}
+                        <EditFAQ
+                          id={faq.id}
+                          question={faq.faqQuestionDesc}
+                          answer={faq.faqAnswerDesc}
+                          onChange={props.updateFAQ}
+                        ></EditFAQ>
+                        <p>
+                          <button onClick={() => props.editfaqDesc(faq.id)}>
+                            Save
+                          </button>
+                          <button onClick={() => props.revertChange(faq.id)}>
+                            Revert
+                          </button>
+                        </p>
+                      </>
+                    ) : null}
+                    </>
                 ) : null}
               </Paper>
             </div>
