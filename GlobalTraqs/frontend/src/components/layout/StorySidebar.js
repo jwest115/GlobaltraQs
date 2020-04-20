@@ -111,14 +111,6 @@ function StorySidebar(props) {
                 <div className="sidebar-story-description">
                 <Markup content={props.pinData.description} />
                 </div>
-                <Link
-                  to={`${props.maplink}/${props.pinData.id}`}
-                  onClick={() => props.centerMarker(props.pinData)}
-                >
-                  <button type="button" style={{position: "absolute", bottom: "50"}} className="btn btn-primary btn-sm default-btn-purple">
-                    View Full Story
-                  </button>
-                </Link>
               </div>
             ) : null}
             {/* show edit/ delete button for story owners and admins/moderators */}
@@ -147,6 +139,16 @@ function StorySidebar(props) {
                 </div>
               </div>
             ) : null}
+            <div>
+               <Link
+                  to={`${props.maplink}/${props.pinData.id}`}
+                  onClick={() => props.centerMarker(props.pinData)}
+                >
+                  <button type="button" style={{bottom: "50"}} className="btn btn-primary btn-sm default-btn-purple">
+                    View Full Story
+                  </button>
+                </Link>
+            </div>
           </div>
         }
         open={props.storySidebarOpen}

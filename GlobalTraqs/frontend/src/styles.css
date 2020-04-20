@@ -700,6 +700,7 @@ button {
     font-size: 1rem !important;
     font-weight: 600 !important;
     color: rgb(77, 65, 133) !important;
+    text-transform: lowercase !important;
 }
 
 .sidebar-story-author {
@@ -716,4 +717,29 @@ button {
     font-weight: 600 !important;
     color: rgb(77, 65, 133) !important;
     text-transform: none !important;
+}
+
+.sidebar-text {
+    font-family: "Eina", "Arial" !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    color: #98999b !important;
+    text-transform: none !important;
+}
+
+.react-date-picker, react-date-picker--closed, react-date-picker--enabled {
+    padding-right: 20px !important;
+}
+
+.add-story-button {
+    background-color: #e01783 !important;
+    border-radius: 8px !important;
+}
+
+.map-buttons {
+    border-radius: 8px !important;
+}
+
+.story-page-story-title {
+
 }

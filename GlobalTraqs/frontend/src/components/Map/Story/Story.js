@@ -89,7 +89,7 @@ function Story(props) {
           </button>
         </div>
       ) : null}{" "}
-      <h2>
+      <h2 className={"story-page-story-title"}>
         <strong>{props.pin.title}</strong>
       </h2>
       <p>

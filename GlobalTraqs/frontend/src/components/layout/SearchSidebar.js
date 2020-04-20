@@ -184,7 +184,7 @@ const colorStyles = {
     <div style={{ marginTop: "10px" }}>
       <form onSubmit={submitSearch} noValidate={true}>
         <div className={"form-group"}>
-          <label>Search:</label>
+          <label className="sidebar-text">Search:</label>
           <input
             className="form-control"
             id="searchForm"
@@ -195,7 +195,7 @@ const colorStyles = {
             value={searchText}
           />
         </div>
-        <label>Category: </label>
+        <label className="sidebar-text">Category: </label>
         <Select
           isMulti
           defaultValue={options}
@@ -205,7 +205,7 @@ const colorStyles = {
           styles={colorStyles}
         />
         <InputGroup style={{ marginTop: "20px" }}>
-          <Label style={labelStyle} for="startDate">
+          <Label className="sidebar-text" style={labelStyle} for="dateRange">
             Search date range
           </Label>
           <DatePicker
@@ -327,7 +327,7 @@ const colorStyles = {
         </div>
       </form>
       <div>
-        <p style={{ marginTop: "50px", marginBottom: "20px" }}>
+        <p className="sidebar-text" style={{ marginTop: "50px", marginBottom: "20px" }}>
           {" "}
           {pinData.length}{" "}
           {pinData.length == 1 ? " search result" : " search results"}{" "}
@@ -349,7 +349,7 @@ const colorStyles = {
                       {story.title}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" className={"sidebar-story-description"}>
-                      <Markup content={story.description} />
+                      <Markup content={story.description.substring(0, 250) + "..."} blockList={["img"]} noHtml={true}/>
                     </Typography>
                     <Typography variant="body2" color="textSecondary" className={"sidebar-story-read-more"}>
                       read more
@@ -381,10 +381,10 @@ const colorStyles = {
           </IconButton>
           <div style={{ marginTop: "20px" }}>
             <Tabs defaultActiveKey="stories" id="uncontrolled-tab-example">
-              <Tab eventKey="stories" title="Search Stories">
+              <Tab eventKey="stories" tabClassName="sidebar-text" title="Search Stories">
                 {storySearch}
               </Tab>
-              <Tab eventKey="users" title="Search Users">
+              <Tab eventKey="users" tabClassName="sidebar-text" title="Search Users">
                 <UserSearchForm
                   previous={users.previous}
                   next={users.next}
@@ -425,7 +425,7 @@ const UserSearchForm = (props) => {
     <div style={{ marginTop: "10px" }}>
       <form onSubmit={props.onSubmit}>
         <div className={"form-group"}>
-          <label>Search: </label>
+          <label className="sidebar-text">Search: </label>
           <input
             className="form-control"
             id="searchForm"
@@ -471,7 +471,7 @@ const UserSearchForm = (props) => {
         </div>
       </form>
       <div>
-        <p style={{ marginTop: "50px", marginBottom: "20px" }}>
+        <p className="sidebar-text" style={{ marginTop: "50px", marginBottom: "20px" }}>
           {" "}
           {props.count}{" "}
           {props.count === 1 ? " search result" : " search results"}{" "}
@@ -493,7 +493,7 @@ const ListUsersSearch = (props) => {
             >
               <CardActionArea>
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
+                  <Typography gutterBottom variant="h5" component="h2" className="sidebar-story-title">
                     {user.username}
                   </Typography>
                 </CardContent>
