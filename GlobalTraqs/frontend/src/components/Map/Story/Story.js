@@ -26,13 +26,13 @@ function Story(props) {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const { isAuthenticated, user } = auth;
+  const { isAuthenticated, user, userFavoritePinState } = auth;
 
   const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
 
   if (props.pinDeleted) {
     props.setPinDeleted(false);
-    return <Redirect to="/test" />;
+    return <Redirect to="/" />;
   }
 
   let canManagePin = false;
@@ -121,8 +121,8 @@ function Story(props) {
         {/* {props.pin.updooots} upvotes */}
         {props.pin.updooots} favorites
         {/* need to figure out a way to update upvotes maybe websockets  */}
-        {props.isAuthenticated
-          ? props.pin && props.pin.updotes && <Upvote {...props} />
+        {isAuthenticated
+          ? props.pin && props.pin.updotes && <Upvote id={props.pin.id} />
           : upvoteButoon}
         &nbsp;&nbsp;&nbsp;
         {props.isAuthenticated

@@ -79,7 +79,6 @@ const useProfileImage = () => {
       });
   };
 
-  console.log(croppedAreaPixels);
   return {
     modalState,
     onSelectFile,

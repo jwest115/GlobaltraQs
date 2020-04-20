@@ -21,7 +21,9 @@ import {
   GET_NEXT_FLAGGED_PINS,
   GET_MAX_PIN,
   GET_MIN_PIN,
+  USER_FAVORITE_STATE_PIN,
 } from "./types";
+import ActionButton from "antd/lib/modal/ActionButton";
 
 //GET PINS
 export const getPins = () => (dispatch) => {
@@ -292,6 +294,7 @@ export const userFirstUpvote = (pin, user) => (dispatch) => {
     pinId: pin,
     upVoter: user,
   };
+  console.log("pinid: " + pin + " user:" + user);
   axios
     .post(`api/upVoteStory/`, submit)
     .then((res) => {
@@ -303,17 +306,13 @@ export const userFirstUpvote = (pin, user) => (dispatch) => {
     .catch((error) => console.log(error));
 };
 
-export const userUpovte = (id, state) => (dispatch) => {
-  const submit = {
-    upvote: !state,
-  };
-
+export const userUpovte = (id) => (dispatch) => {
   axios
-    .patch(`api/upVoteStory/${id}/`, submit)
+    .delete(`api/upVoteStory/${id}/`)
     .then((res) => {
       dispatch({
         type: USER_UPVOTE,
-        payload: res.data,
+        payload: id,
       });
     })
     .catch((error) => console.log(error));

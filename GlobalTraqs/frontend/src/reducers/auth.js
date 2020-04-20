@@ -23,6 +23,10 @@ import {
   USER_PROFILE_LOADING,
   USER_PROFILE_NOT_FOUND,
   EDIT_PIN,
+  GET_PIN,
+  USER_FIRST_UPVOTE,
+  GUEST_USER,
+  USER_UPVOTE,
 } from "../actions/types";
 import { getPinsById } from "../actions/pins";
 
@@ -39,6 +43,9 @@ const initialState = {
   loginFail: false,
   favoriteStories: [],
   profileStatus: false,
+  favoritedPin: false,
+  guest_user: false,
+  upvoteid: 0,
 };
 
 export default function (state = initialState, action) {
@@ -170,6 +177,7 @@ export default function (state = initialState, action) {
         isLoading: false,
         registerFail: false,
         loginFail: false,
+        guest_user: false,
       };
     case USER_SELF_DELETE:
     case AUTH_ERROR:
@@ -192,6 +200,7 @@ export default function (state = initialState, action) {
         user: null,
         isAuthenticated: false,
         isLoading: false,
+        guest_user: true,
       };
     case REGISTER_FAIL:
       localStorage.removeItem("token");
@@ -252,6 +261,49 @@ export default function (state = initialState, action) {
         user: profilepic,
         userProfile: profilepic,
       };
+    case GET_PIN:
+      const userFavoritePinState = state.user
+        ? state.user.user_upvoted_stories.some(
+            (s) => s.pinId === action.payload.id
+          )
+        : false;
+      const upvoteid = userFavoritePinState
+        ? state.user.user_upvoted_stories.filter(
+            (a) => a.pinId === action.payload.id
+          )[0].id
+        : 0;
+
+      return {
+        ...state,
+        favoritedPin: userFavoritePinState,
+        upvoteid: upvoteid,
+      };
+    case USER_FIRST_UPVOTE:
+      return {
+        ...state,
+        favoritedPin: true,
+        upvoteid: action.payload.id,
+      };
+    case GUEST_USER:
+      return {
+        ...state,
+        guest_user: true,
+      };
+
+    case USER_UPVOTE:
+      const favoritedUserStories = {
+        ...state.user,
+        user_upvoted_stories: state.user.user_upvoted_stories.filter(
+          (x) => x.id !== action.payload.id
+        ),
+      };
+
+      return {
+        ...state,
+        favoritedPin: false,
+        user: favoritedUserStories,
+      };
+
     default:
       return state;
   }

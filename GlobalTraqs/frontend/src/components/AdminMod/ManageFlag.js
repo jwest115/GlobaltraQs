@@ -3,33 +3,32 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getFlaggedPins,
   getNextFlaggedPins,
-  deletePins
+  deletePins,
 } from "../../actions/pins";
 import { Link, Redirect } from "react-router-dom";
 import { Alert } from "reactstrap";
 function ManageFlag() {
   const [showReport, setshowReport] = useState("");
-  const flaggedPins = useSelector(state => state.pins.flaggedPins);
+  const flaggedPins = useSelector((state) => state.pins.flaggedPins);
   const dispatch = useDispatch(); // dispatches the action
 
   useEffect(() => {
     //similar to component did mount
     dispatch(getFlaggedPins());
   }, []);
-  const toggleReports = id => {
-    setshowReport(prevshowReport => ({
+  const toggleReports = (id) => {
+    setshowReport((prevshowReport) => ({
       ...showReport,
-      [id]: !prevshowReport[id]
+      [id]: !prevshowReport[id],
     }));
   };
-  const adminDelete = id => {
+  const adminDelete = (id) => {
     dispatch(deletePins(id));
   };
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
 
   const { isAuthenticated, user } = auth;
 
-  console.log(flaggedPins.results);
   return (
     <div>
       MANAGE THE FLAG
@@ -50,7 +49,7 @@ function ManageFlag() {
 
 export default ManageFlag;
 
-const PrevNext = props => {
+const PrevNext = (props) => {
   const dispatch = useDispatch();
   return (
     <>
@@ -123,12 +122,12 @@ function ListFlags(props) {
   );
 }
 
-const StoryReports = props => {
+const StoryReports = (props) => {
   console.log(props);
   return (
     <ul>
       {props.reports.length > 0
-        ? props.reports.map(report => {
+        ? props.reports.map((report) => {
             return <li key={report.id}>{report.reason}</li>;
           })
         : "none"}
