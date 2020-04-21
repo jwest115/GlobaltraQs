@@ -311,7 +311,12 @@ b, strong {
 }
 
 .user-profile-name {
-    color: rgb(77, 65, 133);
+    font-family: "Eina", "Arial" !important;
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: black !important;
+    text-transform: none !important;
 }
 
 .default-btn-purple {
@@ -702,6 +707,17 @@ button {
     text-transform: lowercase !important;
 }
 
+.profile-page-edit-story {
+    background-color: transparent !important;
+    font-family: "Courier New", "Courier" !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: rgb(77, 65, 133) !important;
+    text-transform: lowercase !important;
+    padding: 0 !important;
+    margin-top: 10px;
+}
+
 .sidebar-story-author {
     font-family: "Courier New", "Courier" !important;
     font-size: 1rem !important;
@@ -810,4 +826,48 @@ button {
 .faq-card {
     border-radius: 25px !important;
     box-shadow: -5px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.user-profile-main-content {
+    padding-top: 50px;
+}
+
+.user-profile-bio {
+    font-family: "Eina", "Arial" !important;
+    font-size: 1rem;
+    color: black !important;
+    text-transform: none !important;
+}
+
+.user-profile-body {
+    margin-top: 50px;
+}
+
+.profile-story-card {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 20px !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+
+.profile-page-story-settings-card {
+    color: white;
+    font-family: "Eina", "Arial" !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    background-color: rgb(77, 65, 133) !important;
+    text-transform: lowercase !important;
+    border-radius: 20px;
+    height: 100%;
+    width: 76%;
+}
+
+.user-profile-my-posts-title {
+    font-family: "Eina", "Arial" !important;
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+    font-weight: 500;
+    color: black !important;
+    text-transform: none !important;
 }
