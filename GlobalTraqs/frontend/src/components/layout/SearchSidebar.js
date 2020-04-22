@@ -17,23 +17,27 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import Slider from "@material-ui/core/Slider";
 import { Label } from "reactstrap";
-
+import chroma from 'chroma-js';
 import InputGroup from "react-bootstrap/InputGroup";
+import { Avatar } from "antd";
+import { Row, Col } from "react-bootstrap";
+
 import {
-  getUsers,
   searchUsers,
   getNextPreviousUsers,
 } from "../../actions/users";
 
 const options = [
-  { value: "1", label: "Personal" },
-  { value: "2", label: "Community" },
-  { value: "3", label: "Historical" },
+  { value: "1", label: "Personal"},
+  { value: "2", label: "Community"},
+  { value: "3", label: "Historical"},
 ];
 
 const labelStyle = {
   marginRight: "10px",
 };
+
+
 
 function SearchSidebar(props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -77,7 +81,7 @@ function SearchSidebar(props) {
   }, []);
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(searchUsers(""));
   }, []);
 
   const onSetSidebarOpen = (open) => {
@@ -145,11 +149,44 @@ function SearchSidebar(props) {
     dispatch(getPins());
   };
 
+const colorStyles = {
+  control: styles => ({ ...styles, backgroundColor: 'white' }),
+  multiValue: (styles, { data }) => {
+    const category = data.value;
+    let color = "white";
+    if(category == 1) {
+      color = "#e01783";
+    }
+    else if(category == 2) {
+      color = "#00ce7d"
+    }
+    else {
+      color = "#248dc1";
+    }
+    return {
+      ...styles,
+      backgroundColor: color,
+      color: "white",
+      fontFamily: "Eina, Arial",
+      textTransform: "lowercase",
+      borderRadius: "8px",
+    };
+  },
+  multiValueLabel: (styles, { data }) => ({
+    ...styles,
+    color: "white",
+    fontFamily: "Eina, Arial",
+    textTransform: "lowercase",
+    borderRadius: "8px",
+  }),
+};
+
+
   const storySearch = (
     <div style={{ marginTop: "10px" }}>
       <form onSubmit={submitSearch} noValidate={true}>
         <div className={"form-group"}>
-          <label>Search:</label>
+          <label className="sidebar-text">Search:</label>
           <input
             className="form-control"
             id="searchForm"
@@ -160,16 +197,17 @@ function SearchSidebar(props) {
             value={searchText}
           />
         </div>
-        <label>Category: </label>
+        <label className="sidebar-text">Category: </label>
         <Select
           isMulti
           defaultValue={options}
           value={selectedCategories}
           onChange={(categories) => setSelectedCategories(categories)}
           options={options}
+          styles={colorStyles}
         />
         <InputGroup style={{ marginTop: "20px" }}>
-          <Label style={labelStyle} for="startDate">
+          <Label className="sidebar-text" style={labelStyle} for="dateRange">
             Search date range
           </Label>
           <DatePicker
@@ -276,14 +314,14 @@ function SearchSidebar(props) {
           <button
             type="submit"
             style={{ float: "right" }}
-            className="btn btn-primary"
+            className="btn btn-primary default-btn-purple"
           >
             Search
           </button>
           <button
             type="submit"
-            style={{ float: "right", paddingRight: "20px" }}
-            className="btn btn-primary"
+            style={{ float: "left", paddingRight: "20px" }}
+            className="btn btn-primary default-btn-purple"
             onClick={() => clearFilters()}
           >
             Clear filters
@@ -291,7 +329,7 @@ function SearchSidebar(props) {
         </div>
       </form>
       <div>
-        <p style={{ marginTop: "50px", marginBottom: "20px" }}>
+        <p className="sidebar-text" style={{ marginTop: "50px", marginBottom: "20px" }}>
           {" "}
           {pinData.length}{" "}
           {pinData.length == 1 ? " search result" : " search results"}{" "}
@@ -299,19 +337,24 @@ function SearchSidebar(props) {
 
         {pinData.map((story, index) => {
           return (
-            <Card style={{ marginTop: "5px" }}>
+            <Card style={{ marginTop: "10px", borderRadius: "20px" }}>
               <Link
                 style={{ textDecoration: "inherit" }}
                 to={`story/${story.id}`}
                 onClick={() => props.centerMarker(story)}
               >
+               <div className={story.category == 1 ? "search-bar-story-card-trim-personal" : (story.category == 2 ? "search-bar-story-card-trim-community" : "search-bar-story-card-trim-historical")}>
+               </div>
                 <CardActionArea>
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom variant="h5" component="h2" className={"sidebar-story-title"}>
                       {story.title}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      <Markup content={story.description} />
+                    <Typography variant="body2" color="textSecondary" className={"sidebar-story-description"}>
+                      <Markup content={story.description.substring(0, 250) + "..."} blockList={["img"]} noHtml={true}/>
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" className={"sidebar-story-read-more"}>
+                      read more
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -340,10 +383,10 @@ function SearchSidebar(props) {
           </IconButton>
           <div style={{ marginTop: "20px" }}>
             <Tabs defaultActiveKey="stories" id="uncontrolled-tab-example">
-              <Tab eventKey="stories" title="Search Stories">
+              <Tab eventKey="stories" tabClassName="sidebar-text" title="Search Stories">
                 {storySearch}
               </Tab>
-              <Tab eventKey="users" title="Search Users">
+              <Tab eventKey="users" tabClassName="sidebar-text" title="Search Users">
                 <UserSearchForm
                   previous={users.previous}
                   next={users.next}
@@ -384,7 +427,7 @@ const UserSearchForm = (props) => {
     <div style={{ marginTop: "10px" }}>
       <form onSubmit={props.onSubmit}>
         <div className={"form-group"}>
-          <label>Search: </label>
+          <label className="sidebar-text">Search: </label>
           <input
             className="form-control"
             id="searchForm"
@@ -430,7 +473,7 @@ const UserSearchForm = (props) => {
         </div>
       </form>
       <div>
-        <p style={{ marginTop: "50px", marginBottom: "20px" }}>
+        <p className="sidebar-text" style={{ marginTop: "50px", marginBottom: "20px" }}>
           {" "}
           {props.count}{" "}
           {props.count === 1 ? " search result" : " search results"}{" "}
@@ -452,9 +495,26 @@ const ListUsersSearch = (props) => {
             >
               <CardActionArea>
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {user.username}
-                  </Typography>
+                  <Row>
+                    <Col md={3}>
+                   {user.profileurl ? (
+                      <img
+                        src={user.profileurl}
+                        style={{ borderRadius: "50%", height: "100px", width: "100px" }}
+                      />
+                    ) : (
+                      <Avatar size={100} icon="user" />
+                    )}
+                    </Col>
+                    <Col md={9} style={{ marginTop: "auto", marginBottom: "auto" }}>
+                    <Typography gutterBottom variant="h5" component="h2" className="sidebar-story-title">
+                        {user.username}
+                      </Typography>
+                      <Typography gutterBottom variant="h5" component="h2" className="sidebar-story-description">
+                        {user.bio ? user.bio.substring(0, 50) + "..." : ""}
+                      </Typography>
+                    </Col>
+                  </Row>
                 </CardContent>
               </CardActionArea>
             </Link>

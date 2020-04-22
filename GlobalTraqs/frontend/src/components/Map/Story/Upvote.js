@@ -4,36 +4,30 @@ import CircularIndeterminate from "./CircularIndeterminate";
 import { userFirstUpvote, userUpovte } from "../../../actions/pins";
 import { useDispatch, useSelector } from "react-redux";
 function Upvote(props) {
+  const auth = useSelector((state) => state.auth);
+
+  const { favoritedPin, upvoteid, user } = auth;
   const dispatch = useDispatch();
-  const upvoteid = props.pin.upvotedBefore
-    ? props.pin.updotes.filter(a => a.upVoter === props.user.id)[0].id
-    : 0;
+
   return (
-    // fragment
-    <>
-      {props.pin.upvotedBefore ? (
-        <button
-          type="submit"
-          onClick={() =>
-            dispatch(userUpovte(upvoteid, props.pin.userCurrentUpvote))
-          }
-          className="btn btn-primary"
-        >
-          {props.pin.userCurrentUpvote ? "Favorited" : "Favorite"}
-        </button>
-      ) : (
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={e => {
-            dispatch(userFirstUpvote(props.pin.id, props.user.id));
-          }}
-        >
-          Favorite
-        </button>
-      )}
-    </>
+    <FavoriteButton
+      onClick={() =>
+        favoritedPin
+          ? dispatch(userUpovte(upvoteid))
+          : dispatch(userFirstUpvote(props.id, user.id))
+      }
+    >
+      {favoritedPin ? "Favorited" : "Favorite"}
+    </FavoriteButton>
   );
 }
 
 export default Upvote;
+
+const FavoriteButton = ({ children, onClick }) => {
+  return (
+    <button className="btn btn-primary default-btn-purple" onClick={onClick}>
+      {children}
+    </button>
+  );
+};

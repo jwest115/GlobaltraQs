@@ -6,13 +6,14 @@ import { editUser } from "../../actions/users";
 import IdleTimer from "react-idle-timer";
 import Image from "react-bootstrap/Image";
 import logo from "./images/thearqive_white_color_logos.png";
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 function Header() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user } = auth;
   const [anonymousMode, setAnoynmousMode] = useState(false);
-
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   useEffect(() => {
     if (user) {
       setAnoynmousMode(user.is_anonymous_active);
@@ -56,8 +57,8 @@ function Header() {
     if (user.is_administrator) {
       adminManager = (
         <li className="nav-item">
-          <Link to="/manage" className="nav-link">
-            Manage
+          <Link to="/manage" className="nav-link header-dropdown-nav-item">
+            Management
           </Link>
         </li>
       );
@@ -65,7 +66,7 @@ function Header() {
     } else if (user.is_moderator) {
       adminManager = (
         <li className="nav-item">
-          <Link to="/manage" className="nav-link">
+          <Link to="/manage" className="nav-link header-dropdown-nav-item">
             Manage
           </Link>
         </li>
@@ -79,35 +80,48 @@ function Header() {
   }
   const authLinks = (
     <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-      <li className="nav-item">
+      <li className="nav-item anonymous-nav-item">
         <button
           onClick={toggleAnonymous}
           className="header-nav-anonymous nav-link btn btn-link btn-lg"
         >
-          {anonymousMode ? "Leave Anonymous Mode" : "Go Anonymous"}
+          {anonymousMode ? <p className="header-nav-anonymous-active nav">Anonymous</p> : <p className="header-nav-anonymous nav">Go Anonymous</p>}
         </button>
       </li>
-      <li className="nav-item header-nav-username">
-        {user
-          ? `Welcome ${user.is_anonymous_active ? "Anonymous" : user.username}`
-          : ""}{" "}
-        {userRole}{" "}
-      </li>
-      <li className="nav-item">
-        <button
-          onClick={() => dispatch(logout())}
-          className="nav-link btn btn-link btn-lg text-info"
-        >
-          LOGOUT
-        </button>
-      </li>
-      <li className="nav-item">
-        <Link
-          to={user ? `/users/${actual_username}` : " "}
-          className="nav-link header-nav-link"
-        >
-          Profile
-        </Link>
+      <li className="nav-item dropdown-nav">
+         <Dropdown className="header-dropdown" outline isOpen={isDropdownOpen} nav={true} toggle={() => setIsDropdownOpen(!isDropdownOpen)}>
+          <DropdownToggle caret className="header-user-dropdown-button header-nav-username">
+            {user
+              ? `Welcome ${user.is_anonymous_active ? "Anonymous" : user.username}`
+              : ""}{" "}
+            {userRole}{" "}
+            </DropdownToggle>
+          <DropdownMenu className="header-user-dropdown-menu">
+            <DropdownItem>
+               <Link
+                  to={user ? `/users/${actual_username}` : " "}
+                  className="nav-link header-dropdown-nav-item"
+                >
+                  Profile
+                </Link>
+            </DropdownItem>
+             {adminManager ? (
+              <DropdownItem>
+                {adminManager}
+              </DropdownItem>
+            ) : "" }
+            <DropdownItem>
+              <li className="nav-item">
+                <button
+                  onClick={() => dispatch(logout())}
+                  className="nav-link btn btn-link header-dropdown-nav-item"
+                >
+                  Logout
+                </button>
+              </li>
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       </li>
     </ul>
   );
@@ -155,31 +169,30 @@ function Header() {
       <div className="collapse navbar-collapse" id="navbarColor01">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to="/faq" className="nav-link header-nav-link">
+            <Link to="/faq" className="nav-link header-nav-link faq-header-nav-link">
               Faq{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/About" className="nav-link header-nav-link">
+            <Link to="/About" className="nav-link header-nav-link about-us-header-nav-link">
               About Us{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/support" className="nav-link header-nav-link">
+            <Link to="/support" className="nav-link header-nav-link support-us-nav-link">
               Support Us{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/resources" className="nav-link header-nav-link">
+            <Link to="/resources" className="nav-link header-nav-link resources-nav-link">
               Resources{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/ContactUs" className="nav-link header-nav-link">
+            <Link to="/ContactUs" className="nav-link header-nav-link contact-us-nav-link">
               Contact Us{" "}
             </Link>
           </li>
-          {adminManager ? adminManager : ""}
         </ul>
         {isAuthenticated ? authLinks : guestLinks}
       </div>

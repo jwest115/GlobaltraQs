@@ -202,14 +202,29 @@ const LeafletMap = (props) => {
           />
         )}
         <Control position={"topleft"} style={{ left: "0px" }}>
-          <button className={"btn btn-primary"}>
+          <button className={"btn btn-primary add-story-button"}
+                  onClick={() => {
+                    console.log("add address");
+                    props.setAddAddress(true);
+
+                    if(mapInstance) {
+                      let center = mapInstance.leafletElement.getCenter();
+                         props.setaddPinValues({
+                          ...props.addPinValues,
+                          latitude: center.lat,
+                          longitude: center.lng,
+                        });
+                    }
+                    props.toggle();
+                  }}
+          >
             <AddCommentIcon></AddCommentIcon>
           </button>
         </Control>
         {props.showSidebarButton ? (
           <Control position={"topright"}>
             <button
-              className={"btn btn-primary"}
+              className={"btn btn-primary map-buttons"}
               id="open-sidebar-button"
               onClick={() => {
                 props.setStorySidebarOpen(false);
@@ -222,7 +237,7 @@ const LeafletMap = (props) => {
         ) : null}
         <Control position={"bottomright"}>
           <div>
-            <button onClick={props.getLocation} className="btn btn-primary">
+            <button onClick={props.getLocation} className="btn btn-primary map-buttons">
               <MyLocationIcon></MyLocationIcon>
             </button>
           </div>
@@ -287,6 +302,7 @@ const LeafletMap = (props) => {
         toggle={props.toggle}
         modalState={props.modalState}
         setAnonRadius={props.setAnonRadius}
+        addAddress={props.addAddress}
         {...props}
       />
       <ModalEditPinForm

@@ -11,7 +11,7 @@ function CommentStory(props) {
       {props.isAuthenticated ? (
         <button
           type="button"
-          className="btn btn-primary btn-sm"
+          className="btn btn-primary default-btn-purple"
           onClick={() => props.settoggleComment(!props.toggleComment)}
         >
           Add Comment
@@ -23,39 +23,41 @@ function CommentStory(props) {
       {props.comment.map((userComment, index) => {
         return (
           <div
-            className="card border-primary mb-3 col-md-6"
+            className="card border-primary mb-3 col-md-6 story-comment-card"
             key={userComment.id}
           >
-            <div className="card-header">
-              {userComment.is_anonymous_comment
-                ? "Anonymous"
-                : userComment.username}
-            </div>
+            {/*<div className="card-header">*/}
+            {/*  {userComment.is_anonymous_comment*/}
+            {/*    ? "Anonymous"*/}
+            {/*    : userComment.username}*/}
+            {/*</div>*/}
             <div className="card-body">
+              <p className="sidebar-story-author"><span className="sidebar-story-username">{userComment.is_anonymous_comment ? "Anonymous" : userComment.username}</span> says:</p>
               {/*<h4 className="card-title">{userComment.description}</h4>*/}
               <p className="card-text">
                 {userComment.description}
                 {/*Some quick example text to build on the card title and make up*/}
                 {/*the bulk of the card's content.*/}
               </p>
+              {props.isAuthenticated ? (
+                <FlagButton id={userComment.id} {...props} />
+              ) : (
+                ""
+              )}
               {props.isAuthenticated &&
               (props.user.id === userComment.commenter ||
                 props.user.is_moderator ||
                 props.user.is_administrator) ? (
                 <button
                   type="button"
-                  className="btn btn-primary btn-sm"
+                  className="btn btn-primary btn-sm default-btn-purple"
+                  style={{ float: "right", marginRight: "20px"}}
                   onClick={(e) => {
                     dispatch(deleteComment(userComment.id));
                   }}
                 >
                   Delete
                 </button>
-              ) : (
-                ""
-              )}
-              {props.isAuthenticated ? (
-                <FlagButton id={userComment.id} {...props} />
               ) : (
                 ""
               )}
@@ -85,7 +87,7 @@ const FlagButton = (props) => {
         <button
           onClick={() => dispatch(delFlagComment(flagid[0].id))}
           type="button"
-          className="btn btn-primary btn-sm"
+          className="btn btn-primary btn-sm flag-story-btn"
         >
           Remove Flag
         </button>
@@ -93,7 +95,7 @@ const FlagButton = (props) => {
         <button
           onClick={() => props.toggle(props.id)}
           type="button"
-          className="btn btn-primary btn-sm"
+          className="btn btn-primary btn-sm flag-story-btn"
         >
           Flag
         </button>
@@ -105,12 +107,10 @@ const FlagButton = (props) => {
 const AddCommentForm = (props) => {
   if (props.user) {
     return (
-      <div className="card border-primary mb-3 col-md-6">
-        <div className="card-header">
-          {props.user.is_anonymous_active ? "Anonymous " : props.user.username}
-        </div>
+      <div className="card border-primary mb-3 col-md-6 story-comment-card">
         <div className="card-body">
-          <h4 className="card-title">Post a Comment</h4>
+         {/*{props.user.is_anonymous_active ? "Anonymous " : props.user.username}*/}
+          <h4 className="card-title story-card-description">Post a Comment</h4>
           <form onSubmit={props.onSubmitComment}>
             <div className="form-group">
               <textarea
@@ -126,8 +126,8 @@ const AddCommentForm = (props) => {
                 }
               ></textarea>
             </div>
-            <button type="submit" className="btn btn-primary btn-sm">
-              Post
+            <button type="submit" className="btn btn-primary btn-sm default-btn-purple" style={{ float: "right" }}>
+              comment
             </button>
           </form>
 
