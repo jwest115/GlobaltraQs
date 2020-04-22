@@ -67,18 +67,10 @@ export default function (state = initialState, action) {
         pinMinDate: action.payload,
       };
     case DELETE_PINS:
-      const flaggedpins = state.flaggedPins.results.filter(
-        (p) => p.id !== action.payload
-      );
-
-      const delFlag = {
-        ...state.flaggedPins,
-        results: flaggedpins,
-      };
       return {
         ...state,
         pins: state.pins.filter((pins) => pins.id !== action.payload),
-        flaggedPins: delFlag,
+
         pin: [],
       };
     case ADD_PIN:
@@ -163,14 +155,9 @@ export default function (state = initialState, action) {
 
       const userUp = {
         ...state.pin,
-        updotes: [
-          ...state.pin.updotes.filter((x) => x.id !== action.payload.id),
-          action.payload,
-        ],
+        updotes: [state.pin.updotes.filter((x) => x.id !== action.payload.id)],
         userCurrentUpvote: action.payload.upvote,
-        updooots: action.payload.upvote
-          ? state.pin.updooots + 1
-          : state.pin.updooots - 1,
+        updooots: state.pin.updooots - 1,
         // updooots: action.payload.upvote ? pin.updooots++ : pin.updoots--
       };
       return {

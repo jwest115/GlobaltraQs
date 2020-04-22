@@ -7,19 +7,20 @@ import {
   Redirect,
   useParams,
   useRouteMatch,
-  useLocation
+  useLocation,
 } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ManageFlag from "./ManageFlag";
 import ManageUsers from "./ManageUsers";
 import ManageComments from "./ManageComments";
+import ManageCategory from "./ManageCategory";
 import { RoutedTabs, NavTab } from "react-router-tabs";
 import "./styles/react-router-tabs.css";
 export default function Manage() {
   let { path, url } = useRouteMatch();
   console.log("the path is " + path + " and the url is " + url);
   const dispatch = useDispatch();
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user } = auth;
 
   return (
@@ -27,7 +28,7 @@ export default function Manage() {
       <NavTab to="/manage/flag">Check Flags</NavTab>
       <NavTab to="/manage/users">Manage User</NavTab>
       <NavTab to="/manage/comments">Manage Comments</NavTab>
-
+      <NavTab to="/manage/category">Manage Category</NavTab>
       <Switch>
         <Route exact path={`/manage`}>
           <MainManage />
@@ -42,6 +43,9 @@ export default function Manage() {
         </Route>
         <Route path={`/manage/comments`}>
           <ManageComments />
+        </Route>
+        <Route path={`/manage/category`}>
+          <ManageCategory />
         </Route>
       </Switch>
     </div>

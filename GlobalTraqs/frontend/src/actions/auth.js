@@ -16,6 +16,7 @@ import {
   REMOVE_FLAG_COMMENT,
   UPDATE_PROFILE_PIC,
   EDIT_PIN_PRO,
+  GUEST_USER,
 } from "./types";
 
 // CHECK TOKEN & LOAD USER
@@ -35,6 +36,9 @@ export const loadUser = () => (dispatch, getState) => {
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: AUTH_ERROR,
+      });
+      dispatch({
+        type: GUEST_USER,
       });
     });
 };

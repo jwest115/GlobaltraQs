@@ -11,6 +11,7 @@ import {
   GET_PINS,
   USER_PROFILE_LOADING,
   USER_PROFILE_NOT_FOUND,
+  UNFAVORITE_PROFILE_STORY,
 } from "./types";
 
 import { DELETE_USER } from "./types";
@@ -170,6 +171,19 @@ export const getFavoritePosts = (id) => (dispatch) => {
           });
         })
         .catch((err) => console.log(err));
+    })
+    .catch((error) => console.log(error));
+};
+
+export const unFavoriteProfile = (id) => (dispatch) => {
+  axios
+    .delete(`api/upVoteStory/${id}/`)
+    .then((res) => {
+      console.log(id);
+      dispatch({
+        type: UNFAVORITE_PROFILE_STORY,
+        payload: id,
+      });
     })
     .catch((error) => console.log(error));
 };

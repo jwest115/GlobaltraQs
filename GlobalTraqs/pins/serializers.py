@@ -24,6 +24,12 @@ class FaqSerializer(serializers.ModelSerializer):
 
 
 class upVoteStorySerializer(DynamicFieldsMixin, serializers.ModelSerializer):
+
+    title = serializers.CharField(
+        source="pinId.title", read_only=True)
+    pinAuthor = serializers.CharField(
+        source="pinId.owner.username", read_only=True)
+
     class Meta:
         model = upVoteStory
         fields = '__all__'

@@ -29,7 +29,7 @@ class upVoteStorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = upVoteStory
-        fields = ['pinId', 'title', 'pinAuthor']
+        fields = ['id', 'pinId', 'title', 'pinAuthor']
 
 
 class UserSerializer(serializers.ModelSerializer):
