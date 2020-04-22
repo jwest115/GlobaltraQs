@@ -873,7 +873,7 @@ button {
 }
 
 .register-div {
-    background-color: #6f42c1 !important;
+    background-color: rgb(77, 65, 133) !important;
     padding-top: 3% !important;
 }
 
@@ -909,7 +909,7 @@ button {
 }
 
 .login-div {
-    background-color: #6f42c1 !important;
+    background-color: rgb(77, 65, 133) !important;
     padding-top: 3% !important;
 }
 
@@ -942,4 +942,9 @@ button {
     color: white !important;
     font-size: 1rem !important;
     width: 120px !important;
+}
+
+.login-register-links a {
+    color: rgb(77, 65, 133) !important;
+    font-weight: 600 !important;
 }
