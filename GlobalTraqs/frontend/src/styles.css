@@ -871,3 +871,75 @@ button {
     color: black !important;
     text-transform: none !important;
 }
+
+.register-div {
+    background-color: #6f42c1 !important;
+    padding-top: 3% !important;
+}
+
+.register-card {
+    border-radius: 25px !important;
+    box-shadow: -5px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.register-title {
+    font-family: Eina, Arial;
+    color: #98999b !important;
+    text-transform: lowercase !important;
+    font-weight: 600;
+    font-size: 1.7rem;
+    letter-spacing: -.5px;
+}
+
+.register-text {
+    font-family: "Courier New", "Courier" !important;
+    text-transform: lowercase !important;
+    font-weight: 600 !important;
+    color: #98999b !important;
+    font-size: 1rem;
+}
+
+.register-btn {
+    background-color: black !important;
+    border-radius: 15px !important;
+    text-transform: lowercase !important;
+    color: white !important;
+    font-size: 1rem !important;
+    width: 120px !important;
+}
+
+.login-div {
+    background-color: #6f42c1 !important;
+    padding-top: 3% !important;
+}
+
+.login-card {
+    border-radius: 25px !important;
+    box-shadow: -5px 5px rgba(0, 0, 0, 0.1) !important;
+}
+
+.login-title {
+    font-family: Eina, Arial;
+    color: #98999b !important;
+    text-transform: lowercase !important;
+    font-weight: 600;
+    font-size: 1.7rem;
+    letter-spacing: -.5px;
+}
+
+.login-text {
+    font-family: "Courier New", "Courier" !important;
+    text-transform: lowercase !important;
+    font-weight: 600 !important;
+    color: #98999b !important;
+    font-size: 1rem;
+}
+
+.login-btn {
+    background-color: black !important;
+    border-radius: 15px !important;
+    text-transform: lowercase !important;
+    color: white !important;
+    font-size: 1rem !important;
+    width: 120px !important;
+}
