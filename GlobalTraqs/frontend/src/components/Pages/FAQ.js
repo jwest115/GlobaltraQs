@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
@@ -149,61 +150,83 @@ export default function FAQ() {
               </button>
             </div>
             ) : ""}
-    <div className="mt-4 mb-4">
+    <div className="col-md-6 m-auto">
         <div style={{ marginBottom: "30px" }}>
-          <Paper className={classes.root}>
-            <h3 className="faq-question">
-              Q: What if I don't want to give an exact location?
-            </h3>
-            <p className="faq-answer">
-              A: Not a problem! Give as much, or as little location information
-              as you'd like. We just ask that you give us at least a city/region
-              and country, since the purpose of this site is to see stories
-              located around the world.
-            </p>
+          <Paper className={`faq-card ${classes.root}`}>
+            <button class="accordion">
+              <h3 className="faq-question">
+                what is  <i>the arqive</i>?
+              </h3>
+            </button>
+              <div class="panel">
+                <p className="faq-answer">
+                  <i>The arqive</i> is a place to learn more about queer experiences
+                  and serve as a resource for members of the queer community. Check
+                  out our <Link to="/About"><u>About Us</u></Link> page for more info!
+                </p>
+              </div>
           </Paper>
         </div>
         <div style={{ marginBottom: "30px" }}>
-          <Paper className={classes.root}>
-            <h3 className="faq-question">
-              Q: I'm straight, but have a lot of LGBTQ friends. Can I post
-              stories too?
-            </h3>
-            <p className="faq-answer">
-              A: Of course, as long as it has something to do with your
-              connection to LGBTQ communities or individuals.
-            </p>
-          </Paper>
-        </div>
-
-        <div style={{ marginBottom: "30px" }}>
-          <Paper className={classes.root}>
-            <h3 className="faq-question">
-              Q: How long or short do stories have to be?
-            </h3>
-            <p className="faq-answer">
-              A: As long or as short as you want them to be.
-            </p>
+          <Paper className={`faq-card ${classes.root}`}>
+            <button class="accordion">
+              <h3 className="faq-question">
+                what do the different color bubbles mean?
+              </h3>
+            </button>
+              <div class="panel">
+                <p className="faq-answer">
+                  ummm...
+                </p>
+              </div>
           </Paper>
         </div>
 
         <div style={{ marginBottom: "30px" }}>
-          <Paper className={classes.root}>
-            <h3 className="faq-question">
-              Q: What do the different color pins mean?
-            </h3>
-            <p className="faq-answer">
-              A: Lavender/purple pins are personal stories. Green pins are
-              community histories, or stories that have significance to LGBTQ
-              communities on a scale larger than the individual. For example,
-              Stonewall would be considered a community story, as would, say,
-              the legalization of gay marriage in California, or the first
-              lesbian couple to get married (quite publically) in Taiwan. Red
-              pins are current locations of active organizations and resources
-              for LGBTQ individuals.
-            </p>
+          <Paper className={`faq-card ${classes.root}`}>
+            <button class="accordion">
+              <h3 className="faq-question">
+                is the website free?
+              </h3>
+            </button>
+              <div class="panel">
+                <p className="faq-answer">
+                  Absolutely!
+                </p>
+              </div>
           </Paper>
         </div>
+
+        <div style={{ marginBottom: "30px" }}>
+          <Paper className={`faq-card ${classes.root}`}>
+            <button class="accordion">
+              <h3 className="faq-question">
+                who can use the website?
+              </h3>
+            </button>
+              <div class="panel">
+                <p className="faq-answer">
+                  Anyone! Even your dog! :)
+                </p>
+              </div>
+          </Paper>
+        </div>
+
+        <div style={{ marginBottom: "30px" }}>
+          <Paper className={`faq-card ${classes.root}`}>
+            <button class="accordion">
+              <h3 className="faq-question">
+                if i don't know the exact address , is that okay? 
+              </h3>
+            </button>
+              <div class="panel">
+                <p className="faq-answer">
+                  yes, but an approximation would be helpful
+                </p>
+              </div>
+          </Paper>
+        </div>
+
         {faqDesc && (
           <DisplayFaq
             user={user}
@@ -239,41 +262,53 @@ function DisplayFaq(props) {
   const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user } = auth;
 
+  let canEdit = false;
+
+  if(isAuthenticated) {
+      if(user.is_administrator) {
+          canEdit = true;
+      }
+  }
+
   return (
     <>
       {props.data.map((faq) => {
         return (
           <div key={faq.id}>
             <div style={{ marginBottom: "30px" }}>
-              <Paper className={props.classes.root}>
+            <Paper className={`faq-card ${props.classes.root}`}>
                 <h3 className="faq-question">
                   Q: {faq.faqQuestionDesc}
                 </h3>
                 <p className="faq-answer">A: {faq.faqAnswerDesc}</p>
-                <button onClick={() => props.deletefaqDesc(faq.id)}>
-                  Delete
-                </button>
-                <button onClick={() => props.toggle(faq.id)}>
-                  Toggle Edit Form
-                </button>
-                {props.shownComments[faq.id] ? (
-                  <>
-                    {" "}
-                    <EditFAQ
-                      id={faq.id}
-                      question={faq.faqQuestionDesc}
-                      answer={faq.faqAnswerDesc}
-                      onChange={props.updateFAQ}
-                    ></EditFAQ>
-                    <p>
-                      <button onClick={() => props.editfaqDesc(faq.id)}>
-                        Save
-                      </button>
-                      <button onClick={() => props.revertChange(faq.id)}>
-                        Revert
-                      </button>
-                    </p>
-                  </>
+                {canEdit ? (
+                    <>
+                     <button onClick={() => props.deletefaqDesc(faq.id)}>
+                      Delete
+                    </button>
+                    <button onClick={() => props.toggle(faq.id)}>
+                      Toggle Edit Form
+                    </button>
+                    {props.shownComments[faq.id] ? (
+                      <>
+                        {" "}
+                        <EditFAQ
+                          id={faq.id}
+                          question={faq.faqQuestionDesc}
+                          answer={faq.faqAnswerDesc}
+                          onChange={props.updateFAQ}
+                        ></EditFAQ>
+                        <p>
+                          <button onClick={() => props.editfaqDesc(faq.id)}>
+                            Save
+                          </button>
+                          <button onClick={() => props.revertChange(faq.id)}>
+                            Revert
+                          </button>
+                        </p>
+                      </>
+                    ) : null}
+                    </>
                 ) : null}
               </Paper>
             </div>

@@ -162,7 +162,7 @@ export default function MapDashboard() {
   const [showSidebarButton, setShowSidebarButton] = useState(false);
   const [mapReference, setMapReference] = useState();
   const [map, setMap] = useState();
-
+  const [addAddress, setAddAddress] = useState(false);
   const minPinDate = useSelector((state) => state.pins.pinMinDate);
   const maxPinDate = useSelector((state) => state.pins.pinMaxDate);
 
@@ -185,6 +185,9 @@ export default function MapDashboard() {
   };
 
   const toggle = () => {
+    if(modalState == true) {
+      setAddAddress(false);
+    }
     setmodalstate(!modalState);
   };
 
@@ -341,6 +344,8 @@ export default function MapDashboard() {
               mapContainerStyle={divStyle1}
               setMapContainerStyle={setMapContainerStyle}
               centerMarker={centerMarker}
+              addAddress={addAddress}
+              setAddAddress={setAddAddress}
             />
           </div>
         </Route>
@@ -393,6 +398,8 @@ export default function MapDashboard() {
                 setMapContainerStyle={setMapContainerStyle}
                 centerMarker={centerMarker}
                 updateEditForm={updateEditForm}
+                addAddress={addAddress}
+                setAddAddress={setAddAddress}
               />
             </div>
             <StoryDisplay

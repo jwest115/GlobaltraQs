@@ -114,13 +114,13 @@ export default function Login() {
     return <Redirect to="/" />;
   }
   return (
-   <div className={"main-content-div"}>
-    <div className="col-md-6 m-auto">
+   <div className={"main-content-div login-div"}>
+    <div className="col-md-6 m-auto login-col">
       {console.log(attempts)}
       {/* if form was submitted and login failed then show an error banner*/}
       {console.log("submitted " + submitted + " login fail " + failed)}
-      <div className="card card-body mt-5">
-        <h2 className="text-center">Login</h2>
+      <div className="card card-body mt-5 login-card">
+        <h2 className="text-center login-title">Login</h2>
         {submitted && failed ?
           <div className="card card-body mt-5 alert alert-danger" role="alert">
           Invalid username and/or password, please try again
@@ -130,7 +130,7 @@ export default function Login() {
         }
         <form onSubmit={submitForm}>
           <div className="form-group">
-            <label>Username</label>
+            <label className="login-text">Username</label>
             <input
               type="text"
               className="form-control"
@@ -159,7 +159,7 @@ export default function Login() {
               title="Must be at least eight characters with one Uppercase, Lowercase, Number, and Special Character."
             >
               <div className="form-group">
-                <label>Password</label>
+                <label className="login-text">Password</label>
                 <input
                   onClick={handleTooltipOpen}
                   type="password"
@@ -191,15 +191,15 @@ export default function Login() {
             ) : (
                 ""
               )}
-            <button type="submit" className="btn btn-primary float-right">
+            <button type="submit" className="btn btn-primary float-right login-btn">
               Login
             </button>
           </div>
-          <p>
-            Don't have an account? <Link to="/register">Register</Link>
+          <p className="login-text">
+            Don't have an account? <span className="login-register-links"><Link to="/register">Register</Link></span>
           </p>
-          <p>
-            Forgot Password? <Link to="/forgotPassword">Click here</Link>
+          <p className="login-text">
+            Forgot Password? <span className="login-register-links"><Link to="/forgotPassword">Click here</Link></span>
           </p>
         </form>
       </div>

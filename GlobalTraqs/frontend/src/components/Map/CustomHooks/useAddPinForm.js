@@ -17,6 +17,11 @@ const useAddPinForm = callback => {
     startDate: new Date(),
     endDate: new Date(),
     anonradius: 1,
+    address: "",
+    locality: "",
+    region: "",
+    country: "",
+    postCode: "",
     title: "",
     description: "",
     postDate: new Date(),
@@ -26,6 +31,7 @@ const useAddPinForm = callback => {
 
   const handleAddPinSubmit = e => {
     if (e) e.preventDefault();
+
     let is_anonymous_pin = true;
     if (isAuthenticated) {
       if (!user.is_anonymous_active) {
@@ -36,12 +42,16 @@ const useAddPinForm = callback => {
 
     }
 
+    randomizeLocation(addPinValues.anonradius);
+
     const submit = {
       ...addPinValues,
       owner: isAuthenticated ? user.id : "",
       is_anonymous_pin: is_anonymous_pin
     };
 
+    console.log(submit);
+    console.log("is submit");
     dispatch(addPin(submit));
     callback();
     dispatch(getMaxPinDate());
@@ -54,6 +64,11 @@ const useAddPinForm = callback => {
       startDate: new Date(),
       endDate: new Date(),
       anonradius: 1,
+      address: "",
+      locality: "",
+      region: "",
+      country: "",
+      postCode: "",
       title: "",
       description: "",
       postDate: new Date(),
@@ -70,7 +85,7 @@ const useAddPinForm = callback => {
     }));
   };
 
-  const setAnonRadius = radius => {
+  const randomizeLocation = radius => {
     let randomLat;
     let randomLng;
     const lat = addPinValues.latitude;
@@ -114,12 +129,14 @@ const useAddPinForm = callback => {
       randomLat = lat;
       randomLng = lng;
     }
-    setaddPinValues({
-      ...addPinValues,
-      anonradius: radius,
-      latitude: randomLat,
-      longitude: randomLng
-    });
+    addPinValues.latitude = randomLat;
+    addPinValues.longitude = randomLng;
+    // setaddPinValues({
+    //   ...addPinValues,
+    //   anonradius: radius,
+    //   latitude: randomLat,
+    //   longitude: randomLng
+    // });
   };
   return {
     handleAddPinSubmit,
@@ -128,7 +145,6 @@ const useAddPinForm = callback => {
     setaddPinValues,
     modalState,
     setmodalstate,
-    setAnonRadius
   };
 };
 

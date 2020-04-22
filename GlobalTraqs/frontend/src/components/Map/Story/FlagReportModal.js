@@ -29,7 +29,6 @@ export const FlagReportModal = props => {
     >
       <ModalHeader toggle={props.toggle}> Flagging </ModalHeader>
       <ModalBody>
-        LOL
         <Form onSubmit={props.onSubmit}>
           {/* <FormGroup>
             <Label style={labelStyle} for="category">

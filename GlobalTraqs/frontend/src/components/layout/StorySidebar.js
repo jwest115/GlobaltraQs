@@ -63,10 +63,11 @@ function StorySidebar(props) {
                               gutterBottom
                               variant="h5"
                               component="h2"
+                              className="sidebar-story-title"
                             >
                               {story.options.data.title}
                             </Typography>
-                            <Typography variant="body2" color="textSecondary">
+                            <Typography variant="body2" color="textSecondary" className="sidebar-story-description">
                               <Markup
                                 content={story.options.data.description}
                               />
@@ -81,41 +82,34 @@ function StorySidebar(props) {
             ) : //   not a pin cluster - show the individual story data
             props.pinData ? (
               <div style={{ padding: "25px 25px 25px 25px" }}>
-                <h1>{props.pinData.title}</h1>
+                <h1 className="sidebar-story-title">{props.pinData.title}</h1>
                 <h5>
                   {props.pinData.is_anonymous_pin ? (
-                    "By: Anonymous"
+                      <p className="sidebar-story-author">Posted by: <span className="sidebar-story-username">Anonymous</span></p>
                   ) : (
-                    <Link
+                    <p className="sidebar-story-author">Posted by:
+                      <Link
                       style={{ textDecoration: "inherit" }}
                       to={`/users/${props.pinData.username}`}
-                    >
-                      By: {props.pinData.username}
+                    ><span className="sidebar-story-username">{props.pinData.username}</span>
                     </Link>
+                    </p>
                   )}
                 </h5>
-                {props.pinData.startDate ? (
-                  <Moment format="MM/DD/YYYY">{props.pinData.startDate}</Moment>
-                ) : (
-                  "No Start Date"
-                )}{" "}
-                -{" "}
-                {props.pinData.endDate ? (
-                  <Moment format="MM/DD/YYYY">{props.pinData.endDate}</Moment>
-                ) : (
-                  "No End Date"
-                )}{" "}
-                <br />
-                <br />
+                {/*{props.pinData.startDate ? (*/}
+                {/*  <Moment format="MM/DD/YYYY">{props.pinData.startDate}</Moment>*/}
+                {/*) : (*/}
+                {/*  "No Start Date"*/}
+                {/*)}{" "}*/}
+                {/*-{" "}*/}
+                {/*{props.pinData.endDate ? (*/}
+                {/*  <Moment format="MM/DD/YYYY">{props.pinData.endDate}</Moment>*/}
+                {/*) : (*/}
+                {/*  "No End Date"*/}
+                {/*)}{" "}*/}
+                <div className="sidebar-story-description">
                 <Markup content={props.pinData.description} />
-                <Link
-                  to={`${props.maplink}/${props.pinData.id}`}
-                  onClick={() => props.centerMarker(props.pinData)}
-                >
-                  <button type="button" className="btn btn-primary btn-sm">
-                    View Story
-                  </button>
-                </Link>
+                </div>
               </div>
             ) : null}
             {/* show edit/ delete button for story owners and admins/moderators */}
@@ -124,25 +118,36 @@ function StorySidebar(props) {
                 <div className="admin-moderator-edit">
                   <button
                     type="button"
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary btn-sm default-btn-purple"
+                    style={{marginRight: "20px"}}
                     onClick={(e) =>
                       props.seteditpinmodalState(!props.editpinmodalState)
                     }
                   >
                     Edit
                   </button>
-                </div>
-                <button
+                  <button
                   type="button"
-                  className="btn btn-primary btn-sm"
+                  className="btn btn-primary btn-sm default-btn-purple"
                   onClick={(e) =>
                     props.setDeleteConfirmation(!props.deleteConfirmation)
                   }
                 >
                   Delete
                 </button>
+                </div>
               </div>
             ) : null}
+            <div>
+               <Link
+                  to={`${props.maplink}/${props.pinData.id}`}
+                  onClick={() => props.centerMarker(props.pinData)}
+                >
+                  <button type="button" style={{bottom: "50"}} className="btn btn-primary btn-sm default-btn-purple">
+                    View Full Story
+                  </button>
+                </Link>
+            </div>
           </div>
         }
         open={props.storySidebarOpen}

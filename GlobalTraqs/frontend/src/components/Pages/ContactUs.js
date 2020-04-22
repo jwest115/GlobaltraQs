@@ -40,13 +40,13 @@ export default function contactUs() {
   };
 
   return (
-  <div className={"main-content-div"}>
-    <div className="col-md-6 m-auto">
-      <div className="card card-body mt-5">
-        <h2 className="text-center">Contact Us</h2>
+  <div className="main-content-div contact-us-div">
+    <div className="col-md-6 m-auto contact-us-col">
+      <div className="card card-body mt-5 contact-us-card">
+        <h2 className="text-center contact-us-title">What's on your mind?</h2>
         <form onSubmit={onSubmit}>
           <div className="form-group">
-            <label>Email (Optional)</label>
+            <label className="contact-us-text">Email (Optional)</label>
             <input
               type="email"
               className="form-control"
@@ -55,7 +55,7 @@ export default function contactUs() {
               value={email}
             />
             <br></br>
-            <label>Message</label>
+            <label className="contact-us-text">Message</label>
             <textarea
               rows="5"
               type="message"
@@ -80,9 +80,11 @@ export default function contactUs() {
             <div />
             {/* <p className="text-danger">{contactForm.errors["email"]}</p> */}
           </div>
-          <button type="submit" className="btn btn-primary float-left">
-            CONTACT US
-          </button>
+          <div className="contact-us-btn-div">
+            <button type="submit" className="btn btn-primary contact-us-btn">
+              Send
+            </button>
+          </div>
         </form>
       </div>
     </div>

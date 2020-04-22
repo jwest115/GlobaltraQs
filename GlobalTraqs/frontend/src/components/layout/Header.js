@@ -169,27 +169,27 @@ function Header() {
       <div className="collapse navbar-collapse" id="navbarColor01">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to="/faq" className="nav-link header-nav-link">
+            <Link to="/faq" className="nav-link header-nav-link faq-header-nav-link">
               Faq{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/About" className="nav-link header-nav-link">
+            <Link to="/About" className="nav-link header-nav-link about-us-header-nav-link">
               About Us{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/support" className="nav-link header-nav-link">
+            <Link to="/support" className="nav-link header-nav-link support-us-nav-link">
               Support Us{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/resources" className="nav-link header-nav-link">
+            <Link to="/resources" className="nav-link header-nav-link resources-nav-link">
               Resources{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/ContactUs" className="nav-link header-nav-link">
+            <Link to="/ContactUs" className="nav-link header-nav-link contact-us-nav-link">
               Contact Us{" "}
             </Link>
           </li>

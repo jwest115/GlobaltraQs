@@ -26,7 +26,7 @@ export default Upvote;
 
 const FavoriteButton = ({ children, onClick }) => {
   return (
-    <button className="btn btn-primary" onClick={onClick}>
+    <button className="btn btn-primary default-btn-purple" onClick={onClick}>
       {children}
     </button>
   );
