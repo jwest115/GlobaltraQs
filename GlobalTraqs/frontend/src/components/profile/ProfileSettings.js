@@ -37,8 +37,7 @@ export default function Settings(props) {
   const updateAccessibility = () => {
     setChecked(!checked);
     const accessibility_mode_active = !checked;
-    console.log("accessibility....");
-    console.log(userProfile.accessibility_mode_active);
+
     const userData = { accessibility_mode_active };
     dispatch(editUser(id, user.id, userData));
   };
@@ -46,8 +45,7 @@ export default function Settings(props) {
   const updateProfileVisibility = () => {
     setProfileVisibilityChecked(!profileVisibilityChecked);
     const is_profile_private = !profileVisibilityChecked;
-    console.log("profile visibility....");
-    console.log(userProfile.is_profile_private);
+
     const userData = { is_profile_private };
     dispatch(editUser(id, user.id, userData));
   };
@@ -58,21 +56,6 @@ export default function Settings(props) {
     setAccountDeleted(true);
   };
 
-  const uploadImage = (e) => {
-    e.preventDefault();
-    const userId = id;
-    let data = new FormData();
-    data.append("image_url", userImage);
-    axios
-      .patch(`api/auth/users/${userId}/`, data)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
   const onSubmit = (e) => {
     e.preventDefault(); //prevents refresh of page
     const userData = { bio };
@@ -81,23 +64,15 @@ export default function Settings(props) {
 
   useEffect(() => {
     dispatch(getUser(id));
-  }, id);
 
-  useEffect(() => {
-    dispatch(getUser(id));
-    console.log("user profile");
-    console.log(userProfile);
     if (userProfile) {
       setBio(userProfile.bio);
-      console.log(userProfile);
+
       setChecked(userProfile.accessibility_mode_active);
       setProfileVisibilityChecked(user.is_profile_private);
     }
-  }, userProfile);
+  }, []);
 
-  console.log("params are " + props.match.params.id);
-
-  console.log("checked " + checked);
   if (accountDeleted) {
     return <Redirect to="/" />;
   }
@@ -129,9 +104,7 @@ export default function Settings(props) {
               checked={profileVisibilityChecked}
             />
           </div>
-
           <br />
-
           <button
             onClick={() => deleteAccount()}
             type="button"
@@ -140,7 +113,6 @@ export default function Settings(props) {
             Delete Account
           </button>
           {/*<Redirect to="/" />*/}
-
           <form onSubmit={onSubmit}>
             <div className="form-group">
               <br />
@@ -159,7 +131,6 @@ export default function Settings(props) {
               </button>
             </div>
           </form>
-
           <input
             type="file"
             name="file"
@@ -167,7 +138,7 @@ export default function Settings(props) {
             onChange={onSelectFile}
             accept="image/*"
           />
-
+          <button onClick={() => toggle()}>Upload</button>{" "}
           <button onClick={() => toggle()}>Upload</button>
           <ProfileImageModal
             toggle={toggle}
@@ -181,6 +152,7 @@ export default function Settings(props) {
             onCropComplete={onCropComplete}
             onSubmit={onSubmitPic}
             showCroppedImage={showCroppedImage}
+            onSelectFile={onSelectFile}
           />
         </div>
       );

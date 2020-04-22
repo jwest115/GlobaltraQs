@@ -9,6 +9,7 @@ const useProfileImage = () => {
   const dispatch = useDispatch();
   const { isAuthenticated, user } = auth;
   const [modalState, setmodalState] = useState(false);
+  const [save, setsave] = useState(false);
   const [image, setimage] = useState("");
   const [zoom, setZoom] = useState(1);
   const [crop, setcrop] = useState({
@@ -51,7 +52,8 @@ const useProfileImage = () => {
         image,
         croppedAreaPixels,
         rotation,
-        setnewimage
+        setnewimage,
+        onSubmitPic
       );
 
       setCroppedImage(croppedImage);
@@ -59,12 +61,12 @@ const useProfileImage = () => {
       console.error(e);
     }
   }, [croppedAreaPixels, rotation]);
-  const onSubmitPic = () => {
+  const onSubmitPic = (pic) => {
     let formData = new FormData();
 
     formData.append("upload_preset", "XzetaDev");
-    formData.append("file", newimage);
-
+    formData.append("file", pic);
+    console.log("over here");
     //https://api.cloudinary.com/v1_1/dauntlessx/image/upload
 
     axios
@@ -77,6 +79,7 @@ const useProfileImage = () => {
         // handle error
         console.log(error);
       });
+    toggle();
   };
 
   return {
@@ -91,6 +94,7 @@ const useProfileImage = () => {
     onCropComplete,
     onSubmitPic,
     showCroppedImage,
+    save,
   };
 };
 export default useProfileImage;

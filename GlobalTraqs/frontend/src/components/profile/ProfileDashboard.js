@@ -7,6 +7,10 @@ import ProfilePage from "./ProfilePage";
 import { getUserProfile, getUser } from "../../actions/users";
 import CircularIndeterminate from "./CircularIndeterminate";
 import ProfileSetting from "./ProfileSettings";
+import useProfileImage from "./CustomHooks/useProfileImage";
+import ProfileImageModal from "./ProfileImageModal";
+import useRemovalConfirm from "./CustomHooks/useRemovalConfirm";
+import ConfirmationModal from "./ConfirmationModal";
 export default function ProfileDashboard() {
   const auth = useSelector((state) => state.auth);
   const [pinData, setPinData] = useState(""); //dont mind this
@@ -20,11 +24,33 @@ export default function ProfileDashboard() {
     updateEditForm,
     setEditPinState,
   } = useEditPinForm(pinData, setPinData);
+  const {
+    modalState,
+    onSelectFile,
+    toggle,
+    image,
+    crop,
+    zoom,
+    setcrop,
+    setZoom,
+    onCropComplete,
+    onSubmitPic,
+    showCroppedImage,
+  } = useProfileImage();
+  const {
+    removalModalState,
+    removalToggle,
+    onRemovalSubmit,
+  } = useRemovalConfirm();
   return (
     <div className="main-content-div" style={{ padding: "0px" }}>
       <Switch>
         <Route path="/users/:name">
-          <GetUserProfile setEditPinState={setEditPinState} />
+          <GetUserProfile
+            setEditPinState={setEditPinState}
+            removalToggle={removalToggle}
+            toggle={toggle}
+          />
           <ModalEditPinForm
             toggle={editToggle}
             modalState={editpinmodalState}
@@ -32,6 +58,26 @@ export default function ProfileDashboard() {
             userForm={editPinForm}
             setuserForm={seteditPinForm}
             updateEditForm={updateEditForm}
+          />
+          <ProfileImageModal
+            toggle={toggle}
+            modalState={modalState}
+            onSelectFile={onSelectFile}
+            crop={crop}
+            zoom={zoom}
+            setcrop={setcrop}
+            setZoom={setZoom}
+            image={image}
+            onCropComplete={onCropComplete}
+            onSubmit={onSubmitPic}
+            showCroppedImage={showCroppedImage}
+            onSelectFile={onSelectFile}
+          />
+          <ConfirmationModal
+            modalState={removalModalState}
+            toggle={removalToggle}
+            onSubmit={onRemovalSubmit}
+            title="Remove"
           />
         </Route>
         <Route path="/users">

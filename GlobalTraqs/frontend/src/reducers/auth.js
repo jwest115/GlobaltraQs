@@ -27,6 +27,7 @@ import {
   USER_FIRST_UPVOTE,
   GUEST_USER,
   USER_UPVOTE,
+  UNFAVORITE_PROFILE_STORY,
 } from "../actions/types";
 import { getPinsById } from "../actions/pins";
 
@@ -297,13 +298,30 @@ export default function (state = initialState, action) {
           (x) => x.id !== action.payload.id
         ),
       };
-
+      const profileDel = {
+        ...state.userProfile,
+        user_upvoted_stories: state.userProfile.user_upvoted_stories.filter(
+          (x) => x.id !== action.payload.id
+        ),
+      };
       return {
         ...state,
         favoritedPin: false,
         user: favoritedUserStories,
+        userProfile: profileDel,
       };
-
+    case UNFAVORITE_PROFILE_STORY:
+      const afavoritedUserStories = {
+        ...state.userProfile,
+        user_upvoted_stories: state.userProfile.user_upvoted_stories.filter(
+          (x) => x.id !== action.payload
+        ),
+      };
+      console.log(afavoritedUserStories);
+      return {
+        ...state,
+        userProfile: afavoritedUserStories,
+      };
     default:
       return state;
   }

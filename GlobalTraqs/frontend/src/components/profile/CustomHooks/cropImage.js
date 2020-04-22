@@ -1,8 +1,8 @@
-const createImage = url =>
+const createImage = (url) =>
   new Promise((resolve, reject) => {
     const image = new Image();
     image.addEventListener("load", () => resolve(image));
-    image.addEventListener("error", error => reject(error));
+    image.addEventListener("error", (error) => reject(error));
     image.setAttribute("crossOrigin", "anonymous"); // needed to avoid cross-origin issues on CodeSandbox
     image.src = url;
   });
@@ -22,7 +22,8 @@ export default async function getCroppedImg(
   imageSrc,
   pixelCrop,
   rotation = 0,
-  setnewimg
+  setnewimg,
+  onSubmitPic
 ) {
   const image = await createImage(imageSrc);
   const canvas = document.createElement("canvas");
@@ -64,14 +65,15 @@ export default async function getCroppedImg(
   // return canvas.toDataURL('image/jpeg');
 
   // As a blob
-  return new Promise(resolve => {
-    canvas.toBlob(file => {
+  return new Promise((resolve) => {
+    canvas.toBlob((file) => {
       resolve(URL.createObjectURL(file));
 
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         setnewimg(reader.result);
+        onSubmitPic(reader.result);
       };
     }, "image/jpeg");
   });

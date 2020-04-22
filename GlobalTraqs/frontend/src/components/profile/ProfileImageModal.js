@@ -9,17 +9,17 @@ import {
   FormText,
   FormGroup,
   Input,
-  Label
+  Label,
 } from "reactstrap";
 import Cropper from "react-easy-crop";
 import Slider from "@material-ui/core/Slider";
 
 import InputGroup from "react-bootstrap/InputGroup";
 const buttonStyle = {
-  float: "right"
+  float: "right",
 };
 const labelStyle = {
-  marginRight: "10px"
+  marginRight: "10px",
 };
 export default function ProfileImageModal(props) {
   const size = { width: 300, height: 300 };
@@ -55,6 +55,13 @@ export default function ProfileImageModal(props) {
           </Form>
         </ModalBody>
         <ModalFooter>
+          <input
+            type="file"
+            name="file"
+            id="exampleFile"
+            onChange={props.onSelectFile}
+            accept="image/*"
+          />
           {props.previewUrl && (
             <img alt="Crop preview" src={props.previewUrl} />
           )}

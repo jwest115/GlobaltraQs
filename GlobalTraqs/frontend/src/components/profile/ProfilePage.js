@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getFavoritePosts, getUser } from "../../actions/users";
-import { editPin, getPinsByOwner } from "../../actions/pins";
+import {
+  getFavoritePosts,
+  getUser,
+  unFavoriteProfile,
+} from "../../actions/users";
+import { editPin, getPinsByOwner, userUpovte } from "../../actions/pins";
 import { userEditValidate } from "../../actions/auth";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -14,7 +18,7 @@ import useProfileImage from "./CustomHooks/useProfileImage";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActionArea from "@material-ui/core/CardActionArea";
-
+import Upvote from "../Map/Story/Upvote";
 const FavoritePostField = ({
   index,
   title,
@@ -34,7 +38,7 @@ const FavoritePostField = ({
                 {title}
               </Typography>
               <Typography gutterBottom variant="h5" component="h2">
-                <h4>By: {!isAnon ? username : "Anonymous"} </h4>
+                <h4>By: {!isAnon && username ? username : "Anonymous"} </h4>
               </Typography>
               <Typography variant="body2" color="textSecondary">
                 <Markup content={description} />
@@ -79,7 +83,11 @@ export default function ProfilePage(props) {
                   </button>
                 </Link>
               )}
-              <UserProfileBio userProfile={props.userProfile} />
+              <UserProfileBio
+                ownerid={props.userProfile.id}
+                userProfile={props.userProfile}
+                {...props}
+              />
               <div className="card">
                 <div className="card-body">
                   {props.userProfile.userStories && (
@@ -94,6 +102,8 @@ export default function ProfilePage(props) {
               </div>
             </Col>
             <ShowfavoritedPosts
+              ownerid={props.userProfile.id}
+              toggle={props.removalToggle}
               favoriteStories={props.userProfile.user_upvoted_stories}
             />
           </Row>
@@ -106,21 +116,33 @@ export default function ProfilePage(props) {
 }
 
 const ShowfavoritedPosts = (props) => {
+  const auth = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = auth;
+  const dispatch = useDispatch();
   return (
     <Col md={4} className="favorite-stories">
       <h2 style={{ color: "white" }}>Favorite Posts</h2>
       {props.favoriteStories.length !== 0 ? (
         props.favoriteStories.map((story, index) => {
           return (
-            <div key={index}>
+            <div key={story.id}>
               <FavoritePostField
                 index={index}
                 title={story.title}
                 isAnon={story.is_anonymous_pin}
-                username={story.pinAuthor ? story.pinAuthor : "Anonymous"}
+                username={story.pinAuthor}
                 description={story.description}
                 id={story.pinId}
               />
+              {isAuthenticated &&
+                (user.is_administrator || user.id === props.ownerid) && (
+                  <button
+                    className="btn btn-primary btn-sm "
+                    onClick={() => props.toggle(story.id)}
+                  >
+                    Unfavorite
+                  </button>
+                )}
             </div>
           );
         })
@@ -132,6 +154,9 @@ const ShowfavoritedPosts = (props) => {
 };
 
 const UserProfileBio = (props) => {
+  const auth = useSelector((state) => state.auth);
+
+  const { profileStatus, isAuthenticated, user } = auth;
   return (
     <div>
       <Typography variant="h5" component="h3" align="center">
@@ -144,6 +169,9 @@ const UserProfileBio = (props) => {
           <Avatar size={250} icon="user" />
         )}
       </Typography>
+      {isAuthenticated && user.id === props.ownerid && (
+        <button onClick={() => props.toggle()}>Change</button>
+      )}
       <Typography
         variant="h5"
         component="h3"
