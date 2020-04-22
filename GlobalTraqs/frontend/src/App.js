@@ -30,6 +30,9 @@ import Support from "./components/Pages/Support";
 import ResetPassword from "./components/accounts/ResetPassword";
 import ContactUs from "./components/Pages/ContactUs";
 import ProfileDashboard from "./components/profile/ProfileDashboard";
+import NotFoundPage from "./components/Pages/NotFoundPage";
+
+
 const divStyle = {
   position: "relative",
 };
@@ -83,6 +86,7 @@ export class App extends Component {
                 <Route path="/resetPassword" component={ResetPassword} />
                 <Route path="/Support" component={Support} />
                 <Route path="/ContactUs" component={ContactUs} />
+                <Route component={NotFoundPage}/>
                 {/* <MapDashboard /> */}
               </Switch>
             </div>

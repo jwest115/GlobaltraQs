@@ -297,9 +297,11 @@ b, strong {
   /* Clear floats after the columns */
 .aboutUs-row {
     background: rgb(77, 65, 133);
-    height: auto;
-    min-height: 100%;
+    height: auto !important;
+    min-height: 100% !important;
     width: 100%;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
 }
 
 .favorite-stories {
@@ -1033,3 +1035,125 @@ button {
     font-size: 2rem;
     margin-bottom: 40px;
 }
+
+.moveimage
+{
+    padding-right: 10px;
+    padding-top: 150px;
+    width: 60%;
+    float: right;
+}
+
+.con
+{
+    background: rgb(77, 65, 133);
+}
+
+.copyright
+{
+    padding-right: 10px;
+    padding-top: 30px;
+    width: 60%;
+    float: right;
+    font-size: 12;
+    color: #ffffff;
+
+}
+
+.threeButton1{
+    padding-right: 100px;
+    text-align: center;
+    width: 80%;
+    border-color: #F0DC7D;
+    border-style: solid;
+    border-radius: 40px 40px 40px 40px;
+}
+.threeButton2{
+    text-align: center;
+    width: 80%;
+    border-color: #CD3582;
+    border-style: solid;
+
+    border-radius: 40px 40px 40px 40px;
+}
+.threeButton3{
+    text-align: center;
+    width: 80%;
+    border-color: #448CBC;
+    border-style: solid;
+    border-radius: 40px 40px 40px 40px;
+}
+.aboutHeader
+{
+    padding-top: 150px;
+
+    float: left;
+    font-size: 48;
+    color: #ffffff;
+    font: Eina;
+}
+
+.aboutDesc
+{
+
+    float: right;
+    font-size: 20;
+    color: #ffffff;
+
+}
+
+.columnleft {
+    width: 60%;
+    position: relative;
+    float: left;
+    width: 50%;
+    top: 120px;
+
+    background: rgb(77, 65, 133);
+
+}
+
+.columnright {
+    width: 40%;
+    position: relative;
+    float: right;
+    width: 50%;
+    top: 120px;
+    background: rgb(77, 65, 133);
+
+}
+
+.column {
+    position: relative;
+    float: left;
+    width: 50%;
+    top: 120px;
+    margin-left: -10px;
+    margin-right: -10px;
+    background: rgb(77, 65, 133);
+}
+
+  /* Clear floats after the columns */
+.aboutUs-row{
+    background: rgb(77, 65, 133);
+    height: 100%;
+}
+
+.favorite-stories {
+    min-height: 100%;
+    height: auto;
+    background: rgb(77, 65, 133);
+    padding-top: 60px !important;
+    color: white !important;
+}
+
+.user-profile-name {
+    color: rgb(77, 65, 133);
+}
+
+.default-btn-purple {
+    border-radius: 8px !important;
+    background: rgb(77, 65, 133) !important;
+    color: white;
+}
+
