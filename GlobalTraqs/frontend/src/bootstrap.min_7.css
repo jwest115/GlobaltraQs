@@ -100,7 +100,9 @@ h1,
 h2{
     font-family: Eina
 }
-h3,
+h3{
+    font-family: Eina
+}
 h4,
 h5{
     font-family: "Courier"
@@ -111,7 +113,7 @@ h6 {
 }
 
 p {
-    font-family: "Courier New";
+    font-family: "Eina", "Arial";
     margin-top: 0;
     margin-bottom: 1rem
 }

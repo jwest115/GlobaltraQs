@@ -134,12 +134,12 @@ export default function registerHook() {
     return <Redirect to="/" />;
   }
   return (
-      <div className="main-content-div">
-        <div className="col-md-6 m-auto">
+      <div className="main-content-div register-div">
+        <div className="col-md-6 m-auto register-col">
           {/* if the form was submitted and register failed, show banner*/}
           {console.log("submitted " + submitted + " register fail " + failed)}
-          <div className="card card-body mt-5">
-            <h2 className="text-center">Register</h2>
+          <div className="card card-body mt-5 register-card">
+            <h2 className="text-center register-title">register</h2>
             {console.log("submitted " + submitted + " " + " register fail " + failed)}
             {submitted && failed ?
               <div className="card card-body mt-5 alert alert-danger" role="alert">
@@ -150,7 +150,7 @@ export default function registerHook() {
             }
             <form onSubmit={onSubmit}>
               <div className="form-group">
-                <label>Username</label>
+                <label className="register-text">Username</label>
                 <input
                   type="text"
                   className="form-control"
@@ -168,7 +168,7 @@ export default function registerHook() {
                 <p className="text-danger"></p>
               </div>
               <div className="form-group">
-                <label>Email</label>
+                <label className="register-text">Email</label>
                 <input
                   type="email"
                   className="form-control"
@@ -198,7 +198,7 @@ export default function registerHook() {
                   title="Must be at least eight characters with one Uppercase, Lowercase, Number, and Special Character."
                 >
                   <div className="form-group">
-                    <label>Password</label>
+                    <label className="register-text">Password</label>
                     <input
                       onClick={handleTooltipOpen}
                       type="password"
@@ -217,7 +217,7 @@ export default function registerHook() {
                 </Tooltip>
               </ClickAwayListener>
               <div className="form-group">
-                <label>Confirm Password</label>
+                <label className="register-text">Confirm Password</label>
                 <input
                   type="password"
                   className="form-control"
@@ -241,11 +241,11 @@ export default function registerHook() {
                   verifyCallback={verifyCallback}
                   onloadCallback={reCaptchaLoaded}
                 />
-                 <button type="submit" className="btn btn-primary float-right">
+                 <button type="submit" className="btn btn-primary float-right register-btn" >
                   Register
                 </button>
               </div>
-              <p>
+              <p className="register-text">
                 Already have an account? <Link to="/login">Login</Link>
               </p>
             </form>

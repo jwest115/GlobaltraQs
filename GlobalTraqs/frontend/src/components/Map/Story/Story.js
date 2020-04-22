@@ -15,7 +15,7 @@ import Flag from "./Flag";
 import Moment from "react-moment";
 import Markup from "interweave";
 import FlagReportModal from "./FlagReportModal";
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
+import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 
 const storyBody = {
   paddingTop: "50px",
@@ -28,7 +28,7 @@ function Story(props) {
 
   const { isAuthenticated, user } = auth;
 
-  const upvoteButoon = <Link to="/login"> &nbsp;Login to upvote!</Link>;
+  const upvoteButoon = <Link className="login-link" to="/login"> &nbsp;Login to favorite!</Link>;
 
   if (props.pinDeleted) {
     props.setPinDeleted(false);
@@ -43,26 +43,33 @@ function Story(props) {
     }
   }
 
-  //console.log(pin.flaggerstory);
-
   return (
     <div className="container-fluid" style={storyBody}>
-        <div style={{left: '10', position: 'absolute', top: '10'}}>
-            <Link
-                onClick={() => props.history.goBack()}
-                // onClick={() => props.setIsLeavingStoryPage(true)}
-            >
-                <KeyboardBackspaceIcon></KeyboardBackspaceIcon>
-            </Link>
-        </div>
-      {console.log(props.pin.startDate + " is the start date")}
-      {console.log(new Date())}
+      <div style={{ left: "10", position: "absolute", top: "10" }}>
+        <Link
+          onClick={() => props.history.goBack()}
+          // onClick={() => props.setIsLeavingStoryPage(true)}
+        >
+          <KeyboardBackspaceIcon></KeyboardBackspaceIcon>
+        </Link>
+      </div>
       {canManagePin ? (
         <div>
           <div className="admin-moderator-edit">
+           <button
+            type="button"
+            style={{ float: "right" }}
+            className="btn btn-primary btn-sm default-btn-purple"
+            onClick={(e) =>
+              props.setDeleteConfirmation(!props.deleteConfirmation)
+            }
+          >
+            Delete
+          </button>
             <button
               type="button"
-              className="btn btn-primary btn-sm"
+              style={{ float: "right", marginRight: "20px" }}
+              className="btn btn-primary btn-sm default-btn-purple"
               onClick={(e) => {
                 let start = props.pin.startDate.split("-");
                 start = new Date(start[0], start[1] - 1, start[2], 0, 0, 0, 0);
@@ -82,48 +89,41 @@ function Story(props) {
               Edit
             </button>
           </div>
-          <button
-            type="button"
-            className="btn btn-primary btn-sm"
-            onClick={(e) =>
-              props.setDeleteConfirmation(!props.deleteConfirmation)
-            }
-          >
-            Delete
-          </button>
         </div>
       ) : null}{" "}
-      <h2>
+      <h2 className={"story-page-story-title"}>
         <strong>{props.pin.title}</strong>
       </h2>
-      <p>
-        {" "}
-        {props.pin.startDate ? (
-          <Moment format="MM/DD/YYYY">{props.pin.startDate}</Moment>
-        ) : (
-          "No Start Date"
-        )}{" "}
-        -{" "}
-        {props.pin.endDate ? (
-          <Moment format="MM/DD/YYYY">{props.pin.endDate}</Moment>
-        ) : (
-          "No End Date"
-        )}{" "}
-      </p>
+      {props.pin.startDate && props.pin.endDate ? (
+          <p className={"story-page-dates"}>
+            {" "}
+            {props.pin.startDate ? (
+              <Moment format="MM/DD/YYYY">{props.pin.startDate}</Moment>
+            ) : (
+              "No Start Date"
+            )}{" "}
+            -{" "}
+            {props.pin.endDate ? (
+              <Moment format="MM/DD/YYYY">{props.pin.endDate}</Moment>
+            ) : (
+              "No End Date"
+            )}{" "}
+          </p>
+      ) : ""}
       {/* <p>By: {authorName}</p> */}
       {props.pin.is_anonymous_pin ? (
-        <p>By: Anonymous</p>
+          <p className="sidebar-story-author">Posted by: <span className="sidebar-story-username">Anonymous</span></p>
       ) : (
         <Link
           style={{ textDecoration: "inherit" }}
           to={`/users/${props.pin.username}`}
         >
-          <p>By: {props.pin.username}</p>
+            <p className="sidebar-story-author">Posted by: <span className="sidebar-story-username">{props.pin.username}</span></p>
         </Link>
       )}
-      <h6>
+      <h6 className="story-page-favorites">
         {/* {props.pin.updooots} upvotes */}
-        {props.pin.updooots} favorites
+          <span className="story-page-favorite-count">{props.pin.updooots}</span> favorites
         {/* need to figure out a way to update upvotes maybe websockets  */}
         {props.isAuthenticated
           ? props.pin && props.pin.updotes && <Upvote {...props} />
@@ -134,7 +134,9 @@ function Story(props) {
           : ""}
       </h6>
       <hr></hr>
-      <Markup content={props.pin.description} />
+      <div className="sidebar-story-description">
+        <Markup content={props.pin.description} />
+      </div>
       {props.pin.commentstory && (
         <CommentStory
           user={user}

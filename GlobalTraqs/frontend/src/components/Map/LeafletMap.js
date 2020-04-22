@@ -1,28 +1,19 @@
 import React, { useState, useEffect } from "react";
-import {
-  Map,
-  Marker,
-  Popup,
-  TileLayer,
-  ZoomControl,
-} from "react-leaflet";
+import { Map, Marker, Popup, TileLayer, ZoomControl } from "react-leaflet";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import community from "./images/community.png"; // Tell Webpack this JS file uses this image
 import historical from "./images/historical.png";
 import personal from "./images/personal.png";
 import default_marker from "./images/default.png";
-import {
-  useRouteMatch,
-  useHistory
-} from "react-router-dom";
+import { useRouteMatch, useHistory } from "react-router-dom";
 import Control from "react-leaflet-control";
 import ModalEditPinForm from "./PinForms/ModalEditPinForm";
 import ModalDeleteConfirm from "./PinForms/ModalDeleteConfirm";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
 import ModalAddPinForm from "./PinForms/ModalAddPinForm";
-import FilterListIcon from '@material-ui/icons/FilterList';
-import AddCommentIcon from '@material-ui/icons/AddComment';
+import FilterListIcon from "@material-ui/icons/FilterList";
+import AddCommentIcon from "@material-ui/icons/AddComment";
 import { GeoSearchControl } from "leaflet-geosearch";
 import { EsriProvider } from "leaflet-geosearch";
 import { useDispatch } from "react-redux";
@@ -34,7 +25,7 @@ export const defaultPointerIcon = new L.Icon({
   popupAnchor: [10, -44],
   iconSize: [55, 55],
   shadowSize: [68, 95],
-  shadowAnchor: [20, 92]
+  shadowAnchor: [20, 92],
 });
 
 export const communityIcon = new L.Icon({
@@ -44,7 +35,7 @@ export const communityIcon = new L.Icon({
   popupAnchor: [10, -44],
   iconSize: [55, 55],
   shadowSize: [68, 95],
-  shadowAnchor: [20, 92]
+  shadowAnchor: [20, 92],
 });
 
 export const historicalIcon = new L.Icon({
@@ -54,7 +45,7 @@ export const historicalIcon = new L.Icon({
   popupAnchor: [10, -44],
   iconSize: [55, 55],
   shadowSize: [68, 95],
-  shadowAnchor: [20, 92]
+  shadowAnchor: [20, 92],
 });
 
 export const personalIcon = new L.Icon({
@@ -64,9 +55,9 @@ export const personalIcon = new L.Icon({
   popupAnchor: [10, -44],
   iconSize: [55, 55],
   shadowSize: [68, 95],
-  shadowAnchor: [20, 92]
+  shadowAnchor: [20, 92],
 });
-const LeafletMap = props => {
+const LeafletMap = (props) => {
   let { path, url } = useRouteMatch();
   const history = useHistory();
   // need to enter props.placement directly - if not used directly, when placement is updated the marker does not center on proper coordinates
@@ -77,7 +68,10 @@ const LeafletMap = props => {
   const dispatch = useDispatch();
 
   const [mapInstance, setMapInstance] = useState();
-  const [markerClusterGroupInstance, setMarkerClusterGroupInstance] = useState();
+  const [
+    markerClusterGroupInstance,
+    setMarkerClusterGroupInstance,
+  ] = useState();
 
   const searchControl = new GeoSearchControl({
     provider: provider,
@@ -89,7 +83,7 @@ const LeafletMap = props => {
     showMarker: false,
     showPopup: false,
     autoClose: true,
-    keepResult: true
+    keepResult: true,
   });
 
   useEffect(() => {
@@ -97,19 +91,19 @@ const LeafletMap = props => {
     props.setStorySidebarOpen(false);
   }, []);
 
-  const updatePin = marker => {
+  const updatePin = (marker) => {
     let start = null;
     let end = null;
-    if(marker.startDate) {
-      start = marker.startDate.split('-');
+    if (marker.startDate) {
+      start = marker.startDate.split("-");
       start = new Date(start[0], start[1] - 1, start[2], 0, 0, 0, 0);
     }
-    if(marker.endDate) {
-      end = marker.endDate.split('-');
+    if (marker.endDate) {
+      end = marker.endDate.split("-");
       end = new Date(end[0], end[1] - 1, end[2], 0, 0, 0, 0);
     }
 
-     if(props.isIndividualStoryPage) {
+    if (props.isIndividualStoryPage) {
       props.seteditPin({
         id: marker.id,
         title: marker.title,
@@ -118,13 +112,12 @@ const LeafletMap = props => {
         startDate: start,
         endDate: end,
         lastEditDate: marker.lastEditDate,
-        lastPersonEdit: props.isAuthenticated ? props.user.id : null
+        lastPersonEdit: props.isAuthenticated ? props.user.id : null,
       });
-      console.log("should change url params");
+
       props.setPinData(marker);
       history.push(`${props.maplink}/${marker.id}`);
-    }
-    else {
+    } else {
       props.seteditPin({
         id: marker.id,
         title: marker.title,
@@ -133,7 +126,7 @@ const LeafletMap = props => {
         startDate: start,
         endDate: end,
         lastEditDate: marker.lastEditDate,
-        lastPersonEdit: props.isAuthenticated ? props.user.id : null
+        lastPersonEdit: props.isAuthenticated ? props.user.id : null,
       });
       props.setPinData(marker);
       props.setPinCluster(false);
@@ -144,14 +137,14 @@ const LeafletMap = props => {
     }
   };
 
-  const addressSearch = e => {
+  const addressSearch = (e) => {
     const longitude = e.location.x;
     const latitude = e.location.y;
     props.setPlacement({
       id: "",
       userlat: latitude,
       userlng: longitude,
-      zoom: mapInstance.leafletElement.getZoom()
+      zoom: mapInstance.leafletElement.getZoom(),
     });
     // props.setaddPinValues({
     //   ...props.addPinValues,
@@ -163,9 +156,6 @@ const LeafletMap = props => {
 
   // used for adding the map reference for fly to and address search
   useEffect(() => {
-    console.log("map container style");
-    console.log(props.mapContainerStyle);
-
     if (mapInstance) {
       let map = mapInstance.leafletElement;
       props.setMapReference(mapInstance.leafletElement);
@@ -175,23 +165,26 @@ const LeafletMap = props => {
   }, [mapInstance]);
 
   useEffect(() => {
-    console.log("setting map container style");
-    props.setMapContainerStyle({ height: "100%"});
-  },[]);
+    props.setMapContainerStyle({ height: "100%" });
+  }, []);
 
   return (
     <div className="map-container" style={props.mapContainerStyle}>
       {props.setPinDeleted ? props.setPinDeleted(false) : ""}{" "}
       <Map
         center={[props.placement.userlat, props.placement.userlng]}
-        zoom={mapInstance ? mapInstance.leafletElement.getZoom() : props.placement.zoom}
+        zoom={
+          mapInstance
+            ? mapInstance.leafletElement.getZoom()
+            : props.placement.zoom
+        }
         maxZoom={18} //shows map
         minZoom={3}
         worldCopyJump={true}
         id="map"
         zoomControl={false}
         style={props.divStyle}
-        ref={e => {
+        ref={(e) => {
           setMapInstance(e);
         }}
         onContextMenu={props.addMarker}
@@ -208,17 +201,30 @@ const LeafletMap = props => {
             url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png"
           />
         )}
-         <Control position={"topleft"} style={{left: "0px"}}>
-            <button
-              className={"btn btn-primary"}
-            >
-              <AddCommentIcon></AddCommentIcon>
-            </button>
-          </Control>
+        <Control position={"topleft"} style={{ left: "0px" }}>
+          <button className={"btn btn-primary add-story-button"}
+                  onClick={() => {
+                    console.log("add address");
+                    props.setAddAddress(true);
+
+                    if(mapInstance) {
+                      let center = mapInstance.leafletElement.getCenter();
+                         props.setaddPinValues({
+                          ...props.addPinValues,
+                          latitude: center.lat,
+                          longitude: center.lng,
+                        });
+                    }
+                    props.toggle();
+                  }}
+          >
+            <AddCommentIcon></AddCommentIcon>
+          </button>
+        </Control>
         {props.showSidebarButton ? (
           <Control position={"topright"}>
             <button
-              className={"btn btn-primary"}
+              className={"btn btn-primary map-buttons"}
               id="open-sidebar-button"
               onClick={() => {
                 props.setStorySidebarOpen(false);
@@ -231,32 +237,31 @@ const LeafletMap = props => {
         ) : null}
         <Control position={"bottomright"}>
           <div>
-            <button onClick={props.getLocation} className="btn btn-primary">
+            <button onClick={props.getLocation} className="btn btn-primary map-buttons">
               <MyLocationIcon></MyLocationIcon>
             </button>
           </div>
         </Control>
 
         <MarkerClusterGroup
-            //set to false for marker cluster
-            // spiderfyOnMaxZoom={false}
-            spiderfyOnMaxZoom={true}
-            maxClusterRadius={40}
-            // commenting out marker clustering - needs to be refactored
-            // onClusterClick={(e) => {
-            //     console.log("zoooom");
-            //     console.log(mapInstance.leafletElement.getZoom());
-            //   if(mapInstance.leafletElement.getZoom() > 16) {
-            //     let markers = e.layer.getAllChildMarkers();
-            //     console.log(markers);
-            //     console.log(mapInstance.leafletElement.getZoom() + " is the zoom");
-            //     props.setPinData(markers);
-            //     props.setPinCluster(true);
-            //     props.setStorySidebarOpen(true);
-            //   }
-            // }}
+          //set to false for marker cluster
+          // spiderfyOnMaxZoom={false}
+          spiderfyOnMaxZoom={true}
+          maxClusterRadius={40}
+          // commenting out marker clustering - needs to be refactored
+          // onClusterClick={(e) => {
+          //
+          //
+          //   if(mapInstance.leafletElement.getZoom() > 16) {
+          //     let markers = e.layer.getAllChildMarkers();
+          //
+          //
+          //     props.setPinData(markers);
+          //     props.setPinCluster(true);
+          //     props.setStorySidebarOpen(true);
+          //   }
+          // }}
         >
-
           {props.pins.map((marker, index) => {
             let post = [marker.latitude, marker.longitude];
             let categoryIcon = "";
@@ -274,9 +279,16 @@ const LeafletMap = props => {
                 position={post}
                 icon={categoryIcon}
                 data={marker}
-                onClick={() => { props.centerMarker(marker); updatePin(marker); }}
-                onMouseOver={(e) => { e.target.openPopup(); }}
-                onMouseOut={(e) => { e.target.closePopup(); }}
+                onClick={() => {
+                  props.centerMarker(marker);
+                  updatePin(marker);
+                }}
+                onMouseOver={(e) => {
+                  e.target.openPopup();
+                }}
+                onMouseOut={(e) => {
+                  e.target.closePopup();
+                }}
               >
                 <Popup>
                   <strong>{marker.title}</strong>
@@ -285,12 +297,12 @@ const LeafletMap = props => {
             );
           })}
         </MarkerClusterGroup>
-
       </Map>
       <ModalAddPinForm
         toggle={props.toggle}
         modalState={props.modalState}
         setAnonRadius={props.setAnonRadius}
+        addAddress={props.addAddress}
         {...props}
       />
       <ModalEditPinForm
@@ -299,6 +311,7 @@ const LeafletMap = props => {
         onSubmit={props.onEditSubmit}
         userForm={props.editPin}
         setuserForm={props.seteditPin}
+        updateEditForm={props.updateEditForm}
       />
       <ModalDeleteConfirm
         toggle={props.toggleDelete}

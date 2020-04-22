@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'management',
     'django_cleanup.apps.CleanupConfig',
     'django_cron',
+    'django_extensions',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
@@ -124,7 +125,7 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db2',
+        'NAME': 'db1',
     }
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',

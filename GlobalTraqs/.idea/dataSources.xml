@@ -12,13 +12,7 @@
         <property name="enable_load_extension" value="true" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="arqivedb" uuid="42969ca6-1fc6-464e-abaf-cc72038fc7ee">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://database-1.cake6tjozc5q.us-east-1.rds.amazonaws.com:5432/postgres</jdbc-url>
-    </data-source>
-    <data-source source="LOCAL" name="db1" uuid="af38f332-8603-4411-bf96-8cb1db21a3bd">
+    <data-source source="LOCAL" name="db1" uuid="f0356fc2-e4c1-4122-ab89-98f35f09fd41">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
