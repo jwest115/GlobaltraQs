@@ -246,7 +246,7 @@ export default function registerHook() {
                 </button>
               </div>
               <p className="register-text">
-                Already have an account? <Link to="/login">Login</Link>
+                Already have an account? <span className="login-register-links"><Link to="/login">Login</Link></span>
               </p>
             </form>
           </div>

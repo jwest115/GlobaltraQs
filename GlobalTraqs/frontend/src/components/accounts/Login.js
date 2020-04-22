@@ -196,10 +196,10 @@ export default function Login() {
             </button>
           </div>
           <p className="login-text">
-            Don't have an account? <Link to="/register">Register</Link>
+            Don't have an account? <span className="login-register-links"><Link to="/register">Register</Link></span>
           </p>
           <p className="login-text">
-            Forgot Password? <Link to="/forgotPassword">Click here</Link>
+            Forgot Password? <span className="login-register-links"><Link to="/forgotPassword">Click here</Link></span>
           </p>
         </form>
       </div>
