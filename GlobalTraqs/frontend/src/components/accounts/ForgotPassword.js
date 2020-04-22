@@ -39,14 +39,15 @@ export default function ForgotPassword() {
   };
 
   return (
-  <div className={"main-content-div"}>
-    <div className="col-md-6 m-auto">
-      <div className="card card-body mt-5">
-        <h2 className="text-center">Forgot Password</h2>
+  <div className={"main-content-div forgot-password-div"}>
+    <div className="col-md-6 m-auto forgot-password-col">
+      <div className="card card-body mt-5 forgot-password-card">
+        <h2 className="text-center forgot-password-title">Forgot Password</h2>
         <form className="profile-form" onSubmit={sendEmail}>
           <div className="form-group">
-            <p>Please input your e-mail:</p>
+            <p className="forgot-password-text">Please input your e-mail:</p>
             <TextField
+              className="forgot-password-text"
               id="email"
               label="E-mail"
               value={email}
@@ -54,7 +55,7 @@ export default function ForgotPassword() {
               placeholder="Email Address"
             />
           </div>
-          <button type="submit" className="btn btn-primary float-left">
+          <button type="submit" className="btn btn-primary float-left forgot-password-btn">
             Forgot Password
           </button>
         </form>
