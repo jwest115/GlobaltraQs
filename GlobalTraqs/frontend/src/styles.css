@@ -1022,4 +1022,14 @@ button {
 .react-switch {
     margin-top: 7px;
 }
-    
+
+.profile-page-favorite-posts-title {
+    text-align: center;
+    font-family: "Eina", "Arial" !IMPORTANT;
+    color: white;
+    text-transform: lowercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 2rem;
+    margin-bottom: 40px;
+}

@@ -21,16 +21,18 @@ const FavoritePostField = ({
   isAnon,
   username,
   description,
+  category,
   id,
   ...rest
 }) => {
   return (
-    <div style={{ paddingTop: "20px" }} key={id} {...rest}>
-      <Card style={{ marginTop: "5px", color: "rgb(77, 65, 133)" }}>
+    <div style={{ paddingTop: "20px" }} key={id} {...rest} style={{ height: "155px" }}>
+      <Card className={"profile-story-card"}>
         <Link to={`/story/${id}`}>
-          <CardActionArea>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
+           <div className={category == 1 ? "search-bar-story-card-trim-personal" : (category == 2 ? "search-bar-story-card-trim-community" : "search-bar-story-card-trim-historical")}>
+          </div>
+          <CardContent style={{ paddingLeft: "40px", paddingRight: "40px", height: "165px" }}>
+              <Typography gutterBottom variant="h5" component="h2" className={"sidebar-story-title"}>
                 {title}
               </Typography>
               <Typography gutterBottom variant="h5" component="h2">
@@ -40,7 +42,6 @@ const FavoritePostField = ({
                 <Markup content={description} />
               </Typography>
             </CardContent>
-          </CardActionArea>
         </Link>
       </Card>
     </div>
@@ -105,24 +106,25 @@ export default function ProfilePage(props) {
 const ShowfavoritedPosts = (props) => {
   return (
     <Col md={4} className="favorite-stories">
-      <h2 style={{ color: "white" }}>Favorite Posts</h2>
+      <h2 className="profile-page-favorite-posts-title">Favorite Posts</h2>
       {props.favoriteStories.length !== 0 ? (
         props.favoriteStories.map((story, index) => {
           return (
-            <div key={index}>
+            <div key={index} style={{ marginTop: "25px" }}>
               <FavoritePostField
                 index={index}
                 title={story.title}
                 isAnon={story.is_anonymous_pin}
                 username={story.pinAuthor ? story.pinAuthor : "Anonymous"}
                 description={story.description}
+                category={story.category}
                 id={story.pinId}
               />
             </div>
           );
         })
       ) : (
-        <NoStories type="Favorite Stories" />
+        <NoStories type="favorite posts" />
       )}
     </Col>
   );
@@ -170,7 +172,10 @@ const ProfileNotFound = () => {
 };
 
 const NoStories = ({ type }) => {
-  return <div style={{ padding: "20px" }}>No {type} found</div>;
+  return <div style={{ padding: "20px" }}>
+          <h2 className="profile-page-favorite-posts-title">Favorite Posts</h2>
+            No {type} found
+          </div>;
 };
 
 const ListUserStories = (props) => {
