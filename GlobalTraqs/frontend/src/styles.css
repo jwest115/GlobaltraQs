@@ -854,13 +854,15 @@ button {
 .profile-page-story-settings-card {
     color: white;
     font-family: "Eina", "Arial" !important;
-    font-size: 1rem !important;
+    font-size: .85rem !important;
     font-weight: 600 !important;
     background-color: rgb(77, 65, 133) !important;
     text-transform: lowercase !important;
     border-radius: 20px;
     height: 100%;
-    width: 76%;
+    width: 80%;
+    padding-top: 20px;
+    text-align: center;
 }
 
 .user-profile-my-posts-title {
@@ -947,4 +949,8 @@ button {
 .login-register-links a {
     color: rgb(77, 65, 133) !important;
     font-weight: 600 !important;
+}
+
+.react-switch {
+    margin-top: 7px;
 }

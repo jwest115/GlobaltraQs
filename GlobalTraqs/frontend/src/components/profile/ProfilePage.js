@@ -223,14 +223,6 @@ const StoryField = (props) => {
               <Typography variant="body2" color="textSecondary">
                 <Markup content={description.substring(0, 250) + "..."} blockList={["img"]} noHtml={true}/>
               </Typography>
-              {/*{isAuthenticated &&*/}
-              {/*  (user.is_administrator || user.id === props.ownerid) && (*/}
-              {/*    <Switch*/}
-              {/*      className="react-switch"*/}
-              {/*      onChange={() => props.updateStoryAnonymity(props.story)}*/}
-              {/*      checked={is_anonymous_pin}*/}
-              {/*    />*/}
-              {/*  )}*/}
               {isAuthenticated &&
                 (user.is_administrator || user.id === props.ownerid) && (
                   <button
@@ -247,11 +239,23 @@ const StoryField = (props) => {
         </Link>
       </Card>
       </Col>
+       {isAuthenticated &&
+                (user.is_administrator || user.id === props.ownerid) && (
       <Col md={3} style={{ paddingLeft: "0", paddingRight: "0" }}>
         <div className="profile-page-story-settings-card">
-
+          <p className="profile-anonymous-toggle-title">make this post anonymous?</p>
+              <Switch
+                className="react-switch"
+                onColor={"#00ce7d"}
+                offColor={"#e63f52"}
+                width={90}
+                height={35}
+                onChange={() => props.updateStoryAnonymity(props.story)}
+                checked={is_anonymous_pin}
+              />
         </div>
       </Col>
+       )}
       </Row>
     </>
   );
