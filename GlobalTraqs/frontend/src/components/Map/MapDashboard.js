@@ -204,10 +204,13 @@ export default function MapDashboard() {
 
   const onDelete = (e) => {
     e.preventDefault();
+    console.log(pinData.id);
+    dispatch(deletePins(pinData.id));
     setStorySidebarOpen(!storySidebarOpen);
-    dispatch(deletePins(editPinForm.id));
+
     toggleDelete();
     setPinDeleted(true);
+    setPinData("");
     dispatch(getMinPinDate());
     dispatch(getMaxPinDate());
   };
@@ -451,6 +454,9 @@ export default function MapDashboard() {
 }
 function StoryDisplay(props) {
   let match = useRouteMatch();
+  const auth = useSelector((state) => state.auth);
+  const { isAuthenticated, guest_user } = auth;
+
   let [storyStyle, setStoryStyle] = useState({ top: "100%" });
   let [redirectHome, setRedirectHome] = useState(false);
   // change the map & story page styling for story slide up effect
@@ -478,12 +484,11 @@ function StoryDisplay(props) {
   //     }.bind(this), 700);
   //   }
   // }, [props.isLeavingStoryPage]);
-
   return (
     <div id={"story-page"} style={storyStyle}>
       <Switch>
         <Route path={`${match.path}/:id`}>
-          <IndividualStory {...props} />
+          {(isAuthenticated || guest_user) && <IndividualStory {...props} />}
         </Route>
         <Route path={match.path}>
           <h3>Please select an IndividualStory.</h3>
@@ -498,7 +503,7 @@ function IndividualStory(props) {
   const pin = useSelector((state) => state.pins.pin);
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const { isAuthenticated, user } = auth;
+  const { isAuthenticated, user, favoritedPin } = auth;
   const userid = isAuthenticated ? user.id : false;
 
   useEffect(() => {

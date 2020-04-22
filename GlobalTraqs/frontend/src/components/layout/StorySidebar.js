@@ -55,7 +55,6 @@ function StorySidebar(props) {
                       <Link
                         style={{ textDecoration: "inherit" }}
                         to={`story/${story.options.data.id}`}
-                        params={{ testvalue: "hello" }}
                         onClick={() => props.centerMarker(story)}
                       >
                         <CardActionArea>

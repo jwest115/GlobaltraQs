@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getFavoritePosts, getUser } from "../../actions/users";
-import { editPin, getPinsByOwner } from "../../actions/pins";
+import {
+  getFavoritePosts,
+  getUser,
+  unFavoriteProfile,
+} from "../../actions/users";
+import { editPin, getPinsByOwner, userUpovte } from "../../actions/pins";
 import { userEditValidate } from "../../actions/auth";
 import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
@@ -14,7 +18,7 @@ import useProfileImage from "./CustomHooks/useProfileImage";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActionArea from "@material-ui/core/CardActionArea";
-
+import Upvote from "../Map/Story/Upvote";
 const FavoritePostField = ({
   index,
   title,
@@ -26,22 +30,45 @@ const FavoritePostField = ({
   ...rest
 }) => {
   return (
-    <div style={{ paddingTop: "20px" }} key={id} {...rest} style={{ height: "155px" }}>
+    <div
+      style={{ paddingTop: "20px" }}
+      key={id}
+      {...rest}
+      style={{ height: "155px" }}
+    >
       <Card className={"profile-story-card"}>
         <Link to={`/story/${id}`}>
-           <div className={category == 1 ? "search-bar-story-card-trim-personal" : (category == 2 ? "search-bar-story-card-trim-community" : "search-bar-story-card-trim-historical")}>
-          </div>
-          <CardContent style={{ paddingLeft: "40px", paddingRight: "40px", height: "165px" }}>
-              <Typography gutterBottom variant="h5" component="h2" className={"sidebar-story-title"}>
-                {title}
-              </Typography>
-              <Typography gutterBottom variant="h5" component="h2">
-                <h4>By: {!isAnon ? username : "Anonymous"} </h4>
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                <Markup content={description} />
-              </Typography>
-            </CardContent>
+          <div
+            className={
+              category == 1
+                ? "search-bar-story-card-trim-personal"
+                : category == 2
+                ? "search-bar-story-card-trim-community"
+                : "search-bar-story-card-trim-historical"
+            }
+          ></div>
+          <CardContent
+            style={{
+              paddingLeft: "40px",
+              paddingRight: "40px",
+              height: "165px",
+            }}
+          >
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              className={"sidebar-story-title"}
+            >
+              {title}
+            </Typography>
+            <Typography gutterBottom variant="h5" component="h2">
+              <h4>By: {!isAnon && username ? username : "Anonymous"} </h4>
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              <Markup content={description} />
+            </Typography>
+          </CardContent>
         </Link>
       </Card>
     </div>
@@ -65,37 +92,41 @@ export default function ProfilePage(props) {
   return (
     <>
       {props.userProfile ? (
-          <Row
-            style={{ height: "100%", marginRight: "0px", marginLeft: "0px" }}
-          >
-            <Col md={8} style={{ paddingTop: "20px", paddingRight: "20px" }}>
-              {isAuthenticated && user.id === props.userProfile.id && (
-                <Link to={`/users/${user.id}/settings`}>
-                  <button
-                    type="button"
-                    style={{ float: "right " }}
-                    className="btn btn-primary btn-sm default-btn-purple"
-                  >
-                    Settings
-                  </button>
-                </Link>
-              )}
-              <UserProfileBio userProfile={props.userProfile} />
-              <div className={"user-profile-body"}>
-                {props.userProfile.userStories && (
-                  <ListUserStories
-                    updateStoryAnonymity={updateStoryAnonymity}
-                    stories={props.userProfile.userStories}
-                    ownerid={props.userProfile.id}
-                    {...props}
-                  />
-                )}
-              </div>
-            </Col>
-            <ShowfavoritedPosts
-              favoriteStories={props.userProfile.user_upvoted_stories}
+        <Row style={{ height: "100%", marginRight: "0px", marginLeft: "0px" }}>
+          <Col md={8} style={{ paddingTop: "20px", paddingRight: "20px" }}>
+            {isAuthenticated && user.id === props.userProfile.id && (
+              <Link to={`/users/${user.id}/settings`}>
+                <button
+                  type="button"
+                  style={{ float: "right " }}
+                  className="btn btn-primary btn-sm default-btn-purple"
+                >
+                  Settings
+                </button>
+              </Link>
+            )}
+            <UserProfileBio
+              ownerid={props.userProfile.id}
+              userProfile={props.userProfile}
+              {...props}
             />
-          </Row>
+            <div className={"user-profile-body"}>
+              {props.userProfile.userStories && (
+                <ListUserStories
+                  updateStoryAnonymity={updateStoryAnonymity}
+                  stories={props.userProfile.userStories}
+                  ownerid={props.userProfile.id}
+                  {...props}
+                />
+              )}
+            </div>
+          </Col>
+          <ShowfavoritedPosts
+            ownerid={props.userProfile.id}
+            toggle={props.removalToggle}
+            favoriteStories={props.userProfile.user_upvoted_stories}
+          />
+        </Row>
       ) : (
         <ProfileNotFound />
       )}
@@ -104,22 +135,34 @@ export default function ProfilePage(props) {
 }
 
 const ShowfavoritedPosts = (props) => {
+  const auth = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = auth;
+  const dispatch = useDispatch();
   return (
     <Col md={4} className="favorite-stories">
       <h2 className="profile-page-favorite-posts-title">Favorite Posts</h2>
       {props.favoriteStories.length !== 0 ? (
         props.favoriteStories.map((story, index) => {
           return (
-            <div key={index} style={{ marginTop: "25px" }}>
+            <div key={story.id} style={{ marginTop: "25px" }}>
               <FavoritePostField
                 index={index}
                 title={story.title}
                 isAnon={story.is_anonymous_pin}
-                username={story.pinAuthor ? story.pinAuthor : "Anonymous"}
+                username={story.pinAuthor}
                 description={story.description}
                 category={story.category}
                 id={story.pinId}
               />
+              {isAuthenticated &&
+                (user.is_administrator || user.id === props.ownerid) && (
+                  <button
+                    className="btn btn-primary btn-sm "
+                    onClick={() => props.toggle(story.id)}
+                  >
+                    Unfavorite
+                  </button>
+                )}
             </div>
           );
         })
@@ -131,31 +174,45 @@ const ShowfavoritedPosts = (props) => {
 };
 
 const UserProfileBio = (props) => {
+  const auth = useSelector((state) => state.auth);
+
+  const { profileStatus, isAuthenticated, user } = auth;
   return (
     <div className={"user-profile-main-content"}>
       <Row>
         <Col md={2} className={"offset-md-1"}>
-        {props.userProfile.profileurl ? (
-          <img
-            src={props.userProfile.profileurl}
-            style={{ borderRadius: "50%", height: "125px", width: "125px", margin: "auto", display: "block"}}
-          />
-        ) : (
-          <Avatar size={100} icon="user" />
-        )}
+          {props.userProfile.profileurl ? (
+            <img
+              src={props.userProfile.profileurl}
+              style={{
+                borderRadius: "50%",
+                height: "125px",
+                width: "125px",
+                margin: "auto",
+                display: "block",
+              }}
+            />
+          ) : (
+            <Avatar size={100} icon="user" />
+          )}
         </Col>
         <Col md={7}>
-      <Typography
-        variant="h5"
-        component="h3"
-        align="center"
-        style={{ marginTop: "20px" }}
-      >
-        <h1 className="user-profile-name text-left">
-          {props.userProfile ? `${props.userProfile.username}` : ""}
-        </h1>
-        <p className="user-profile-bio text-left">{props.userProfile.bio}</p>
-      </Typography>
+          {isAuthenticated && user.id === props.ownerid && (
+            <button onClick={() => props.toggle()}>Change</button>
+          )}
+          <Typography
+            variant="h5"
+            component="h3"
+            align="center"
+            style={{ marginTop: "20px" }}
+          >
+            <h1 className="user-profile-name text-left">
+              {props.userProfile ? `${props.userProfile.username}` : ""}
+            </h1>
+            <p className="user-profile-bio text-left">
+              {props.userProfile.bio}
+            </p>
+          </Typography>
         </Col>
       </Row>
     </div>
@@ -172,10 +229,7 @@ const ProfileNotFound = () => {
 };
 
 const NoStories = ({ type }) => {
-  return <div style={{ padding: "20px" }}>
-          <h2 className="profile-page-favorite-posts-title">Favorite Posts</h2>
-            No {type} found
-          </div>;
+  return <div style={{ padding: "20px" }}>No {type} found</div>;
 };
 
 const ListUserStories = (props) => {
@@ -209,58 +263,82 @@ const StoryField = (props) => {
     is_anonymous_pin,
     startDate,
     endDate,
-    category
+    category,
   } = props.story;
   const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user } = auth;
   return (
     <>
-    <Row style={{ height: "150px"}}>
-      <Col md={6} className={"offset-md-2"} style={{ paddingRight: "5px" }}>
-      <Card className={"profile-story-card"}>
-        <Link to={`/story/${id}`}>
-          <div className={category == 1 ? "search-bar-story-card-trim-personal" : (category == 2 ? "search-bar-story-card-trim-community" : "search-bar-story-card-trim-historical")}>
-          </div>
-            <CardContent style={{ paddingLeft: "40px", paddingRight: "40px", height: "165px" }}>
-              <Typography gutterBottom variant="h5" component="h2" className={"sidebar-story-title"}>
-                {title}
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                <Markup content={description.substring(0, 250) + "..."} blockList={["img"]} noHtml={true}/>
-              </Typography>
-              {isAuthenticated &&
-                (user.is_administrator || user.id === props.ownerid) && (
-                  <button
-                    onClick={() =>
-                      props.setEditPinState(startDate, endDate, props.story)
-                    }
-                    type="button"
-                    className="btn btn-primary profile-page-edit-story"
-                  >
-                    edit story
-                  </button>
-               )}
-            </CardContent>
-        </Link>
-      </Card>
-      </Col>
-       {isAuthenticated &&
-                (user.is_administrator || user.id === props.ownerid) && (
-      <Col md={3} style={{ paddingLeft: "0", paddingRight: "0" }}>
-        <div className="profile-page-story-settings-card">
-          <p className="profile-anonymous-toggle-title">make this post anonymous?</p>
-              <Switch
-                className="react-switch"
-                onColor={"#00ce7d"}
-                offColor={"#e63f52"}
-                width={90}
-                height={35}
-                onChange={() => props.updateStoryAnonymity(props.story)}
-                checked={is_anonymous_pin}
-              />
-        </div>
-      </Col>
-       )}
+      <Row style={{ height: "150px" }}>
+        <Col md={6} className={"offset-md-2"} style={{ paddingRight: "5px" }}>
+          <Card className={"profile-story-card"}>
+            <Link to={`/story/${id}`}>
+              <div
+                className={
+                  category == 1
+                    ? "search-bar-story-card-trim-personal"
+                    : category == 2
+                    ? "search-bar-story-card-trim-community"
+                    : "search-bar-story-card-trim-historical"
+                }
+              ></div>
+              <CardContent
+                style={{
+                  paddingLeft: "40px",
+                  paddingRight: "40px",
+                  height: "165px",
+                }}
+              >
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  component="h2"
+                  className={"sidebar-story-title"}
+                >
+                  {title}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  <Markup
+                    content={description.substring(0, 250) + "..."}
+                    blockList={["img"]}
+                    noHtml={true}
+                  />
+                </Typography>
+                {isAuthenticated &&
+                  (user.is_administrator || user.id === props.ownerid) && (
+                    <button
+                      onClick={() =>
+                        props.setEditPinState(startDate, endDate, props.story)
+                      }
+                      type="button"
+                      className="btn btn-primary profile-page-edit-story"
+                    >
+                      edit story
+                    </button>
+                  )}
+              </CardContent>
+            </Link>
+          </Card>
+        </Col>
+        {isAuthenticated &&
+          (user.is_administrator || user.id === props.ownerid) && (
+            <Col md={3} style={{ paddingLeft: "0", paddingRight: "0" }}>
+              <div className="profile-page-story-settings-card">
+                <p className="profile-anonymous-toggle-title">
+                  make this post anonymous?
+                </p>
+                <Switch
+                  className="react-switch"
+                  onColor={"#00ce7d"}
+                  offColor={"#e63f52"}
+                  width={90}
+                  height={35}
+                  onChange={() => props.updateStoryAnonymity(props.story)}
+                  checked={is_anonymous_pin}
+                />
+              </div>
+            </Col>
+          )}
       </Row>
     </>
   );

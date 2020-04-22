@@ -7,26 +7,25 @@ export default function ManageComments() {
   useEffect(() => {
     axios
       .get(`api/commentStory/`)
-      .then(res => {
-        console.log(res.data);
+      .then((res) => {
         setflagComments(res.data);
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   }, []);
 
-  const toggleReports = id => {
-    setshowReport(prevshowReport => ({
+  const toggleReports = (id) => {
+    setshowReport((prevshowReport) => ({
       ...showReport,
-      [id]: !prevshowReport[id]
+      [id]: !prevshowReport[id],
     }));
   };
-  const onDeleteComment = id => {
+  const onDeleteComment = (id) => {
     axios
       .delete(`api/commentStory/${id}/`)
-      .then(res => {
-        setflagComments(flagComments.filter(comment => comment.id !== id));
+      .then((res) => {
+        setflagComments(flagComments.filter((comment) => comment.id !== id));
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   };
   return (
     <div>
@@ -42,12 +41,12 @@ export default function ManageComments() {
   );
 }
 
-const DisplayComments = props => {
+const DisplayComments = (props) => {
   return (
     <div className="container">
       <table className="table table-bordered">
         <tbody>
-          {props.comments.map(pin => {
+          {props.comments.map((pin) => {
             return (
               <tr key={pin.id}>
                 <td>{pin.username ? pin.username : "Anon"}</td>
@@ -86,12 +85,11 @@ const DisplayComments = props => {
   );
 };
 
-const CommentReports = props => {
-  console.log(props);
+const CommentReports = (props) => {
   return (
     <ul>
       {props.reports.length > 0
-        ? props.reports.map(report => {
+        ? props.reports.map((report) => {
             return <li key={report.id}>{report.reason}</li>;
           })
         : "none"}
