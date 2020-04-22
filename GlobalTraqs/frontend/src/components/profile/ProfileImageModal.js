@@ -80,9 +80,7 @@ export default function ProfileImageModal(props) {
           >
             Save
           </Button>
-          <Button style={buttonStyle} onClick={props.onSubmit} color="success">
-            Submit
-          </Button>
+
           <Button color="secondary" onClick={props.toggle}>
             Cancel
           </Button>
