@@ -98,8 +98,8 @@ function About() {
         Originally founded by Cynthia Wang in 2014, then revamped in 2019 with new Co-Founder Zachary Vernon. The arqive seeks to provide the full range of queer stories from historical/archival to personal by geolocating them and digitally preserving them. This is an attempt to counter the queer erasure that happens through the changing physical locations of queer stories. It also seeks to make visible historically marginalized voices and stories and connect queer people globally.
         </p>
         </Col>
-        <Col >
-        <img className="moveimage" src="./static/frontend/images/aboutUs_01.png" alt="About Us" />
+        <Col style={{ marginTop: "auto", marginBottom: "auto" }}>
+        <img className="moveimage" src="./static/frontend/images/aboutUs_03.png" alt="About Us" />
         <p className="copyright">
               ©COPYRIGHT Manuscripts and Archives Division, The New York Public Library. Barbara Gittings
               Photographer: thought to be, Gordon Rainsford. Simon Tseko Nkoli

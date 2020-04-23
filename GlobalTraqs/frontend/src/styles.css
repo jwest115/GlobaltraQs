@@ -214,23 +214,7 @@ b, strong {
   overflow: hidden;
 }
 
-.moveimage
-{
-    padding-top: 50px;
-    width: 80%;
-    float: right;
-}
 
-.copyright
-{
-    padding-right: 10px;
-    padding-top: 30px;
-    width: 80%;
-    float: right;
-    font-size: 12px;
-    color: #98999b;
-
-}
 
 .aboutHeader   
 {
@@ -1040,7 +1024,7 @@ button {
 {
     padding-right: 10px;
     padding-top: 150px;
-    width: 60%;
+    width: 80%;
     float: right;
 }
 
@@ -1049,16 +1033,6 @@ button {
     background: rgb(77, 65, 133);
 }
 
-.copyright
-{
-    padding-right: 10px;
-    padding-top: 30px;
-    width: 60%;
-    float: right;
-    font-size: 12;
-    color: #ffffff;
-
-}
 
 .threeButton1{
     padding-right: 100px;
@@ -1278,4 +1252,14 @@ button {
     text-transform: lowercase;
     border: 1px solid rgb(77, 65, 133) !important;
     font-weight: 600;
+}
+
+.copyright
+{
+    padding-right: 10px;
+    padding-top: 30px;
+    width: 80%;
+    float: right;
+    font-size: 12px;
+    color: #98999b;
 }
