@@ -877,7 +877,7 @@ button {
 
 .profile-story-card {
     width: 100% !important;
-    height: 100% !important;
+    height: auto !important;
     border-radius: 20px !important;
     padding-right: 0 !important;
     padding-left: 0 !important;
@@ -1157,3 +1157,101 @@ button {
     color: white;
 }
 
+.user-profile-favorite-posts-div {
+    marginTop: "25px";
+    width: 90%;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-profile-story-description {
+    font-family: "Eina", "Arial" !important;
+    font-size: 0.8rem;
+    color: black !important;
+    text-transform: none !important;
+}
+
+.user-profile-favorite-bookmark-icon {
+    height: 40px;
+    float: right;
+    width: 40px;
+}
+
+.btn-no-style {
+    background-color: transparent;
+    border: none;
+    float: right;
+}
+
+.edit-profile-pic-button {
+    width: 40px;
+    height: 40px;
+    background: rgb(77, 65, 133) !important;
+    color: white;
+    border-radius: 50px;
+    position: absolute;
+    right: 15;
+    top: 95;
+    border: none;
+}
+.profile-image-div {
+    width: 150px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile-settings-div {
+    background: rgb(77, 65, 133) !important;
+    min-height: 100%;
+    height: auto;
+    width: 100%;
+}
+
+.profile-settings-div span {
+    position: relative;
+    left: 20;
+    top: -14;
+    color: white;
+    font-family: "Eina", "Arial" !important;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+.profile-settings-div label {
+    color: white;
+    font-family: "Eina", "Arial" !important;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+
+
+.profile-settings-div h1{
+    color: white;
+    font-family: "Eina", "Arial" !important;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+}
+
+.profile-settings-div col {
+    padding-top: 50px;
+}
+
+.profile-settings-bio-form {
+    width: 100% !important;
+    height: 200px !important;
+}
+
+.btn-delete-profile {
+    color: white !important;
+    font-family: "Courier New", "Courier" !important;
+    font-weight: 600 !important;
+    text-transform: lowercase !important;
+    background-color: transparent !important;
+    border: none !important;
+    font-size: 1rem !important;
+}

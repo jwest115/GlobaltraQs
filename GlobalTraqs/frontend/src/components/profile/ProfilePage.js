@@ -19,6 +19,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Upvote from "../Map/Story/Upvote";
+import EditIcon from '@material-ui/icons/Edit';
 const FavoritePostField = ({
   index,
   title,
@@ -27,6 +28,11 @@ const FavoritePostField = ({
   description,
   category,
   id,
+  isAuthenticated,
+  user,
+  toggle,
+  ownerid,
+  id2,
   ...rest
 }) => {
   return (
@@ -34,10 +40,9 @@ const FavoritePostField = ({
       style={{ paddingTop: "20px" }}
       key={id}
       {...rest}
-      style={{ height: "155px" }}
+      style={{ height: "auto" }}
     >
       <Card className={"profile-story-card"}>
-        <Link to={`/story/${id}`}>
           <div
             className={
               category == 1
@@ -47,11 +52,19 @@ const FavoritePostField = ({
                 : "search-bar-story-card-trim-historical"
             }
           ></div>
+          {isAuthenticated && (user.is_administrator || user.id === ownerid) && (
+                  <button
+                      className={"btn-no-style"}
+                      onClick={() => toggle(id2)}
+                  >
+                    <img className="user-profile-favorite-bookmark-icon" src={"./static/frontend/images/Bookmark_Icon.png"} alt={"favorite this story icon"}/>
+                  </button>
+          )}
+          <Link to={`/story/${id}`}>
           <CardContent
             style={{
               paddingLeft: "40px",
               paddingRight: "40px",
-              height: "165px",
             }}
           >
             <Typography
@@ -63,10 +76,14 @@ const FavoritePostField = ({
               {title}
             </Typography>
             <Typography gutterBottom variant="h5" component="h2">
-              <h4>By: {!isAnon && username ? username : "Anonymous"} </h4>
+              <p className="sidebar-story-author">Posted by: <span className="sidebar-story-username">{!isAnon && username ? username : "Anonymous"}</span></p>
             </Typography>
-            <Typography variant="body2" color="textSecondary">
-              <Markup content={description} />
+            <Typography variant="body2" className="user-profile-story-description" color="textSecondary">
+             <Markup
+                  content={description.substring(0, 250) + "..."}
+                  blockList={["img"]}
+                  noHtml={true}
+             />
             </Typography>
           </CardContent>
         </Link>
@@ -144,7 +161,7 @@ const ShowfavoritedPosts = (props) => {
       {props.favoriteStories.length !== 0 ? (
         props.favoriteStories.map((story, index) => {
           return (
-            <div key={story.id} style={{ marginTop: "25px" }}>
+            <div key={story.id} className="user-profile-favorite-posts-div">
               <FavoritePostField
                 index={index}
                 title={story.title}
@@ -153,16 +170,12 @@ const ShowfavoritedPosts = (props) => {
                 description={story.description}
                 category={story.category}
                 id={story.pinId}
+                isAuthenticated={isAuthenticated}
+                user={user}
+                toggle={props.toggle}
+                ownerid={props.ownerid}
+                id2={story.id}
               />
-              {isAuthenticated &&
-                (user.is_administrator || user.id === props.ownerid) && (
-                  <button
-                    className="btn btn-primary btn-sm "
-                    onClick={() => props.toggle(story.id)}
-                  >
-                    Unfavorite
-                  </button>
-                )}
             </div>
           );
         })
@@ -181,25 +194,32 @@ const UserProfileBio = (props) => {
     <div className={"user-profile-main-content"}>
       <Row>
         <Col md={2} className={"offset-md-1"}>
-          {props.userProfile.profileurl ? (
-            <img
-              src={props.userProfile.profileurl}
-              style={{
-                borderRadius: "50%",
-                height: "125px",
-                width: "125px",
-                margin: "auto",
-                display: "block",
-              }}
-            />
-          ) : (
-            <Avatar size={100} icon="user" />
-          )}
+          <div className={"profile-image-div"}>
+              {props.userProfile.profileurl ? (
+                <img
+                  src={props.userProfile.profileurl}
+                  style={{
+                    borderRadius: "50%",
+                    height: "125px",
+                    width: "125px",
+                    margin: "auto",
+                    display: "block",
+                  }}
+                />
+              ) : (
+                <Avatar size={125} icon="user" />
+              )}
+              {isAuthenticated && user.id === props.ownerid && (
+                  <button className={"edit-profile-pic-button"} onClick={() => props.toggle()}>
+                    <EditIcon></EditIcon>
+                  </button>
+              )}
+          </div>
         </Col>
         <Col md={7}>
-          {isAuthenticated && user.id === props.ownerid && (
-            <button onClick={() => props.toggle()}>Change</button>
-          )}
+          {/*{isAuthenticated && user.id === props.ownerid && (*/}
+          {/*  <button onClick={() => props.toggle()}>Change</button>*/}
+          {/*)}*/}
           <Typography
             variant="h5"
             component="h3"
@@ -272,7 +292,6 @@ const StoryField = (props) => {
       <Row style={{ height: "150px" }}>
         <Col md={6} className={"offset-md-2"} style={{ paddingRight: "5px" }}>
           <Card className={"profile-story-card"}>
-            <Link to={`/story/${id}`}>
               <div
                 className={
                   category == 1
@@ -286,9 +305,9 @@ const StoryField = (props) => {
                 style={{
                   paddingLeft: "40px",
                   paddingRight: "40px",
-                  height: "165px",
                 }}
               >
+                <Link to={`/story/${id}`}>
                 <Typography
                   gutterBottom
                   variant="h5"
@@ -297,13 +316,14 @@ const StoryField = (props) => {
                 >
                   {title}
                 </Typography>
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2" className={"user-profile-story-description"} color="textSecondary">
                   <Markup
                     content={description.substring(0, 250) + "..."}
                     blockList={["img"]}
                     noHtml={true}
                   />
                 </Typography>
+              </Link>
                 {isAuthenticated &&
                   (user.is_administrator || user.id === props.ownerid) && (
                     <button
@@ -317,7 +337,6 @@ const StoryField = (props) => {
                     </button>
                   )}
               </CardContent>
-            </Link>
           </Card>
         </Col>
         {isAuthenticated &&

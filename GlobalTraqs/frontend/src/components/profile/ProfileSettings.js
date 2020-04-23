@@ -6,6 +6,7 @@ import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { logout } from "../../actions/auth";
 import Switch from "react-switch";
 import axios from "axios";
+import { Row, Col } from "react-bootstrap";
 import useProfileImage from "./CustomHooks/useProfileImage";
 import ProfileImageModal from "./ProfileImageModal";
 
@@ -83,78 +84,67 @@ export default function Settings(props) {
   if (user) {
     if (id == user.id || user.is_administrator || user.is_moderator) {
       userCanEdit = (
-        <div style={{ padding: "20px" }}>
-          <div>
-            <br />
-
-            <span>Accessibility</span>
-            <Switch
-              className="react-switch"
-              onChange={updateAccessibility}
-              checked={checked}
-            />
-          </div>
-          <div>
-            <br />
-
-            <span>Profile Visibility</span>
-            <Switch
-              className="react-switch"
-              onChange={updateProfileVisibility}
-              checked={profileVisibilityChecked}
-            />
-          </div>
-          <br />
-          <button
-            onClick={() => deleteAccount()}
-            type="button"
-            className="btn btn-warning"
-          >
-            Delete Account
-          </button>
-          {/*<Redirect to="/" />*/}
-          <form onSubmit={onSubmit}>
-            <div className="form-group">
+        <Row>
+          <Col md={4} className={"offset-md-2"} style={{ paddingTop: "50px" }}>
+            <h1>profile settings</h1>
+            {/*<Redirect to="/" />*/}
+            <form onSubmit={onSubmit}>
+              <div className="form-group">
+                <br />
+                <label>Bio</label>
+                <input
+                  className="form-control profile-settings-bio-form"
+                  type="text"
+                  name="bio"
+                  onChange={(e) => setBio(e.target.value)}
+                  value={bio}
+                />
+              </div>
+              {/*<div className="form-group">*/}
+              {/*  <button type="submit" className="btn btn-primary">*/}
+              {/*    Submit*/}
+              {/*  </button>*/}
+              {/*</div>*/}
+            </form>
+            <div>
               <br />
-              <label>Bio</label>
-              <input
-                className="form-control"
-                type="text"
-                name="bio"
-                onChange={(e) => setBio(e.target.value)}
-                value={bio}
+
+              <Switch
+                className="react-switch"
+                onColor={"#00ce7d"}
+                offColor={"#e63f52"}
+                width={90}
+                height={35}
+                onChange={updateProfileVisibility}
+                checked={profileVisibilityChecked}
               />
+              <span>turn on accessibility</span>
             </div>
-            <div className="form-group">
-              <button type="submit" className="btn btn-primary">
-                Submit
-              </button>
+             <div>
+              <br />
+
+              <Switch
+                className="react-switch"
+                onColor={"#00ce7d"}
+                offColor={"#e63f52"}
+                width={90}
+                height={35}
+                onChange={updateAccessibility}
+                checked={checked}
+              />
+              <span>make profile private</span>
             </div>
-          </form>
-          <input
-            type="file"
-            name="file"
-            id="exampleFile"
-            onChange={onSelectFile}
-            accept="image/*"
-          />
-          <button onClick={() => toggle()}>Upload</button>{" "}
-          <button onClick={() => toggle()}>Upload</button>
-          <ProfileImageModal
-            toggle={toggle}
-            modalState={modalState}
-            onSelectFile={onSelectFile}
-            crop={crop}
-            zoom={zoom}
-            setcrop={setcrop}
-            setZoom={setZoom}
-            image={image}
-            onCropComplete={onCropComplete}
-            onSubmit={onSubmitPic}
-            showCroppedImage={showCroppedImage}
-            onSelectFile={onSelectFile}
-          />
-        </div>
+            <br />
+            <button
+              onClick={() => deleteAccount()}
+              type="button"
+              className="btn btn-delete-profile"
+            >
+              delete profile
+            </button>
+          </Col>
+          <Col md={4}></Col>
+        </Row>
       );
     } else {
       userCanEdit = (
@@ -171,7 +161,7 @@ export default function Settings(props) {
     );
   }
   return (
-    <div className={"main-content-div"}>
+    <div className={"main-content-div profile-settings-div"}>
       <div style={{ padding: "20px" }}>{userCanEdit}</div>;
     </div>
   );
