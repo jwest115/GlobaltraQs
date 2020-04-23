@@ -8,7 +8,6 @@ import default_marker from "./images/default.png";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import Control from "react-leaflet-control";
 import ModalEditPinForm from "./PinForms/ModalEditPinForm";
-import ModalDeleteConfirm from "./PinForms/ModalDeleteConfirm";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
 import ModalAddPinForm from "./PinForms/ModalAddPinForm";
@@ -202,21 +201,22 @@ const LeafletMap = (props) => {
           />
         )}
         <Control position={"topleft"} style={{ left: "0px" }}>
-          <button className={"btn btn-primary add-story-button"}
-                  onClick={() => {
-                    console.log("add address");
-                    props.setAddAddress(true);
+          <button
+            className={"btn btn-primary add-story-button"}
+            onClick={() => {
+              console.log("add address");
+              props.setAddAddress(true);
 
-                    if(mapInstance) {
-                      let center = mapInstance.leafletElement.getCenter();
-                         props.setaddPinValues({
-                          ...props.addPinValues,
-                          latitude: center.lat,
-                          longitude: center.lng,
-                        });
-                    }
-                    props.toggle();
-                  }}
+              if (mapInstance) {
+                let center = mapInstance.leafletElement.getCenter();
+                props.setaddPinValues({
+                  ...props.addPinValues,
+                  latitude: center.lat,
+                  longitude: center.lng,
+                });
+              }
+              props.toggle();
+            }}
           >
             <AddCommentIcon></AddCommentIcon>
           </button>
@@ -237,7 +237,10 @@ const LeafletMap = (props) => {
         ) : null}
         <Control position={"bottomright"}>
           <div>
-            <button onClick={props.getLocation} className="btn btn-primary map-buttons">
+            <button
+              onClick={props.getLocation}
+              className="btn btn-primary map-buttons"
+            >
               <MyLocationIcon></MyLocationIcon>
             </button>
           </div>
@@ -312,11 +315,6 @@ const LeafletMap = (props) => {
         userForm={props.editPin}
         setuserForm={props.seteditPin}
         updateEditForm={props.updateEditForm}
-      />
-      <ModalDeleteConfirm
-        toggle={props.toggleDelete}
-        modalState={props.deleteConfirmation}
-        onSubmit={props.onDelete}
       />
     </div>
   );

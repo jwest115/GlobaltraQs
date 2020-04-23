@@ -67,7 +67,11 @@ function StorySidebar(props) {
                             >
                               {story.options.data.title}
                             </Typography>
-                            <Typography variant="body2" color="textSecondary" className="sidebar-story-description">
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                              className="sidebar-story-description"
+                            >
                               <Markup
                                 content={story.options.data.description}
                               />
@@ -85,14 +89,21 @@ function StorySidebar(props) {
                 <h1 className="sidebar-story-title">{props.pinData.title}</h1>
                 <h5>
                   {props.pinData.is_anonymous_pin ? (
-                      <p className="sidebar-story-author">Posted by: <span className="sidebar-story-username">Anonymous</span></p>
+                    <p className="sidebar-story-author">
+                      Posted by:{" "}
+                      <span className="sidebar-story-username">Anonymous</span>
+                    </p>
                   ) : (
-                    <p className="sidebar-story-author">Posted by:
+                    <p className="sidebar-story-author">
+                      Posted by:
                       <Link
-                      style={{ textDecoration: "inherit" }}
-                      to={`/users/${props.pinData.username}`}
-                    ><span className="sidebar-story-username">{props.pinData.username}</span>
-                    </Link>
+                        style={{ textDecoration: "inherit" }}
+                        to={`/users/${props.pinData.username}`}
+                      >
+                        <span className="sidebar-story-username">
+                          {props.pinData.username}
+                        </span>
+                      </Link>
                     </p>
                   )}
                 </h5>
@@ -108,7 +119,7 @@ function StorySidebar(props) {
                 {/*  "No End Date"*/}
                 {/*)}{" "}*/}
                 <div className="sidebar-story-description">
-                <Markup content={props.pinData.description} />
+                  <Markup content={props.pinData.description} />
                 </div>
               </div>
             ) : null}
@@ -119,7 +130,7 @@ function StorySidebar(props) {
                   <button
                     type="button"
                     className="btn btn-primary btn-sm default-btn-purple"
-                    style={{marginRight: "20px"}}
+                    style={{ marginRight: "20px" }}
                     onClick={(e) =>
                       props.seteditpinmodalState(!props.editpinmodalState)
                     }
@@ -127,26 +138,28 @@ function StorySidebar(props) {
                     Edit
                   </button>
                   <button
-                  type="button"
-                  className="btn btn-primary btn-sm default-btn-purple"
-                  onClick={(e) =>
-                    props.setDeleteConfirmation(!props.deleteConfirmation)
-                  }
-                >
-                  Delete
-                </button>
+                    type="button"
+                    className="btn btn-primary btn-sm default-btn-purple"
+                    onClick={(e) => props.removalToggle(props.pinData.id)}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ) : null}
             <div>
-               <Link
-                  to={`${props.maplink}/${props.pinData.id}`}
-                  onClick={() => props.centerMarker(props.pinData)}
+              <Link
+                to={`${props.maplink}/${props.pinData.id}`}
+                onClick={() => props.centerMarker(props.pinData)}
+              >
+                <button
+                  type="button"
+                  style={{ bottom: "50" }}
+                  className="btn btn-primary btn-sm default-btn-purple"
                 >
-                  <button type="button" style={{bottom: "50"}} className="btn btn-primary btn-sm default-btn-purple">
-                    View Full Story
-                  </button>
-                </Link>
+                  View Full Story
+                </button>
+              </Link>
             </div>
           </div>
         }
