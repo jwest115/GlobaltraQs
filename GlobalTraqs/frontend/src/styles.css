@@ -1243,7 +1243,7 @@ button {
 
 .profile-settings-bio-form {
     width: 100% !important;
-    height: 200px !important;
+    height: 150px !important;
 }
 
 .btn-delete-profile {
@@ -1254,4 +1254,28 @@ button {
     background-color: transparent !important;
     border: none !important;
     font-size: 1rem !important;
+}
+
+.profile-settings-cancel-btn {
+    background-color: transparent;
+    border-radius: 20px;
+    width: 200px;
+    height: 50px;
+    color: white;
+    font-family: "Eina", "Arial";
+    text-transform: lowercase;
+    border: 1px solid white;
+    font-weight: 600;
+}
+
+.profile-settings-submit-btn {
+    background-color: white;
+    border-radius: 20px;
+    width: 200px;
+    height: 50px;
+    color: rgb(77, 65, 133) !important;
+    font-family: "Eina", "Arial";
+    text-transform: lowercase;
+    border: 1px solid rgb(77, 65, 133) !important;
+    font-weight: 600;
 }

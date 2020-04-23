@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteUser, editUser, getUser } from "../../actions/users";
-import { Redirect } from "react-router-dom";
+import {deleteUser, editUser, getUser, getUserProfile} from "../../actions/users";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { logout } from "../../actions/auth";
 import Switch from "react-switch";
@@ -12,16 +12,19 @@ import ProfileImageModal from "./ProfileImageModal";
 
 export default function Settings(props) {
   const [accountDeleted, setAccountDeleted] = useState(false);
+  const [redirectToProfile, setRedirectToProfile] = useState(false);
   const [userImage, setUserImage] = useState("");
+  let { name } = useParams();
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const userProfile = useSelector((state) => state.auth.userProfile);
   const [bio, setBio] = useState("");
-  const { id } = props.match.params;
   const [checked, setChecked] = useState(false);
   const [profileVisibilityChecked, setProfileVisibilityChecked] = useState(
     false
   );
+  const history = useHistory();
+
   const {
     modalState,
     onSelectFile,
@@ -35,116 +38,139 @@ export default function Settings(props) {
     onSubmitPic,
     showCroppedImage,
   } = useProfileImage();
+
   const updateAccessibility = () => {
     setChecked(!checked);
-    const accessibility_mode_active = !checked;
-
-    const userData = { accessibility_mode_active };
-    dispatch(editUser(id, user.id, userData));
   };
 
   const updateProfileVisibility = () => {
     setProfileVisibilityChecked(!profileVisibilityChecked);
-    const is_profile_private = !profileVisibilityChecked;
-
-    const userData = { is_profile_private };
-    dispatch(editUser(id, user.id, userData));
   };
 
   const deleteAccount = () => {
     dispatch(logout());
-    dispatch(deleteUser(id));
+    dispatch(deleteUser(userProfile.id));
     setAccountDeleted(true);
   };
 
   const onSubmit = (e) => {
     e.preventDefault(); //prevents refresh of page
-    const userData = { bio };
-    dispatch(editUser(id, user.id, userData));
+
+    const accessibility_mode_active = checked;
+
+    const is_profile_private = profileVisibilityChecked;
+
+    const userData = { bio, accessibility_mode_active, is_profile_private };
+
+    dispatch(editUser(userProfile.id, user.id, userData));
+    setRedirectToProfile(true);
   };
+  useEffect(() => {
+    dispatch(getUserProfile(name));
+    console.log("getting user profile");
+  }, [name]);
 
   useEffect(() => {
-    dispatch(getUser(id));
-
     if (userProfile) {
+      console.log("setting it the user profile");
+      console.log(userProfile);
       setBio(userProfile.bio);
-
       setChecked(userProfile.accessibility_mode_active);
-      setProfileVisibilityChecked(user.is_profile_private);
+      setProfileVisibilityChecked(userProfile.is_profile_private);
     }
   }, []);
+
+  const { isAuthenticated, user } = auth;
+
 
   if (accountDeleted) {
     return <Redirect to="/" />;
   }
-  const { isAuthenticated, user } = auth;
-
+  if(redirectToProfile) {
+    const profilePath = `/users/${user.username}`;
+    return <Redirect to={profilePath}/>
+  }
   let userCanEdit = "";
 
-  if (user) {
-    if (id == user.id || user.is_administrator || user.is_moderator) {
+  if (userProfile && user) {
+    if (userProfile.id == user.id || user.is_administrator) {
       userCanEdit = (
-        <Row>
-          <Col md={4} className={"offset-md-2"} style={{ paddingTop: "50px" }}>
-            <h1>profile settings</h1>
-            {/*<Redirect to="/" />*/}
-            <form onSubmit={onSubmit}>
-              <div className="form-group">
+          <form onSubmit={onSubmit} style={{ width: '100%', minHeight: '100%', height: 'auto' }}>
+            <Row>
+            <Col md={4} className={"offset-md-2"} style={{ paddingTop: "50px" }}>
+              <h1>profile settings</h1>
+              {/*<Redirect to="/" />*/}
+                <div className="form-group">
+                  <br />
+                  <label>Bio</label>
+                  <textarea
+                    className="form-control profile-settings-bio-form"
+                    type="text"
+                    name="bio"
+                    onChange={(e) => setBio(e.target.value)}
+                  >
+                  {bio}
+                  </textarea>
+                </div>
+                {/*<div className="form-group">*/}
+                {/*  <button type="submit" className="btn btn-primary">*/}
+                {/*    Submit*/}
+                {/*  </button>*/}
+                {/*</div>*/}
+              <div>
                 <br />
-                <label>Bio</label>
-                <input
-                  className="form-control profile-settings-bio-form"
-                  type="text"
-                  name="bio"
-                  onChange={(e) => setBio(e.target.value)}
-                  value={bio}
+
+                <Switch
+                  className="react-switch"
+                  onColor={"#00ce7d"}
+                  offColor={"#e63f52"}
+                  width={90}
+                  height={35}
+                  onChange={updateProfileVisibility}
+                  checked={profileVisibilityChecked}
                 />
+                <span>make profile private</span>
               </div>
-              {/*<div className="form-group">*/}
-              {/*  <button type="submit" className="btn btn-primary">*/}
-              {/*    Submit*/}
-              {/*  </button>*/}
-              {/*</div>*/}
-            </form>
-            <div>
-              <br />
+               <div>
+                <br />
 
-              <Switch
-                className="react-switch"
-                onColor={"#00ce7d"}
-                offColor={"#e63f52"}
-                width={90}
-                height={35}
-                onChange={updateProfileVisibility}
-                checked={profileVisibilityChecked}
-              />
-              <span>turn on accessibility</span>
-            </div>
-             <div>
+                <Switch
+                  className="react-switch"
+                  onColor={"#00ce7d"}
+                  offColor={"#e63f52"}
+                  width={90}
+                  height={35}
+                  onChange={updateAccessibility}
+                  checked={checked}
+                />
+                <span>turn on accessibility</span>
+              </div>
               <br />
-
-              <Switch
-                className="react-switch"
-                onColor={"#00ce7d"}
-                offColor={"#e63f52"}
-                width={90}
-                height={35}
-                onChange={updateAccessibility}
-                checked={checked}
-              />
-              <span>make profile private</span>
-            </div>
-            <br />
-            <button
-              onClick={() => deleteAccount()}
-              type="button"
-              className="btn btn-delete-profile"
-            >
-              delete profile
-            </button>
-          </Col>
-          <Col md={4}></Col>
-        </Row>
+              <button
+                onClick={() => deleteAccount()}
+                type="button"
+                className="btn-delete-profile"
+              >
+                delete profile
+              </button>
+            </Col>
+            <Col md={4} style={{ paddingTop: "50px", marginTop: "auto", marginBottom: "auto", textAlign: "center" }}>
+              <div>
+                <button
+                    className={"profile-settings-cancel-btn "}
+                    onClick={() => setRedirectToProfile(true)}
+                    >
+                  Cancel
+                </button>
+              </div>
+              <div style={{ marginTop: "20px" }}>
+                <button className={"profile-settings-submit-btn "}>
+                save
+              </button>
+              </div>
+            </Col>
+            </Row>
+          </form>
       );
     } else {
       userCanEdit = (

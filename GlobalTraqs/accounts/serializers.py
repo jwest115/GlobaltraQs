@@ -56,7 +56,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'userStories', 'date_joined', 'first_name',
-                  'last_name', 'username', 'email', 'is_profile_private', 'image_url', 'user_upvoted_stories', 'bio', 'is_profile_private', 'profileurl', 'is_profile_private']
+                  'last_name', 'username', 'email', 'is_profile_private', 'image_url', 'user_upvoted_stories', 'bio', 'accessibility_mode_active', 'profileurl']
 
 
 class RegisterSerializer(serializers.ModelSerializer):

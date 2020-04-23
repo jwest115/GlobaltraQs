@@ -57,7 +57,7 @@ export default function App() {
               <Route exact path="/login" component={login} />
               <Route exact path="/register" component={register} />
               <Route exact path="/users/:name" component={ProfileDashboard} />
-              <Route exact path="/users/:id/settings" component={Settings} />
+              <Route exact path="/users/:name/settings" component={Settings} />
               <Route exact path="/users" component={ProfileDashboard} />
               <PrivateRoute exact path="/manage" component={Manage} />
               <PrivateRoute exact path="/manage/flag" component={Manage} />
