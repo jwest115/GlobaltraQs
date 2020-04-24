@@ -362,7 +362,8 @@ b, strong {
     background: #F2CE5C !important;
     min-height: 100%;
     height: auto;
-    width: 100%
+    width: 100%;
+    paddiing-top: 80px !important;
 }
 
 .faq-card {
@@ -386,6 +387,7 @@ b, strong {
 .add-faq-button {
     float: right;
     border-radius: 8px !important;
+    text-transform: lowercase !important;
 }
 
 /* Style the buttons that are used to open and close the accordion panel */
@@ -1262,4 +1264,15 @@ button {
     float: right;
     font-size: 12px;
     color: #98999b;
+}
+
+.faq-expand-btn {
+    width: 20px;
+    height: 20px;
+}
+
+.faq-title-div {
+    display: flex;
+    align-items: center;
+    padding-right: 70px;
 }

@@ -4,7 +4,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import axios from "axios";
 import { TextField, Divider } from "@material-ui/core";
+import TinyMCE from "react-tinymce";
 import { useSelector, useDispatch, useStore } from "react-redux";
+import { UncontrolledCollapse, Button, CardBody, Card } from 'reactstrap';
+import Markup from "interweave";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 export default function FAQ() {
   const [faqDesc, setfaqDesc] = useState();
   const [shownComments, setShownComments] = useState({});
+  const [imageStates, setImageStates] = useState({});
   const [showAddForm, setshowAddForm] = useState(false);
   const toggleComment = (id) => {
     // toggles to show
@@ -24,6 +28,15 @@ export default function FAQ() {
     }));
     revertChange(id);
   };
+   const toggleImageSrc = (id) => {
+    // toggles to show
+
+    setImageStates((prevImageStates) => ({
+      ...prevImageStates,
+      [id]: !prevImageStates[id],
+    }));
+  };
+
   const [backUpFaq, setbackUpFaq] = useState();
   const [createNewfaq, setNewfaq] = useState({
     faqQuestionDesc: "",
@@ -151,81 +164,87 @@ export default function FAQ() {
             </div>
             ) : ""}
     <div className="col-md-6 m-auto">
-        <div style={{ marginBottom: "30px" }}>
-          <Paper className={`faq-card ${classes.root}`}>
-            <button class="accordion">
-              <h3 className="faq-question">
-                what is  <i>the arqive</i>?
-              </h3>
-            </button>
-              <div class="panel">
-                <p className="faq-answer">
-                  <i>The arqive</i> is a place to learn more about queer experiences
-                  and serve as a resource for members of the queer community. Check
-                  out our <Link to="/About"><u>About Us</u></Link> page for more info!
-                </p>
-              </div>
-          </Paper>
-        </div>
-        <div style={{ marginBottom: "30px" }}>
-          <Paper className={`faq-card ${classes.root}`}>
-            <button class="accordion">
-              <h3 className="faq-question">
-                what do the different color bubbles mean?
-              </h3>
-            </button>
-              <div class="panel">
-                <p className="faq-answer">
-                  ummm...
-                </p>
-              </div>
-          </Paper>
-        </div>
+        {/*<div style={{ marginBottom: "30px" }}>*/}
+        {/*  <Paper className={`faq-card ${classes.root}`}>*/}
+        {/*      <div className={"faq-title-div"}>*/}
+        {/*        <button className={"btn"} id="toggler"*/}
+        {/*        >*/}
+        {/*          <img src="./static/frontend/images/plus.svg" className={"faq-expand-btn"} alt={"expand faq"}/>*/}
+        {/*        </button>*/}
+        {/*          <span className="faq-question">*/}
+        {/*            what is  <i>the arqive</i>?*/}
+        {/*          </span>*/}
+        {/*      </div>*/}
+        {/*      <UncontrolledCollapse toggler="#toggler">*/}
+        {/*          <div>*/}
+        {/*            <p className="faq-answer">*/}
+        {/*              <i>The arqive</i> is a place to learn more about queer experiences*/}
+        {/*              and serve as a resource for members of the queer community. Check*/}
+        {/*              out our <Link to="/About"><u>About Us</u></Link> page for more info!*/}
+        {/*            </p>*/}
+        {/*          </div>*/}
+        {/*      </UncontrolledCollapse>*/}
+        {/*  </Paper>*/}
+        {/*</div>*/}
+        {/*<div style={{ marginBottom: "30px" }}>*/}
+        {/*  <Paper className={`faq-card ${classes.root}`}>*/}
+        {/*    <button className="accordion">*/}
+        {/*      <h3 className="faq-question">*/}
+        {/*        what do the different color bubbles mean?*/}
+        {/*      </h3>*/}
+        {/*    </button>*/}
+        {/*      <div className="panel">*/}
+        {/*        <p className="faq-answer">*/}
+        {/*          ummm...*/}
+        {/*        </p>*/}
+        {/*      </div>*/}
+        {/*  </Paper>*/}
+        {/*</div>*/}
 
-        <div style={{ marginBottom: "30px" }}>
-          <Paper className={`faq-card ${classes.root}`}>
-            <button class="accordion">
-              <h3 className="faq-question">
-                is the website free?
-              </h3>
-            </button>
-              <div class="panel">
-                <p className="faq-answer">
-                  Absolutely!
-                </p>
-              </div>
-          </Paper>
-        </div>
+        {/*<div style={{ marginBottom: "30px" }}>*/}
+        {/*  <Paper className={`faq-card ${classes.root}`}>*/}
+        {/*    <button className="accordion">*/}
+        {/*      <h3 className="faq-question">*/}
+        {/*        is the website free?*/}
+        {/*      </h3>*/}
+        {/*    </button>*/}
+        {/*      <div className="panel">*/}
+        {/*        <p className="faq-answer">*/}
+        {/*          Absolutely!*/}
+        {/*        </p>*/}
+        {/*      </div>*/}
+        {/*  </Paper>*/}
+        {/*</div>*/}
 
-        <div style={{ marginBottom: "30px" }}>
-          <Paper className={`faq-card ${classes.root}`}>
-            <button class="accordion">
-              <h3 className="faq-question">
-                who can use the website?
-              </h3>
-            </button>
-              <div class="panel">
-                <p className="faq-answer">
-                  Anyone! Even your dog! :)
-                </p>
-              </div>
-          </Paper>
-        </div>
+        {/*<div style={{ marginBottom: "30px" }}>*/}
+        {/*  <Paper className={`faq-card ${classes.root}`}>*/}
+        {/*    <button className="accordion">*/}
+        {/*      <h3 className="faq-question">*/}
+        {/*        who can use the website?*/}
+        {/*      </h3>*/}
+        {/*    </button>*/}
+        {/*      <div className="panel">*/}
+        {/*        <p className="faq-answer">*/}
+        {/*          Anyone! Even your dog! :)*/}
+        {/*        </p>*/}
+        {/*      </div>*/}
+        {/*  </Paper>*/}
+        {/*</div>*/}
 
-        <div style={{ marginBottom: "30px" }}>
-          <Paper className={`faq-card ${classes.root}`}>
-            <button class="accordion">
-              <h3 className="faq-question">
-                if i don't know the exact address , is that okay? 
-              </h3>
-            </button>
-              <div class="panel">
-                <p className="faq-answer">
-                  yes, but an approximation would be helpful
-                </p>
-              </div>
-          </Paper>
-        </div>
+        {/*<div style={{ marginBottom: "30px" }}>*/}
+        {/*  <Paper className={`faq-card ${classes.root}`}>*/}
+        {/*    <button className="accordion">*/}
+        {/*      <h3 className="faq-question">*/}
+        {/*        if i don't know the exact address , is that okay? */}
+        {/*      </h3>*/}
+        {/*    </button>*/}
+        {/*      <div className="panel">*/}
+        {/*        <p className="faq-answer">*/}
+        {/*          yes, but an approximation would be helpful*/}
+        {/*        </p>*/}
+        {/*      </div>*/}
+        {/*  </Paper>*/}
+        {/*</div>*/}
 
         {faqDesc && (
           <DisplayFaq
@@ -241,6 +260,8 @@ export default function FAQ() {
             setbackUpFaq={setbackUpFaq}
             toggle={toggleComment}
             shownComments={shownComments}
+            toggleImgSrc={toggleImageSrc}
+            imageStates={imageStates}
             revertChange={revertChange}
           />
         )}
@@ -273,25 +294,40 @@ function DisplayFaq(props) {
   return (
     <>
       {props.data.map((faq) => {
+        const faqId = "toggler-" + faq.id;
+        const togglerFaqId = "#toggler-" + faq.id;
         return (
           <div key={faq.id}>
             <div style={{ marginBottom: "30px" }}>
             <Paper className={`faq-card ${props.classes.root}`}>
-                <h3 className="faq-question">
-                  Q: {faq.faqQuestionDesc}
-                </h3>
-                <p className="faq-answer">A: {faq.faqAnswerDesc}</p>
+                <div className={"faq-title-div"}>
+                <button className={"btn"}
+                        id={faqId}
+                        onClick={() => props.toggleImgSrc(faq.id)}
+                >
+                  <img src={props.imageStates[faq.id] ? "./static/frontend/images/minus.svg" : "./static/frontend/images/plus.svg" } className={"faq-expand-btn"} alt={"expand faq"}/>
+                </button>
+                  <span className="faq-question">
+                      <Markup content={faq.faqQuestionDesc} />
+                  </span>
+              </div>
+                <UncontrolledCollapse toggler={togglerFaqId}>
+                  <div  style={{ paddingLeft: "70px", paddingRight: "70px" }}>
+                    <p className="faq-answer">
+                        <Markup content={faq.faqAnswerDesc} />
+                    </p>
+                  </div>
+              </UncontrolledCollapse>
                 {canEdit ? (
                     <>
-                     <button onClick={() => props.deletefaqDesc(faq.id)}>
+                     <button className={"add-faq-button btn btn-primary btn-sm"} onClick={() => props.deletefaqDesc(faq.id)}>
                       Delete
                     </button>
-                    <button onClick={() => props.toggle(faq.id)}>
+                    <button className={"add-faq-button btn btn-primary btn-sm"} onClick={() => props.toggle(faq.id)}>
                       Toggle Edit Form
                     </button>
                     {props.shownComments[faq.id] ? (
-                      <>
-                        {" "}
+                      <div style={{ marginTop: "100px" }}>
                         <EditFAQ
                           id={faq.id}
                           question={faq.faqQuestionDesc}
@@ -299,14 +335,14 @@ function DisplayFaq(props) {
                           onChange={props.updateFAQ}
                         ></EditFAQ>
                         <p>
-                          <button onClick={() => props.editfaqDesc(faq.id)}>
+                          <button className={"add-faq-button btn btn-primary btn-sm"} onClick={() => props.editfaqDesc(faq.id)}>
                             Save
                           </button>
-                          <button onClick={() => props.revertChange(faq.id)}>
+                          <button className={"add-faq-button btn btn-primary btn-sm"} onClick={() => props.revertChange(faq.id)}>
                             Revert
                           </button>
                         </p>
-                      </>
+                      </div>
                     ) : null}
                     </>
                 ) : null}
@@ -321,8 +357,9 @@ function DisplayFaq(props) {
 
 function EditFAQ(props) {
   return (
-    <p>
+       <p>
       <TextField
+        style={{ width: "100%" }}
         name="faqQuestionDesc"
         onChange={(e) => props.onChange(e, props.id)}
         placeholder="Question"
@@ -330,11 +367,36 @@ function EditFAQ(props) {
       ></TextField>
       <Divider />
       <TextField
+        style={{ width: "100%" }}
         name="faqAnswerDesc"
         value={props.answer}
         onChange={(e) => props.onChange(e, props.id)}
       ></TextField>
     </p>
+      /*<>
+       <TinyMCE
+            content={props.question}
+            config={{
+              height: 300,
+              fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+              plugins: "autolink link image lists print preview",
+              toolbar: "undo redo | bold italic"
+            }}
+            onChange={(e) => props.onChange(e, props.id)}
+        />
+        <Divider />
+        <TinyMCE
+            content={props.answer}
+            config={{
+              height: 300,
+              fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+              plugins: "autolink link image lists print preview",
+              toolbar: "undo redo | bold italic"
+            }}
+            onChange={(e) => props.onChange(e, props.id)}
+        />
+        </>*/
+
   );
 }
 
