@@ -28,7 +28,12 @@ function Story(props) {
 
   const { isAuthenticated, user, userFavoritePinState } = auth;
 
-  const upvoteButoon = <Link className="login-link" to="/login"> &nbsp;Login to favorite!</Link>;
+  const upvoteButoon = (
+    <Link className="login-link" to="/login">
+      {" "}
+      &nbsp;Login to favorite!
+    </Link>
+  );
 
   if (props.pinDeleted) {
     props.setPinDeleted(false);
@@ -56,34 +61,22 @@ function Story(props) {
       {canManagePin ? (
         <div>
           <div className="admin-moderator-edit">
-           <button
-            type="button"
-            style={{ float: "right" }}
-            className="btn btn-primary btn-sm default-btn-purple"
-            onClick={(e) =>
-              props.setDeleteConfirmation(!props.deleteConfirmation)
-            }
-          >
-            Delete
-          </button>
+            <button
+              type="button"
+              style={{ float: "right" }}
+              className="btn btn-primary btn-sm default-btn-purple"
+              onClick={(e) =>
+                props.setDeleteConfirmation(!props.deleteConfirmation)
+              }
+            >
+              Delete
+            </button>
             <button
               type="button"
               style={{ float: "right", marginRight: "20px" }}
               className="btn btn-primary btn-sm default-btn-purple"
-              onClick={(e) => {
-                let start = props.pin.startDate.split("-");
-                start = new Date(start[0], start[1] - 1, start[2], 0, 0, 0, 0);
-                let end = props.pin.endDate.split("-");
-                end = new Date(end[0], end[1] - 1, end[2], 0, 0, 0, 0);
-                props.seteditPin({
-                  id: props.pin.id,
-                  title: props.pin.title,
-                  description: props.pin.description,
-                  category: props.pin.category,
-                  startDate: start,
-                  endDate: end,
-                });
-                props.seteditpinmodalState(!props.editpinmodalState);
+              onClick={() => {
+                props.setEditPinState(props.pin);
               }}
             >
               Edit
@@ -95,35 +88,45 @@ function Story(props) {
         <strong>{props.pin.title}</strong>
       </h2>
       {props.pin.startDate && props.pin.endDate ? (
-          <p className={"story-page-dates"}>
-            {" "}
-            {props.pin.startDate ? (
-              <Moment format="MM/DD/YYYY">{props.pin.startDate}</Moment>
-            ) : (
-              "No Start Date"
-            )}{" "}
-            -{" "}
-            {props.pin.endDate ? (
-              <Moment format="MM/DD/YYYY">{props.pin.endDate}</Moment>
-            ) : (
-              "No End Date"
-            )}{" "}
-          </p>
-      ) : ""}
+        <p className={"story-page-dates"}>
+          {" "}
+          {props.pin.startDate ? (
+            <Moment format="MM/DD/YYYY">{props.pin.startDate}</Moment>
+          ) : (
+            "No Start Date"
+          )}{" "}
+          -{" "}
+          {props.pin.endDate ? (
+            <Moment format="MM/DD/YYYY">{props.pin.endDate}</Moment>
+          ) : (
+            "No End Date"
+          )}{" "}
+        </p>
+      ) : (
+        ""
+      )}
       {/* <p>By: {authorName}</p> */}
       {props.pin.is_anonymous_pin ? (
-          <p className="sidebar-story-author">Posted by: <span className="sidebar-story-username">Anonymous</span></p>
+        <p className="sidebar-story-author">
+          Posted by: <span className="sidebar-story-username">Anonymous</span>
+        </p>
       ) : (
         <Link
           style={{ textDecoration: "inherit" }}
           to={`/users/${props.pin.username}`}
         >
-            <p className="sidebar-story-author">Posted by: <span className="sidebar-story-username">{props.pin.username}</span></p>
+          <p className="sidebar-story-author">
+            Posted by:{" "}
+            <span className="sidebar-story-username">{props.pin.username}</span>
+          </p>
         </Link>
       )}
       <h6 className="story-page-favorites">
         {/* {props.pin.updooots} upvotes */}
-          <span className="story-page-favorite-count">{props.pin.updooots}</span> favorites
+        <span className="story-page-favorite-count">
+          {props.pin.updooots}
+        </span>{" "}
+        favorites
         {/* need to figure out a way to update upvotes maybe websockets  */}
         {isAuthenticated
           ? props.pin && props.pin.updotes && <Upvote id={props.pin.id} />

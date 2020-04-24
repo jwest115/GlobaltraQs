@@ -16,17 +16,13 @@ const useEditPinForm = (pinData, setPinData) => {
     endDate: new Date(),
   });
 
-  const setEditPinState = (startDate, endDate, pin) => {
-    console.log(pin);
-    let start = startDate.split("-");
+  const setEditPinState = (pin) => {
+    let start = pin.startDate.split("-");
     start = new Date(start[0], start[1] - 1, start[2], 0, 0, 0, 0);
-    let end = endDate.split("-");
+    let end = pin.endDate.split("-");
     end = new Date(end[0], end[1] - 1, end[2], 0, 0, 0, 0);
     seteditPinForm({
-      id: pin.id,
-      title: pin.title,
-      description: pin.description,
-      category: pin.category,
+      ...pin,
       startDate: start,
       endDate: end,
     });

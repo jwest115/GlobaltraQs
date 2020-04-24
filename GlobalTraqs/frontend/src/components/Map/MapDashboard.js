@@ -147,6 +147,7 @@ export default function MapDashboard() {
     seteditpinmodalState,
     onEditSubmit,
     updateEditForm,
+    setEditPinState,
   } = useEditPinForm(pinData, setPinData);
   function userAddedPin() {
     mapReference.flyTo([addPinValues.latitude, addPinValues.longitude], 15);
@@ -185,7 +186,7 @@ export default function MapDashboard() {
   };
 
   const toggle = () => {
-    if(modalState == true) {
+    if (modalState == true) {
       setAddAddress(false);
     }
     setmodalstate(!modalState);
@@ -289,6 +290,7 @@ export default function MapDashboard() {
                 userRoleVerified={userRoleVerified}
                 editpinmodalState={editpinmodalState}
                 seteditpinmodalState={seteditpinmodalState}
+                setEditPinState={setEditPinState}
                 deleteConfirmation={deleteConfirmation}
                 setDeleteConfirmation={setDeleteConfirmation}
                 pinCluster={pinCluster}
@@ -416,6 +418,7 @@ export default function MapDashboard() {
               userRoleVerified={userRoleVerified}
               editpinmodalState={editpinmodalState}
               seteditpinmodalState={seteditpinmodalState}
+              setEditPinState={setEditPinState}
               deleteConfirmation={deleteConfirmation}
               setDeleteConfirmation={setDeleteConfirmation}
               pinDeleted={pinDeleted}
