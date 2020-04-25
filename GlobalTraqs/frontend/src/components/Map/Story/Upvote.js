@@ -8,17 +8,25 @@ function Upvote(props) {
 
   const { favoritedPin, upvoteid, user } = auth;
   const dispatch = useDispatch();
-
+  const favoritedCheck = user.user_upvoted_stories.some(
+    (a) => a.pinId === props.id
+  );
+  const a = true;
   return (
-    <FavoriteButton
-      onClick={() =>
-        favoritedPin
-          ? dispatch(userUpovte(upvoteid))
-          : dispatch(userFirstUpvote(props.id, user.id))
-      }
-    >
-      {favoritedPin ? "Favorited" : "Favorite"}
-    </FavoriteButton>
+    <>
+      <h2>
+        {upvoteid} of {props.id} state user {favoritedPin ? "true" : "false"}
+      </h2>
+      <FavoriteButton
+        onClick={() =>
+          favoritedPin
+            ? dispatch(userUpovte(upvoteid))
+            : dispatch(userFirstUpvote(props.id, user.id))
+        }
+      >
+        {favoritedPin ? `Favorited ${upvoteid} ${favoritedPin}` : "Favorite"}
+      </FavoriteButton>
+    </>
   );
 }
 

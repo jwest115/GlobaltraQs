@@ -27,11 +27,11 @@ class pin(models.Model):
     lastPersonEdit = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     # addresses and postcode might differ in other countries
-    postCode = models.CharField(null=True, max_length=150)
-    locality = models.CharField(null=True, max_length=150)
-    region = models.CharField(null=True, max_length=150)
-    country = models.CharField(null=True, max_length=150)
-    address = models.CharField(null=True, max_length=150)
+    postCode = models.CharField(blank=True, null=True, max_length=150)
+    locality = models.CharField(blank=True, null=True, max_length=150)
+    region = models.CharField(blank=True, null=True, max_length=150)
+    country = models.CharField(blank=True, null=True, max_length=150)
+    address = models.CharField(blank=True, null=True, max_length=150)
 
     class Meta:
         ordering = ['id']

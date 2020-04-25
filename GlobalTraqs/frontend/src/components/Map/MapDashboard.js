@@ -89,7 +89,9 @@ export default function MapDashboard() {
     dispatch(getMaxPinDate());
     dispatch(getMinPinDate());
   }, []);
-
+  useEffect(() => {
+    dispatch(getPins());
+  }, []);
   useEffect(() => {
     if (mapReference != undefined) {
       // dispatch(getPins());
