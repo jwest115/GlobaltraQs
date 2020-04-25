@@ -31,7 +31,7 @@ function Story(props) {
   const[fixedArrow, setFixedArrow] = useState(false);
 
   const upvoteButoon = <Link className="login-link favorite-story-btn" to="/login">
-                            <img className="story-favorites-icon" src={"./static/frontend/images/Bookmark_Icon.png"} alt={"favorite this story icon"}/>
+                            <img className="story-favorites-icon" src={"./static/frontend/images/Bookmark_Outline_Icon.png"} alt={"favorite this story icon"}/>
                        </Link>;
 
   useEffect(() => {
@@ -82,44 +82,6 @@ function Story(props) {
           </Col>
         </Row>
         <Row>
-          {/*{canManagePin ? (*/}
-          {/*  <div>*/}
-          {/*    <div className="admin-moderator-edit">*/}
-          {/*     <button*/}
-          {/*      type="button"*/}
-          {/*      style={{ float: "right" }}*/}
-          {/*      className="btn btn-primary btn-sm default-btn-purple"*/}
-          {/*      onClick={(e) =>*/}
-          {/*        props.setDeleteConfirmation(!props.deleteConfirmation)*/}
-          {/*      }*/}
-          {/*    >*/}
-          {/*      Delete*/}
-          {/*    </button>*/}
-          {/*      <button*/}
-          {/*        type="button"*/}
-          {/*        style={{ float: "right", marginRight: "20px" }}*/}
-          {/*        className="btn btn-primary btn-sm default-btn-purple"*/}
-          {/*        onClick={(e) => {*/}
-          {/*          let start = props.pin.startDate.split("-");*/}
-          {/*          start = new Date(start[0], start[1] - 1, start[2], 0, 0, 0, 0);*/}
-          {/*          let end = props.pin.endDate.split("-");*/}
-          {/*          end = new Date(end[0], end[1] - 1, end[2], 0, 0, 0, 0);*/}
-          {/*          props.seteditPin({*/}
-          {/*            id: props.pin.id,*/}
-          {/*            title: props.pin.title,*/}
-          {/*            description: props.pin.description,*/}
-          {/*            category: props.pin.category,*/}
-          {/*            startDate: start,*/}
-          {/*            endDate: end,*/}
-          {/*          });*/}
-          {/*          props.seteditpinmodalState(!props.editpinmodalState);*/}
-          {/*        }}*/}
-          {/*      >*/}
-          {/*        Edit*/}
-          {/*      </button>*/}
-          {/*    </div>*/}
-          {/*  </div>*/}
-          {/*) : null}{" "}*/}
           <Col md={1} className={"offset-md-1"}>
                {isAuthenticated
               ? props.pin && props.pin.updotes && <Upvote id={props.pin.id} />
@@ -160,11 +122,52 @@ function Story(props) {
           <div className="sidebar-story-description">
             <Markup content={props.pin.description} />
           </div>
+                {props.isAuthenticated
+                    ? props.pin && props.pin.flaggerstory && <div style={{ float: "left"}}><Flag {...props} /> </div>
+              : ""}
+                {canManagePin ? (
+            <div>
+              <div className="admin-moderator-edit">
+               <button
+                type="button"
+                style={{ float: "right" }}
+                className="btn btn-primary btn-sm default-btn-purple"
+                onClick={(e) =>
+                  props.setDeleteConfirmation(!props.deleteConfirmation)
+                }
+              >
+                Delete
+              </button>
+                <button
+                  type="button"
+                  style={{ float: "right", marginRight: "20px" }}
+                  className="btn btn-primary btn-sm default-btn-purple"
+                  onClick={(e) => {
+                    let start = props.pin.startDate.split("-");
+                    start = new Date(start[0], start[1] - 1, start[2], 0, 0, 0, 0);
+                    let end = props.pin.endDate.split("-");
+                    end = new Date(end[0], end[1] - 1, end[2], 0, 0, 0, 0);
+                    props.seteditPin({
+                      id: props.pin.id,
+                      title: props.pin.title,
+                      description: props.pin.description,
+                      category: props.pin.category,
+                      startDate: start,
+                      endDate: end,
+                    });
+                    props.seteditpinmodalState(!props.editpinmodalState);
+                  }}
+                >
+                  Edit
+                </button>
+              </div>
+            </div>
+          ) : null}{" "}
           </Col>
           <Col md={1}>
-                {props.isAuthenticated
-              ? props.pin && props.pin.flaggerstory && <Flag {...props} />
-              : ""}
+              {/*  {props.isAuthenticated*/}
+              {/*? props.pin && props.pin.flaggerstory && <Flag {...props} />*/}
+              {/*: ""}*/}
           </Col>
         </Row>
         <Row>

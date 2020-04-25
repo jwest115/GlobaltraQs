@@ -357,7 +357,7 @@ b, strong {
 
 .header-nav-anonymous-not-active {
     color: #e63f52 !important;
-    font-family: Eina, Arial;
+    font-fsupport-header-activeamily: Eina, Arial;
     font-size: 1rem;
     text-transform: lowercase !important;
     font-weight: 600;
@@ -523,7 +523,7 @@ button {
     color: #248dc1 !important;
 }
 
-.supportUs-header-active {
+.support-us-header-active {
     color: #e01783 !important;
 }
 
@@ -632,7 +632,7 @@ button {
     color: #F0DC7D !important;
 }
 
-.faq-nav-link:hover, .faq-nav-link:focus {
+.faq-header-nav-link:hover, .faq-header-nav-link:focus {
     color: #F0DC7D !important;
 }
 
@@ -640,7 +640,7 @@ button {
     color: rgb(77, 65, 133) !important;
 }
 
-.about-us-nav-link:hover, .about-us-nav-link:focus {
+.about-us-header-nav-link:hover, .aabout-us-header-nav-link:focus {
     color: rgb(77, 65, 133) !important;
 }
 

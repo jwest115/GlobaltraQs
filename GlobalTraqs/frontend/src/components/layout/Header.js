@@ -240,7 +240,7 @@ function Header() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/support" className={activePages["support"] ? "support-header-active nav-link header-nav-link support-us-nav-link" : "nav-link header-nav-link support-us-nav-link"}>
+            <Link to="/support" className={activePages["supportUs"] ? "support-us-header-active nav-link header-nav-link support-us-nav-link" : "nav-link header-nav-link support-us-nav-link"}>
               Support Us{" "}
             </Link>
           </li>

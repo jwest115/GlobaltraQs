@@ -17,7 +17,7 @@ function Flag(props) {
         <button
           type="submit"
           onClick={() => dispatch(userUnFlagPin(flagid, props.pin.flagState))}
-          className="btn btn-primary flag-story-btn"
+          className="btn btn-primary btn-sm flag-story-btn"
         >
           {props.pin.flagState ? "Flagged" : "Flag"}
         </button>
@@ -30,7 +30,7 @@ function Flag(props) {
           // }}
           onClick={() => props.flagToggle(props.pin.id)}
           type="submit"
-          className="btn btn-warning flag-story-btn"
+          className="btn btn-sm btn-primary flag-story-btn"
         >
           Flag
         </button>
