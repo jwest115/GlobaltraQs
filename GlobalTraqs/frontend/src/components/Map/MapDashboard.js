@@ -69,22 +69,9 @@ export default function MapDashboard() {
   });
 
   const pins = useSelector((state) => state.pins.pins);
-
   const dispatch = useDispatch();
-  const [userRoleVerified, setUserRoleVerified] = useState(false);
   const [pinData, setPinData] = useState();
   const history = useHistory();
-  useEffect(() => {
-    if (isAuthenticated) {
-      if (user.is_administrator || user.is_moderator) {
-        setUserRoleVerified(true);
-      } else {
-        setUserRoleVerified(false);
-      }
-    } else {
-      setUserRoleVerified(false);
-    }
-  });
   useEffect(() => {
     dispatch(getMaxPinDate());
     dispatch(getMinPinDate());
@@ -289,7 +276,6 @@ export default function MapDashboard() {
                 setStorySidebarOpen={setStorySidebarOpen}
                 isAuthenticated={isAuthenticated}
                 user={user}
-                userRoleVerified={userRoleVerified}
                 editpinmodalState={editpinmodalState}
                 seteditpinmodalState={seteditpinmodalState}
                 setEditPinState={setEditPinState}
@@ -336,7 +322,6 @@ export default function MapDashboard() {
               setdarkMode={setdarkMode}
               mapReference={mapReference}
               setMapReference={setMapReference}
-              userRoleVerified={userRoleVerified}
               user={user}
               isAuthenticated={isAuthenticated}
               storySidebarOpen={storySidebarOpen}
@@ -393,7 +378,6 @@ export default function MapDashboard() {
                 setdarkMode={setdarkMode}
                 mapReference={mapReference}
                 setMapReference={setMapReference}
-                userRoleVerified={userRoleVerified}
                 user={user}
                 isAuthenticated={isAuthenticated}
                 setPinData={setPinData}
@@ -417,7 +401,6 @@ export default function MapDashboard() {
               onDeleteComment={onDeleteComment}
               user={user}
               isAuthenticated={isAuthenticated}
-              userRoleVerified={userRoleVerified}
               editpinmodalState={editpinmodalState}
               seteditpinmodalState={seteditpinmodalState}
               setEditPinState={setEditPinState}

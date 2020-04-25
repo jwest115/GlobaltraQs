@@ -40,14 +40,6 @@ function Story(props) {
     return <Redirect to="/" />;
   }
 
-  let canManagePin = false;
-
-  if (props.isAuthenticated) {
-    if (props.user.id == props.pin.owner || props.userRoleVerified) {
-      canManagePin = true;
-    }
-  }
-
   return (
     <div className="container-fluid" style={storyBody}>
       <div style={{ left: "10", position: "absolute", top: "10" }}>
@@ -58,32 +50,33 @@ function Story(props) {
           <KeyboardBackspaceIcon></KeyboardBackspaceIcon>
         </Link>
       </div>
-      {canManagePin ? (
-        <div>
-          <div className="admin-moderator-edit">
-            <button
-              type="button"
-              style={{ float: "right" }}
-              className="btn btn-primary btn-sm default-btn-purple"
-              onClick={(e) =>
-                props.setDeleteConfirmation(!props.deleteConfirmation)
-              }
-            >
-              Delete
-            </button>
-            <button
-              type="button"
-              style={{ float: "right", marginRight: "20px" }}
-              className="btn btn-primary btn-sm default-btn-purple"
-              onClick={() => {
-                props.setEditPinState(props.pin);
-              }}
-            >
-              Edit
-            </button>
+      {isAuthenticated &&
+        (user.is_administrator || user.id === props.pin.owner) && (
+          <div>
+            <div className="admin-moderator-edit">
+              <button
+                type="button"
+                style={{ float: "right" }}
+                className="btn btn-primary btn-sm default-btn-purple"
+                onClick={(e) =>
+                  props.setDeleteConfirmation(!props.deleteConfirmation)
+                }
+              >
+                Delete
+              </button>
+              <button
+                type="button"
+                style={{ float: "right", marginRight: "20px" }}
+                className="btn btn-primary btn-sm default-btn-purple"
+                onClick={() => {
+                  props.setEditPinState(props.pin);
+                }}
+              >
+                Edit
+              </button>
+            </div>
           </div>
-        </div>
-      ) : null}{" "}
+        )}
       <h2 className={"story-page-story-title"}>
         <strong>{props.pin.title}</strong>
       </h2>

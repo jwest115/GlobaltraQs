@@ -10,23 +10,16 @@ import { Markup } from "interweave";
 import Moment from "react-moment";
 import { IconButton } from "@material-ui/core";
 import { getPinsWithBounds } from "../../actions/pins";
+import { useSelector } from "react-redux";
 
 function StorySidebar(props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const auth = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = auth;
 
   const onSetSidebarOpen = (open) => {
     setSidebarOpen({ sidebarOpen: open });
   };
-
-  let canManagePin = false;
-  if (props.isAuthenticated) {
-    if (
-      (props.pinData && props.user.id == props.pinData.owner) ||
-      props.userRoleVerified
-    ) {
-      canManagePin = true;
-    }
-  }
 
   if (props.storySidebarOpen) {
     if (props.pins.length == 0) {
@@ -124,29 +117,31 @@ function StorySidebar(props) {
               </div>
             ) : null}
             {/* show edit/ delete button for story owners and admins/moderators */}
-            {!props.pinCluster && canManagePin ? (
-              <div>
-                <div className="admin-moderator-edit">
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-sm default-btn-purple"
-                    style={{ marginRight: "20px" }}
-                    onClick={() => props.setEditPinState(props.pinData)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-sm default-btn-purple"
-                    onClick={(e) =>
-                      props.setDeleteConfirmation(!props.deleteConfirmation)
-                    }
-                  >
-                    Delete
-                  </button>
+            {!props.pinCluster &&
+              isAuthenticated &&
+              (user.is_administrator || user.id === ownerid) && (
+                <div>
+                  <div className="admin-moderator-edit">
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm default-btn-purple"
+                      style={{ marginRight: "20px" }}
+                      onClick={() => props.setEditPinState(props.pinData)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm default-btn-purple"
+                      onClick={(e) =>
+                        props.setDeleteConfirmation(!props.deleteConfirmation)
+                      }
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ) : null}
+              )}
             <div>
               <Link
                 to={`${props.maplink}/${props.pinData.id}`}
