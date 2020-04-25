@@ -305,7 +305,7 @@ function DisplayFaq(props) {
                         id={faqId}
                         onClick={() => props.toggleImgSrc(faq.id)}
                 >
-                  <img src={props.imageStates[faq.id] ? "./static/frontend/images/minus.svg" : "./static/frontend/images/plus.svg" } className={"faq-expand-btn"} alt={"expand faq"}/>
+                  <img src={props.imageStates[faq.id] ? "./static/frontend/images/minus.svg" : "./static/frontend/images/plus.svg" } className={props.imageStates[faq.id] ? "faq-minus-btn" : "faq-plus-btn"} alt={"expand faq"}/>
                 </button>
                   <span className="faq-question">
                       <Markup content={faq.faqQuestionDesc} />

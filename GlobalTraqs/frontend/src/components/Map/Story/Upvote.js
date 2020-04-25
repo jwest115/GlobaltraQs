@@ -26,8 +26,8 @@ export default Upvote;
 
 const FavoriteButton = ({ children, onClick }) => {
   return (
-    <button className="btn btn-primary default-btn-purple" onClick={onClick}>
-      {children}
+    <button className="favorite-story-btn" onClick={onClick}>
+        <img className="story-favorites-icon" src={"./static/frontend/images/Bookmark_Icon.png"} alt={"favorite this story icon"}/>
     </button>
   );
 };

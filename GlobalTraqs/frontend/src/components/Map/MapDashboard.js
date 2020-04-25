@@ -522,5 +522,5 @@ function IndividualStory(props) {
     });
   }, [id]);
 
-  return <Story pin={pin} pinData={props.pinData} {...props} />;
+  return <Story pin={pin} pinData={props.pinData} mapReference={props.mapReference} {...props} />;
 }

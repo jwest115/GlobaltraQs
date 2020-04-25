@@ -294,6 +294,7 @@ b, strong {
     background: rgb(77, 65, 133);
     padding-top: 60px !important;
     color: white !important;
+    padding-bottom: 60px !important;
 }
 
 .user-profile-name {
@@ -363,7 +364,7 @@ b, strong {
     min-height: 100%;
     height: auto;
     width: 100%;
-    paddiing-top: 80px !important;
+    padding-top: 80px !important;
 }
 
 .faq-card {
@@ -836,6 +837,7 @@ button {
     border-radius: 25px !important;
     box-shadow: -5px 5px rgba(0, 0, 0, 0.1) !important;
     margin-top: 20px;
+    width: 100% !important;
 }
 
 .story-card-description {
@@ -1160,6 +1162,15 @@ button {
     float: right;
 }
 
+
+.favorite-story-btn {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: -13px;
+    top: -4px;
+}
+
 .edit-profile-pic-button {
     width: 40px;
     height: 40px;
@@ -1266,8 +1277,13 @@ button {
     color: #98999b;
 }
 
-.faq-expand-btn {
+.faq-plus-btn {
     width: 20px;
+    height: 20px;
+}
+
+.faq-minus-btn {
+    width: 15px;
     height: 20px;
 }
 
@@ -1275,4 +1291,56 @@ button {
     display: flex;
     align-items: center;
     padding-right: 70px;
+}
+
+.sidebar-story-div {
+    padding: 80px 40px;
+    position: relative;
+    height: auto;
+    min-height: 100%;
+}
+
+.story-comment-header {
+    font-family: "Eina", "Arial" !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    color: black !important;
+    text-transform: lowercase !important;
+}
+
+.story-comment-text {
+    font-family: "Eina", "Arial" !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    color: black !important;
+    text-transform: none !important;
+}
+
+.down-icon-col {
+    left: 20px;
+    position: absolute !important;
+    top: 55px;
+}
+
+.fixed-down-icon-col {
+    left: 20px;
+    position: fixed !important;
+    top: 173px;
+}
+
+.down-arrow-row a {
+    color: rgb(77, 65, 133) !important;
+}
+
+.story-favorites-icon {
+    height: 40px;
+    width: 40px;
+}
+
+.sidebar-story-anon-username {
+    font-family: "Courier New", "Courier" !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: #98999b !important;
+    text-transform: none !important;
 }
