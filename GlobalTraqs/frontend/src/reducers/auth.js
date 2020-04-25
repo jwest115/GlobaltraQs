@@ -267,15 +267,19 @@ export default function (state = initialState, action) {
         userProfile: profilepics,
       };
     case GET_PIN:
-      const userFavoritePinState = state.user.user_upvoted_stories.some(
-        (s) => s.pinId === action.payload.id
-      );
+      let userFavoritePinState = null;
+      let upvoteid = null;
+      if (state.user) {
+        userFavoritePinState = state.user.user_upvoted_stories.some(
+          (s) => s.pinId === action.payload.id
+        );
 
-      const upvoteid = userFavoritePinState
-        ? state.user.user_upvoted_stories.filter(
-            (a) => a.pinId === action.payload.id
-          )[0].id
-        : 0;
+        upvoteid = userFavoritePinState
+          ? state.user.user_upvoted_stories.filter(
+              (a) => a.pinId === action.payload.id
+            )[0].id
+          : 0;
+      }
 
       return {
         ...state,

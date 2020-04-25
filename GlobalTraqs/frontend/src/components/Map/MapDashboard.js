@@ -73,11 +73,9 @@ export default function MapDashboard() {
   const [pinData, setPinData] = useState();
   const history = useHistory();
   useEffect(() => {
+    dispatch(getPins());
     dispatch(getMaxPinDate());
     dispatch(getMinPinDate());
-  }, []);
-  useEffect(() => {
-    dispatch(getPins());
   }, []);
   useEffect(() => {
     if (mapReference != undefined) {
@@ -493,7 +491,7 @@ function IndividualStory(props) {
   const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user, favoritedPin } = auth;
   const userid = isAuthenticated ? user.id : false;
-
+  console.log(pin);
   useEffect(() => {
     dispatch(getPin(id, userid));
     props.setuserComment({

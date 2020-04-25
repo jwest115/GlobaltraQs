@@ -6,19 +6,20 @@ import { editUser } from "../../actions/users";
 import IdleTimer from "react-idle-timer";
 import Image from "react-bootstrap/Image";
 import logo from "./images/thearqive_white_color_logos.png";
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 
 function Header() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user } = auth;
-  const [anonymousMode, setAnoynmousMode] = useState(false);
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  useEffect(() => {
-    if (user) {
-      setAnoynmousMode(user.is_anonymous_active);
-    }
-  });
+
   const idleTimer = useRef(null);
   const onIdle = (e) => {
     dispatch(logout());
@@ -26,7 +27,7 @@ function Header() {
   };
 
   const toggleAnonymous = () => {
-    const is_anonymous_active = !anonymousMode;
+    const is_anonymous_active = !user.is_anonymous_active;
 
     const userData = { is_anonymous_active };
     dispatch(editUser(user.id, user.id, userData));
@@ -85,31 +86,42 @@ function Header() {
           onClick={toggleAnonymous}
           className="header-nav-anonymous nav-link btn btn-link btn-lg"
         >
-          {anonymousMode ? <p className="header-nav-anonymous-active nav">Anonymous</p> : <p className="header-nav-anonymous nav">Go Anonymous</p>}
+          {isAuthenticated && user.is_anonymous_active ? (
+            <p className="header-nav-anonymous-active nav">Anonymous</p>
+          ) : (
+            <p className="header-nav-anonymous nav">Go Anonymous</p>
+          )}
         </button>
       </li>
       <li className="nav-item dropdown-nav">
-         <Dropdown className="header-dropdown" outline isOpen={isDropdownOpen} nav={true} toggle={() => setIsDropdownOpen(!isDropdownOpen)}>
-          <DropdownToggle caret className="header-user-dropdown-button header-nav-username">
+        <Dropdown
+          className="header-dropdown"
+          outline
+          isOpen={isDropdownOpen}
+          nav={true}
+          toggle={() => setIsDropdownOpen(!isDropdownOpen)}
+        >
+          <DropdownToggle
+            caret
+            className="header-user-dropdown-button header-nav-username"
+          >
             {user
-              ? `Welcome ${user.is_anonymous_active ? "Anonymous" : user.username}`
+              ? `Welcome ${
+                  user.is_anonymous_active ? "Anonymous" : user.username
+                }`
               : ""}{" "}
             {userRole}{" "}
-            </DropdownToggle>
+          </DropdownToggle>
           <DropdownMenu className="header-user-dropdown-menu">
             <DropdownItem>
-               <Link
-                  to={user ? `/users/${actual_username}` : " "}
-                  className="nav-link header-dropdown-nav-item"
-                >
-                  Profile
-                </Link>
+              <Link
+                to={user ? `/users/${actual_username}` : " "}
+                className="nav-link header-dropdown-nav-item"
+              >
+                Profile
+              </Link>
             </DropdownItem>
-             {adminManager ? (
-              <DropdownItem>
-                {adminManager}
-              </DropdownItem>
-            ) : "" }
+            {adminManager ? <DropdownItem>{adminManager}</DropdownItem> : ""}
             <DropdownItem>
               <li className="nav-item">
                 <button
@@ -169,28 +181,43 @@ function Header() {
       <div className="collapse navbar-collapse" id="navbarColor01">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to="/faq" className="nav-link header-nav-link faq-header-nav-link">
-              Faq{" "}
+            <Link
+              to="/faq"
+              className="nav-link header-nav-link faq-header-nav-link"
+            >
+              Faq
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/About" className="nav-link header-nav-link about-us-header-nav-link">
-              About Us{" "}
+            <Link
+              to="/About"
+              className="nav-link header-nav-link about-us-header-nav-link"
+            >
+              About Us
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/support" className="nav-link header-nav-link support-us-nav-link">
-              Support Us{" "}
+            <Link
+              to="/support"
+              className="nav-link header-nav-link support-us-nav-link"
+            >
+              Support Us
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/resources" className="nav-link header-nav-link resources-nav-link">
-              Resources{" "}
+            <Link
+              to="/resources"
+              className="nav-link header-nav-link resources-nav-link"
+            >
+              Resources
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/ContactUs" className="nav-link header-nav-link contact-us-nav-link">
-              Contact Us{" "}
+            <Link
+              to="/ContactUs"
+              className="nav-link header-nav-link contact-us-nav-link"
+            >
+              Contact Us
             </Link>
           </li>
         </ul>
