@@ -320,12 +320,12 @@ b, strong {
 }
 
 .header-nav-link {
-    color: #98999b !important;
+    color: white !important;
     font-family: Eina, Arial;
     font-size: 1rem;
 }
 .header-nav-link:hover {
-    color: #98999b !important;
+    color: white !important;
 }
 
 .header-nav-username {
@@ -340,7 +340,7 @@ b, strong {
 }
 
 .header-nav-anonymous {
-    color: #98999b !important;
+    color: white !important;
     text-transform: lowercase !important;
     font-family: Eina, Arial;
     font-size: 1rem;
@@ -348,10 +348,18 @@ b, strong {
 }
 
 .header-nav-anonymous-active {
+    color: #00ce7d !important;
+    font-family: Eina, Arial;
+    font-size: 1rem;
+    text-transform: lowercase !important;
+    font-weight: 600;
+}
+
+.header-nav-anonymous-not-active {
     color: #e63f52 !important;
     font-family: Eina, Arial;
     font-size: 1rem;
-    text-transform: uppercase !important;
+    text-transform: lowercase !important;
     font-weight: 600;
 }
 
@@ -511,6 +519,14 @@ button {
     text-align: center;
 }
 
+.contactUs-header-active {
+    color: #248dc1 !important;
+}
+
+.supportUs-header-active {
+    color: #e01783 !important;
+}
+
 .support-us-nav-link:hover {
     color: #e01783 !important;
 }
@@ -610,6 +626,26 @@ button {
     height: 40px;
     margin-top: 40px;
     margin-right: 40px;
+}
+
+.faq-header-active {
+    color: #F0DC7D !important;
+}
+
+.faq-nav-link:hover, .faq-nav-link:focus {
+    color: #F0DC7D !important;
+}
+
+.about-us-header-active {
+    color: rgb(77, 65, 133) !important;
+}
+
+.about-us-nav-link:hover, .about-us-nav-link:focus {
+    color: rgb(77, 65, 133) !important;
+}
+
+.resources-header-active {
+    color: #00ce7d !important;
 }
 
 .resources-nav-link:hover, .resources-nav-link:focus {

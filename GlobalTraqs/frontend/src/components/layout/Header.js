@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { logout } from "../../actions/auth";
 import { useSelector, useDispatch, useStore } from "react-redux";
 import { editUser } from "../../actions/users";
@@ -14,11 +14,72 @@ function Header() {
   const { isAuthenticated, user } = auth;
   const [anonymousMode, setAnoynmousMode] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [activePages, setActivePages] = useState({
+    faq: false,
+    aboutUs: false,
+    supportUs: false,
+    resources: false,
+    contactUs: false
+  });
+
+
+  let location = useLocation();
   useEffect(() => {
     if (user) {
       setAnoynmousMode(user.is_anonymous_active);
     }
   });
+  useEffect(() => {
+    const currentPage = location.pathname;
+    if(currentPage == '/faq') {
+      setActivePages({
+        faq: true,
+        aboutUs: false,
+        supportUs: false,
+        resources: false,
+        contactUs: false
+      });
+    }
+    else if(currentPage == '/About') {
+        setActivePages({
+        faq: false,
+        aboutUs: true,
+        supportUs: false,
+        resources: false,
+        contactUs: false
+        });
+    }
+    else if(currentPage == '/support') {
+       setActivePages({
+        faq: false,
+        aboutUs: false,
+        supportUs: true,
+        resources: false,
+        contactUs: false });
+    }
+    else if(currentPage == '/resources') {
+       setActivePages({
+        faq: false,
+        aboutUs: false,
+        supportUs: false,
+        resources: true,
+        contactUs: false
+       });
+    }
+    else if(currentPage == '/ContactUs') {
+      setActivePages({
+        faq: false,
+        aboutUs: false,
+        supportUs: false,
+        resources: false,
+        contactUs: true
+      });
+    }
+    else {
+      setActivePages({faq: false, aboutUs: false, supportUs: false, resources: false, contactUs: false });
+    }
+  }, [location.pathname]);
+
   const idleTimer = useRef(null);
   const onIdle = (e) => {
     dispatch(logout());
@@ -85,7 +146,7 @@ function Header() {
           onClick={toggleAnonymous}
           className="header-nav-anonymous nav-link btn btn-link btn-lg"
         >
-          {anonymousMode ? <p className="header-nav-anonymous-active nav">Anonymous</p> : <p className="header-nav-anonymous nav">Go Anonymous</p>}
+          <p className={"header-nav-anonymous nav"}>ANON:<span className={anonymousMode ? "header-nav-anonymous-active nav" : "header-nav-anonymous nav"}>&nbsp;&nbsp;yes </span>&nbsp;&nbsp;|&nbsp;&nbsp;<span className={anonymousMode ? "header-nav-anonymous nav" : "header-nav-anonymous-not-active nav"}> no </span></p>
         </button>
       </li>
       <li className="nav-item dropdown-nav">
@@ -169,27 +230,27 @@ function Header() {
       <div className="collapse navbar-collapse" id="navbarColor01">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to="/faq" className="nav-link header-nav-link faq-header-nav-link">
+            <Link to="/faq" className={activePages["faq"] ? "faq-header-active nav-link header-nav-link faq-header-nav-link" : "nav-link header-nav-link faq-header-nav-link"}>
               Faq{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/About" className="nav-link header-nav-link about-us-header-nav-link">
+            <Link to="/About" className={activePages["aboutUs"] ? "about-us-header-active nav-link header-nav-link about-us-header-nav-link" : "nav-link header-nav-link about-us-header-nav-link"}>
               About Us{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/support" className="nav-link header-nav-link support-us-nav-link">
+            <Link to="/support" className={activePages["support"] ? "support-header-active nav-link header-nav-link support-us-nav-link" : "nav-link header-nav-link support-us-nav-link"}>
               Support Us{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/resources" className="nav-link header-nav-link resources-nav-link">
+            <Link to="/resources" className={activePages["resources"] ? "resources-header-active nav-link header-nav-link resources-nav-link" : "nav-link header-nav-link resources-nav-link"}>
               Resources{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/ContactUs" className="nav-link header-nav-link contact-us-nav-link">
+            <Link to="/ContactUs" className={activePages["contactUs"] ? "contactUs-header-active nav-link header-nav-link contact-us-nav-link" : "nav-link header-nav-link contact-us-nav-link"}>
               Contact Us{" "}
             </Link>
           </li>
