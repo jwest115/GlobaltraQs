@@ -129,7 +129,8 @@ function StorySidebar(props) {
                 </div>
                 {/* show edit/ delete button for story owners and admins/moderators */}
                 {isAuthenticated &&
-                  (user.is_administrator || user.id === ownerid) && (
+                  (user.is_administrator ||
+                    user.id === props.pinData.owner) && (
                     <div>
                       <div className="admin-moderator-edit">
                         <button

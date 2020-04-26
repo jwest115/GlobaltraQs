@@ -333,10 +333,17 @@ export default function (state = initialState, action) {
           (x) => x.id !== action.payload
         ),
       };
-      console.log(afavoritedUserStories);
+      const currentUserUnFav = {
+        ...state.user,
+        user_upvoted_stories: state.user.user_upvoted_stories.filter(
+          (a) => a.id !== action.payload
+        ),
+      };
+
       return {
         ...state,
         userProfile: afavoritedUserStories,
+        user: currentUserUnFav,
       };
     default:
       return state;
