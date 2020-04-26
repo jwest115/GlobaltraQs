@@ -33,7 +33,7 @@ function StorySidebar(props) {
           <div style={{ padding: "5px 5px 5px 5px" }}>
             <IconButton
               onClick={() => props.setStorySidebarOpen(false)}
-              style={{ float: "right" }}
+              style={{ float: "right", zIndex: "5" }}
               aria-label="close"
             >
               <CloseIcon color="disabled"></CloseIcon>

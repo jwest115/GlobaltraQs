@@ -121,8 +121,7 @@ export default function ProfilePage(props) {
       {props.userProfile ? (
         <Row style={{ height: "100%", marginRight: "0px", marginLeft: "0px" }}>
           <Col md={8} style={{ paddingTop: "20px", paddingRight: "20px" }}>
-            {(isAuthenticated && user.is_administrator) ||
-              (isAuthenticated && user.id === props.userProfile.id && (
+            {(((isAuthenticated && (user.id == props.userProfile.id)) || (isAuthenticated && user.is_administrator))) && (
                 <Link to={`/users/${props.userProfile.username}/settings`}>
                   <button
                     type="button"
@@ -132,7 +131,7 @@ export default function ProfilePage(props) {
                     Settings
                   </button>
                 </Link>
-              ))}
+              )}
             <UserProfileBio
               ownerid={props.userProfile.id}
               userProfile={props.userProfile}
