@@ -70,30 +70,17 @@ export default function MapDashboard() {
   });
 
   const pins = useSelector((state) => state.pins.pins);
-
   const dispatch = useDispatch();
-  const [userRoleVerified, setUserRoleVerified] = useState(false);
   const [pinData, setPinData] = useState();
   const history = useHistory();
   const [mapReference, setMapReference] = useState();
   const [isSearch, setIsSearch] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      if (user.is_administrator || user.is_moderator) {
-        setUserRoleVerified(true);
-      } else {
-        setUserRoleVerified(false);
-      }
-    } else {
-      setUserRoleVerified(false);
-    }
-  });
-  useEffect(() => {
+    dispatch(getPins());
     dispatch(getMaxPinDate());
     dispatch(getMinPinDate());
   }, []);
-
   useEffect(() => {
     console.log("here trying first");
     if (mapReference != undefined) {
@@ -166,6 +153,7 @@ export default function MapDashboard() {
     seteditpinmodalState,
     onEditSubmit,
     updateEditForm,
+    setEditPinState,
   } = useEditPinForm(pinData, setPinData);
   const onDelProfile = () => {
     dispatch(deletePins(removalFav));
@@ -299,9 +287,9 @@ export default function MapDashboard() {
                 setStorySidebarOpen={setStorySidebarOpen}
                 isAuthenticated={isAuthenticated}
                 user={user}
-                userRoleVerified={userRoleVerified}
                 editpinmodalState={editpinmodalState}
                 seteditpinmodalState={seteditpinmodalState}
+                setEditPinState={setEditPinState}
                 pinCluster={pinCluster}
                 setPinCluster={setPinCluster}
                 setSidebarOpen={setSidebarOpen}
@@ -340,7 +328,6 @@ export default function MapDashboard() {
               setdarkMode={setdarkMode}
               mapReference={mapReference}
               setMapReference={setMapReference}
-              userRoleVerified={userRoleVerified}
               user={user}
               isAuthenticated={isAuthenticated}
               storySidebarOpen={storySidebarOpen}
@@ -393,7 +380,6 @@ export default function MapDashboard() {
                 setdarkMode={setdarkMode}
                 mapReference={mapReference}
                 setMapReference={setMapReference}
-                userRoleVerified={userRoleVerified}
                 user={user}
                 isAuthenticated={isAuthenticated}
                 setPinData={setPinData}
@@ -417,10 +403,10 @@ export default function MapDashboard() {
               onDeleteComment={onDeleteComment}
               user={user}
               isAuthenticated={isAuthenticated}
-              userRoleVerified={userRoleVerified}
               editpinmodalState={editpinmodalState}
               seteditpinmodalState={seteditpinmodalState}
               removalToggle={removalToggle}
+              setEditPinState={setEditPinState}
               pinDeleted={pinDeleted}
               setPinDeleted={setPinDeleted}
               editPin={editPinForm}
@@ -508,7 +494,7 @@ function IndividualStory(props) {
   const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user, favoritedPin } = auth;
   const userid = isAuthenticated ? user.id : false;
-
+  console.log(pin);
   useEffect(() => {
     dispatch(getPin(id, userid));
     props.setuserComment({
@@ -525,5 +511,12 @@ function IndividualStory(props) {
     });
   }, [id]);
 
-  return <Story pin={pin} pinData={props.pinData} mapReference={props.mapReference} {...props} />;
+  return (
+    <Story
+      pin={pin}
+      pinData={props.pinData}
+      mapReference={props.mapReference}
+      {...props}
+    />
+  );
 }

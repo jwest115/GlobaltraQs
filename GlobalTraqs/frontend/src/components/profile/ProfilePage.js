@@ -19,7 +19,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Upvote from "../Map/Story/Upvote";
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from "@material-ui/icons/Edit";
 const FavoritePostField = ({
   index,
   title,
@@ -43,24 +43,25 @@ const FavoritePostField = ({
       style={{ height: "auto" }}
     >
       <Card className={"profile-story-card"}>
-          <div
-            className={
-              category == 1
-                ? "search-bar-story-card-trim-personal"
-                : category == 2
-                ? "search-bar-story-card-trim-community"
-                : "search-bar-story-card-trim-historical"
-            }
-          ></div>
-          {isAuthenticated && (user.is_administrator || user.id === ownerid) && (
-                  <button
-                      className={"btn-no-style"}
-                      onClick={() => toggle(id2)}
-                  >
-                    <img className="user-profile-favorite-bookmark-icon" src={"./static/frontend/images/Bookmark_Icon.png"} alt={"favorite this story icon"}/>
-                  </button>
-          )}
-          <Link to={`/story/${id}`}>
+        <div
+          className={
+            category == 1
+              ? "search-bar-story-card-trim-personal"
+              : category == 2
+              ? "search-bar-story-card-trim-community"
+              : "search-bar-story-card-trim-historical"
+          }
+        ></div>
+        {isAuthenticated && (user.is_administrator || user.id === ownerid) && (
+          <button className={"btn-no-style"} onClick={() => toggle(id2)}>
+            <img
+              className="user-profile-favorite-bookmark-icon"
+              src={"./static/frontend/images/Bookmark_Icon.png"}
+              alt={"favorite this story icon"}
+            />
+          </button>
+        )}
+        <Link to={`/story/${id}`}>
           <CardContent
             style={{
               paddingLeft: "40px",
@@ -76,14 +77,23 @@ const FavoritePostField = ({
               {title}
             </Typography>
             <Typography gutterBottom variant="h5" component="h2">
-              <p className="sidebar-story-author">Posted by: <span className="sidebar-story-username">{!isAnon && username ? username : "Anonymous"}</span></p>
+              <p className="sidebar-story-author">
+                Posted by:{" "}
+                <span className="sidebar-story-username">
+                  {!isAnon && username ? username : "Anonymous"}
+                </span>
+              </p>
             </Typography>
-            <Typography variant="body2" className="user-profile-story-description" color="textSecondary">
-             <Markup
-                  content={description.substring(0, 250) + "..."}
-                  blockList={["img"]}
-                  noHtml={true}
-             />
+            <Typography
+              variant="body2"
+              className="user-profile-story-description"
+              color="textSecondary"
+            >
+              <Markup
+                content={description.substring(0, 250) + "..."}
+                blockList={["img"]}
+                noHtml={true}
+              />
             </Typography>
           </CardContent>
         </Link>
@@ -111,17 +121,18 @@ export default function ProfilePage(props) {
       {props.userProfile ? (
         <Row style={{ height: "100%", marginRight: "0px", marginLeft: "0px" }}>
           <Col md={8} style={{ paddingTop: "20px", paddingRight: "20px" }}>
-            {isAuthenticated && user.is_administrator || isAuthenticated && user.id === props.userProfile.id && (
-              <Link to={`/users/${props.userProfile.username}/settings`}>
-                <button
-                  type="button"
-                  style={{ float: "right " }}
-                  className="btn btn-primary btn-sm default-btn-purple"
-                >
-                  Settings
-                </button>
-              </Link>
-            )}
+            {(isAuthenticated && user.is_administrator) ||
+              (isAuthenticated && user.id === props.userProfile.id && (
+                <Link to={`/users/${props.userProfile.username}/settings`}>
+                  <button
+                    type="button"
+                    style={{ float: "right " }}
+                    className="btn btn-primary btn-sm default-btn-purple"
+                  >
+                    Settings
+                  </button>
+                </Link>
+              ))}
             <UserProfileBio
               ownerid={props.userProfile.id}
               userProfile={props.userProfile}
@@ -195,25 +206,28 @@ const UserProfileBio = (props) => {
       <Row>
         <Col md={2} className={"offset-md-1"}>
           <div className={"profile-image-div"}>
-              {props.userProfile.profileurl ? (
-                <img
-                  src={props.userProfile.profileurl}
-                  style={{
-                    borderRadius: "50%",
-                    height: "125px",
-                    width: "125px",
-                    margin: "auto",
-                    display: "block",
-                  }}
-                />
-              ) : (
-                <Avatar size={125} icon="user" />
-              )}
-              {isAuthenticated && user.id === props.ownerid && (
-                  <button className={"edit-profile-pic-button"} onClick={() => props.toggle()}>
-                    <EditIcon></EditIcon>
-                  </button>
-              )}
+            {props.userProfile.profileurl ? (
+              <img
+                src={props.userProfile.profileurl}
+                style={{
+                  borderRadius: "50%",
+                  height: "125px",
+                  width: "125px",
+                  margin: "auto",
+                  display: "block",
+                }}
+              />
+            ) : (
+              <Avatar size={125} icon="user" />
+            )}
+            {isAuthenticated && user.id === props.ownerid && (
+              <button
+                className={"edit-profile-pic-button"}
+                onClick={() => props.toggle()}
+              >
+                <EditIcon></EditIcon>
+              </button>
+            )}
           </div>
         </Col>
         <Col md={7}>
@@ -292,22 +306,22 @@ const StoryField = (props) => {
       <Row style={{ height: "150px" }}>
         <Col md={6} className={"offset-md-2"} style={{ paddingRight: "5px" }}>
           <Card className={"profile-story-card"}>
-              <div
-                className={
-                  category == 1
-                    ? "search-bar-story-card-trim-personal"
-                    : category == 2
-                    ? "search-bar-story-card-trim-community"
-                    : "search-bar-story-card-trim-historical"
-                }
-              ></div>
-              <CardContent
-                style={{
-                  paddingLeft: "40px",
-                  paddingRight: "40px",
-                }}
-              >
-                <Link to={`/story/${id}`}>
+            <div
+              className={
+                category == 1
+                  ? "search-bar-story-card-trim-personal"
+                  : category == 2
+                  ? "search-bar-story-card-trim-community"
+                  : "search-bar-story-card-trim-historical"
+              }
+            ></div>
+            <CardContent
+              style={{
+                paddingLeft: "40px",
+                paddingRight: "40px",
+              }}
+            >
+              <Link to={`/story/${id}`}>
                 <Typography
                   gutterBottom
                   variant="h5"
@@ -316,7 +330,11 @@ const StoryField = (props) => {
                 >
                   {title}
                 </Typography>
-                <Typography variant="body2" className={"user-profile-story-description"} color="textSecondary">
+                <Typography
+                  variant="body2"
+                  className={"user-profile-story-description"}
+                  color="textSecondary"
+                >
                   <Markup
                     content={description.substring(0, 250) + "..."}
                     blockList={["img"]}
@@ -324,19 +342,17 @@ const StoryField = (props) => {
                   />
                 </Typography>
               </Link>
-                {isAuthenticated &&
-                  (user.is_administrator || user.id === props.ownerid) && (
-                    <button
-                      onClick={() =>
-                        props.setEditPinState(startDate, endDate, props.story)
-                      }
-                      type="button"
-                      className="btn btn-primary profile-page-edit-story"
-                    >
-                      edit story
-                    </button>
-                  )}
-              </CardContent>
+              {isAuthenticated &&
+                (user.is_administrator || user.id === props.ownerid) && (
+                  <button
+                    onClick={() => props.setEditPinState(props.story)}
+                    type="button"
+                    className="btn btn-primary profile-page-edit-story"
+                  >
+                    edit story
+                  </button>
+                )}
+            </CardContent>
           </Card>
         </Col>
         {isAuthenticated &&

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { unFavoriteProfile } from "../../../actions/users";
-const useRemovalConfirm = (onConfirmDeletion) => {
+const useRemovalConfirm = (onSubmit) => {
   const [removalModalState, setremovalModalState] = useState(false);
   const [removalFav, setremovalFav] = useState();
   const dispatch = useDispatch();
@@ -15,8 +15,11 @@ const useRemovalConfirm = (onConfirmDeletion) => {
     setremovalModalState(!removalModalState);
   };
   const onDeleteHome = () => {
-    onConfirmDeletion(removalFav);
+    onSubmit(removalFav);
     setremovalModalState(!removalModalState);
+  };
+  const onConfirmDelete = () => {
+    onSubmit();
   };
   return {
     removalModalState,
@@ -24,6 +27,7 @@ const useRemovalConfirm = (onConfirmDeletion) => {
     onRemovalSubmit,
     removalFav,
     onDeleteHome,
+    onConfirmDelete,
   };
 };
 

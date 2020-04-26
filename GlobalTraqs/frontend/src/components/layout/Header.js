@@ -6,77 +6,79 @@ import { editUser } from "../../actions/users";
 import IdleTimer from "react-idle-timer";
 import Image from "react-bootstrap/Image";
 import logo from "./images/thearqive_white_color_logos.png";
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 
 function Header() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user } = auth;
-  const [anonymousMode, setAnoynmousMode] = useState(false);
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activePages, setActivePages] = useState({
     faq: false,
     aboutUs: false,
     supportUs: false,
     resources: false,
-    contactUs: false
+    contactUs: false,
   });
-
 
   let location = useLocation();
-  useEffect(() => {
-    if (user) {
-      setAnoynmousMode(user.is_anonymous_active);
-    }
-  });
+
   useEffect(() => {
     const currentPage = location.pathname;
-    if(currentPage == '/faq') {
+    if (currentPage == "/faq") {
       setActivePages({
         faq: true,
         aboutUs: false,
         supportUs: false,
         resources: false,
-        contactUs: false
+        contactUs: false,
       });
-    }
-    else if(currentPage == '/About') {
-        setActivePages({
+    } else if (currentPage == "/About") {
+      setActivePages({
         faq: false,
         aboutUs: true,
         supportUs: false,
         resources: false,
-        contactUs: false
-        });
-    }
-    else if(currentPage == '/support') {
-       setActivePages({
+        contactUs: false,
+      });
+    } else if (currentPage == "/support") {
+      setActivePages({
         faq: false,
         aboutUs: false,
         supportUs: true,
         resources: false,
-        contactUs: false });
-    }
-    else if(currentPage == '/resources') {
-       setActivePages({
+        contactUs: false,
+      });
+    } else if (currentPage == "/resources") {
+      setActivePages({
         faq: false,
         aboutUs: false,
         supportUs: false,
         resources: true,
-        contactUs: false
-       });
-    }
-    else if(currentPage == '/ContactUs') {
+        contactUs: false,
+      });
+    } else if (currentPage == "/ContactUs") {
       setActivePages({
         faq: false,
         aboutUs: false,
         supportUs: false,
         resources: false,
-        contactUs: true
+        contactUs: true,
       });
-    }
-    else {
-      setActivePages({faq: false, aboutUs: false, supportUs: false, resources: false, contactUs: false });
+    } else {
+      setActivePages({
+        faq: false,
+        aboutUs: false,
+        supportUs: false,
+        resources: false,
+        contactUs: false,
+      });
     }
   }, [location.pathname]);
 
@@ -87,7 +89,7 @@ function Header() {
   };
 
   const toggleAnonymous = () => {
-    const is_anonymous_active = !anonymousMode;
+    const is_anonymous_active = !user.is_anonymous_active;
 
     const userData = { is_anonymous_active };
     dispatch(editUser(user.id, user.id, userData));
@@ -146,31 +148,60 @@ function Header() {
           onClick={toggleAnonymous}
           className="header-nav-anonymous nav-link btn btn-link btn-lg"
         >
-          <p className={"header-nav-anonymous nav"}>ANON:<span className={anonymousMode ? "header-nav-anonymous-active nav" : "header-nav-anonymous nav"}>&nbsp;&nbsp;yes </span>&nbsp;&nbsp;|&nbsp;&nbsp;<span className={anonymousMode ? "header-nav-anonymous nav" : "header-nav-anonymous-not-active nav"}> no </span></p>
+          <p className={"header-nav-anonymous nav"}>
+            ANON:
+            <span
+              className={
+                isAuthenticated && user.is_anonymous_active
+                  ? "header-nav-anonymous-active nav"
+                  : "header-nav-anonymous nav"
+              }
+            >
+              &nbsp;&nbsp;yes{" "}
+            </span>
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <span
+              className={
+                isAuthenticated && user.is_anonymous_active
+                  ? "header-nav-anonymous nav"
+                  : "header-nav-anonymous-not-active nav"
+              }
+            >
+              {" "}
+              no{" "}
+            </span>
+          </p>
         </button>
       </li>
       <li className="nav-item dropdown-nav">
-         <Dropdown className="header-dropdown" outline isOpen={isDropdownOpen} nav={true} toggle={() => setIsDropdownOpen(!isDropdownOpen)}>
-          <DropdownToggle caret className="header-user-dropdown-button header-nav-username">
+        <Dropdown
+          className="header-dropdown"
+          outline
+          isOpen={isDropdownOpen}
+          nav={true}
+          toggle={() => setIsDropdownOpen(!isDropdownOpen)}
+        >
+          <DropdownToggle
+            caret
+            className="header-user-dropdown-button header-nav-username"
+          >
             {user
-              ? `Welcome ${user.is_anonymous_active ? "Anonymous" : user.username}`
+              ? `Welcome ${
+                  user.is_anonymous_active ? "Anonymous" : user.username
+                }`
               : ""}{" "}
             {userRole}{" "}
-            </DropdownToggle>
+          </DropdownToggle>
           <DropdownMenu className="header-user-dropdown-menu">
             <DropdownItem>
-               <Link
-                  to={user ? `/users/${actual_username}` : " "}
-                  className="nav-link header-dropdown-nav-item"
-                >
-                  Profile
-                </Link>
+              <Link
+                to={user ? `/users/${actual_username}` : " "}
+                className="nav-link header-dropdown-nav-item"
+              >
+                Profile
+              </Link>
             </DropdownItem>
-             {adminManager ? (
-              <DropdownItem>
-                {adminManager}
-              </DropdownItem>
-            ) : "" }
+            {adminManager ? <DropdownItem>{adminManager}</DropdownItem> : ""}
             <DropdownItem>
               <li className="nav-item">
                 <button
@@ -230,27 +261,62 @@ function Header() {
       <div className="collapse navbar-collapse" id="navbarColor01">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to="/faq" className={activePages["faq"] ? "faq-header-active nav-link header-nav-link faq-header-nav-link" : "nav-link header-nav-link faq-header-nav-link"}>
+            <Link
+              to="/faq"
+              className={
+                activePages["faq"]
+                  ? "faq-header-active nav-link header-nav-link faq-header-nav-link"
+                  : "nav-link header-nav-link faq-header-nav-link"
+              }
+            >
               Faq{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/About" className={activePages["aboutUs"] ? "about-us-header-active nav-link header-nav-link about-us-header-nav-link" : "nav-link header-nav-link about-us-header-nav-link"}>
+            <Link
+              to="/About"
+              className={
+                activePages["aboutUs"]
+                  ? "about-us-header-active nav-link header-nav-link about-us-header-nav-link"
+                  : "nav-link header-nav-link about-us-header-nav-link"
+              }
+            >
               About Us{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/support" className={activePages["supportUs"] ? "support-us-header-active nav-link header-nav-link support-us-nav-link" : "nav-link header-nav-link support-us-nav-link"}>
+            <Link
+              to="/support"
+              className={
+                activePages["supportUs"]
+                  ? "support-us-header-active nav-link header-nav-link support-us-nav-link"
+                  : "nav-link header-nav-link support-us-nav-link"
+              }
+            >
               Support Us{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/resources" className={activePages["resources"] ? "resources-header-active nav-link header-nav-link resources-nav-link" : "nav-link header-nav-link resources-nav-link"}>
+            <Link
+              to="/resources"
+              className={
+                activePages["resources"]
+                  ? "resources-header-active nav-link header-nav-link resources-nav-link"
+                  : "nav-link header-nav-link resources-nav-link"
+              }
+            >
               Resources{" "}
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/ContactUs" className={activePages["contactUs"] ? "contactUs-header-active nav-link header-nav-link contact-us-nav-link" : "nav-link header-nav-link contact-us-nav-link"}>
+            <Link
+              to="/ContactUs"
+              className={
+                activePages["contactUs"]
+                  ? "contactUs-header-active nav-link header-nav-link contact-us-nav-link"
+                  : "nav-link header-nav-link contact-us-nav-link"
+              }
+            >
               Contact Us{" "}
             </Link>
           </li>

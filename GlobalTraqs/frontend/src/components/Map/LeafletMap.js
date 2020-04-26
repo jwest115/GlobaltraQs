@@ -163,10 +163,6 @@ const LeafletMap = (props) => {
     }
   }, [mapInstance]);
 
-  useEffect(() => {
-    props.setMapContainerStyle({ height: "100%" });
-  }, []);
-
   return (
     <div className="map-container" style={props.mapContainerStyle}>
       {props.setPinDeleted ? props.setPinDeleted(false) : ""}{" "}

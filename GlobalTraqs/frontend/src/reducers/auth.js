@@ -267,16 +267,19 @@ export default function (state = initialState, action) {
         userProfile: profilepics,
       };
     case GET_PIN:
-      const userFavoritePinState = state.user
-        ? state.user.user_upvoted_stories.some(
-            (s) => s.pinId === action.payload.id
-          )
-        : false;
-      const upvoteid = userFavoritePinState
-        ? state.user.user_upvoted_stories.filter(
-            (a) => a.pinId === action.payload.id
-          )[0].id
-        : 0;
+      let userFavoritePinState = null;
+      let upvoteid = null;
+      if (state.user) {
+        userFavoritePinState = state.user.user_upvoted_stories.some(
+          (s) => s.pinId === action.payload.id
+        );
+
+        upvoteid = userFavoritePinState
+          ? state.user.user_upvoted_stories.filter(
+              (a) => a.pinId === action.payload.id
+            )[0].id
+          : 0;
+      }
 
       return {
         ...state,
@@ -284,8 +287,16 @@ export default function (state = initialState, action) {
         upvoteid: upvoteid,
       };
     case USER_FIRST_UPVOTE:
+      const userFirstupvoteadd = {
+        ...state.user,
+        user_upvoted_stories: [
+          ...state.user.user_upvoted_stories,
+          action.payload,
+        ],
+      };
       return {
         ...state,
+        user: userFirstupvoteadd,
         favoritedPin: true,
         upvoteid: action.payload.id,
       };
@@ -302,17 +313,18 @@ export default function (state = initialState, action) {
           (x) => x.id !== action.payload.id
         ),
       };
-      const profileDel = {
-        ...state.userProfile,
-        user_upvoted_stories: state.userProfile.user_upvoted_stories.filter(
-          (x) => x.id !== action.payload.id
-        ),
-      };
+      // const profileDel = {
+      //   ...state.userProfile,
+      //   user_upvoted_stories: state.userProfile.user_upvoted_stories.filter(
+      //     (x) => x.id !== action.payload.id
+      //   ),
+      // };
       return {
         ...state,
         favoritedPin: false,
         user: favoritedUserStories,
-        userProfile: profileDel,
+        upvoteid: null,
+        // userProfile: profileDel,
       };
     case UNFAVORITE_PROFILE_STORY:
       const afavoritedUserStories = {

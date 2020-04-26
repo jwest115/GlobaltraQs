@@ -17,7 +17,9 @@ function Upvote(props) {
           : dispatch(userFirstUpvote(props.id, user.id))
       }
     >
-      {favoritedPin ? "./static/frontend/images/Bookmark_Icon.png" : "./static/frontend/images/Bookmark_Outline_Icon.png"}
+      {favoritedPin
+        ? "./static/frontend/images/Bookmark_Icon.png"
+        : "./static/frontend/images/Bookmark_Outline_Icon.png"}
     </FavoriteButton>
   );
 }
@@ -27,7 +29,11 @@ export default Upvote;
 const FavoriteButton = ({ children, onClick }) => {
   return (
     <button className="favorite-story-btn" onClick={onClick}>
-        <img className="story-favorites-icon" src={children} alt={"favorite this story icon"}/>
+      <img
+        className="story-favorites-icon"
+        src={children}
+        alt={"favorite this story icon"}
+      />
     </button>
   );
 };
