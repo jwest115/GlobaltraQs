@@ -344,6 +344,8 @@ export default function (state = initialState, action) {
         ...state,
         userProfile: afavoritedUserStories,
         user: currentUserUnFav,
+        favoritedPin: false,
+        upvoteid: null,
       };
     default:
       return state;
