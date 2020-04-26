@@ -14,6 +14,9 @@ import ConfirmationModal from "./ConfirmationModal";
 export default function ProfileDashboard() {
   const auth = useSelector((state) => state.auth);
   const [pinData, setPinData] = useState(""); //dont mind this
+  const onRequestedFunction = () => {
+    setPinData("");
+  };
   const {
     editToggle,
     editPinForm,

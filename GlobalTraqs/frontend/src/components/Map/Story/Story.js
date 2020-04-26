@@ -114,6 +114,7 @@ function Story(props) {
             <Link
               style={{ textDecoration: "inherit" }}
               to={`/users/${props.pin.username}`}
+     
             >
                 <p className="sidebar-story-author">Posted by: <span className="sidebar-story-username">{props.pin.username}</span></p>
             </Link>
@@ -132,9 +133,7 @@ function Story(props) {
                 type="button"
                 style={{ float: "right" }}
                 className="btn btn-primary btn-sm default-btn-purple"
-                onClick={(e) =>
-                  props.setDeleteConfirmation(!props.deleteConfirmation)
-                }
+                        onClick={() => props.removalToggle(props.pin.id)}
               >
                 Delete
               </button>

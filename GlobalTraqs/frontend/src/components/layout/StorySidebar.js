@@ -67,7 +67,11 @@ function StorySidebar(props) {
                             >
                               {story.options.data.title}
                             </Typography>
-                            <Typography variant="body2" color="textSecondary" className="sidebar-story-description">
+                            <Typography
+                              variant="body2"
+                              color="textSecondary"
+                              className="sidebar-story-description"
+                            >
                               <Markup
                                 content={story.options.data.description}
                               />
@@ -81,74 +85,104 @@ function StorySidebar(props) {
               </div>
             ) : //   not a pin cluster - show the individual story data
             props.pinData ? (
-              <div className={"sidebar-story-div"} >
+              <div className={"sidebar-story-div"}>
                 <h1 className="sidebar-story-title">{props.pinData.title}</h1>
                 <h5>
                   {props.pinData.is_anonymous_pin ? (
-                      <p style={{ marginBottom: "5" }} className="sidebar-story-author">Posted by: <span className="sidebar-story-username">Anonymous</span></p>
+                    <p
+                      style={{ marginBottom: "5" }}
+                      className="sidebar-story-author"
+                    >
+                      Posted by:{" "}
+                      <span className="sidebar-story-username">Anonymous</span>
+                    </p>
                   ) : (
-                    <p style={{ marginBottom: "5" }} className="sidebar-story-author">Posted by:
+                    <p
+                      style={{ marginBottom: "5" }}
+                      className="sidebar-story-author"
+                    >
+                      Posted by:
                       <Link
-                      style={{ textDecoration: "inherit" }}
-                      to={`/users/${props.pinData.username}`}
-                    ><span className="sidebar-story-username">{props.pinData.username}</span>
-                    </Link>
+                        style={{ textDecoration: "inherit" }}
+                        to={`/users/${props.pinData.username}`}
+                      >
+                        <span className="sidebar-story-username">
+                          {props.pinData.username}
+                        </span>
+                      </Link>
                     </p>
                   )}
                 </h5>
-                <div className={"story-page-dates"} style={{ marginBottom: "20px" }}>
-                {props.pinData.startDate ? (
-                  <Moment format="MM/DD/YYYY">{props.pinData.startDate}</Moment>
-                ) : (
-                  "No Start Date"
-                )}{" "}
-                -{" "}
-                {props.pinData.endDate ? (
-                  <Moment format="MM/DD/YYYY">{props.pinData.endDate}</Moment>
-                ) : (
-                  "No End Date"
-                )}{" "}
+                <div
+                  className={"story-page-dates"}
+                  style={{ marginBottom: "20px" }}
+                >
+                  {props.pinData.startDate ? (
+                    <Moment format="MM/DD/YYYY">
+                      {props.pinData.startDate}
+                    </Moment>
+                  ) : (
+                    "No Start Date"
+                  )}{" "}
+                  -{" "}
+                  {props.pinData.endDate ? (
+                    <Moment format="MM/DD/YYYY">{props.pinData.endDate}</Moment>
+                  ) : (
+                    "No End Date"
+                  )}{" "}
                 </div>
                 <div className="sidebar-story-description">
-                <Markup content={props.pinData.description} />
+                  <Markup content={props.pinData.description} />
                 </div>
                 {/* show edit/ delete button for story owners and admins/moderators */}
                 {canManagePin ? (
-                     <div>
-                      <div className="admin-moderator-edit">
-                        <button
-                          type="button"
-                          className="btn btn-primary btn-sm default-btn-purple"
-                          style={{ position: "absolute", bottom: "50", right: "80" }}
-                          onClick={(e) =>
-                            props.seteditpinmodalState(!props.editpinmodalState)
-                          }
-                        >
-                          Edit
-                        </button>
-                        <button
+                  <div>
+                    <div className="admin-moderator-edit">
+                      <button
                         type="button"
-                        style={{ position: "absolute", bottom: "50", right: "0" }}
                         className="btn btn-primary btn-sm default-btn-purple"
+                        style={{
+                          position: "absolute",
+                          bottom: "50",
+                          right: "80",
+                        }}
                         onClick={(e) =>
-                          props.setDeleteConfirmation(!props.deleteConfirmation)
+                          props.seteditpinmodalState(!props.editpinmodalState)
                         }
+                      >
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        style={{
+                          position: "absolute",
+                          bottom: "50",
+                          right: "0",
+                        }}
+                        className="btn btn-primary btn-sm default-btn-purple"
+                        onClick={(e) => props.removalToggle(props.pinData.id)}
                       >
                         Delete
                       </button>
-                      </div>
                     </div>
-                ) : ""}
-                 <div>
-                 <Link
+                  </div>
+                ) : (
+                  ""
+                )}
+                <div>
+                  <Link
                     to={`${props.maplink}/${props.pinData.id}`}
                     onClick={() => props.centerMarker(props.pinData)}
                   >
-                    <button type="button" style={{position: "absolute", bottom: "50"}} className="btn btn-primary btn-sm default-btn-purple">
+                    <button
+                      type="button"
+                      style={{ position: "absolute", bottom: "50" }}
+                      className="btn btn-primary btn-sm default-btn-purple"
+                    >
                       View Full Story
                     </button>
                   </Link>
-              </div>
+                </div>
               </div>
             ) : null}
           </div>
