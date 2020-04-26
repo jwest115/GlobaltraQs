@@ -77,12 +77,17 @@ export default function MapDashboard() {
   const [isSearch, setIsSearch] = useState(false);
 
   useEffect(() => {
+    if(mapReference) {
+      mapReference.__proto__.invalidateSize();
+    }
+  }, [mapContainerStyle]);
+
+  useEffect(() => {
     dispatch(getPins());
     dispatch(getMaxPinDate());
     dispatch(getMinPinDate());
   }, []);
   useEffect(() => {
-    console.log("here trying first");
     if (mapReference != undefined) {
       let mapBounds = mapReference.getBounds();
       let south = mapBounds.getSouth();
@@ -94,10 +99,7 @@ export default function MapDashboard() {
   }, [mapReference]);
 
   useEffect(() => {
-    console.log("in use effect");
-    console.log("is search " + isSearch);
     if (mapReference != undefined && !isSearch) {
-      console.log("here");
       // dispatch(getPins());
       mapReference.once("moveend", function () {
         let mapBounds = mapReference.getBounds();
@@ -116,11 +118,11 @@ export default function MapDashboard() {
 
   const centerMarker = (marker) => {
     if (mapReference) {
-      mapReference.panTo([marker.latitude, marker.longitude]);
+      mapReference.panTo([Number(marker.latitude), Number(marker.longitude)]);
       setplacement({
         id: marker.id,
-        userlat: marker.latitude,
-        userlng: marker.longitude,
+        userlat: Number(marker.latitude),
+        userlng: Number(marker.longitude),
         zoom: mapReference.getZoom(),
       });
     }
@@ -494,7 +496,6 @@ function IndividualStory(props) {
   const auth = useSelector((state) => state.auth);
   const { isAuthenticated, user, favoritedPin } = auth;
   const userid = isAuthenticated ? user.id : false;
-  console.log(pin);
   useEffect(() => {
     dispatch(getPin(id, userid));
     props.setuserComment({
@@ -515,6 +516,7 @@ function IndividualStory(props) {
     <Story
       pin={pin}
       pinData={props.pinData}
+      centerMarker={props.centerMarker}
       mapReference={props.mapReference}
       {...props}
     />

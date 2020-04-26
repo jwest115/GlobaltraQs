@@ -30,6 +30,12 @@ function Story(props) {
   const { isAuthenticated, user, userFavoritePinState } = auth;
   const [fixedArrow, setFixedArrow] = useState(false);
 
+  useEffect(() => {
+     if(props.pin.id && props.mapReference) {
+       props.centerMarker(props.pin);
+     }
+  },[props.pin] );
+
   const upvoteButoon = (
     <Link className="login-link favorite-story-btn" to="/login">
       <img
