@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import CloseIcon from "@material-ui/icons/Close";
 import Sidebar from "react-sidebar";
 import { IconButton } from "@material-ui/core";
-import { searchPins } from "../../actions/pins";
+import {getPinsWithBounds, searchPins} from "../../actions/pins";
 import { getPins } from "../../actions/pins";
 import { Link } from "react-router-dom";
 import Card from "@material-ui/core/Card";
@@ -76,9 +76,9 @@ function SearchSidebar(props) {
     setMaxDate(props.maxPinDate.getFullYear());
   }, [props.maxPinDate]);
 
-  useEffect(() => {
-    dispatch(getPins());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getPins());
+  // }, []);
 
   useEffect(() => {
     dispatch(searchUsers(""));
@@ -124,6 +124,7 @@ function SearchSidebar(props) {
     // console.log(categorySearchQuery);
     // console.log("is the query");
     dispatch(searchPins(searchText, categorySearchQuery, start, end));
+    props.setIsSearch(true);
   };
   const submitUserSearch = (e) => {
     e.preventDefault(); //prevents refresh of page
@@ -146,7 +147,14 @@ function SearchSidebar(props) {
       props.maxPinDate.getFullYear(),
     ]);
     setSearchText("");
-    dispatch(getPins());
+    let mapBounds = props.mapReference.getBounds();
+    let south = mapBounds.getSouth();
+    let west = mapBounds.getWest();
+    let north = mapBounds.getNorth();
+    let east = mapBounds.getEast();
+    dispatch(getPinsWithBounds(north, south, east, west));
+    props.setIsSearch(false);
+    // dispatch(getPins());
   };
 
 const colorStyles = {

@@ -74,6 +74,9 @@ export default function MapDashboard() {
   const [userRoleVerified, setUserRoleVerified] = useState(false);
   const [pinData, setPinData] = useState();
   const history = useHistory();
+  const [mapReference, setMapReference] = useState();
+  const [isSearch, setIsSearch] = useState(false);
+
   useEffect(() => {
     if (isAuthenticated) {
       if (user.is_administrator || user.is_moderator) {
@@ -91,7 +94,22 @@ export default function MapDashboard() {
   }, []);
 
   useEffect(() => {
+    console.log("here trying first");
     if (mapReference != undefined) {
+      let mapBounds = mapReference.getBounds();
+      let south = mapBounds.getSouth();
+      let west = mapBounds.getWest();
+      let north = mapBounds.getNorth();
+      let east = mapBounds.getEast();
+      dispatch(getPinsWithBounds(north, south, east, west));
+    }
+  }, [mapReference]);
+
+  useEffect(() => {
+    console.log("in use effect");
+    console.log("is search " + isSearch);
+    if (mapReference != undefined && !isSearch) {
+      console.log("here");
       // dispatch(getPins());
       mapReference.once("moveend", function () {
         let mapBounds = mapReference.getBounds();
@@ -102,7 +120,7 @@ export default function MapDashboard() {
         dispatch(getPinsWithBounds(north, south, east, west));
       });
     }
-  }, []);
+  }, [pins]);
 
   useEffect(() => {
     getLocation();
@@ -160,7 +178,6 @@ export default function MapDashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [storySidebarOpen, setStorySidebarOpen] = useState(false);
   const [showSidebarButton, setShowSidebarButton] = useState(false);
-  const [mapReference, setMapReference] = useState();
   const [map, setMap] = useState();
   const [addAddress, setAddAddress] = useState(false);
   const minPinDate = useSelector((state) => state.pins.pinMinDate);
@@ -276,6 +293,8 @@ export default function MapDashboard() {
                 mapReference={mapReference}
                 setPlacement={setplacement}
                 centerMarker={centerMarker}
+                isSearch={isSearch}
+                setIsSearch={setIsSearch}
               />
               <StorySidebar
                 maplink={"/story"}

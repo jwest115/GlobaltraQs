@@ -23,7 +23,7 @@ export const defaultPointerIcon = new L.Icon({
   iconRetinaUrl: default_marker,
   iconAnchor: [28, 61],
   popupAnchor: [10, -44],
-  iconSize: [55, 55],
+  iconSize: [45, 45],
   shadowSize: [68, 95],
   shadowAnchor: [20, 92],
 });
@@ -33,7 +33,7 @@ export const communityIcon = new L.Icon({
   iconRetinaUrl: community,
   iconAnchor: [28, 61],
   popupAnchor: [10, -44],
-  iconSize: [55, 55],
+  iconSize: [45, 45],
   shadowSize: [68, 95],
   shadowAnchor: [20, 92],
 });
@@ -43,7 +43,7 @@ export const historicalIcon = new L.Icon({
   iconRetinaUrl: historical,
   iconAnchor: [28, 61],
   popupAnchor: [10, -44],
-  iconSize: [55, 55],
+  iconSize: [45, 45],
   shadowSize: [68, 95],
   shadowAnchor: [20, 92],
 });
@@ -53,7 +53,7 @@ export const personalIcon = new L.Icon({
   iconRetinaUrl: personal,
   iconAnchor: [28, 61],
   popupAnchor: [10, -44],
-  iconSize: [55, 55],
+  iconSize: [45, 45],
   shadowSize: [68, 95],
   shadowAnchor: [20, 92],
 });
@@ -180,6 +180,7 @@ const LeafletMap = (props) => {
         }
         maxZoom={18} //shows map
         minZoom={3}
+        preferCanvas={true}
         worldCopyJump={true}
         id="map"
         zoomControl={false}
@@ -247,7 +248,7 @@ const LeafletMap = (props) => {
           //set to false for marker cluster
           // spiderfyOnMaxZoom={false}
           spiderfyOnMaxZoom={true}
-          maxClusterRadius={40}
+          maxClusterRadius={20}
           // commenting out marker clustering - needs to be refactored
           // onClusterClick={(e) => {
           //
