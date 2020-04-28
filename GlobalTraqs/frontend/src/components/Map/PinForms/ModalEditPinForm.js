@@ -24,11 +24,25 @@ const labelStyle = {
 function ModalEditPinForm(props) {
   const validateEditForm = (e) => {
     e.preventDefault();
-    console.log("validating edit pin...");
+    // console.log("validating edit pin...");
     if (props.userForm.title && props.userForm.description) {
       props.onSubmit();
     }
   };
+  const {
+    address,
+    locality,
+    country,
+    postCode,
+    region,
+    category,
+    title,
+    description,
+    startDate,
+    endDate,
+  } = props.userForm;
+  const { updateEditForm } = props;
+
   return (
     <>
       {" "}
@@ -42,6 +56,40 @@ function ModalEditPinForm(props) {
         <ModalHeader toggle={props.toggle}> Add a story </ModalHeader>
         <ModalBody>
           <Form onSubmit={validateEditForm} noValidate={true}>
+            {address && (
+              <>
+                <InputField
+                  label="address"
+                  title="Address"
+                  value={address}
+                  onChange={updateEditForm}
+                />
+                <InputField
+                  label="locality"
+                  title="Locality"
+                  value={locality}
+                  onChange={updateEditForm}
+                />
+                <InputField
+                  label="region"
+                  title="Region"
+                  value={region}
+                  onChange={updateEditForm}
+                />
+                <InputField
+                  label="country"
+                  title="Country"
+                  value={country}
+                  onChange={updateEditForm}
+                />
+                <InputField
+                  label="postCode"
+                  title="postCode"
+                  value={postCode}
+                  onChange={updateEditForm}
+                />{" "}
+              </>
+            )}
             <FormGroup>
               <Label style={labelStyle} for="category">
                 Category
@@ -144,3 +192,18 @@ function ModalEditPinForm(props) {
 }
 
 export default ModalEditPinForm;
+
+const InputField = ({ label, title, value, onChange }) => {
+  return (
+    <FormGroup>
+      <Label for={label}>{title}</Label>
+      <Input
+        className="form-control"
+        type="text"
+        name={label}
+        value={value || ""}
+        onChange={onChange}
+      />
+    </FormGroup>
+  );
+};

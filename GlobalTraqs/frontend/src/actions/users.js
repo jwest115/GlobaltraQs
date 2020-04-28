@@ -24,8 +24,6 @@ export const searchUsers = (username) => (dispatch) => {
         type: SEARCH_USERS,
         payload: res.data,
       });
-      console.log("user search");
-      console.log(res.data);
     })
     .catch((error) => console.log(error.response.data));
 };
@@ -43,7 +41,6 @@ export const getUsers = () => (dispatch) => {
 };
 
 export const editUser = (userId, editorId, user) => (dispatch) => {
-  console.log(user);
   axios
     .patch(`/api/auth/users/${userId}/`, user)
     .then((res) => {
@@ -58,7 +55,6 @@ export const editUser = (userId, editorId, user) => (dispatch) => {
           payload: null,
         });
       }
-      console.log(res.data);
     })
     .catch((err) => console.log(err));
 };
@@ -67,7 +63,6 @@ export const deleteUser = (id) => (dispatch) => {
   axios
     .delete(`/api/auth/users/${id}/`)
     .then((res) => {
-      console.log(res.data);
       dispatch({
         type: DELETE_USER,
         payload: id,
@@ -86,7 +81,6 @@ export const getUser = (id) => (dispatch) => {
       });
     })
     .catch(function (error) {
-      console.log(error.response);
       dispatch({
         type: GET_USER,
         payload: null,
@@ -109,7 +103,6 @@ export const getUserProfile = (username) => (dispatch) => {
             type: GET_USER,
             payload: res.data.results[0],
           });
-      console.log(test);
     })
     .catch(function (error) {
       console.log(error.response);
@@ -142,35 +135,6 @@ export const getNextPreviousUsers = (link) => (dispatch) => {
         type: GET_NEXT_PREVIOUS_USERS,
         payload: res.data,
       });
-    })
-    .catch((error) => console.log(error));
-};
-
-export const getFavoritePosts = (id) => (dispatch) => {
-  axios
-    .get(`/api/upVoteStory/?upVoter=${id}&upvote=true`)
-    .then((res) => {
-      console.log(res.data);
-      let arrayOfIDs = [];
-      for (let i = 0; i < res.data.length; i++) {
-        arrayOfIDs.push(res.data[i].pinId);
-      }
-      console.log(arrayOfIDs);
-      axios
-        .get("/api/pins/")
-        .then((res2) => {
-          console.log(res2.data);
-          console.log("is res 2");
-          let favoritedPins = res2.data.filter((pin) =>
-            arrayOfIDs.includes(pin.id)
-          );
-          console.log(favoritedPins);
-          dispatch({
-            type: GET_USER_FAVORITE_STORIES,
-            payload: favoritedPins,
-          });
-        })
-        .catch((err) => console.log(err));
     })
     .catch((error) => console.log(error));
 };

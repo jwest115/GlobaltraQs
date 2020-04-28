@@ -8,7 +8,6 @@ import default_marker from "./images/default.png";
 import { useRouteMatch, useHistory } from "react-router-dom";
 import Control from "react-leaflet-control";
 import ModalEditPinForm from "./PinForms/ModalEditPinForm";
-import ModalDeleteConfirm from "./PinForms/ModalDeleteConfirm";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from "leaflet";
 import ModalAddPinForm from "./PinForms/ModalAddPinForm";
@@ -23,7 +22,7 @@ export const defaultPointerIcon = new L.Icon({
   iconRetinaUrl: default_marker,
   iconAnchor: [28, 61],
   popupAnchor: [10, -44],
-  iconSize: [55, 55],
+  iconSize: [45, 45],
   shadowSize: [68, 95],
   shadowAnchor: [20, 92],
 });
@@ -33,7 +32,7 @@ export const communityIcon = new L.Icon({
   iconRetinaUrl: community,
   iconAnchor: [28, 61],
   popupAnchor: [10, -44],
-  iconSize: [55, 55],
+  iconSize: [45, 45],
   shadowSize: [68, 95],
   shadowAnchor: [20, 92],
 });
@@ -43,7 +42,7 @@ export const historicalIcon = new L.Icon({
   iconRetinaUrl: historical,
   iconAnchor: [28, 61],
   popupAnchor: [10, -44],
-  iconSize: [55, 55],
+  iconSize: [45, 45],
   shadowSize: [68, 95],
   shadowAnchor: [20, 92],
 });
@@ -53,7 +52,7 @@ export const personalIcon = new L.Icon({
   iconRetinaUrl: personal,
   iconAnchor: [28, 61],
   popupAnchor: [10, -44],
-  iconSize: [55, 55],
+  iconSize: [45, 45],
   shadowSize: [68, 95],
   shadowAnchor: [20, 92],
 });
@@ -164,10 +163,6 @@ const LeafletMap = (props) => {
     }
   }, [mapInstance]);
 
-  useEffect(() => {
-    props.setMapContainerStyle({ height: "100%" });
-  }, []);
-
   return (
     <div className="map-container" style={props.mapContainerStyle}>
       {props.setPinDeleted ? props.setPinDeleted(false) : ""}{" "}
@@ -180,6 +175,7 @@ const LeafletMap = (props) => {
         }
         maxZoom={18} //shows map
         minZoom={3}
+        preferCanvas={true}
         worldCopyJump={true}
         id="map"
         zoomControl={false}
@@ -202,21 +198,22 @@ const LeafletMap = (props) => {
           />
         )}
         <Control position={"topleft"} style={{ left: "0px" }}>
-          <button className={"btn btn-primary add-story-button"}
-                  onClick={() => {
-                    console.log("add address");
-                    props.setAddAddress(true);
+          <button
+            className={"btn btn-primary add-story-button"}
+            onClick={() => {
+              console.log("add address");
+              props.setAddAddress(true);
 
-                    if(mapInstance) {
-                      let center = mapInstance.leafletElement.getCenter();
-                         props.setaddPinValues({
-                          ...props.addPinValues,
-                          latitude: center.lat,
-                          longitude: center.lng,
-                        });
-                    }
-                    props.toggle();
-                  }}
+              if (mapInstance) {
+                let center = mapInstance.leafletElement.getCenter();
+                props.setaddPinValues({
+                  ...props.addPinValues,
+                  latitude: center.lat,
+                  longitude: center.lng,
+                });
+              }
+              props.toggle();
+            }}
           >
             <AddCommentIcon></AddCommentIcon>
           </button>
@@ -237,7 +234,10 @@ const LeafletMap = (props) => {
         ) : null}
         <Control position={"bottomright"}>
           <div>
-            <button onClick={props.getLocation} className="btn btn-primary map-buttons">
+            <button
+              onClick={props.getLocation}
+              className="btn btn-primary map-buttons"
+            >
               <MyLocationIcon></MyLocationIcon>
             </button>
           </div>
@@ -247,7 +247,7 @@ const LeafletMap = (props) => {
           //set to false for marker cluster
           // spiderfyOnMaxZoom={false}
           spiderfyOnMaxZoom={true}
-          maxClusterRadius={40}
+          maxClusterRadius={20}
           // commenting out marker clustering - needs to be refactored
           // onClusterClick={(e) => {
           //
@@ -312,11 +312,6 @@ const LeafletMap = (props) => {
         userForm={props.editPin}
         setuserForm={props.seteditPin}
         updateEditForm={props.updateEditForm}
-      />
-      <ModalDeleteConfirm
-        toggle={props.toggleDelete}
-        modalState={props.deleteConfirmation}
-        onSubmit={props.onDelete}
       />
     </div>
   );

@@ -124,12 +124,16 @@ class PinSearchViewSet(viewsets.ModelViewSet):
 
 
 class MinPinDate(viewsets.ModelViewSet):
-    queryset = pin.objects.all().order_by("startDate")[:1]
+    queryset = pin.objects.exclude(
+        startDate__isnull=True).order_by("startDate")[:1]
+
     serializer_class = PinSerializer
 
 
 class MaxPinDate(viewsets.ModelViewSet):
-    queryset = pin.objects.all().order_by("startDate").reverse()[:1]
+    queryset = pin.objects.exclude(
+        endDate__isnull=True).order_by("endDate").reverse()[:1]
+
     serializer_class = PinSerializer
 
 

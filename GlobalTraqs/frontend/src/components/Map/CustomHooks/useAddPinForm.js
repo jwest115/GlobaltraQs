@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {addPin, getMaxPinDate, getMinPinDate} from "../../../actions/pins";
+import { addPin, getMaxPinDate, getMinPinDate } from "../../../actions/pins";
 
-const useAddPinForm = callback => {
-  const auth = useSelector(state => state.auth);
+const useAddPinForm = (callback) => {
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { isAuthenticated, user } = auth;
   let x = new Date();
@@ -26,10 +26,10 @@ const useAddPinForm = callback => {
     description: "",
     postDate: new Date(),
     lastEditDate: new Date(),
-    lastPersonEdit: isAuthenticated ? user.id : null
+    lastPersonEdit: isAuthenticated ? user.id : null,
   });
 
-  const handleAddPinSubmit = e => {
+  const handleAddPinSubmit = (e) => {
     if (e) e.preventDefault();
 
     let is_anonymous_pin = true;
@@ -38,8 +38,7 @@ const useAddPinForm = callback => {
         is_anonymous_pin = false;
       }
     }
-    if(!addPinValues.startDate) {
-
+    if (!addPinValues.startDate) {
     }
 
     randomizeLocation(addPinValues.anonradius);
@@ -47,7 +46,7 @@ const useAddPinForm = callback => {
     const submit = {
       ...addPinValues,
       owner: isAuthenticated ? user.id : "",
-      is_anonymous_pin: is_anonymous_pin
+      is_anonymous_pin: is_anonymous_pin,
     };
 
     console.log(submit);
@@ -73,19 +72,19 @@ const useAddPinForm = callback => {
       description: "",
       postDate: new Date(),
       lastEditDate: new Date(),
-      lastPersonEdit: isAuthenticated ? user.id : null
+      lastPersonEdit: isAuthenticated ? user.id : null,
     });
   };
 
-  const handleAddPinChange = e => {
-    e.persist();
-    setaddPinValues(addPinValues => ({
+  const handleAddPinChange = (e) => {
+    // e.persist();
+    setaddPinValues((addPinValues) => ({
       ...addPinValues,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
-  const randomizeLocation = radius => {
+  const randomizeLocation = (radius) => {
     let randomLat;
     let randomLng;
     const lat = addPinValues.latitude;
@@ -138,6 +137,7 @@ const useAddPinForm = callback => {
     //   longitude: randomLng
     // });
   };
+
   return {
     handleAddPinSubmit,
     handleAddPinChange,

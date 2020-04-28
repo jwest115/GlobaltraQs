@@ -214,23 +214,7 @@ b, strong {
   overflow: hidden;
 }
 
-.moveimage
-{
-    padding-top: 50px;
-    width: 80%;
-    float: right;
-}
 
-.copyright
-{
-    padding-right: 10px;
-    padding-top: 30px;
-    width: 80%;
-    float: right;
-    font-size: 12px;
-    color: #98999b;
-
-}
 
 .aboutHeader   
 {
@@ -310,6 +294,7 @@ b, strong {
     background: rgb(77, 65, 133);
     padding-top: 60px !important;
     color: white !important;
+    padding-bottom: 60px !important;
 }
 
 .user-profile-name {
@@ -335,12 +320,12 @@ b, strong {
 }
 
 .header-nav-link {
-    color: #98999b !important;
+    color: white !important;
     font-family: Eina, Arial;
     font-size: 1rem;
 }
 .header-nav-link:hover {
-    color: #98999b !important;
+    color: white !important;
 }
 
 .header-nav-username {
@@ -355,7 +340,7 @@ b, strong {
 }
 
 .header-nav-anonymous {
-    color: #98999b !important;
+    color: white !important;
     text-transform: lowercase !important;
     font-family: Eina, Arial;
     font-size: 1rem;
@@ -363,10 +348,18 @@ b, strong {
 }
 
 .header-nav-anonymous-active {
-    color: #e63f52 !important;
+    color: #00ce7d !important;
     font-family: Eina, Arial;
     font-size: 1rem;
-    text-transform: uppercase !important;
+    text-transform: lowercase !important;
+    font-weight: 600;
+}
+
+.header-nav-anonymous-not-active {
+    color: #e63f52 !important;
+    font-fsupport-header-activeamily: Eina, Arial;
+    font-size: 1rem;
+    text-transform: lowercase !important;
     font-weight: 600;
 }
 
@@ -378,7 +371,8 @@ b, strong {
     background: #F2CE5C !important;
     min-height: 100%;
     height: auto;
-    width: 100%
+    width: 100%;
+    padding-top: 80px !important;
 }
 
 .faq-card {
@@ -402,6 +396,7 @@ b, strong {
 .add-faq-button {
     float: right;
     border-radius: 8px !important;
+    text-transform: lowercase !important;
 }
 
 /* Style the buttons that are used to open and close the accordion panel */
@@ -524,6 +519,14 @@ button {
     text-align: center;
 }
 
+.contactUs-header-active {
+    color: #248dc1 !important;
+}
+
+.support-us-header-active {
+    color: #e01783 !important;
+}
+
 .support-us-nav-link:hover {
     color: #e01783 !important;
 }
@@ -623,6 +626,26 @@ button {
     height: 40px;
     margin-top: 40px;
     margin-right: 40px;
+}
+
+.faq-header-active {
+    color: #F0DC7D !important;
+}
+
+.faq-header-nav-link:hover, .faq-header-nav-link:focus {
+    color: #F0DC7D !important;
+}
+
+.about-us-header-active {
+    color: rgb(77, 65, 133) !important;
+}
+
+.about-us-header-nav-link:hover, .aabout-us-header-nav-link:focus {
+    color: rgb(77, 65, 133) !important;
+}
+
+.resources-header-active {
+    color: #00ce7d !important;
 }
 
 .resources-nav-link:hover, .resources-nav-link:focus {
@@ -850,6 +873,7 @@ button {
     border-radius: 25px !important;
     box-shadow: -5px 5px rgba(0, 0, 0, 0.1) !important;
     margin-top: 20px;
+    width: 100% !important;
 }
 
 .story-card-description {
@@ -877,7 +901,7 @@ button {
 
 .profile-story-card {
     width: 100% !important;
-    height: 100% !important;
+    height: auto !important;
     border-radius: 20px !important;
     padding-right: 0 !important;
     padding-left: 0 !important;
@@ -1040,7 +1064,7 @@ button {
 {
     padding-right: 10px;
     padding-top: 150px;
-    width: 60%;
+    width: 80%;
     float: right;
 }
 
@@ -1049,16 +1073,6 @@ button {
     background: rgb(77, 65, 133);
 }
 
-.copyright
-{
-    padding-right: 10px;
-    padding-top: 30px;
-    width: 60%;
-    float: right;
-    font-size: 12;
-    color: #ffffff;
-
-}
 
 .threeButton1{
     padding-right: 100px;
@@ -1157,3 +1171,212 @@ button {
     color: white;
 }
 
+.user-profile-favorite-posts-div {
+    marginTop: "25px";
+    width: 90%;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-profile-story-description {
+    font-family: "Eina", "Arial" !important;
+    font-size: 0.8rem;
+    color: black !important;
+    text-transform: none !important;
+}
+
+.user-profile-favorite-bookmark-icon {
+    height: 40px;
+    float: right;
+    width: 40px;
+}
+
+.btn-no-style {
+    background-color: transparent;
+    border: none;
+    float: right;
+}
+
+
+.favorite-story-btn {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: -13px;
+    top: -4px;
+}
+
+.edit-profile-pic-button {
+    width: 40px;
+    height: 40px;
+    background: rgb(77, 65, 133) !important;
+    color: white;
+    border-radius: 50px;
+    position: absolute;
+    right: 15;
+    top: 95;
+    border: none;
+}
+.profile-image-div {
+    width: 150px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile-settings-div {
+    background: rgb(77, 65, 133) !important;
+    min-height: 100%;
+    height: auto;
+    width: 100%;
+}
+
+.profile-settings-div span {
+    position: relative;
+    left: 20;
+    top: -14;
+    color: white;
+    font-family: "Eina", "Arial" !important;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+.profile-settings-div label {
+    color: white;
+    font-family: "Eina", "Arial" !important;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: lowercase;
+}
+
+
+.profile-settings-div h1{
+    color: white;
+    font-family: "Eina", "Arial" !important;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+}
+
+.profile-settings-div col {
+    padding-top: 50px;
+}
+
+.profile-settings-bio-form {
+    width: 100% !important;
+    height: 150px !important;
+}
+
+.btn-delete-profile {
+    color: white !important;
+    font-family: "Courier New", "Courier" !important;
+    font-weight: 600 !important;
+    text-transform: lowercase !important;
+    background-color: transparent !important;
+    border: none !important;
+    font-size: 1rem !important;
+}
+
+.profile-settings-cancel-btn {
+    background-color: transparent;
+    border-radius: 20px;
+    width: 200px;
+    height: 50px;
+    color: white;
+    font-family: "Eina", "Arial";
+    text-transform: lowercase;
+    border: 1px solid white;
+    font-weight: 600;
+}
+
+.profile-settings-submit-btn {
+    background-color: white;
+    border-radius: 20px;
+    width: 200px;
+    height: 50px;
+    color: rgb(77, 65, 133) !important;
+    font-family: "Eina", "Arial";
+    text-transform: lowercase;
+    border: 1px solid rgb(77, 65, 133) !important;
+    font-weight: 600;
+}
+
+.copyright
+{
+    padding-right: 10px;
+    padding-top: 30px;
+    width: 80%;
+    float: right;
+    font-size: 12px;
+    color: #98999b;
+}
+
+.faq-plus-btn {
+    width: 20px;
+    height: 20px;
+}
+
+.faq-minus-btn {
+    width: 15px;
+    height: 20px;
+}
+
+.faq-title-div {
+    display: flex;
+    align-items: center;
+    padding-right: 70px;
+}
+
+.sidebar-story-div {
+    padding: 80px 40px;
+    position: relative;
+    height: auto;
+    min-height: 100%;
+}
+
+.story-comment-header {
+    font-family: "Eina", "Arial" !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    color: black !important;
+    text-transform: lowercase !important;
+}
+
+.story-comment-text {
+    font-family: "Eina", "Arial" !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    color: black !important;
+    text-transform: none !important;
+}
+
+.down-icon-col {
+    left: 20px;
+    position: absolute !important;
+    top: 55px;
+}
+
+.fixed-down-icon-col {
+    left: 20px;
+    position: fixed !important;
+    top: 173px;
+}
+
+.down-arrow-row a {
+    color: rgb(77, 65, 133) !important;
+}
+
+.story-favorites-icon {
+    height: 40px;
+    width: 40px;
+}
+
+.sidebar-story-anon-username {
+    font-family: "Courier New", "Courier" !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    color: #98999b !important;
+    text-transform: none !important;
+}

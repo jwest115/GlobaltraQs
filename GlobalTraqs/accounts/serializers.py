@@ -24,6 +24,8 @@ class FlagCommentSerializer(serializers.ModelSerializer):
 class upVoteStorySerializer(serializers.ModelSerializer):
     title = serializers.CharField(
         source="pinId.title", read_only=True)
+    description = serializers.CharField(
+        source="pinId.description", read_only=True)
     pinAuthor = serializers.CharField(
         source="pinId.owner.username", read_only=True)
     category = serializers.CharField(
@@ -31,7 +33,7 @@ class upVoteStorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = upVoteStory
-        fields = ['id', 'pinId', 'title', 'pinAuthor', 'category']
+        fields = ['id', 'pinId', 'title', 'description', 'pinAuthor', 'category']
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -54,7 +56,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'userStories', 'date_joined', 'first_name',
-                  'last_name', 'username', 'email', 'is_profile_private', 'image_url', 'user_upvoted_stories', 'bio', 'is_profile_private', 'profileurl', 'is_profile_private']
+                  'last_name', 'username', 'email', 'is_profile_private', 'image_url', 'user_upvoted_stories', 'bio', 'accessibility_mode_active', 'profileurl']
 
 
 class RegisterSerializer(serializers.ModelSerializer):
