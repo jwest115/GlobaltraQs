@@ -53,9 +53,11 @@ def parse_csv(csv_filename):
 
             # change category type number to match our setup
             if category == "1":
-                category = 2
+                category = 3
             elif category == "2":
                 category = 1
+            else:
+                category = 2
 
             # check for null dates
             # date format YYYY-MM-DD or  YYYY-MM-DDThh:mm:ss.uuuuuuZ
