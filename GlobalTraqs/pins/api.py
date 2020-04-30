@@ -18,7 +18,7 @@ from pins.models import pin, categoryType, upVoteStory, flagStory, commentStory,
 from rest_framework import viewsets, permissions
 from .serializers import PinSerializer, CategorySerializer, upVoteStorySerializer, FlagStorySerializer, \
     CommentStorySerializer, AboutUsSerializer, FaqSerializer, PhotoSerializer, PinFlaggedSerializer, \
-    FlagCommentSerializer
+    FlagCommentSerializer, PinDateSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import RetrieveAPIView
 
@@ -127,14 +127,14 @@ class MinPinDate(viewsets.ModelViewSet):
     queryset = pin.objects.exclude(
         startDate__isnull=True).order_by("startDate")[:1]
 
-    serializer_class = PinSerializer
+    serializer_class = PinDateSerializer
 
 
 class MaxPinDate(viewsets.ModelViewSet):
     queryset = pin.objects.exclude(
         endDate__isnull=True).order_by("endDate").reverse()[:1]
 
-    serializer_class = PinSerializer
+    serializer_class = PinDateSerializer
 
 
 class PinCoordViewSet(viewsets.ModelViewSet):
