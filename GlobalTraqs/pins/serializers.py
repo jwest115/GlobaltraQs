@@ -99,3 +99,9 @@ class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = photo
         fields = '__all__'
+
+
+class PinDateSerializer (serializers.ModelSerializer):
+    class Meta:
+        model = pin
+        fields = ['id', 'startDate', 'endDate']
