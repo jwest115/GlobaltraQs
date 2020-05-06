@@ -1,4 +1,5 @@
 1. [About](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#about)
+1. [Rules](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#rules)
 1. [Instructions](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#globaltraqs) 
 1. [Running](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#running)
 1. [Screenshots](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#screenshots)
@@ -9,6 +10,57 @@
 
 Senior Design Project of redesigning of the website : [GlobalTraQs](http://globaltraqs.com/)
 Still In Development
+
+# Rules 
+Contribution Rules
+
+✔️ Never work on master branch!
+
+
+✔️ Create a new branch for each set of related bugs or set of related tasks, naming by:
+
+
+type_PascalCase, example: feat_CareerPage, bug_CareerEmail.
+
+
+Common short type tokens: wip (work in progress), feat (feature or design), bug (bug fixes)
+
+
+💻 command to create new branch locally: git checkout -b bug_CareerEmail
+
+
+⚠️ Important: Before creating a branch, check if someone already started to work on this task and if there's already a branch created for this task, and if there is, please checkout and track the branch with the 💻 command: git checkout --track origin/bug_CareerEmail
+
+
+--track shorthand for git checkout -b [branch] [remotename]/[branch] where remote name is origin and branch is the specific branch you're pulling from the origin remote
+
+
+Right after creating a new branch, push it to remote to make it available for everyone, defining the upstream
+
+
+💻 command: git push -u origin bug_CareerEmail
+
+
+✔️ Everyday after working, push your local branch updates to remote branch.
+
+
+⚠️ Important: make sure you're on the correct branch... and push
+
+
+With 💻 command: git push
+
+
+✔️ Finished with the task and want to merge?
+
+
+Fix conflicts if needed, usually happens when more than 1 developer is working on the same file on different branches - communicate with the other developer to make sure their work was not removed
+
+
+Please make the merge/pull request with as much detail about what you've done/added with a link to the trello ticket
+
+
+Or lead will merge your branch to master for you. Just ask!
+
 
 # GlobaltraQs
 
