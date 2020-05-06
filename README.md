@@ -56,7 +56,7 @@ With 💻 command: git push
 Fix conflicts if needed, usually happens when more than 1 developer is working on the same file on different branches - communicate with the other developer to make sure their work was not removed
 
 
-Please make the merge/pull request with as much detail about what you've done/added with a link to the trello ticket
+Please make the merge/pull request with as much detail about what you've done/added.
 
 
 Or lead will merge your branch to master for you. Just ask!
