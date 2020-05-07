@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'django_cron',
     'django_extensions',
-    'taggit',
+    # 'taggit',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
