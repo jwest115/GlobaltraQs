@@ -123,14 +123,14 @@ class PinSearchViewSet(viewsets.ModelViewSet):
     search_fields = ['title', 'description']
 
 
-class MinPinDate(viewsets.ModelViewSet):
+class MinPinDate(viewsets.ReadOnlyModelViewSet):
     queryset = pin.objects.exclude(
         startDate__isnull=True).order_by("startDate")[:1]
 
     serializer_class = PinDateSerializer
 
 
-class MaxPinDate(viewsets.ModelViewSet):
+class MaxPinDate(viewsets.ReadOnlyModelViewSet):
     queryset = pin.objects.exclude(
         endDate__isnull=True).order_by("endDate").reverse()[:1]
 
