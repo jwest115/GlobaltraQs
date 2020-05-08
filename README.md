@@ -66,7 +66,17 @@ Or lead will merge your branch to master for you. Just ask!
 
 developmental version: http://globaltraqsdev.com/
 
-first terminal
+# settings.ini
+
+1. open up settings.ini
+
+1. Development Set Debug = True; Production = False
+
+1. Input DB info * could use local postgres or sqlite. Ask for Online DB
+
+1. Input Email Info *dont use your personal email. Ask for Email prod
+
+# first terminal
 
 1. install Python 3.7, pip 
 
