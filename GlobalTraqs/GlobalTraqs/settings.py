@@ -112,28 +112,6 @@ WSGI_APPLICATION = 'GlobalTraqs.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    #
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'lbsggtda',
-    #     'USER': 'lbsggtda',
-    #     'PASSWORD': 'XOpmy4Z0BX79r0cOKoD6NIYnhGkKDCl1',
-    #     'HOST': 'salt.db.elephantsql.com',
-    #     'PORT': '5432',
-    # }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'ooiarmnn',
-    #     'USER': 'ooiarmnn',
-    #     'PASSWORD': '5tZaOHTt-xRz0rwfLK8lFO6fkNccO0KQ',
-    #     'HOST': 'rajje.db.elephantsql.com',
-    #     'PORT': '5432',
-    # }
-    #
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': 'dbz1',
-    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': config('NAME'),
@@ -142,14 +120,6 @@ DATABASES = {
         'HOST': config('HOST'),
         'PORT': config('PORT'),
     }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'arqivedb',
-    #     'USER': 'arqivemaster',
-    #     'PASSWORD': 'secretarqive',
-    #     'HOST': 'database-1.cake6tjozc5q.us-east-1.rds.amazonaws.com',
-    #     'PORT': '5432',
-    # }
 }
 
 
