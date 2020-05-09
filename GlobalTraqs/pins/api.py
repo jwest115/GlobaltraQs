@@ -85,17 +85,7 @@ class PinSearchFilter(FilterSet):
 
 
 class PinViewSet(viewsets.ModelViewSet):
-    # queryset = pin.objects.all()
-    #   queryset = pin.objects.annotate(
-    #      updoot=Coalesce(Sum('pinsUpvote__upvote'), Value(1))
-    # )
     queryset = pin.objects.annotate(
-        # flagscore=Sum(Case(
-        #     When(flaggerstory__flagged=True, then=1),
-        #     default=Value(0),
-        #     output_field=IntegerField()
-        # )),
-        # updooots=Coalesce(Sum('updotes__upvote'), Value(0))
         updooots=Sum(Case(
             When(updotes__upvote=True, then=1),
             default=Value(0),
@@ -104,10 +94,10 @@ class PinViewSet(viewsets.ModelViewSet):
 
     )
 
-    permission_classes = [
-        permissions.AllowAny
-        # permissions.IsAuthenticated,
-    ]
+    # permission_classes = [
+    #     permissions.AllowAny
+    #     # permissions.IsAuthenticated,
+    # ]
 
     serializer_class = PinSerializer
     filter_backends = [DjangoFilterBackend]
@@ -146,19 +136,19 @@ class PinCoordViewSet(viewsets.ModelViewSet):
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = categoryType.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-        # permissions.IsAuthenticated,
-    ]
+    # permission_classes = [
+    #     permissions.AllowAny
+    #     # permissions.IsAuthenticated,
+    # ]
     serializer_class = CategorySerializer
 
 
 class upVoteStoryViewSet(viewsets.ModelViewSet):
     queryset = upVoteStory.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-        # permissions.IsAuthenticated,
-    ]
+    # permission_classes = [
+    #     permissions.AllowAny
+    #     # permissions.IsAuthenticated,
+    # ]
     serializer_class = upVoteStorySerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
@@ -166,10 +156,10 @@ class upVoteStoryViewSet(viewsets.ModelViewSet):
 
 class FlagStoryViewSet(viewsets.ModelViewSet):
     queryset = flagStory.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-        # permissions.IsAuthenticated,
-    ]
+    # permission_classes = [
+    #     permissions.AllowAny
+    #     # permissions.IsAuthenticated,
+    # ]
     serializer_class = FlagStorySerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
@@ -177,10 +167,10 @@ class FlagStoryViewSet(viewsets.ModelViewSet):
 
 class FlagCommentViewSet(viewsets.ModelViewSet):
     queryset = FlagComment.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-        # permissions.IsAuthenticated,
-    ]
+    # permission_classes = [
+    #     permissions.AllowAny
+    #     # permissions.IsAuthenticated,
+    # ]
     serializer_class = FlagCommentSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
@@ -189,12 +179,7 @@ class FlagCommentViewSet(viewsets.ModelViewSet):
 class CommentStoryViewSet(viewsets.ModelViewSet):
 
     queryset = commentStory.objects.annotate(
-        # flagscore=Sum(Case(
-        #     When(flaggerstory__flagged=True, then=1),
-        #     default=Value(0),
-        #     output_field=IntegerField()
-        # )),
-        #updooots=Coalesce(Sum('updotes__upvote'), Value(0))
+
         flagscore=Sum(Case(
             When(flaggingComment__flagged=True, then=1),
             default=Value(0),
@@ -204,10 +189,10 @@ class CommentStoryViewSet(viewsets.ModelViewSet):
 
     )
 
-    permission_classes = [
-        permissions.AllowAny
-        # permissions.IsAuthenticated,
-    ]
+    # permission_classes = [
+    #     permissions.AllowAny
+    #     # permissions.IsAuthenticated,
+    # ]
     serializer_class = CommentStorySerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
@@ -221,30 +206,24 @@ class CommentStoryViewSet(viewsets.ModelViewSet):
 
 class FaqViewSet(viewsets.ModelViewSet):
     queryset = Faq.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-        # permissions.IsAuthenticated,
-    ]
+    # permission_classes = [
+    #     permissions.AllowAny
+    #     # permissions.IsAuthenticated,
+    # ]
     serializer_class = FaqSerializer
 
 
 class PhotoViewSet(viewsets.ModelViewSet):
     queryset = photo.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-        # permissions.IsAuthenticated,
-    ]
+    # permission_classes = [
+    #     permissions.AllowAny
+    #     # permissions.IsAuthenticated,
+    # ]
     serializer_class = PhotoSerializer
 
 
 class PinFlaggedViewSet(viewsets.ModelViewSet):
     queryset = pin.objects.annotate(
-        # flagscore=Sum(Case(
-        #     When(flaggerstory__flagged=True, then=1),
-        #     default=Value(0),
-        #     output_field=IntegerField()
-        # )),
-        # updooots=Coalesce(Sum('updotes__upvote'), Value(0))
         flagscore=Sum(Case(
             When(flaggerstory__flagged=True, then=1),
             default=Value(0),
@@ -253,10 +232,10 @@ class PinFlaggedViewSet(viewsets.ModelViewSet):
 
     )
 
-    permission_classes = [
-        permissions.AllowAny
-        # permissions.IsAuthenticated,
-    ]
+    # permission_classes = [
+    #     permissions.AllowAny
+    #     # permissions.IsAuthenticated,
+    # ]
     serializer_class = PinFlaggedSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'

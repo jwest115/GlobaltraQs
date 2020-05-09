@@ -8,8 +8,8 @@ from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, Us
 import django_filters
 from django_filters import FilterSet, Filter
 from rest_framework.pagination import PageNumberPagination
-
-
+from rest_framework.views import APIView
+from rest_framework_api_key.permissions import HasAPIKey
 # Register API
 
 
@@ -48,7 +48,9 @@ class LoginAPI(generics.GenericAPIView):
 class UserAPI(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
+        HasAPIKey
     ]
+
     serializer_class = UserSerializer
 
     def get_object(self):
@@ -63,9 +65,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    permission_classes = [
-        permissions.AllowAny
-    ]
+
     serializer_class = UserSerializer
     pagination_class = StandardResultsSetPagination
 
@@ -75,6 +75,7 @@ class UsersViewSet(viewsets.ModelViewSet):
 
 
 class UserSearchViewSet(viewsets.ModelViewSet):
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
     filter_backends = [filters.SearchFilter, DjangoFilterBackend]

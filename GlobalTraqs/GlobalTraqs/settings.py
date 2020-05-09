@@ -7,6 +7,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+from corsheaders.defaults import default_headers
 import os
 from decouple import config
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -27,7 +28,7 @@ DEBUG = config('DEBUG', cast=bool)
 ALLOWED_HOSTS = ['.herokuapp.com', '127.0.0.1',
                  'https://globaltraqs.netlify.app/', 'localhost']
 
-
+API_KEY_CUSTOM_HEADER = "HTTP_X_ARQIVE_API_KEY"
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'django_cron',
     'django_extensions',
+    "rest_framework_api_key",
     # 'taggit',
 ]
 REST_FRAMEWORK = {
@@ -61,7 +63,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-    )
+    ),
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework_api_key.permissions.HasAPIKey",
+    ]
     # enable this in production
 
 
@@ -127,7 +132,7 @@ DATABASES = {
     #
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': 'db1',
+    #     'NAME': 'dbz1',
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -203,7 +208,14 @@ EMAIL_HOST_PASSWORD = 'nmjpfuuvopvbmeri'
 STATIC_URL = '/static/'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = ['https://localhost:3000']
+CORS_ORIGIN_WHITELIST = [
+
+    "http://localhost:3000",
+
+]
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'X-Arqive-Api-Key'
+]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 OPTIMIZED_IMAGE_METHOD = 'pillow'

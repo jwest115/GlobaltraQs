@@ -22,6 +22,7 @@ django-cleanup = "*"
 python-decouple = "*"
 django-cron = "*"
 django-extensions = "*"
+djangorestframework-api-key = "*"
 
 [requires]
 python_version = "3.7"
