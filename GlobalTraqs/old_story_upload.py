@@ -2,6 +2,7 @@ import csv
 from pins.models import pin
 import sys
 
+
 # run the below command in the Django Console while connected to the AWS db
 # exec(open('old_story_upload.py').read())
 
@@ -50,6 +51,11 @@ def parse_csv(csv_filename):
             longitude = row[6]
             date_created = row[7]
             last_edited_date = row[8]
+            address = row[9]
+            locality = row[10]
+            region = row[11]
+            country = row[12]
+            post_code = row[13]
 
             # change category type number to match our setup
             if category == "1":
@@ -58,6 +64,18 @@ def parse_csv(csv_filename):
                 category = 1
             else:
                 category = 2
+
+            # if the address, etc. is not available make it empty string
+            if address == "NULL" or address == '':
+                address = ""
+            if locality == "NULL" or locality == '':
+                locality = ""
+            if region == "NULL" or region == '':
+                region = ""
+            if country == "NULL" or country == '':
+                country = ""
+            if post_code == "NULL" or post_code == '':
+                post_code = ""
 
             # check for null dates
             # date format YYYY-MM-DD or  YYYY-MM-DDThh:mm:ss.uuuuuuZ
@@ -87,6 +105,11 @@ def parse_csv(csv_filename):
             print(end_date)
             print(date_created)
             print(last_edited_date)
+            print(address)
+            print(locality)
+            print(region)
+            print(country)
+            print(post_code)
 
             # "title": "",
             # "description": "",
@@ -101,7 +124,11 @@ def parse_csv(csv_filename):
             # "owner": null,
             # "category": null,
             # "lastPersonEdit": null
-            newPin = pin.objects.create(title=title, description=description, latitude=latitude, longitude=longitude, upVotes=0, startDate=start_date, endDate=end_date, is_anonymous_pin=True, postDate=date_created, lastEditDate=last_edited_date, category_id=category, lastPersonEdit=None)
+            newPin = pin.objects.create(title=title, description=description, latitude=latitude, longitude=longitude,
+                                        upVotes=0, startDate=start_date, endDate=end_date, is_anonymous_pin=True,
+                                        postDate=date_created, lastEditDate=last_edited_date, category_id=category,
+                                        lastPersonEdit=None, address=address, locality=locality, region=region,
+                                        country=country, postCode=post_code)
             try:
                 newPin.save()
                 print("------------------------")
