@@ -91,7 +91,7 @@
     "sequelize": "^5.21.2",
     "style-loader": "^1.0.0",
     "styled-components": "^4.4.0",
-    "tinymce": "^5.1.6",
+    "tinymce": "^5.2.2",
     "url-loader": "^2.2.0",
     "yarn": "^1.17.3"
   }
