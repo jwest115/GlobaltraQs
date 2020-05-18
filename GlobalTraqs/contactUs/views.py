@@ -46,7 +46,7 @@ def email(config):
                 # from:
                 email,
                 #   to:
-                ["resetglobaltraqs@gmail.com"]
+                ["thearqive@gmail.com"]
             )
             msg.attach_alternative(email_html_message, "text/html")
             msg.send()
@@ -78,7 +78,7 @@ def supportEmail(config):
             # message:
             email_plaintext_message,
             # from:
-            "globaltraqsNoReply@gmail.com",
+            "thearqiveNoReply@gmail.com",
             #   to:
             [email]
         )
@@ -109,7 +109,7 @@ def FAQEmail(config):
             # from:
             email,
             #   to:
-            ["globaltraqsNoReply@gmail.com"]
+            ["thearqiveNoReply@gmail.com"]
         )
         msg.attach_alternative(email_html_message, "text/html")
         msg.send()
