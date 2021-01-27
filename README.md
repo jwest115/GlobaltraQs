@@ -1,70 +1,34 @@
 1. [About](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#about)
-1. [Rules](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#rules)
 1. [Instructions](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#globaltraqs) 
 1. [Running](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#running)
 1. [Screenshots](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#screenshots)
 
 
 
-# About
+# What is thearQive 
 
-Senior Design Project of redesigning of the website : [GlobalTraQs](http://globaltraqs.com/)
-Still In Development
+![thearqive](https://github.com/jwest115/GlobaltraQs/blob/master/GlobalTraqs/media/media/arqive_1.png)
 
-# Rules 
-Contribution Rules
+The ArQive, formerly known as GlobaltraQs, is an LGBTQ+ web application that allows anyone to post fun and interesting stories, events, and other information that they find meaningful. Founded in 2014 by Dr. Cynthia Wang and Zachary Vernon, The ArQive gives users a safe platform where they can share personal, historical, and/or community stories, as well as have access to information about safe spaces, which all serve as valuable resources to members of the LGBTQ+ community. By providing users with the ability to place pins on the map indicating where they have been and the experiences they have lived, The ArQive gives people the ability to mark their place in the world and in history.
 
-✔️ Never work on master branch!
+![arqive2](https://github.com/jwest115/GlobaltraQs/blob/master/GlobalTraqs/media/media/arqive_2.png)
 
+Originally built in PHP, the previous website required updating and improved features. We decided to use Django and React to make a more dynamic website. We used Django Rest to handle requests faster while using BootStrap to make the website more visually appealing for the user. We are changing the previous website by making the new one more scalable, responsive, and secure. By giving a select group of students the ability to stress test our new website, we can fine tune our website’s user learnability by receiving feedback from regular users. While there are many features pending completion, there will be more improvements coming to the website in the near future.
 
-✔️ Create a new branch for each set of related bugs or set of related tasks, naming by:
+# Starting Off
 
+![arqovies](https://github.com/jwest115/GlobaltraQs/blob/master/GlobalTraqs/media/media/arqive_3.png)
 
-type_PascalCase, example: feat_CareerPage, bug_CareerEmail.
+We were excited to be using React And Django together. Since it was our first time using these technologies, mistakes and bugs were bound to happen especially following old Youtube Tutorials. Our App initaitally had Django Rest just using the build files of React but found out, performance  was a main concern and had to separate it into different applications. Django Rest was easy to pick up and we were able to develop the  backend much fasater and focus more on the frontend portion.
 
+# Learning
 
-Common short type tokens: wip (work in progress), feat (feature or design), bug (bug fixes)
+Django Rest was an interesting technology since it uses Python for development. It was a great tech to learn especially as a beginner but performance might be a main concern in the long run. I recommend learning Django for beginners as a stepping stone to learn other technologies.
 
+# Status 
 
-💻 command to create new branch locally: git checkout -b bug_CareerEmail
+Senior Project is being continued for the Seniors 2021 where they are developing a mobile app and fixing many issues in our project.
 
-
-⚠️ Important: Before creating a branch, check if someone already started to work on this task and if there's already a branch created for this task, and if there is, please checkout and track the branch with the 💻 command: git checkout --track origin/bug_CareerEmail
-
-
---track shorthand for git checkout -b [branch] [remotename]/[branch] where remote name is origin and branch is the specific branch you're pulling from the origin remote
-
-
-Right after creating a new branch, push it to remote to make it available for everyone, defining the upstream
-
-
-💻 command: git push -u origin bug_CareerEmail
-
-
-✔️ Everyday after working, push your local branch updates to remote branch.
-
-
-⚠️ Important: make sure you're on the correct branch... and push
-
-
-With 💻 command: git push
-
-
-✔️ Finished with the task and want to merge?
-
-
-Fix conflicts if needed, usually happens when more than 1 developer is working on the same file on different branches - communicate with the other developer to make sure their work was not removed
-
-
-Please make the merge/pull request with as much detail about what you've done/added.
-
-
-Or lead will merge your branch to master for you. Just ask!
-
-
-# GlobaltraQs
-
-developmental version: http://globaltraqsdev.com/
 
 # settings.ini
 
@@ -114,7 +78,7 @@ clear cache in browser
     1. add Personal, Historical, Community 
     1. Adds the categories
 
-# ScreenShots
+# ScreenShots of 2019 Development
 
 ![HomePage](GlobalTraqs/media/media/Home.png)
 
