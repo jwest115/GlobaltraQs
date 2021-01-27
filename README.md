@@ -29,6 +29,8 @@ Django Rest was an interesting technology since it uses Python for development. 
 
 Senior Project is being continued for the Seniors 2021 where they are developing a mobile app and fixing many issues in our project.
 
+[frontend](https://github.com/redxzeta/gloaltraqs-frontend)
+
 
 # settings.ini
 
