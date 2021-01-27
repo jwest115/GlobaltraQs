@@ -1,9 +1,3 @@
-1. [About](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#about)
-1. [Instructions](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#globaltraqs) 
-1. [Running](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#running)
-1. [Screenshots](https://github.com/jwest115/GlobaltraQs/blob/master/README.md#screenshots)
-
-
 
 # What is thearQive 
 
